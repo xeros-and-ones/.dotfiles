@@ -6,3 +6,5 @@
 [user]
 	name = Mohamed Tarek
 	email = mohamed96tarek@hotmail.com
+[credential]
+	helper = cache
