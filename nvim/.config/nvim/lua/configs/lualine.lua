@@ -81,7 +81,10 @@ local lsp = {
 	icon = " ",
 	color = { gui = "bold" },
 }
-
+local treesitter = function()
+	local ts_avail, ts = pcall(require, "nvim-treesitter.parsers")
+	return (ts_avail and ts.has_parser()) and " 綠TS" or "ﳠ No TS"
+end
 --local spaces = function()
 --return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
 --end
@@ -115,7 +118,7 @@ require("lualine").setup({
 		lualine_b = { branch, diff, diagnostics },
 		lualine_c = {},
 		lualine_x = { "fileformat", "encoding", "filename" },
-		lualine_y = { lsp, filetype },
+		lualine_y = { lsp, treesitter, filetype },
 		lualine_z = { location, progress },
 	},
 	inactive_sections = {
