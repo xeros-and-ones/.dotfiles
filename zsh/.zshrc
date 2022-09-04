@@ -117,6 +117,8 @@ LC_ALL=en_US.UTF-8
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias projects="cd /run/media/xero/Data/Programming/Projects/"
 alias pyprojects="cd /run/media/xero/Data/Programming/Projects/Python_Projects"
+alias data="cd /run/media/xero/Data/"
+alias apps="/run/media/xero/Data/Apps/"
 
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
