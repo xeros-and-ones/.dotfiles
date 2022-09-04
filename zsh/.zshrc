@@ -110,16 +110,23 @@ export EDITOR='nvim'
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-LC_CTYPE=en_US.UTF-8
 LC_ALL=en_US.UTF-8
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+
+
+alias zshconf="nvim ~/.zshrc"
+
+# folders aliases
 alias projects="cd /run/media/xero/Data/Programming/Projects/"
 alias pyprojects="cd /run/media/xero/Data/Programming/Projects/Python_Projects"
 alias data="cd /run/media/xero/Data/"
-alias apps="/run/media/xero/Data/Apps/"
+alias apps="cd /run/media/xero/Data/Apps/"
 
-
+# yt-dlp aliases
+alias ytv-mkv720='yt-dlp -f "bestvideo\[height<=720]+bestaudio/best\[height<=720]" -o "//run//media//xero//Data//Downloads//%(title)s.%(ext)s" --add-metadata --merge-output-format mkv'
+alias ytv-mkv1080='yt-dlp -f "bestvideo\[height<=1080]+bestaudio/best\[height<=1080]" -o "//run//media//xero//Data//Downloads//%(title)s.%(ext)s" --add-metadata --merge-output-format mkv'
+alias ytv-mp4='yt-dlp -f bestvideo\[height<=1080]+bestaudio -o "//run//media//xero//Data//Downloads//%(title)s.%(ext)s" --add-metadata --merge-output-format mp4'
+alias yta-mp3='yt-dlp -f bestaudio --extract-audio --audio-format mp3 -o "//run//media//xero//Data//Downloads//%(title)s.%(ext)s" --add-metadata'
+alias yt-playlist720="yt-dlp -f 'bv*[height=720]+ba' --download-archive videos.txt -o '//run//media//xero//Data//Downloads//%(playlist_id)s//%(title)s.%(ext)s' --add-metadata --merge-output-format mkv"
+alias yt-playlist1080="yt-dlp -f 'bv*[height=1080]+ba' --download-archive videos.txt -o '//run//media//xero//Data//Downloads//%(playlist_id)s//%(title)s.%(ext)s' --add-metadata --merge-output-format mkv"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
