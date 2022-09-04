@@ -1,0 +1,231 @@
+#urlbar-background,
+#urlbar-container,
+.urlbar-input-box {
+  border: none !important;
+}
+
+#urlbar-background {
+  background: #212635 !important;
+}
+
+/* remove blue focus ring */
+* {
+  outline-color: transparent !important;
+}
+
+/* remove blue focus ring */
+:root {
+  --toolbar-field-focus-border-color: rgb(90, 90, 90) !important;
+}
+
+/*** hide "open all in tabs" ***/
+.bookmark-item[type="menu"][container="true"]
+  menuitem[label="Open All in Tabs"],
+.bookmark-item[type="menu"][container="true"] .bookmarks-actions-menuseparator {
+  display: none !important;
+}
+
+/* hide icons for bookmark folders */
+#personal-bookmarks .bookmark-item[container="true"] .toolbarbutton-icon {
+  display: none !important;
+}
+
+/* Coloured Bookmakark folder */
+/*.bookmark-item[container] {
+  list-style-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0iY29udGV4dC1maWxsIiBmaWxsLW9wYWNpdHk9ImNvbnRleHQtZmlsbC1vcGFjaXR5IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPg0KICA8cGF0aCBkPSJNMTQuNSAzSDYuOTE0YS41LjUgMCAwIDEtLjM1NC0uMTQ2TDUuMTQ2IDEuNDM5QTEuNDkxIDEuNDkxIDAgMCAwIDQuMDg2IDFIMS41QTEuNSAxLjUgMCAwIDAgMCAyLjV2MTFBMS41IDEuNSAwIDAgMCAxLjUgMTVoMTNhMS41IDEuNSAwIDAgMCAxLjUtMS41di05QTEuNSAxLjUgMCAwIDAgMTQuNSAzem0uNSAxMC41YS41LjUgMCAwIDEtLjUuNWgtMTNhLjUuNSAwIDAgMS0uNS0uNVY2aDE0ek0xIDVWMi41YS41LjUgMCAwIDEgLjUtLjVoMi41ODZhLjUuNSAwIDAgMSAuMzU0LjE0NmwxLjQxNCAxLjQxNUExLjQ5MSAxLjQ5MSAwIDAgMCA2LjkxNCA0SDE0LjVhLjUuNSAwIDAgMSAuNS41VjV6IiBmaWxsPSIjYjE4NTAyIi8+DQogIDxwYXRoIGQ9Ik0xNSAxMy41YS41LjUgMCAwIDEtLjUuNWgtMTNhLjUuNSAwIDAgMS0uNS0uNVY2aDE0eiIgZmlsbC1vcGFjaXR5PSIuOCIgZmlsbD0iI2ZmZTA4MiIvPg0KICA8cGF0aCBkPSJNMSA1VjIuNWEuNS41IDAgMCAxIC41LS41aDIuNTg2YS41LjUgMCAwIDEgLjM1NC4xNDZsMS40MTQgMS40MTVBMS40OTEgMS40OTEgMCAwIDAgNi45MTQgNEgxNC41YS41LjUgMCAwIDEgLjUuNVY1eiIgZmlsbC1vcGFjaXR5PSIuNiIgZmlsbD0iI2ZmZTA4MiIvPg0KICA8cGF0aCBkPSJNMTUgMTMuNWEuNS41IDAgMCAxLS41LjVoLTEzYS41LjUgMCAwIDEtLjUtLjVWMTNoMTR6IiBmaWxsLW9wYWNpdHk9Ii41IiBmaWxsPSIjZmZlMDgyIi8+DQo8L3N2Zz4=") !important;
+}*/
+
+/*** main-hamburger ***/
+#appMenu-fxa-status,
+/* Sign in to Sync / Open Sync preferences / Reconnect to Sync */
+#appMenu-mainView toolbarseparator.sync-ui-item,
+/**** Separator ****/
+#appMenu-protection-report-button,
+/* Privacy Protections */
+#appMenu-tp-separator,
+/**** Separator ****/
+#appMenu-zoom-controls,
+/* Zoom */
+#appMenu-zoom-controls+toolbarseparator,
+/**** Separator ****/
+#appMenu-edit-controls,
+/* Edit */
+#appMenu-edit-controls+toolbarseparator,
+/**** Separator ****/
+#appMenu-library-button,
+/* Library */
+#appMenu-customize-button+toolbarseparator,
+/**** Separator ****/
+#appMenu-open-file-button,
+/* Open File… */
+#appMenu-save-file-button,
+/* Save Page As… */
+#appMenu-print-button,
+/* Print… */
+#appMenu-print-button+toolbarseparator,
+/**** Separator ****/
+#appMenu-find-button,
+/* Find in This Page… */
+#appMenu-whatsnew-button,
+/* What's New */
+#appMenu-help-button+toolbarseparator,
+/**** Separator ****/
+#leave_this_dummy_here {
+  display: none !important;
+}
+
+/* Show Tab Close buttons only when hovered */
+.tabbrowser-tab:not([pinned]):hover .tab-close-button {
+  display: -moz-box !important;
+}
+
+#tabbrowser-tabs {
+  --uc-tabs-scrollbutton-border: 0px;
+  --proton-tab-block-margin: 0px;
+  --tab-block-margin: 2px;
+  --uc-tab-line-color: rgb(10, 132, 255);
+}
+
+.tabbrowser-tab {
+  padding-inline: 0px !important;
+  /* By default, proton tabs have 2px + 2px = 4px space between them */
+}
+
+#TabsToolbar {
+  --toolbarbutton-inner-padding: 6px !important;
+}
+
+#scrollbutton-up,
+#scrollbutton-down {
+  border-block-width: var(--uc-tabs-scrollbutton-border, 0px) !important;
+}
+
+/*-------------LIBRARY-------------*/
+@-moz-document url("chrome://browser/content/places/places.xhtml")
+{
+  :root {
+    --organizer-border-color: none !important;
+  }
+
+  treechildren::-moz-tree-row(selected, current) {
+    border-color: none !important;
+  }
+
+  treechildren::-moz-tree-row(selected, current, focus) {
+    border-color: none !important;
+  }
+}
+
+/*--------bookmarking page popup--------*/
+#editBookmarkPanelBottomContent,
+#editBMPanel_tagsRow,
+#editBMPanel_tagsSelectorRow #editBMPanel_keywordRow {
+  display: none !important;
+}
+
+/*** Change right-click tab -> reload tab to be first context menu entry (for both single tab and multiple tab selections) ***/
+#tabContextMenu #context_reloadTab,
+#tabContextMenu #context_reloadSelectedTabs {
+  -moz-box-ordinal-group: 0 !important;
+}
+
+#tabbrowser-tabs {
+  --user-tab-rounding: 0px;
+}
+
+.tab-background {
+  border-radius: var(--user-tab-rounding) var(--user-tab-rounding) 0px 0px !important;
+  /* Connected */
+  margin-block: 1px 0 !important;
+  /* Connected */
+}
+
+#scrollbutton-up,
+#scrollbutton-down {
+  /* 6/10/2021 */
+  border-top-width: 1px !important;
+  border-bottom-width: 0 !important;
+}
+
+/* 1/16/2022 Tone down the Fx96 tab border with add-on themes in certain fallback situations */
+.tab-background:is([selected], [multiselected]):-moz-lwtheme {
+  --lwt-tabs-border-color: rgba(0, 0, 0, 0.5) !important;
+  border-bottom-color: transparent !important;
+}
+
+[brighttext="true"]
+  .tab-background:is([selected], [multiselected]):-moz-lwtheme {
+  --lwt-tabs-border-color: rgba(255, 255, 255, 0.5) !important;
+  border-bottom-color: transparent !important;
+}
+
+/* Container color bar visibility */
+.tabbrowser-tab[usercontextid]
+  > .tab-stack
+  > .tab-background
+  > .tab-context-line {
+  margin: 0px max(calc(var(--user-tab-rounding) - 3px), 0px) !important;
+}
+
+/* [Connected Tabs] Set a max height based on min-height plus margin-block: 1px 0 */
+#TabsToolbar,
+#TabsToolbar > hbox,
+#TabsToolbar-customization-target,
+#tabbrowser-arrowscrollbox {
+  max-height: calc(var(--tab-min-height) + 1px) !important;
+}
+
+/* [Connected Tabs] Adjust padding around icons on buttons to avoid crushed images */
+#TabsToolbar-customization-target toolbarbutton > .toolbarbutton-icon,
+#TabsToolbar-customization-target .toolbarbutton-text,
+#TabsToolbar-customization-target .toolbarbutton-badge-stack,
+#scrollbutton-up,
+#scrollbutton-down {
+  padding-top: 5px !important;
+  padding-bottom: 4px !important;
+}
+
+/*** Tighten up drop-down/context/popup menu spacing (8 Sep 2021) ***/
+
+menupopup:not(.in-menulist) > menuitem,
+menupopup:not(.in-menulist) > menu {
+  padding-block: 2px !important;
+  /* reduce to 3px, 2px, 1px or 0px as needed */
+  min-height: unset !important;
+  /* v92.0 - for padding below 4px */
+}
+
+:root {
+  --arrowpanel-menuitem-padding: 1px 5px !important;
+  /*--arrowpanel-border-radius: 0px !important; */
+  --panel-subview-body-padding: 2px 0px !important;
+  --arrowpanel-padding: 1.3em !important;
+  --arrowpanel-menuitem-margin: 0 0px !important;
+}
+
+/* show audio icon as a separate icon in compact mode */
+.tab-icon-stack:is([muted], [soundplaying], [activemedia-blocked]) {
+  grid-template-areas: "a s";
+}
+
+.tab-icon-overlay:is([muted], [soundplaying], [activemedia-blocked]) {
+  grid-area: s;
+}
+
+.tab-icon-overlay,
+.tab-icon-image {
+  opacity: 1 !important;
+}
+
+.tab-icon-overlay {
+  padding: 0 !important;
+}
+
+.tab-icon-overlay:hover {
+  background: none !important;
+}
+
+/* remove space pre tabs */
+.titlebar-spacer[type="pre-tabs"] {
+  display: none !important;
+}
