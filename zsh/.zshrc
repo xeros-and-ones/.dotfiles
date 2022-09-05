@@ -114,6 +114,7 @@ LC_ALL=en_US.UTF-8
 
 
 alias zshconf="nvim ~/.zshrc"
+alias matrix='neo-matrix -D -s -m" WE RULE THE WORLD! FROM THE SHADOWS "'
 
 # folders aliases
 alias projects="cd /run/media/xero/Data/Programming/Projects/"
