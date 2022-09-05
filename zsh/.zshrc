@@ -122,12 +122,15 @@ alias apps="cd /run/media/xero/Data/Apps/"
 alias dotfiles="cd ~/.dotfiles/"
 
 # yt-dlp aliases
-alias ytv-mkv720='yt-dlp -f "bestvideo\[height<=720]+bestaudio/best\[height<=720]" -o "//run//media//xero//Data//Downloads//%(title)s.%(ext)s" --add-metadata --merge-output-format mkv'
-alias ytv-mkv1080='yt-dlp -f "bestvideo\[height<=1080]+bestaudio/best\[height<=1080]" -o "//run//media//xero//Data//Downloads//%(title)s.%(ext)s" --add-metadata --merge-output-format mkv'
-alias ytv-mp4='yt-dlp -f bestvideo\[height<=1080]+bestaudio -o "//run//media//xero//Data//Downloads//%(title)s.%(ext)s" --add-metadata --merge-output-format mp4'
+alias ytv-mkv-720='yt-dlp -f "bestvideo\[height<=720]+bestaudio/best\[height<=720]" -o "//run//media//xero//Data//Downloads//%(title)s.%(ext)s" --add-metadata --merge-output-format mkv'
+alias ytv-mkv-1080='yt-dlp -f "bestvideo\[height<=1080]+bestaudio/best\[height<=1080]" -o "//run//media//xero//Data//Downloads//%(title)s.%(ext)s" --add-metadata --merge-output-format mkv'
+alias ytv-mp4='yt-dlp -f bestvideo\[height<=720]+bestaudio -o "//run//media//xero//Data//Downloads//%(title)s.%(ext)s" --add-metadata --merge-output-format mp4'
+alias ytv-best='yt-dlp -f bestvideo+bestaudio -o "//run//media//xero//Data//Downloads//%(title)s.%(ext)s" --add-metadata --merge-output-format mp4'
 alias yta-mp3='yt-dlp -f bestaudio --extract-audio --audio-format mp3 -o "//run//media//xero//Data//Downloads//%(title)s.%(ext)s" --add-metadata'
-alias ytp-playlist720="yt-dlp -f 'bv*[height=720]+ba' --download-archive videos.txt -o '//run//media//xero//Data//Downloads//%(playlist_id)s//%(title)s.%(ext)s' --add-metadata --merge-output-format mkv"
-alias ytp-playlist1080="yt-dlp -f 'bv*[height=1080]+ba' --download-archive videos.txt -o '//run//media//xero//Data//Downloads//%(playlist_id)s//%(title)s.%(ext)s' --add-metadata --merge-output-format mkv"
+alias ytp-mkv-list-720="yt-dlp -f 'bv*[height=720]+ba' -o '//run//media//xero//Data//Downloads//%(playlist_title)s//%(title)s.%(ext)s' --add-metadata --merge-output-format mkv"
+alias ytp-mp4-list-720="yt-dlp -f 'bv*[height=720]+ba' -o '//run//media//xero//Data//Downloads//%(playlist_title)s//%(title)s.%(ext)s' --add-metadata --merge-output-format mp4"
+alias ytp-mkv-list-1080="yt-dlp -f 'bv*[height=1080]+ba' -o '//run//media//xero//Data//Downloads//%(playlist_title)s//%(title)s.%(ext)s' --add-metadata --merge-output-format mkv"
+alias ytp-mp4-list-1080="yt-dlp -f 'bv*[height=1080]+ba' -o '//run//media//xero//Data//Downloads//%(playlist_title)s//%(title)s.%(ext)s' --add-metadata --merge-output-format mp4"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
