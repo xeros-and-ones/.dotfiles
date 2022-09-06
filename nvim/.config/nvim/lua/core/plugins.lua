@@ -3,6 +3,8 @@ local astro_plugins = {
 	--vim be good
 	["ThePrimeagen/vim-be-good"] = {},
 
+	["luisiacc/gruvbox-baby"] = {},
+
 	["folke/trouble.nvim"] = {
 		requires = "kyazdani42/nvim-web-devicons",
 		config = function()

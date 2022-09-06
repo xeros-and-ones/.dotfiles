@@ -178,45 +178,23 @@ local config = {
 	-- Configure plugins
 	plugins = {
 		init = {
-			-- You can disable default plugins as follows:
-			-- ["goolord/alpha-nvim"] = { disable = true },
-			-- colorschemes
 			{
-				"ellisonleao/gruvbox.nvim",
-				require("gruvbox").setup({
-					undercurl = true,
-					bold = true,
-					italic = true,
-					strikethrough = true,
-					invert_selection = false,
-					invert_signs = false,
-					invert_tabline = false,
-					invert_intend_guides = false,
-					inverse = true, -- invert background for search, diffs, statuslines and errors
-					contrast = "hard", -- can be "hard", "soft" or empty string
-					overrides = {},
-				}),
-				vim.cmd("colorscheme gruvbox"),
+				-- "ellisonleao/gruvbox.nvim",
+				-- require("gruvbox").setup({
+				-- 	undercurl = true,
+				-- 	bold = true,
+				-- 	italic = true,
+				-- 	strikethrough = true,
+				-- 	invert_selection = false,
+				-- 	invert_signs = false,
+				-- 	invert_tabline = false,
+				-- 	invert_intend_guides = false,
+				-- 	inverse = true, -- invert background for search, diffs, statuslines and errors
+				-- 	contrast = "hard", -- can be "hard", "soft" or empty string
+				-- 	overrides = {},
+				-- }),
+				-- vim.cmd("colorscheme gruvbox"),
 			},
-
-			-- You can also add new plugins here as well:
-			-- Add plugins, the packer syntax without the "use"
-			-- { "andweeb/presence.nvim" },
-			-- {
-			--   "ray-x/lsp_signature.nvim",
-			--   event = "BufRead",
-			--   config = function()
-			--     require("lsp_signature").setup()
-			--   end,
-			-- },
-
-			-- We also support a key value style plugin definition similar to NvChad:
-			-- ["ray-x/lsp_signature.nvim"] = {
-			--   event = "BufRead",
-			--   config = function()
-			--     require("lsp_signature").setup()
-			--   end,
-			-- },
 		},
 		-- All other entries override the require("<key>").setup({...}) call for default plugins
 		["null-ls"] = function(config) -- overrides `require("null-ls").setup(config)`
