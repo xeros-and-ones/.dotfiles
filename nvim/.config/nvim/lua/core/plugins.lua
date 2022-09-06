@@ -49,7 +49,24 @@ local astro_plugins = {
 	-- Plugin manager
 	["wbthomason/packer.nvim"] = {},
 
-	["folke/tokyonight.nvim"] = {},
+	["folke/tokyonight.nvim"] = {
+		config = function()
+			require("tokyonight").setup({
+				style = "night", -- The theme comes in three styles, `storm`, a darker variant `night` and `day`
+				transparent = true, -- Enable this to disable setting the background color
+				terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim                                                                                                  |
+				styles = {
+					comments = "italic",
+					keywords = "italic",
+					functions = "bold",
+					sidebars = "dark", -- style for sidebars, see below
+					floats = "dark", -- style for floating windows
+				},
+				sidebars = { "qf", "help", "Neotree" }, -- Set a darker background on sidebar-like windows. For example: `["qf", "vista_kind", "terminal", "packer"]`                                                      |
+				lualine_bold = true, -- When `true`, section headers in the lualine theme will be bold                                                                                                  |
+			})
+		end,
+	},
 	-- Optimiser
 	["lewis6991/impatient.nvim"] = {},
 
