@@ -21,23 +21,23 @@ end
 astronvim.conditional_func(astronvim.user_plugin_opts("polish", nil, false))
 
 -- tokyonight config
--- vim.g.tokyonight_style = "night"
--- vim.g.tokyonight_terminal_colors = true
--- vim.g.tokyonight_italic_functions = true
--- vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer", "neo-tree" }
--- vim.g.tokyonight_transparent_sidebar = true
--- vim.g.tokyonight_dark_float = true
--- vim.g.tokyonight_lualine_bold = true
--- -- Change the "hint" color to the "orange" color, and make the "error" color bright red
--- vim.g.tokyonight_colors = { hint = "orange", error = "#fc443a" }
--- -- Load the colorscheme
--- vim.cmd([[colorscheme tokyonight]])
+vim.g.tokyonight_style = "night"
+vim.g.tokyonight_terminal_colors = true
+vim.g.tokyonight_italic_functions = true
+vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer", "neo-tree" }
+vim.g.tokyonight_transparent_sidebar = true
+vim.g.tokyonight_dark_float = true
+vim.g.tokyonight_lualine_bold = true
+-- Change the "hint" color to the "orange" color, and make the "error" color bright red
+vim.g.tokyonight_colors = { hint = "orange", error = "#fc443a" }
+-- Load the colorscheme
+vim.cmd([[colorscheme tokyonight]])
 
 --gruvbox-baby config
-vim.g.gruvbox_baby_keyword_style = "italic"
-vim.g.gruvbox_use_original_palette = true
--- Enable transparent mode
-vim.g.gruvbox_baby_transparent_mode = 1
-
--- Load the colorscheme
-vim.cmd([[colorscheme gruvbox-baby]])
+-- vim.g.gruvbox_baby_keyword_style = "italic"
+-- vim.g.gruvbox_use_original_palette = true
+-- -- Enable transparent mode
+-- vim.g.gruvbox_baby_transparent_mode = 1
+--
+-- -- Load the colorscheme
+-- vim.cmd([[colorscheme gruvbox-baby]])
