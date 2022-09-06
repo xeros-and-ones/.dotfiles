@@ -1530,6 +1530,6 @@ map ctrl+shift+tab previous_window
 
 
 # BEGIN_KITTY_THEME
-# Gruvbox Dark Hard
+# Brogrammer
 include current-theme.conf
 # END_KITTY_THEME
