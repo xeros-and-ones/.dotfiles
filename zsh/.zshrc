@@ -86,6 +86,7 @@ plugins=(
     zsh-autosuggestions
     zsh-syntax-highlighting
     zsh-interactive-cd
+    virtualenv
     )
 
 source $ZSH/oh-my-zsh.sh
