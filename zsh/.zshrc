@@ -10,6 +10,8 @@ fi
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
+export PATH="/home/xero/.deta/bin:$PATH"
+export PATH=$PATH:/usr/local/go/bin
 
 fpath+=~/.zfunc
 # Set name of the theme to load --- if set to "random", it will
