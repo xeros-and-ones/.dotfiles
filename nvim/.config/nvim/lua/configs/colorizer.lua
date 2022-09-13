@@ -7,7 +7,7 @@ local colorizer_opts = astronvim.user_plugin_opts("plugins.colorizer", {
 	{
 		RGB = true, -- #RGB hex codes
 		RRGGBB = true, -- #RRGGBB hex codes
-		names = true, -- "Name" codes like Blue
+		names = false, -- "Name" codes like Blue
 		RRGGBBAA = true, -- #RRGGBBAA hex codes
 		rgb_fn = false, -- CSS rgb() and rgba() functions
 		hsl_fn = false, -- CSS hsl() and hsla() functions

@@ -123,6 +123,10 @@ setup(astronvim.user_plugin_opts("plugins.cmp", {
 			"s",
 		}),
 	},
+	sources = {
+		{ name = "nvim_lsp" },
+		{ name = "nvim_lsp_signature_help" },
+	},
 }))
 
 vim.api.nvim_create_autocmd("BufRead", {

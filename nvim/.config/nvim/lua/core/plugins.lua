@@ -3,6 +3,8 @@ local astro_plugins = {
 	--vim be good
 	["ThePrimeagen/vim-be-good"] = {},
 
+	["hrsh7th/cmp-nvim-lsp-signature-help"] = {},
+
 	["luisiacc/gruvbox-baby"] = {},
 
 	["folke/trouble.nvim"] = {
