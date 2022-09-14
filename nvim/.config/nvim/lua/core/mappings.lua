@@ -11,15 +11,21 @@ vim.api.nvim_set_keymap("i", "<c-s>", "<cmd>lua vim.lsp.buf.signature_help()<CR>
 --moving text
 -- Normal --
 keymap("n", "<A-j>", "<ESC>:m .+1<CR>==", opts)
+keymap("n", "<A-Down>", "<ESC>:m .+1<CR>==", opts)
 keymap("n", "<A-k>", "<ESC>:m .-2<CR>==", opts)
+keymap("n", "<A-Up>", "<ESC>:m .-2<CR>==", opts)
 
 -- insert
 -- Move text up and down
 keymap("i", "<A-j>", "<Esc>:m .+1<CR>==gi", opts)
+keymap("i", "<A-Down>", "<Esc>:m .+1<CR>==gi", opts)
 keymap("i", "<A-k>", "<Esc>:m .-2<CR>==gi", opts)
+keymap("i", "<A-Up>", "<Esc>:m .-2<CR>==gi", opts)
 
 keymap("v", "<A-j>", ":m .+1<CR>==", opts)
+keymap("v", "<A-Down>", ":m .+1<CR>==", opts)
 keymap("v", "<A-k>", ":m .-2<CR>==", opts)
+keymap("v", "<A-Up>", ":m .-2<CR>==", opts)
 keymap("v", "p", '"_dP', opts)
 -- Visual Block --
 -- Move text up and down
@@ -27,6 +33,8 @@ keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
 keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
 keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
 keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
+keymap("x", "<A-Down>", ":move '>+1<CR>gv-gv", opts)
+keymap("x", "<A-Up>", ":move '<-2<CR>gv-gv", opts)
 
 maps.n["<leader>w"] = { "<cmd>w<cr>", desc = "Save" }
 maps.n["<leader>q"] = { "<cmd>q<cr>", desc = "Quit" }
