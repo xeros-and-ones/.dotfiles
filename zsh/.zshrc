@@ -120,7 +120,7 @@ alias zshconf="nvim ~/.zshrc"
 alias matrix='neo-matrix -D -s -m" WE RULE THE WORLD! FROM THE SHADOWS "'
 
 # folders aliases
-alias projects="cd /run/media/xero/Data/Programming/Projects/"
+alias projects="cd ~/Documents/Projects/"
 alias data="cd /run/media/xero/Data/"
 alias apps="cd /run/media/xero/Data/Apps/"
 alias dotfiles="cd ~/.dotfiles/"
