@@ -71,6 +71,12 @@ astronvim.lsp.on_attach = function(client, bufnr)
 					end,
 					desc = "Declaration of current symbol",
 				},
+				["gT"] = {
+					function()
+						vim.lsp.buf.type_definition()
+					end,
+					desc = "Definition of current type",
+				},
 				["gI"] = {
 					function()
 						vim.lsp.buf.implementation()

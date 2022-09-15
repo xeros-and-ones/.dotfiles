@@ -52,7 +52,6 @@ maps.n["gx"] = {
 	end,
 	desc = "Open the file under cursor with system app",
 }
-maps.n["<C-s>"] = { "<cmd>w!<cr>", desc = "Force write" }
 maps.n["<C-q>"] = { "<cmd>q!<cr>", desc = "Force quit" }
 maps.n["Q"] = "<Nop>"
 
@@ -384,6 +383,12 @@ if is_available("telescope.nvim") then
 			end
 		end,
 		desc = "Search symbols",
+	}
+	maps.n["<leader>lG"] = {
+		function()
+			require("telescope.builtin").lsp_workspace_symbols()
+		end,
+		desc = "Search workspace symbols",
 	}
 	maps.n["<leader>lR"] = {
 		function()

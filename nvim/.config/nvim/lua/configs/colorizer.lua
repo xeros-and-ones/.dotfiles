@@ -3,7 +3,7 @@ if not status_ok then
 	return
 end
 local colorizer_opts = astronvim.user_plugin_opts("plugins.colorizer", {
-	{ "*" },
+	{ nil },
 	{
 		RGB = true, -- #RGB hex codes
 		RRGGBB = true, -- #RRGGBB hex codes
