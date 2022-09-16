@@ -242,10 +242,10 @@ else
 	maps.n["<C-j>"] = { "<C-w>j", desc = "Move to below split" }
 	maps.n["<C-k>"] = { "<C-w>k", desc = "Move to above split" }
 	maps.n["<C-l>"] = { "<C-w>l", desc = "Move to right split" }
-	maps.n["<C-Up>"] = { "<cmd>resize -2<CR>", desc = "Resize split up" }
-	maps.n["<C-Down>"] = { "<cmd>resize +2<CR>", desc = "Resize split down" }
-	maps.n["<C-Left>"] = { "<cmd>vertical resize -2<CR>", desc = "Resize split left" }
-	maps.n["<C-Right>"] = { "<cmd>vertical resize +2<CR>", desc = "Resize split right" }
+	maps.n["<C-Up>"] = { "<ESC>:resize -2<CR>", desc = "Resize split up" }
+	maps.n["<C-Down>"] = { "<ESC>:resize +2<CR>", desc = "Resize split down" }
+	maps.n["<C-Left>"] = { "<ESC>:vertical resize -2<CR>", desc = "Resize split left" }
+	maps.n["<C-Right>"] = { "<ESC>:vertical resize +2<CR>", desc = "Resize split right" }
 end
 
 -- SymbolsOutline
@@ -446,7 +446,7 @@ if is_available("toggleterm.nvim") then
 	}
 	maps.n["<leader>tf"] = { "<cmd>ToggleTerm direction=float<cr>", desc = "ToggleTerm float" }
 	maps.n["<leader>th"] = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", desc = "ToggleTerm horizontal split" }
-	maps.n["<leader>tv"] = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", desc = "ToggleTerm vertical split" }
+	maps.n["<leader>tv"] = { "<cmd>ToggleTerm size=45 direction=vertical<cr>", desc = "ToggleTerm vertical split" }
 end
 
 -- Stay in indent mode
