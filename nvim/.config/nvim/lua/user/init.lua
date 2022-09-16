@@ -191,11 +191,13 @@ local config = {
 					invert_intend_guides = false,
 					inverse = true, -- invert background for search, diffs, statuslines and errors
 					contrast = "hard", -- can be "hard", "soft" or empty string
+					transparent_mode = true,
 					overrides = {
 						DiagnosticVirtualTextError = { fg = "#fb4934", bg = "#400404" },
 						DiagnosticVirtualTextWarn = { fg = "#fabd2f", bg = "#3f4004" },
 						DiagnosticVirtualTextInfo = { fg = "#83a598", bg = "#040540" },
 						DiagnosticVirtualTextHint = { fg = "#427b58", bg = "#043d40" },
+						BufferLineBufferSelected = { fg = "#637CF7", bold = true },
 					},
 				}),
 				vim.cmd("colorscheme gruvbox"),
