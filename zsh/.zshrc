@@ -89,6 +89,7 @@ plugins=(
     zsh-syntax-highlighting
     zsh-interactive-cd
     virtualenv
+    aliases
     )
 
 source $ZSH/oh-my-zsh.sh

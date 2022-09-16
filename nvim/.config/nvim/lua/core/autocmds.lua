@@ -17,13 +17,13 @@ cmd("BufReadPost", { command = [[if line("'\"") > 1 && line("'\"") <= line("$") 
 -- set cursorColumn for python only on the current buffer
 -- vim.cmd("autocmd FileType python set cursorcolumn")
 local cursorColumn = augroup("CursorColumn", { clear = true })
-cmd({ "InsertLeave", "WinEnter" }, { pattern = "*.py", command = "set cursorcolumn", group = cursorColumn })
-cmd({ "InsertEnter", "WinLeave" }, { pattern = "*", command = "set nocursorcolumn", group = cursorColumn })
+cmd({ "WinEnter" }, { pattern = "*.py", command = "set cursorcolumn", group = cursorColumn })
+cmd({ "WinLeave" }, { pattern = "*", command = "set nocursorcolumn", group = cursorColumn })
 
 -- set cursorline on the current buffer only
 local cursorGrp = augroup("CursorLine", { clear = true })
-cmd({ "InsertLeave", "WinEnter" }, { pattern = "*", command = "set cursorline", group = cursorGrp })
-cmd({ "InsertEnter", "WinLeave" }, { pattern = "*", command = "set nocursorline", group = cursorGrp })
+cmd({ "WinEnter" }, { pattern = "*", command = "set cursorline", group = cursorGrp })
+cmd({ "WinLeave" }, { pattern = "*", command = "set nocursorline", group = cursorGrp })
 
 augroup("highlighturl", { clear = true })
 cmd({ "VimEnter", "FileType", "BufEnter", "WinEnter" }, {
