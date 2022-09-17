@@ -13,12 +13,14 @@ bufferline.setup(astronvim.user_plugin_opts("plugins.bufferline", {
 		modified_icon = "",
 		close_icon = "",
 		max_name_length = 14,
+
 		max_prefix_length = 13,
 		tab_size = 20,
 		separator_style = "thick",
 		diagnostics = "nvim_lsp",
 		diagnostics_update_in_insert = true,
-		diagnostics_indicator = function(diagnostics_dict)
+		always_show_bufferline = true,
+		diagnostics_indicator = function(count, level, diagnostics_dict, context)
 			local s = " "
 			for e, n in pairs(diagnostics_dict) do
 				local sym = e == "error" and " " or (e == "warning" and " " or "")
@@ -26,5 +28,9 @@ bufferline.setup(astronvim.user_plugin_opts("plugins.bufferline", {
 			end
 			return s
 		end,
+		-- diagnostics_indicator = function(count, level, diagnostics_dict, context)
+		-- 	local icon = level:match("error") and " " or " "
+		-- 	return " " .. icon .. count
+		-- end,
 	},
 }))

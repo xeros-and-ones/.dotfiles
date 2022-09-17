@@ -225,27 +225,27 @@ if is_available("smart-splits.nvim") then
 		end,
 		desc = "Resize split down",
 	}
-	maps.n["<C-Left>"] = {
-		function()
-			require("smart-splits").resize_left()
-		end,
-		desc = "Resize split left",
-	}
-	maps.n["<C-Right>"] = {
-		function()
-			require("smart-splits").resize_right()
-		end,
-		desc = "Resize split right",
-	}
+	maps.n["<C-Left>"] = { "<ESC>:vertical resize -2<CR>==", desc = "Resize split left" }
+	maps.n["<C-Right>"] = { "<ESC>:vertical resize +2<CR>==", desc = "Resize split right" }
+	-- maps.n["<C-Left>"] = {
+	-- 	function()
+	-- 		require("smart-splits").resize_left()
+	-- 	end,
+	-- 	desc = "Resize split left",
+	-- }
+	-- maps.n["<C-Right>"] = {
+	-- 	function()
+	-- 		require("smart-splits").resize_right()
+	-- 	end,
+	-- 	desc = "Resize split right",
+	-- }
 else
 	maps.n["<C-h>"] = { "<C-w>h", desc = "Move to left split" }
 	maps.n["<C-j>"] = { "<C-w>j", desc = "Move to below split" }
 	maps.n["<C-k>"] = { "<C-w>k", desc = "Move to above split" }
 	maps.n["<C-l>"] = { "<C-w>l", desc = "Move to right split" }
-	maps.n["<C-Up>"] = { "<ESC>:resize -2<CR>", desc = "Resize split up" }
-	maps.n["<C-Down>"] = { "<ESC>:resize +2<CR>", desc = "Resize split down" }
-	maps.n["<C-Left>"] = { "<ESC>:vertical resize -2<CR>", desc = "Resize split left" }
-	maps.n["<C-Right>"] = { "<ESC>:vertical resize +2<CR>", desc = "Resize split right" }
+	maps.n["<C-Up>"] = { "<ESC>:resize -2<CR>==", desc = "Resize split up" }
+	maps.n["<C-Down>"] = { "<ESC>:resize +2<CR>==", desc = "Resize split down" }
 end
 
 -- SymbolsOutline
