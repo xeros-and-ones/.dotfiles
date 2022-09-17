@@ -121,6 +121,8 @@ alias zshconf="nvim ~/.zshrc"
 alias matrix='neo-matrix -D -s -m" WE RULE THE WORLD! FROM THE SHADOWS "'
 
 # folders aliases
+alias l="exa --long --grid --group-directories-first --git --header --icons --all"
+alias lf="exa --grid --group-directories-first --git --header --icons --all"
 alias projects="cd ~/Documents/Projects/"
 alias data="cd /run/media/xero/Data/"
 alias apps="cd /run/media/xero/Data/Apps/"
