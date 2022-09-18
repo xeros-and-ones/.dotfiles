@@ -6,7 +6,7 @@ bold_font        Fira code Bold Nerd Font Complete
 italic_font      Caskaydia Cove Nerd Font Complete SemiBold Italic
 bold_italic_font Caskaydia Cove Nerd Font Complete Bold Italic
 
-font_size 12.0
+font_size 12.0 
 
 # force_ltr no
 
@@ -505,11 +505,11 @@ inactive_tab_font_style normal
 #: Color scheme {{{
 
 # foreground #dddddd
-# background #16162e
+background #16162e
 
 #: The foreground and background colors.
 
-background_opacity 0.75
+background_opacity 0.8
 # background_image none
 # background_image_layout tiled
 
@@ -552,7 +552,7 @@ background_opacity 0.75
 #: remaining 240 colors as color16 to color255.
 
 # color0 #000000
-# color8 #bbbdbb
+# color8 #b5b1b1
 
 #: black
 
@@ -1530,6 +1530,6 @@ map ctrl+shift+tab previous_window
 
 
 # BEGIN_KITTY_THEME
-# Campbell
+# Wez
 include current-theme.conf
 # END_KITTY_THEME
