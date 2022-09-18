@@ -221,6 +221,11 @@ local config = {
 					},
 				}),
 				vim.cmd("colorscheme gruvbox"),
+				require("notify").setup({
+					background_colour = "Normal",
+					opacity = 20,
+					timeout = 3000,
+				}),
 			},
 		},
 		-- All other entries override the require("<key>").setup({...}) call for default plugins
