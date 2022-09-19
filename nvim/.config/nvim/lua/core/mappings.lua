@@ -257,7 +257,7 @@ end
 if is_available("telescope.nvim") then
 	maps.n["<leader>fw"] = {
 		function()
-			require("telescope.builtin").live_grep()
+			require("telescope.builtin").live_grep({ search_dirs = { vim.fn.expand("%:p") } })
 		end,
 		desc = "Search words",
 	}
