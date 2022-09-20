@@ -119,6 +119,7 @@ LC_ALL=en_US.UTF-8
 
 alias zshconf="nvim ~/.zshrc"
 alias matrix='neo-matrix -D -s -m" WE RULE THE WORLD! FROM THE SHADOWS "'
+alias printcolors='for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$"\n"};done'
 
 # folders aliases
 alias l="exa --long --grid --group-directories-first --git --header --icons --all"
