@@ -12,7 +12,7 @@ fi
 export ZSH="$HOME/.oh-my-zsh"
 export PATH="/home/xero/.deta/bin:$PATH"
 export PATH=$PATH:/usr/local/go/bin
-
+export PATH="$HOME/.emacs.d/bin:$PATH"
 fpath+=~/.zfunc
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
