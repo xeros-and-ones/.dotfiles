@@ -9,6 +9,9 @@ local astro_plugins = {
 			})
 		end,
 	},
+
+	["mg979/vim-visual-multi"] = {},
+
 	["hrsh7th/cmp-nvim-lsp-signature-help"] = {
 		require("treesitter-context").setup({
 			enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
