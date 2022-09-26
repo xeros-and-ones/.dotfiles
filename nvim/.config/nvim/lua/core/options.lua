@@ -7,7 +7,6 @@ astronvim.vim_opts(astronvim.user_plugin_opts("options", {
 		cursorline = true, -- Highlight the text line of the cursor
 		expandtab = true, -- Enable the use of space in tab
 		fileencoding = "utf-8", -- File content encoding for the buffer
-		fillchars = { eob = " " }, -- Disable `~` on nonexistent lines
 		history = 100, -- Number of commands to remember in a history table
 		ignorecase = true, -- Case insensitive searching
 		laststatus = 3, -- globalstatus
@@ -34,6 +33,14 @@ astronvim.vim_opts(astronvim.user_plugin_opts("options", {
 		wrap = false, -- Disable wrapping of lines longer than the width of window
 		writebackup = false, -- Disable making a backup before overwriting a file
 		guifont = { "FiraCode Nerd Font", ":h11" },
+		-- fold settings
+		foldmethod = "expr",
+		foldlevel = 10,
+		foldexpr = "nvim_treesitter#foldexpr()",
+		foldtext = [[substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').'...'.trim(getline(v:foldend)) . ' (' . (v:foldend - v:foldstart + 1) . ' lines)']],
+		fillchars = { eob = " " }, -- Disable `~` on nonexistent lines
+		foldnestmax = 2,
+		foldminlines = 1,
 	},
 	g = {
 		do_filetype_lua = 1, -- use filetype.lua
