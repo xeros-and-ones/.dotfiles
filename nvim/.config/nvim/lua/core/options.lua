@@ -39,7 +39,7 @@ astronvim.vim_opts(astronvim.user_plugin_opts("options", {
 		foldexpr = "nvim_treesitter#foldexpr()",
 		foldtext = [[substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').'...'.trim(getline(v:foldend)) . ' (' . (v:foldend - v:foldstart + 1) . ' lines)']],
 		fillchars = { eob = " " }, -- Disable `~` on nonexistent lines
-		foldnestmax = 2,
+		foldnestmax = 3,
 		foldminlines = 1,
 	},
 	g = {
@@ -65,5 +65,9 @@ astronvim.vim_opts(astronvim.user_plugin_opts("options", {
 		loaded_zipPlugin = true, -- disable zip
 		loaded_vimball = true, -- disable vimball
 		loaded_vimballPlugin = true, -- disable vimball
+		-- NEOVIDE Config
+		neovide_transparency = 0.75,
+		neovide_floating_blur_amount_x = 2.0,
+		neovide_floating_blur_amount_y = 2.0,
 	},
 }))

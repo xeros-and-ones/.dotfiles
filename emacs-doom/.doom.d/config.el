@@ -63,7 +63,7 @@
   (load-theme doom-theme t))
 
 (if (daemonp)
-  (add-hook 'after-make-frame-functions #'load-doom-theme)
+    (add-hook 'after-make-frame-functions #'load-doom-theme)
   (load-theme doom-theme t))
 
 ;; modeline config
@@ -72,13 +72,25 @@
         doom-modeline-major-mode-icon t
         doom-modeline-major-mode-color-icon t
         doom-modeline-buffer-file-name-style 'truncate-upto-project
-        doom-modeline-modal-icon nil))
+        doom-modeline-modal-icon nil
+        evil-normal-state-tag   (propertize "NORMAL")
+        evil-emacs-state-tag    (propertize "EMACS")
+        evil-insert-state-tag   (propertize "INSERT")
+        evil-motion-state-tag   (propertize "MOTION")
+        evil-visual-state-tag   (propertize "VISUAL")
+        evil-replace-state-tag   (propertize "REPLACE")
+        evil-operator-state-tag (propertize "OPERATOR")))
+
 
 ;;lsp-mode config
-(setq lsp-ui-doc-enable t)
+(setq lsp-ui-doc-enable nil)
 (setq lsp-ui-doc-show-with-cursor t)
 (setq lsp-ui-doc-show-with-mouse t)
+(setq lsp-ui-sideline-enable t)
 (setq lsp-lens-enable t)
 (setq lsp-headerline-breadcrumb-enable t)
 (setq lsp-signature-auto-activate t)
 (setq lsp-signature-render-documentation t)
+(setq lsp-modeline-diagnostics-enable t)
+(setq lsp-completion-show-detail t)
+(setq lsp-completion-show-kind t)
