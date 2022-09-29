@@ -4,9 +4,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("e3daa8f18440301f3e54f2093fe15f4fe951986a8628e98dcd781efbec7a46f2" default))
- '(package-selected-packages
-   '(django-mode mmm-jinja2 jinja2-mode django-snippets)))
+   '("0f1da577aee469f092b24417fe8c13d0b5b76c40c8e4484ff40c609d8da61f69" "e3daa8f18440301f3e54f2093fe15f4fe951986a8628e98dcd781efbec7a46f2" default))
+ '(package-selected-packages '(django-mode mmm-jinja2 jinja2-mode django-snippets)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

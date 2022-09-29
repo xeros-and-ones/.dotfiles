@@ -94,3 +94,5 @@
 (setq lsp-modeline-diagnostics-enable t)
 (setq lsp-completion-show-detail t)
 (setq lsp-completion-show-kind t)
+
+
