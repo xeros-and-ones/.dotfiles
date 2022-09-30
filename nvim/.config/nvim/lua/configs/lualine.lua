@@ -131,7 +131,7 @@ require("lualine").setup({
 		lualine_b = { branch, diff, diagnostics },
 		lualine_c = {},
 		lualine_x = { format, encoding, treesitter },
-		lualine_y = { lsp, filetype },
+		lualine_y = { lsp },
 		lualine_z = { "filename", location, progress },
 	},
 	inactive_sections = {

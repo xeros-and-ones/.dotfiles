@@ -20,7 +20,7 @@ bufferline.setup(astronvim.user_plugin_opts("plugins.bufferline", {
 		diagnostics = "nvim_lsp",
 		diagnostics_update_in_insert = true,
 		always_show_bufferline = true,
-		diagnostics_indicator = function(diagnostics_dict)
+		diagnostics_indicator = function(count, level, diagnostics_dict, context)
 			local s = " "
 			for e, n in pairs(diagnostics_dict) do
 				local sym = e == "error" and " " or (e == "warning" and " " or "")
