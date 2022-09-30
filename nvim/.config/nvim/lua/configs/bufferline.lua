@@ -9,7 +9,7 @@ bufferline.setup(astronvim.user_plugin_opts("plugins.bufferline", {
 			{ filetype = "neo-tree", text = "", padding = 1 },
 			{ filetype = "Outline", text = "", padding = 1 },
 		},
-		buffer_close_icon = "",
+		buffer_close_icon = "",
 		modified_icon = "",
 		close_icon = "",
 		max_name_length = 14,
@@ -20,7 +20,7 @@ bufferline.setup(astronvim.user_plugin_opts("plugins.bufferline", {
 		diagnostics = "nvim_lsp",
 		diagnostics_update_in_insert = true,
 		always_show_bufferline = true,
-		diagnostics_indicator = function(count, level, diagnostics_dict, context)
+		diagnostics_indicator = function(diagnostics_dict)
 			local s = " "
 			for e, n in pairs(diagnostics_dict) do
 				local sym = e == "error" and " " or (e == "warning" and " " or "")

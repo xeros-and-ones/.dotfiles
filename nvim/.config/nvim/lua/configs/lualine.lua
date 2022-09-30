@@ -47,7 +47,6 @@ local branch = {
 local location = {
 	"location",
 	padding = 0,
-	cond = hide_in_width,
 }
 
 -- cool function for progress
