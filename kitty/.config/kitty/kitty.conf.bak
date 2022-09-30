@@ -4,8 +4,7 @@
 font_family      Fira Code SemiBold Nerd Font Complete
 bold_font        Fira code Bold Nerd Font Complete
 italic_font      auto 
-bold_italic_font Caskaydia Cove Nerd Font Complete Bold Italic
-
+bold_italic_font auto
 font_size 12.0
 
 # force_ltr no
@@ -1530,6 +1529,6 @@ map ctrl+shift+tab previous_window
 
 
 # BEGIN_KITTY_THEME
-# Symfonic
+# Wez
 include current-theme.conf
 # END_KITTY_THEME
