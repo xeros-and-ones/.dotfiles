@@ -51,18 +51,20 @@ local location = {
 }
 
 -- cool function for progress
-local progress = function()
-	local current_line = vim.fn.line(".")
-	local total_lines = vim.fn.line("$")
-	local chars = { "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" }
-	local line_ratio = current_line / total_lines
-	local index = math.ceil(line_ratio * #chars)
-	return chars[index]
-end
+local progress = {
+	cond = hide_in_width,
+	function()
+		local current_line = vim.fn.line(".")
+		local total_lines = vim.fn.line("$")
+		local chars = { "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" }
+		local line_ratio = current_line / total_lines
+		local index = math.ceil(line_ratio * #chars)
+		return chars[index]
+	end,
+}
 
 local lsp = {
 	-- Lsp server name .
-	cond = hide_in_width,
 	function()
 		local msg = "No Active Lsp"
 		local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
@@ -81,13 +83,25 @@ local lsp = {
 	icon = " ",
 	color = { gui = "bold" },
 }
-local treesitter = function()
-	local ts_avail, ts = pcall(require, "nvim-treesitter.parsers")
-	return (ts_avail and ts.has_parser()) and " 綠TS" or "ﳠ No TS"
-end
+local treesitter = {
+	cond = hide_in_width,
+	function()
+		local ts_avail, ts = pcall(require, "nvim-treesitter.parsers")
+		return (ts_avail and ts.has_parser()) and " 綠TS" or "ﳠ No TS"
+	end,
+}
 --local spaces = function()
 --return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
 --end
+
+local format = {
+	"fileformat",
+	cond = hide_in_width,
+}
+local encoding = {
+	"encoding",
+	cond = hide_in_width,
+}
 
 require("lualine").setup({
 	options = {
@@ -117,9 +131,9 @@ require("lualine").setup({
 		lualine_a = { mode },
 		lualine_b = { branch, diff, diagnostics },
 		lualine_c = {},
-		lualine_x = { lsp, treesitter, filetype },
-		lualine_y = { "fileformat", "encoding", "filename" },
-		lualine_z = { location, progress },
+		lualine_x = { format, encoding, treesitter },
+		lualine_y = { lsp, filetype },
+		lualine_z = { "filename", location, progress },
 	},
 	inactive_sections = {
 		lualine_a = {},

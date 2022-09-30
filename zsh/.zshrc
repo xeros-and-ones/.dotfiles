@@ -124,7 +124,7 @@ alias printcolors='for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i
 # folders aliases
 alias l="exa --long --grid --group-directories-first --git --header --icons --all"
 alias lf="exa --grid --group-directories-first --git --header --icons --all"
-alias projects="cd ~/Documents/Projects/"
+alias docs="cd ~/Documents"
 alias data="cd /run/media/xero/Data/"
 alias apps="cd /run/media/xero/Data/Apps/"
 alias dotfiles="cd ~/.dotfiles/"
