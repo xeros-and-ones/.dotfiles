@@ -50,21 +50,21 @@
 ;;Keybinds
 (map! :i "M-y" #'yank-pop)
 (map! :i "M-Y" #'consult-yank-pop)
-;; (map! :n "SPC e" #'neotree-toggle)
+(map! :n "SPC e" #'neotree-toggle)
 
 ;;theme config
+;; (set-frame-parameter nil 'alpha-background 70) ; For current frame
+(add-to-list 'default-frame-alist '(alpha-background . 70)) ; For all new frames henceforth
+
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
-(set-frame-parameter nil 'alpha-background 75)
-(add-to-list 'default-frame-alist '(alpha-background . 75))
+;; (defun load-doom-gruvbox-theme (frame)
+;;   (select-frame frame)
+;;   (load-theme doom-theme t))
 
-(defun load-doom-gruvbox-theme (frame)
-  (select-frame frame)
-  (load-theme doom-theme t))
-
-(if (daemonp)
-    (add-hook 'after-make-frame-functions #'load-doom-theme)
-  (load-theme doom-theme t))
+;; (if (daemonp)
+;;     (add-hook 'after-make-frame-functions #'load-doom-theme)
+;;   (load-theme doom-theme t))
 
 ;; modeline config
 (after! doom-modeline
@@ -95,4 +95,24 @@
 (setq lsp-completion-show-detail t)
 (setq lsp-completion-show-kind t)
 
-
+;; Dashboard config
+(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
+(defun doom-dashboard-draw-ascii-banner-fn ()
+  (let* ((banner
+          '("██╗░░██╗███████╗██████╗░░█████╗░"
+            "╚██╗██╔╝██╔════╝██╔══██╗██╔══██╗"
+            "░╚███╔╝░█████╗░░██████╔╝██║░░██║"
+            "░██╔██╗░██╔══╝░░██╔══██╗██║░░██║"
+            "██╔╝╚██╗███████╗██║░░██║╚█████╔╝"
+            "╚═╝░░╚═╝╚══════╝╚═╝░░╚═╝░╚════╝░"))
+         (longest-line (apply #'max (mapcar #'length banner))))
+    (put-text-property
+     (point)
+     (dolist (line banner (point))
+       (insert (+doom-dashboard--center
+                +doom-dashboard--width
+                (concat
+                 line (make-string (max 0 (- longest-line (length line)))
+                                   32)))
+               "\n"))
+     'face 'doom-dashboard-banner)))
