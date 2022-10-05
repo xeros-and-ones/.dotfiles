@@ -197,8 +197,7 @@ local config = {
 
 	-- Configure plugins
 	plugins = {
-		init = {
-		},
+		init = {},
 		-- All other entries override the require("<key>").setup({...}) call for default plugins
 		["null-ls"] = function(config) -- overrides `require("null-ls").setup(config)`
 			-- config variable is the default configuration table for the setup functino call
