@@ -105,7 +105,7 @@ source $ZSH/oh-my-zsh.sh
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='nvim'
 # else
-export EDITOR='lvim'
+export EDITOR='nvim'
 # fi
 
 # Compilation flags
@@ -117,10 +117,11 @@ export EDITOR='lvim'
 LC_ALL=en_US.UTF-8
 
 
-alias zshconf="lvim ~/.zshrc"
+alias zshconf="nvim ~/.zshrc"
 alias matrix='neo-matrix -D -s -m" WE RULE THE WORLD! FROM THE SHADOWS "'
 alias printcolors='for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$"\n"};done'
 alias nvidia="sudo optirun -b none nvidia-settings -c :8"
+alias t="erdtree"
 
 # folders aliases
 alias l="exa --long --grid --group-directories-first --git --header --icons --all"
