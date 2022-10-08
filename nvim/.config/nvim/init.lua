@@ -1,30 +1,22 @@
-local impatient_ok, impatient = pcall(require, "impatient")
-if impatient_ok then
-	impatient.enable_profile()
-end
-
-for _, source in ipairs({
-	"core.utils",
-	"core.options",
-	"core.bootstrap",
-	"core.plugins",
-	"core.autocmds",
-	"core.mappings",
-	"configs.which-key-register",
-}) do
-	local status_ok, fault = pcall(require, source)
-	if not status_ok then
-		vim.api.nvim_err_writeln("Failed to load " .. source .. "\n\n" .. fault)
-	end
-end
-
-astronvim.conditional_func(astronvim.user_plugin_opts("polish", nil, false))
-
---gruvbox-baby config
--- vim.g.gruvbox_baby_keyword_style = "italic"
--- vim.g.gruvbox_use_original_palette = true
--- -- Enable transparent mode
--- vim.g.gruvbox_baby_transparent_mode = 1
---
--- -- Load the colorscheme
--- vim.cmd([[colorscheme gruvbox-baby]])
+require "user.options"
+require "user.keymaps"
+require "user.plugins"
+require "user.autocommands"
+require "user.colorscheme"
+require "user.cmp"
+require "user.telescope"
+require "user.gitsigns"
+require "user.treesitter"
+require "user.autopairs"
+require "user.comment"
+require "user.nvim-tree"
+require "user.bufferline"
+require "user.lualine"
+require "user.toggleterm"
+require "user.project"
+require "user.impatient"
+require "user.illuminate"
+require "user.indentline"
+require "user.alpha"
+require "user.lsp"
+require "user.dap"
