@@ -122,6 +122,7 @@ alias matrix='neo-matrix -D -s -m" WE RULE THE WORLD! FROM THE SHADOWS "'
 alias printcolors='for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$"\n"};done'
 alias nvidia="sudo optirun -b none nvidia-settings -c :8"
 alias t="erdtree"
+alias diff="prettydiff"
 
 # folders aliases
 alias l="exa --long --grid --group-directories-first --git --header --icons --all"

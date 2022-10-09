@@ -5,10 +5,30 @@ end
 
 bufferline.setup {
   options = {
-    close_command = "bdelete %d", -- can be a string | function, see "Mouse actions"
-    right_mouse_command = "bdelete %d", -- can be a string | function, see "Mouse actions"
-    offsets = { { filetype = "neo-tree", text = "Explorer", padding = 1 } },
+    -- close_command = "bdelete %d", -- can be a string | function, see "Mouse actions"
+    -- right_mouse_command = "bdelete %d", -- can be a string | function, see "Mouse actions"
+    offsets = { { filetype = "NvimTree", text = "Explorer", padding = 1 } },
     separator_style = "thick", -- | "thick" | "thin" | { 'any', 'any' },
+   	buffer_close_icon = "",
+		modified_icon = "",
+		close_icon = "",
+		max_name_length = 14,
+		max_prefix_length = 13,
+		tab_size = 20,
+		diagnostics = "nvim_lsp",
+		diagnostics_update_in_insert = true,
+		diagnostics_indicator = function(count, level, diagnostics_dict, context)
+			local s = " "
+			for e, n in pairs(diagnostics_dict) do
+				local sym = e == "error" and " " or (e == "warning" and " " or "")
+				s = s .. n .. sym
+			end
+			return s
+		end,
+		-- diagnostics_indicator = function(count, level, diagnostics_dict, context)
+		-- 	local icon = level:match("error") and " " or " "
+		-- 	return " " .. icon .. count
+		-- end,
   },
 
   highlights = {

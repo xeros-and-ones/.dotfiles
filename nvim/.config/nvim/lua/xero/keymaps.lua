@@ -94,7 +94,7 @@ keymap("n", "<leader>t", ":NvimTreeFocus<CR>", {desc = "Float Explorer"}, opts)
 
 -- Telescope
 keymap("n", "<leader>ff",
-  ":Telescope find_files<CR>",
+  "<cmd>lua require('telescope.builtin').find_files({hiddin = true, no_ignore = true})<CR>",
   {desc = "Find Files"},
   opts
 )
@@ -108,8 +108,28 @@ keymap("n", "<leader>fW",
   {desc = "Find Text In workspace"},
   opts
 )
-keymap("n", "<leader>fp", ":Telescope projects<CR>", opts)
-keymap("n", "<leader>fb", ":Telescope buffers<CR>", opts)
+keymap("n", "<leader>fh",
+  "<cmd>lua require('telescope.builtin').help_tags()<CR>",
+  {desc = "Search Help"},
+  opts
+)
+keymap("n", "<leader>fp", ":Telescope projects<CR>", {desc = "Search Projects"}, opts)
+keymap("n", "<leader>fb", "<cmd>lua require('telescope.builtin').buffers()<CR>", {desc = "Search Buffers"}, opts)
+keymap("n", "<leader>gt",
+  "<cmd>lua require('telescope.builtin').git_status()<CR>",
+  {desc = "Git Status"},
+  opts
+)
+keymap("n", "<leader>gb",
+  "<cmd>lua require('telescope.builtin').git_branches()<CR>",
+  {desc = "Git Repo Branches"},
+  opts
+)
+keymap("n", "<leader>gc",
+  "<cmd>lua require('telescope.builtin').git_commits()<CR>",
+  {desc = "Git Commits"},
+  opts
+)
 
 -- Git
 keymap("n", "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", opts)

@@ -1,3 +1,23 @@
+local cmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
+
+-- go to last loc when opening a buffer
+cmd("BufReadPost", { command = [[if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif]] })
+
+-- set cursorColumn for python only on the current buffer
+-- vim.cmd("autocmd FileType python set cursorcolumn")
+local cursorColumn = augroup("CursorColumn", { clear = true })
+cmd(
+	{ "FileType", "BufEnter", "VimEnter", "WinEnter" },
+	{ pattern = "*.py", command = "set cursorcolumn", group = cursorColumn }
+)
+cmd({ "WinLeave" }, { pattern = "*", command = "set nocursorcolumn", group = cursorColumn })
+
+-- set cursorline on the current buffer only
+local cursorGrp = augroup("CursorLine", { clear = true })
+cmd({ "WinEnter" }, { pattern = "*", command = "set cursorline", group = cursorGrp })
+cmd({ "WinLeave" }, { pattern = "*", command = "set nocursorline", group = cursorGrp })
+
 vim.api.nvim_create_autocmd({ "FileType" }, {
 	pattern = { "qf", "help", "man", "lspinfo", "spectre_panel" },
 	callback = function()
@@ -53,7 +73,7 @@ vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
 
 vim.api.nvim_create_autocmd({ "TextYankPost" }, {
 	callback = function()
-		vim.highlight.on_yank({ higroup = "Visual", timeout = 200 })
+		vim.highlight.on_yank({ clear = true })
 	end,
 })
 
