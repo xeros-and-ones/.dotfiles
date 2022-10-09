@@ -5,10 +5,10 @@ end
 
 bufferline.setup {
   options = {
-    close_command = "Bdelete! %d", -- can be a string | function, see "Mouse actions"
-    right_mouse_command = "Bdelete! %d", -- can be a string | function, see "Mouse actions"
-    offsets = { { filetype = "NvimTree", text = "", padding = 1 } },
-    separator_style = "thin", -- | "thick" | "thin" | { 'any', 'any' },
+    close_command = "bdelete %d", -- can be a string | function, see "Mouse actions"
+    right_mouse_command = "bdelete %d", -- can be a string | function, see "Mouse actions"
+    offsets = { { filetype = "neo-tree", text = "Explorer", padding = 1 } },
+    separator_style = "thick", -- | "thick" | "thin" | { 'any', 'any' },
   },
 
   highlights = {
@@ -35,7 +35,7 @@ bufferline.setup {
       fg = { attribute = "fg", highlight = "TabLine" },
       bg = { attribute = "bg", highlight = "TabLine" },
     },
-   
+
     tab_selected = {
       fg = { attribute = "fg", highlight = "Normal" },
       bg = { attribute = "bg", highlight = "Normal" },

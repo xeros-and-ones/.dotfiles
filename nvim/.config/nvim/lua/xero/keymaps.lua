@@ -1,10 +1,9 @@
 -- Shorten function name
 local keymap = vim.keymap.set
 -- Silent keymap option
-local opts = { silent = true }
+local opts = { noremap = true, silent = true }
 
 --Remap space as leader key
-keymap("", "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "
 
 -- Modes
@@ -15,6 +14,36 @@ vim.g.mapleader = " "
 --   term_mode = "t",
 --   command_mode = "c",
 
+--moving text
+-- Normal --
+keymap("n", "<A-j>", "<ESC>:m .+1<CR>==", opts)
+keymap("n", "<A-Down>", "<ESC>:m .+1<CR>==", opts)
+keymap("n", "<A-k>", "<ESC>:m .-2<CR>==", opts)
+keymap("n", "<A-Up>", "<ESC>:m .-2<CR>==", opts)
+-- insert
+-- Move text up and down
+keymap("i", "<A-j>", "<Esc>:m .+1<CR>==gi", opts)
+keymap("i", "<A-Down>", "<Esc>:m .+1<CR>==gi", opts)
+keymap("i", "<A-k>", "<Esc>:m .-2<CR>==gi", opts)
+keymap("i", "<A-Up>", "<Esc>:m .-2<CR>==gi", opts)
+-- visual
+-- move text up and down
+keymap("v", "<A-j>", ":m .+1<CR>==", opts)
+keymap("v", "<A-Down>", ":m .+1<CR>==", opts)
+keymap("v", "<A-k>", ":m .-2<CR>==", opts)
+keymap("v", "<A-Up>", ":m .-2<CR>==", opts)
+keymap("v", "p", '"_dP', opts)
+-- Visual Block --
+-- Move text up and down
+keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
+keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
+keymap("x", "<A-Down>", ":move '>+1<CR>gv-gv", opts)
+keymap("x", "<A-Up>", ":move '<-2<CR>gv-gv", opts)
+--
+--
+--
+--
+--
 -- Normal --
 -- Better window navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
@@ -33,10 +62,17 @@ keymap("n", "<S-l>", ":bnext<CR>", opts)
 keymap("n", "<S-h>", ":bprevious<CR>", opts)
 
 -- Clear highlights
-keymap("n", "<leader>h", "<cmd>nohlsearch<CR>", opts)
+keymap("n", "<leader>h", "<cmd>nohlsearch<CR>",{desc = "No Highlights"}, opts)
+
+--save buffer
+keymap("n", "<leader>w", "<cmd>w<cr>", {desc = "Save Buffer"}, opts)
 
 -- Close buffers
-keymap("n", "<S-q>", "<cmd>Bdelete!<CR>", opts)
+keymap("n", "<leader>q", "<cmd>q<CR>", {desc = "Quit"}, opts)
+
+-- Stay in indent mode
+keymap("n", "<", "<cmd><<cr>", opts)
+keymap("n", ">", "<cmd>><cr>", opts)
 
 -- Better paste
 keymap("v", "p", '"_dP', opts)
@@ -52,12 +88,26 @@ keymap("v", ">", ">gv", opts)
 
 -- Plugins --
 
--- NvimTree
-keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
+-- NeoTree
+keymap("n", "<leader>e", ":NvimTreeToggle<CR>", {desc = "Toggle Explorer"}, opts)
+keymap("n", "<leader>t", ":NvimTreeFocus<CR>", {desc = "Float Explorer"}, opts)
 
 -- Telescope
-keymap("n", "<leader>ff", ":Telescope find_files<CR>", opts)
-keymap("n", "<leader>ft", ":Telescope live_grep<CR>", opts)
+keymap("n", "<leader>ff",
+  ":Telescope find_files<CR>",
+  {desc = "Find Files"},
+  opts
+)
+keymap("n", "<leader>fw",
+  "<cmd>lua require('telescope.builtin').live_grep({ search_dirs = { vim.fn.expand('%:p') } })<cr>",
+  {desc = "Find text In Buffer"},
+  opts
+)
+keymap("n", "<leader>fW",
+  "<cmd>lua require('telescope.builtin').live_grep({ additional_args = function(args) return vim.list_extend(args, { '--hidden', '--no-ignore' })end,})<cr>",
+  {desc = "Find Text In workspace"},
+  opts
+)
 keymap("n", "<leader>fp", ":Telescope projects<CR>", opts)
 keymap("n", "<leader>fb", ":Telescope buffers<CR>", opts)
 
