@@ -6,40 +6,8 @@
 -- where a value with no key simply has an implicit numeric key
 local config = {
 
-	-- Configure AstroNvim updates
-	updater = {
-		remote = "origin", -- remote to use
-		channel = "nightly", -- "stable" or "nightly"
-		version = "latest", -- "latest", tag name, or regex search like "v1.*" to only do updates before v2 (STABLE ONLY)
-		branch = "main", -- branch name (NIGHTLY ONLY)
-		commit = nil, -- commit hash (NIGHTLY ONLY)
-		pin_plugins = nil, -- nil, true, false (nil will pin plugins on stable only)
-		skip_prompts = false, -- skip prompts about breaking changes
-		show_changelog = true, -- show the changelog after performing an update
-		auto_reload = false, -- automatically reload and sync packer after a successful update
-		auto_quit = false, -- automatically quit the current session after a successful update
-		-- remotes = { -- easily add new remotes to track
-		--   ["remote_name"] = "https://remote_url.come/repo.git", -- full remote url
-		--   ["remote2"] = "github_user/repo", -- GitHub user/repo shortcut,
-		--   ["remote3"] = "github_user", -- GitHub user assume AstroNvim fork
-		-- },
-	},
-
 	-- Set colorscheme to use
 	colorscheme = "gruvbox",
-
-	-- Override highlight groups in any theme
-	highlights = {
-		-- duskfox = { -- a table of overrides/changes to the default
-		--   Normal = { bg = "#000000" },
-		-- },
-		default_theme = function(highlights) -- or a function that returns a new table of colors to set
-			local C = require("default_theme.colors")
-
-			highlights.Normal = { fg = C.fg, bg = C.bg }
-			return highlights
-		end,
-	},
 
 	-- set vim options here (vim.<first_key>.<second_key> =  value)
 	-- options = {
@@ -198,108 +166,108 @@ local config = {
 	-- Configure plugins
 	plugins = {
 		init = {
-		    require("gruvbox").setup({
-			    undercurl = true,
-			    bold = true,
-			    italic = true,
-			    strikethrough = true,
-			    invert_selection = false,
-			    invert_signs = false,
-			    invert_tabline = false,
-			    invert_intend_guides = false,
-			    inverse = true, -- invert background for search, diffs, statuslines and errors
-			    contrast = "hard", -- can be "hard", "soft" or empty string
-			    transparent_mode = true,
-			    overrides = {
-				    DiagnosticVirtualTextError = { fg = "#fb4934", bg = "#400404" },
-				    DiagnosticVirtualTextWarn = { fg = "#fabd2f", bg = "#3f4004" },
-				    DiagnosticVirtualTextInfo = { fg = "#83a598", bg = "#040540" },
-				    DiagnosticVirtualTextHint = { fg = "#427b58", bg = "#043d40" },
-				    BufferLineBufferSelected = { fg = "#637CF7", bold = true },
-			    },
-		    }),
-		    vim.cmd("colorscheme gruvbox"),
-		    require("notify").setup({
-			    background_colour = "Normal",
-			    opacity = 20,
-			    timeout = 3000,
-		    }),
-		    require("treesitter-context").setup({
-			    enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-			    max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
-			    trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-			    patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
-				    -- For all filetypes
-				    -- Note that setting an entry here replaces all other patterns for this entry.
-				    -- By setting the 'default' entry below, you can control which nodes you want to
-				    -- appear in the context window.
-				    default = {
-					    "class",
-					    "function",
-					    "method",
-					    "for",
-					    "while",
-					    "if",
-					    "switch",
-					    "case",
-				    },
-				    -- Patterns for specific filetypes
-				    -- If a pattern is missing, *open a PR* so everyone can benefit.
-				    tex = {
-					    "chapter",
-					    "section",
-					    "subsection",
-					    "subsubsection",
-				    },
-				    rust = {
-					    "impl_item",
-					    "struct",
-					    "enum",
-				    },
-				    scala = {
-					    "object_definition",
-				    },
-				    vhdl = {
-					    "process_statement",
-					    "architecture_body",
-					    "entity_declaration",
-				    },
-				    markdown = {
-					    "section",
-				    },
-				    elixir = {
-					    "anonymous_function",
-					    "arguments",
-					    "block",
-					    "do_block",
-					    "list",
-					    "map",
-					    "tuple",
-					    "quoted_content",
-				    },
-				    json = {
-					    "pair",
-				    },
-				    yaml = {
-					    "block_mapping_pair",
-				    },
-			    },
-			    exact_patterns = {
-				    -- Example for a specific filetype with Lua patterns
-				    -- Treat patterns.rust as a Lua pattern (i.e "^impl_item$" will
-				    -- exactly match "impl_item" only)
-				    -- rust = true,
-			    },
+			require("gruvbox").setup({
+				undercurl = true,
+				bold = true,
+				italic = true,
+				strikethrough = true,
+				invert_selection = false,
+				invert_signs = false,
+				invert_tabline = false,
+				invert_intend_guides = false,
+				inverse = true, -- invert background for search, diffs, statuslines and errors
+				contrast = "hard", -- can be "hard", "soft" or empty string
+				transparent_mode = true,
+				overrides = {
+					DiagnosticVirtualTextError = { fg = "#fb4934", bg = "#400404" },
+					DiagnosticVirtualTextWarn = { fg = "#fabd2f", bg = "#3f4004" },
+					DiagnosticVirtualTextInfo = { fg = "#83a598", bg = "#040540" },
+					DiagnosticVirtualTextHint = { fg = "#427b58", bg = "#043d40" },
+					BufferLineBufferSelected = { fg = "#637CF7", bold = true },
+				},
+			}),
+			vim.cmd("colorscheme gruvbox"),
+			require("notify").setup({
+				background_colour = "Normal",
+				opacity = 20,
+				timeout = 3000,
+			}),
+			require("treesitter-context").setup({
+				enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+				max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+				trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+				patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+					-- For all filetypes
+					-- Note that setting an entry here replaces all other patterns for this entry.
+					-- By setting the 'default' entry below, you can control which nodes you want to
+					-- appear in the context window.
+					default = {
+						"class",
+						"function",
+						"method",
+						"for",
+						"while",
+						"if",
+						"switch",
+						"case",
+					},
+					-- Patterns for specific filetypes
+					-- If a pattern is missing, *open a PR* so everyone can benefit.
+					tex = {
+						"chapter",
+						"section",
+						"subsection",
+						"subsubsection",
+					},
+					rust = {
+						"impl_item",
+						"struct",
+						"enum",
+					},
+					scala = {
+						"object_definition",
+					},
+					vhdl = {
+						"process_statement",
+						"architecture_body",
+						"entity_declaration",
+					},
+					markdown = {
+						"section",
+					},
+					elixir = {
+						"anonymous_function",
+						"arguments",
+						"block",
+						"do_block",
+						"list",
+						"map",
+						"tuple",
+						"quoted_content",
+					},
+					json = {
+						"pair",
+					},
+					yaml = {
+						"block_mapping_pair",
+					},
+				},
+				exact_patterns = {
+					-- Example for a specific filetype with Lua patterns
+					-- Treat patterns.rust as a Lua pattern (i.e "^impl_item$" will
+					-- exactly match "impl_item" only)
+					-- rust = true,
+				},
 
-			    -- [!] The options below are exposed but shouldn't require your attention,
-			    --     you can safely ignore them.
+				-- [!] The options below are exposed but shouldn't require your attention,
+				--     you can safely ignore them.
 
-			    zindex = 20, -- The Z-index of the context window
-			    mode = "cursor", -- Line used to calculate context. Choices: 'cursor', 'topline'
-			    -- Separator between context and content. Should be a single character string, like '-'.
-			    -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
-			    separator = nil,
-		    }),
+				zindex = 20, -- The Z-index of the context window
+				mode = "cursor", -- Line used to calculate context. Choices: 'cursor', 'topline'
+				-- Separator between context and content. Should be a single character string, like '-'.
+				-- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+				separator = nil,
+			}),
 		},
 		-- All other entries override the require("<key>").setup({...}) call for default plugins
 		["null-ls"] = function(config) -- overrides `require("null-ls").setup(config)`

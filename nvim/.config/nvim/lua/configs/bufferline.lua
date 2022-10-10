@@ -9,9 +9,9 @@ bufferline.setup(astronvim.user_plugin_opts("plugins.bufferline", {
 			{ filetype = "neo-tree", text = "", padding = 1 },
 			{ filetype = "Outline", text = "", padding = 1 },
 		},
-		buffer_close_icon = "",
+		buffer_close_icon = "",
 		modified_icon = "",
-		close_icon = "",
+		close_icon = "",
 		max_name_length = 14,
 
 		max_prefix_length = 13,

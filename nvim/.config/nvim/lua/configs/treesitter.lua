@@ -14,8 +14,7 @@ treesitter.setup(astronvim.user_plugin_opts("plugins.treesitter", {
   },
   rainbow = {
     enable = true,
-    disable = { "html" },
-    extended_mode = false,
+    extended_mode = true,
     max_file_lines = nil,
   },
   autopairs = { enable = true },

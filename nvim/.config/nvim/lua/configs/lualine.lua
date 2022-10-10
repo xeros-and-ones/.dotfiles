@@ -70,7 +70,7 @@ require("lualine").setup({
 		disabled_filetypes = {
 			"alpha",
 			"neo-tree",
-      "NvimTree",
+			"NvimTree",
 			"dashboard",
 			"Outline",
 			statusline = {},
@@ -87,48 +87,47 @@ require("lualine").setup({
 	},
 
 	sections = {
-		lualine_a = { { 'mode', separator = {right = ""}} },
+		lualine_a = { { "mode", separator = { right = "" } } },
 		lualine_b = {
-      {
-        "branch",
-        icons_enabled = true,
-        -- icon = "",
-        icon = {'', color={fg='#b8bb26'}}
-      },
-      {
-        "diff",
-        colored = true,
-        symbols = { added = " ", modified = " ", removed = " " }, -- changes diff symbols
-        cond = hide_in_width,
-      },
-    },
+			{
+				"branch",
+				icons_enabled = true,
+				-- icon = "",
+				icon = { "", color = { fg = "#b8bb26" } },
+			},
+			{
+				"diff",
+				colored = true,
+				symbols = { added = " ", modified = " ", removed = " " }, -- changes diff symbols
+				cond = hide_in_width,
+			},
+		},
 		lualine_c = {
-      { 'filetype', colored = true, icon_only = false, cond = hide_in_width},
-      {
-        "filename",
-        file_status = true,
-        path = 1,
-        shorting_target = 105,
-        symbols = {
-          modified = '[+]',
-          readonly = '[-]',
-          unnamed = '[No Name]',
-          newfile = '[New]',
-        },
-      },
-
-    },
-		lualine_x = { },
+			{ "filetype", colored = true, icon_only = false, cond = hide_in_width },
+			{
+				"filename",
+				file_status = true,
+				path = 1,
+				shorting_target = 105,
+				symbols = {
+					modified = "[+]",
+					readonly = "[-]",
+					unnamed = "[No Name]",
+					newfile = "[New]",
+				},
+			},
+		},
+		lualine_x = {},
 		lualine_y = { diagnostics, treesitter, lsp },
 		lualine_z = {
-      'progress',
-      {
-        "location",--'%l:%c ‖ %p%%',
-        cond = hide_in_width,
-        separator = {left = ""},
-      },
-    },
-  },
+			"progress",
+			{
+				"location", --'%l:%c ‖ %p%%',
+				cond = hide_in_width,
+				separator = { left = "" },
+			},
+		},
+	},
 	inactive_sections = {
 		lualine_a = {},
 		lualine_b = {},
