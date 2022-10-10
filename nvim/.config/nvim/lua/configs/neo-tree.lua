@@ -35,6 +35,18 @@ neotree.setup(astronvim.user_plugin_opts("plugins.neo-tree", {
 		width = 25,
 		mappings = {
 			["o"] = "open",
+			["P"] = { "toggle_preview", config = { use_float = true } },
+			-- ["S"] = "open_split",
+			-- ["s"] = "open_vsplit",
+			["s"] = "split_with_window_picker",
+			["v"] = "vsplit_with_window_picker",
+			["t"] = "open_tabnew",
+			-- ["<cr>"] = "open_drop",
+			-- ["t"] = "open_tab_drop",
+			["w"] = "open_with_window_picker",
+			["A"] = "add_directory", -- also accepts the optional config.show_path option like "add".
+			["d"] = "delete",
+			["r"] = "rename",
 		},
 	},
 	filesystem = {
@@ -52,6 +64,19 @@ neotree.setup(astronvim.user_plugin_opts("plugins.neo-tree", {
 		follow_current_file = true,
 		hijack_netrw_behavior = "open_current",
 		use_libuv_file_watcher = true,
+		window = {
+			mappings = {
+				["<bs>"] = "navigate_up",
+				["."] = "set_root",
+				["H"] = "toggle_hidden",
+				["/"] = "fuzzy_finder",
+				["D"] = "fuzzy_finder_directory",
+				["f"] = "filter_on_submit",
+				["<c-x>"] = "clear_filter",
+				["[g"] = "prev_git_modified",
+				["]g"] = "next_git_modified",
+			},
+		},
 	},
 	git_status = {
 		window = {

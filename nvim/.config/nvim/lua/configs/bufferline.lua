@@ -5,9 +5,9 @@ end
 bufferline.setup(astronvim.user_plugin_opts("plugins.bufferline", {
 	options = {
 		offsets = {
-			{ filetype = "NvimTree", text = "", padding = 1 },
-			{ filetype = "neo-tree", text = "", padding = 1 },
-			{ filetype = "Outline", text = "", padding = 1 },
+			{ filetype = "NvimTree", text = "FILE EXPLORER", text_align = "center", separator = true, padding = 1 },
+			{ filetype = "neo-tree", text = "FILE EXPLORER", text_align = "center", separator = true, padding = 1 },
+			{ filetype = "Outline", text = "FILE EXPLORER", text_align = "center", separator = true, padding = 1 },
 		},
 		buffer_close_icon = "",
 		modified_icon = "",
@@ -16,6 +16,7 @@ bufferline.setup(astronvim.user_plugin_opts("plugins.bufferline", {
 
 		max_prefix_length = 13,
 		tab_size = 20,
+		show_tab_indicatior = true,
 		separator_style = "thick",
 		diagnostics = "nvim_lsp",
 		diagnostics_update_in_insert = true,
