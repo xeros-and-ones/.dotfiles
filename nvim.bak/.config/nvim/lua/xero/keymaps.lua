@@ -94,7 +94,7 @@ keymap("n", "<leader>t", ":NvimTreeFocus<CR>", {desc = "Float Explorer"}, opts)
 
 -- Telescope
 keymap("n", "<leader>ff",
-  "<cmd>lua require('telescope.builtin').find_files({hiddin = true, no_ignore = true})<CR>",
+  "<cmd>lua require('telescope.builtin').find_files({hidden = true, no_ignore = true})<CR>",
   {desc = "Find Files"},
   opts
 )

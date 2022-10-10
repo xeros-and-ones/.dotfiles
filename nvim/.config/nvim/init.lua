@@ -1,22 +1,30 @@
-require "xero.options"
-require "xero.keymaps"
-require "xero.plugins"
-require "xero.autocommands"
-require "xero.colorscheme"
-require "xero.cmp"
-require "xero.telescope"
-require "xero.gitsigns"
-require "xero.treesitter"
-require "xero.autopairs"
-require "xero.comment"
-require "xero.nvim-tree"
-require "xero.bufferline"
-require "xero.lualine"
-require "xero.toggleterm"
-require "xero.project"
-require "xero.impatient"
-require "xero.illuminate"
-require "xero.indentline"
-require "xero.alpha"
-require "xero.lsp"
-require "xero.dap"
+local impatient_ok, impatient = pcall(require, "impatient")
+if impatient_ok then
+	impatient.enable_profile()
+end
+
+for _, source in ipairs({
+	"core.utils",
+	"core.options",
+	"core.bootstrap",
+	"core.plugins",
+	"core.autocmds",
+	"core.mappings",
+	"configs.which-key-register",
+}) do
+	local status_ok, fault = pcall(require, source)
+	if not status_ok then
+		vim.api.nvim_err_writeln("Failed to load " .. source .. "\n\n" .. fault)
+	end
+end
+
+astronvim.conditional_func(astronvim.user_plugin_opts("polish", nil, false))
+
+--gruvbox-baby config
+-- vim.g.gruvbox_baby_keyword_style = "italic"
+-- vim.g.gruvbox_use_original_palette = true
+-- -- Enable transparent mode
+-- vim.g.gruvbox_baby_transparent_mode = 1
+--
+-- -- Load the colorscheme
+-- vim.cmd([[colorscheme gruvbox-baby]])
