@@ -14,14 +14,14 @@ local git = require "core.utils.git"
 --- Updater settings overridden with any user provided configuration
 local options = astronvim.user_plugin_opts("updater", {
   remote = "origin",
-  channel = "stable",
+  branch = "main",
+  channel = "nightly",
   show_changelog = true,
-  auto_reload = true,
-  auto_quit = true,
+  auto_reload = false,
+  auto_quit = false,
 })
 
 -- set the install channel
-if options.branch then options.channel = "nightly" end
 if astronvim.install.is_stable ~= nil then options.channel = astronvim.install.is_stable and "stable" or "nightly" end
 
 astronvim.updater = { options = options }
@@ -118,33 +118,27 @@ function astronvim.updater.update()
     end
   end
   local is_stable = options.channel == "stable"
-  if is_stable then
-    options.branch = "main"
-  elseif not options.branch then
-    options.branch = "nightly"
-  end
+  options.branch = is_stable and "main" or options.branch
   -- fetch the latest remote
   if not git.fetch(options.remote) then
     vim.api.nvim_err_writeln("Error fetching remote: " .. options.remote)
     return
   end
-  -- switch to the necessary branch only if not on the stable channel
-  if not is_stable then
-    local local_branch = (options.remote == "origin" and "" or (options.remote .. "_")) .. options.branch
-    if git.current_branch() ~= local_branch then
-      astronvim.echo {
-        { "Switching to branch: " },
-        { options.remote .. "/" .. options.branch .. "\n\n", "String" },
-      }
-      if not git.checkout(local_branch, false) then
-        git.checkout("-b " .. local_branch .. " " .. options.remote .. "/" .. options.branch, false)
-      end
+  -- switch to the necessary branch
+  local local_branch = (options.remote == "origin" and "" or (options.remote .. "_")) .. options.branch
+  if git.current_branch() ~= local_branch then
+    astronvim.echo {
+      { "Switching to branch: " },
+      { options.remote .. "/" .. options.branch .. "\n\n", "String" },
+    }
+    if not git.checkout(local_branch, false) then
+      git.checkout("-b " .. local_branch .. " " .. options.remote .. "/" .. options.branch, false)
     end
-    -- check if the branch was switched to successfully
-    if git.current_branch() ~= local_branch then
-      vim.api.nvim_err_writeln("Error checking out branch: " .. options.remote .. "/" .. options.branch)
-      return
-    end
+  end
+  -- check if the branch was switched to successfully
+  if git.current_branch() ~= local_branch then
+    vim.api.nvim_err_writeln("Error checking out branch: " .. options.remote .. "/" .. options.branch)
+    return
   end
   local source = git.local_head() -- calculate current commit
   local target -- calculate target commit

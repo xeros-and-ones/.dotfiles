@@ -1,10 +1,11 @@
-vim.cmd.highlight "clear"
-if vim.fn.exists "syntax_on" then vim.cmd.syntax "reset" end
+vim.cmd "highlight clear"
+if vim.fn.exists "syntax_on" then vim.cmd "syntax reset" end
 vim.o.background = "dark"
 vim.o.termguicolors = true
 vim.g.colors_name = "default_theme"
 
 local user_plugin_opts = astronvim.user_plugin_opts
+local utils = require "default_theme.utils"
 
 C = require "default_theme.colors"
 
@@ -40,7 +41,7 @@ do
 end
 
 for group, spec in pairs(user_plugin_opts("default_theme.highlights", highlights)) do
-  vim.api.nvim_set_hl(0, group, spec)
+  vim.api.nvim_set_hl(0, group, utils.parse_style(spec))
 end
 
 astronvim.vim_opts {
