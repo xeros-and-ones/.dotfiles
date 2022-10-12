@@ -5,9 +5,9 @@ end
 bufferline.setup(astronvim.user_plugin_opts("plugins.bufferline", {
 	options = {
 		offsets = {
-			{ filetype = "NvimTree", text = "FILE EXPLORER", text_align = "center", separator = true, padding = 1 },
-			{ filetype = "neo-tree", text = "FILE EXPLORER", text_align = "center", separator = true, padding = 1 },
-			{ filetype = "Outline", text = "FILE EXPLORER", text_align = "center", separator = true, padding = 1 },
+			{ filetype = "NvimTree", text = "FILE EXPLORER", text_align = "center", separator = true },
+			{ filetype = "neo-tree", text = "FILE EXPLORER", text_align = "center", separator = true },
+			{ filetype = "Outline", text = "FILE EXPLORER", text_align = "center", separator = true },
 		},
 		buffer_close_icon = "",
 		modified_icon = "",
@@ -24,7 +24,7 @@ bufferline.setup(astronvim.user_plugin_opts("plugins.bufferline", {
 		diagnostics_indicator = function(count, level, diagnostics_dict, context)
 			local s = " "
 			for e, n in pairs(diagnostics_dict) do
-				local sym = e == "error" and " " or (e == "warning" and " " or "")
+				local sym = e == "error" and "  " or (e == "warning" and "  " or " ")
 				s = s .. n .. sym
 			end
 			return s
