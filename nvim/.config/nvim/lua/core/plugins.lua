@@ -1,5 +1,38 @@
 local astro_plugins = {
 
+	["bennypowers/nvim-regexplainer"] = {
+		config = function()
+			require("regexplainer").setup({
+				auto = true,
+				filetypes = {
+					"html",
+					"js",
+					"cjs",
+					"py",
+					"mjs",
+					"ts",
+					"jsx",
+					"tsx",
+					"cjsx",
+					"mjsx",
+				},
+				display = "popup",
+
+				mappings = {
+					toggle = "gR",
+					-- examples, not defaults:
+					-- show = 'gS',
+					-- hide = 'gH',
+					-- show_split = 'gP',
+					-- show_popup = 'gU',
+				},
+			})
+		end,
+		requires = {
+			"nvim-treesitter/nvim-treesitter",
+			"MunifTanjim/nui.nvim",
+		},
+	},
 	--vim be good
 	["ThePrimeagen/vim-be-good"] = {},
 	["kylechui/nvim-surround"] = {

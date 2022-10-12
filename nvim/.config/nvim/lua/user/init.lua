@@ -304,6 +304,7 @@ local config = {
 				"tsx",
 				"css",
 				"comment",
+				"regex",
 			},
 		},
 		-- use mason-lspconfig to configure LSP installations
@@ -328,7 +329,6 @@ local config = {
 				"flake8",
 				"revive",
 				"goimports",
-				"eslint_d",
 				"csharpier",
 				"djlint",
 			},

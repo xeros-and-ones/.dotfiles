@@ -6,7 +6,13 @@ bufferline.setup(astronvim.user_plugin_opts("plugins.bufferline", {
 	options = {
 		offsets = {
 			{ filetype = "NvimTree", text = "FILE EXPLORER", text_align = "center", separator = true },
-			{ filetype = "neo-tree", text = "FILE EXPLORER", text_align = "center", separator = true },
+			{
+				filetype = "neo-tree",
+				text = "FILE EXPLORER",
+				highlight = "directory",
+				text_align = "center",
+				separator = true,
+			},
 			{ filetype = "Outline", text = "FILE EXPLORER", text_align = "center", separator = true },
 		},
 		buffer_close_icon = "",
