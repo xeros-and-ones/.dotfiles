@@ -21,7 +21,7 @@ local config = {
 	-- If you need more control, you can use the function()...end notation
 	options = function(local_vim)
 		local_vim.opt.relativenumber = true
-		local_vim.g.mapleader = " "
+		-- local_vim.g.mapleader = " "
 		--   local_vim.opt.whichwrap = vim.opt.whichwrap - { 'b', 's' } -- removing option from list
 		--   local_vim.opt.shortmess = vim.opt.shortmess + { I = true } -- add to option list
 		--
@@ -181,6 +181,14 @@ local config = {
 						BufferLineBufferSelected = { fg = "#637CF7", bold = true },
 					},
 				}),
+				vim.cmd("au ColorScheme * hi Normal ctermbg=none guibg=none"),
+				vim.cmd("au ColorScheme * hi SignColumn ctermbg=none guibg=none"),
+				vim.cmd("au ColorScheme * hi NormalNC ctermbg=none guibg=none"),
+				vim.cmd("au ColorScheme * hi NormalFloat ctermbg=none guibg=none"),
+				vim.cmd("au ColorScheme * hi MsgArea ctermbg=none guibg=none"),
+				-- vim.cmd "au ColorScheme * hi TelescopeBorder ctermbg=none guibg=none",
+				-- vim.cmd "au ColorScheme * hi NvimTreeNormal ctermbg=none guibg=none",
+				vim.cmd("let &fcs='eob: '"),
 				vim.cmd("colorscheme gruvbox"),
 				require("notify").setup({
 					background_colour = "Normal",

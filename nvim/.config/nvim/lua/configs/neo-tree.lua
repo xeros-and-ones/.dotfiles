@@ -6,10 +6,12 @@ neotree.setup(astronvim.user_plugin_opts("plugins.neo-tree", {
 	close_if_last_window = true,
 	popup_border_style = "rounded",
 	enable_diagnostics = true,
+	enable_git_status = true,
 	default_component_configs = {
 		indent = {
-			padding = 0,
-			with_expanders = false,
+			indent_size = 2,
+			padding = 1,
+			with_expanders = true,
 		},
 		icon = {
 			folder_closed = "",
@@ -32,10 +34,10 @@ neotree.setup(astronvim.user_plugin_opts("plugins.neo-tree", {
 		},
 	},
 	window = {
-		width = 25,
+		width = 35,
 		mappings = {
 			["o"] = "open",
-			["P"] = { "toggle_preview", config = { use_float = true } },
+			["p"] = { "toggle_preview", config = { use_float = true } },
 			-- ["S"] = "open_split",
 			-- ["s"] = "open_vsplit",
 			["s"] = "split_with_window_picker",
@@ -78,7 +80,29 @@ neotree.setup(astronvim.user_plugin_opts("plugins.neo-tree", {
 			},
 		},
 	},
+	modified = {
+		symbol = "[+]",
+		highlight = nil,
+	},
+	name = {
+		trailing_slash = false,
+		use_git_status_colors = true,
+		highlight = "NeoTreeFileName",
+	},
 	git_status = {
+		symbols = {
+			-- Change type
+			added = "✚", -- or "✚", but this is redundant info if you use git_status_colors on the name
+			modified = "", -- or "", but this is redundant info if you use git_status_colors on the name
+			deleted = "✖", -- this can only be used in the git_status source
+			renamed = "", -- this can only be used in the git_status source
+			-- Status type
+			untracked = "",
+			ignored = "",
+			unstaged = "",
+			staged = "",
+			conflict = "",
+		},
 		window = {
 			position = "float",
 		},
