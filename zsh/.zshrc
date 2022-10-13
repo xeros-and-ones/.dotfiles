@@ -128,7 +128,7 @@ alias c="clear"
 # folders aliases
 alias l="exa --long --grid --group-directories-first --git --header --icons --all"
 alias lf="exa --grid --group-directories-first --git --header --icons --all"
-alias docs="cd ~/Documents"
+alias docs="cd ~/Documents/"
 alias data="cd /run/media/xero/Data/"
 alias apps="cd /run/media/xero/Data/Apps/"
 alias dotfiles="cd ~/.dotfiles/"
