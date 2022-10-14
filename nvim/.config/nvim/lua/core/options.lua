@@ -41,6 +41,7 @@ astronvim.vim_opts(astronvim.user_plugin_opts("options", {
 		fillchars = { eob = " " }, -- Disable `~` on nonexistent lines
 		foldnestmax = 3,
 		foldminlines = 1,
+		title = true,
 	},
 	g = {
 		do_filetype_lua = 1, -- use filetype.lua

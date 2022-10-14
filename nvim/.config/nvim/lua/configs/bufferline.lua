@@ -15,6 +15,31 @@ bufferline.setup(astronvim.user_plugin_opts("plugins.bufferline", {
 			},
 			{ filetype = "Outline", text = "FILE EXPLORER", text_align = "center", separator = true },
 		},
+		-- highlights = {
+		-- 	fill = {
+		-- 		fg = "#606060",
+		-- 		bg = {
+		-- 			attribute = "bg",
+		-- 			highlight = "Pmenu",
+		-- 		},
+		-- 	},
+		-- 	background = {
+		-- 		fg = "#606060",
+		-- 		bg = {
+		-- 			attribute = "bg",
+		-- 			highlight = "Pmenu",
+		-- 		},
+		-- 	},
+		-- 	-- tab = {
+		-- 	-- 	fg = "<colour-value-here>",
+		-- 	-- 	bg = "<colour-value-here>",
+		-- 	-- },
+		-- 	tab_selected = {
+		-- 		-- fg = tabline_sel_bg,
+		-- 		bg = "#808080",
+		-- 		bold = true,
+		-- 	},
+		-- },
 		buffer_close_icon = "",
 		modified_icon = "",
 		close_icon = "",
