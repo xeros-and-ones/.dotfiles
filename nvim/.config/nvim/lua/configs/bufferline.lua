@@ -46,7 +46,7 @@ bufferline.setup(astronvim.user_plugin_opts("plugins.bufferline", {
 		max_name_length = 14,
 
 		max_prefix_length = 13,
-		tab_size = 20,
+		tab_size = 15,
 		show_tab_indicatior = true,
 		separator_style = "thick",
 		diagnostics = "nvim_lsp",
