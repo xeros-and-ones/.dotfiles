@@ -1,8 +1,13 @@
 local astro_plugins = {
 
+	["https://git.sr.ht/~whynothugo/lsp_lines.nvim"] = {
+		config = function()
+			require("lsp_lines").setup()
+		end,
+	},
 	["braxtons12/blame_line.nvim"] = {
 		config = function()
-			require("blame_line").setup({})
+			require("blame_line").disable()
 		end,
 	},
 	["bennypowers/nvim-regexplainer"] = {

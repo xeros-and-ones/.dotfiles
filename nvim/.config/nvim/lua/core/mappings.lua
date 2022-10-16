@@ -119,10 +119,6 @@ if is_available("gitsigns.nvim") then
 		end,
 		desc = "View git blame",
 	}
-	maps.n["<leader>gL"] = {
-		"<cmd>BlameLineToggle<CR>",
-		desc = "toggle git blame",
-	}
 	maps.n["<leader>gp"] = {
 		function()
 			require("gitsigns").preview_hunk()
@@ -160,6 +156,27 @@ if is_available("gitsigns.nvim") then
 		desc = "View git diff",
 	}
 end
+
+-- Blame_line
+maps.n["<leader>vl"] = {
+	function()
+		require("blame_line").enable()
+	end,
+	desc = "Enalble git blame",
+}
+maps.n["<leader>vo"] = {
+	function()
+		require("blame_line").disable()
+	end,
+	desc = "Disable git blame",
+}
+-- Lsp lines
+maps.n["<leader>ll"] = {
+	function()
+		require("lsp_lines").toggle()
+	end,
+	desc = "Toggle Lsp_lines",
+}
 
 -- NeoTree
 if is_available("neo-tree.nvim") then

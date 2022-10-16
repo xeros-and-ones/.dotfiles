@@ -91,7 +91,7 @@ local config = {
 
 	-- Diagnostics configuration (for vim.diagnostics.config({...}))
 	diagnostics = {
-		virtual_text = true,
+		virtual_text = false,
 		--underline = true,
 		undercurl = true,
 	},

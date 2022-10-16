@@ -17,20 +17,20 @@ astronvim.lsp.setup = function(server)
 end
 
 astronvim.lsp.on_attach = function(client, bufnr)
-	vim.api.nvim_create_autocmd("CursorHold", {
-		buffer = bufnr,
-		callback = function()
-			local opts = {
-				focusable = false,
-				close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-				border = "rounded",
-				source = "always",
-				prefix = " ",
-				scope = "cursor",
-			}
-			vim.diagnostic.open_float(nil, opts)
-		end,
-	})
+	-- vim.api.nvim_create_autocmd("CursorHold", {
+	-- 	buffer = bufnr,
+	-- 	callback = function()
+	-- 		local opts = {
+	-- 			focusable = false,
+	-- 			close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+	-- 			border = "rounded",
+	-- 			source = "always",
+	-- 			prefix = " ",
+	-- 			scope = "cursor",
+	-- 		}
+	-- 		vim.diagnostic.open_float(nil, opts)
+	-- 	end,
+	-- })
 
 	astronvim.set_mappings(
 		user_plugin_opts("lsp.mappings", {
