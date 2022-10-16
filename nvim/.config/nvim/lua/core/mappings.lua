@@ -119,6 +119,10 @@ if is_available("gitsigns.nvim") then
 		end,
 		desc = "View git blame",
 	}
+	maps.n["<leader>gL"] = {
+		"<cmd>BlameLineToggle<CR>",
+		desc = "toggle git blame",
+	}
 	maps.n["<leader>gp"] = {
 		function()
 			require("gitsigns").preview_hunk()

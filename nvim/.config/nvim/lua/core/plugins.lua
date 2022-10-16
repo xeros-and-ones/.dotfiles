@@ -1,5 +1,10 @@
 local astro_plugins = {
 
+	["braxtons12/blame_line.nvim"] = {
+		config = function()
+			require("blame_line").setup({})
+		end,
+	},
 	["bennypowers/nvim-regexplainer"] = {
 		config = function()
 			require("regexplainer").setup({
