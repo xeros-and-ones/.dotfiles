@@ -6,7 +6,6 @@ local keymap = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 maps[""]["<Space>"] = "<Nop>"
 
-vim.api.nvim_set_keymap("i", "<c-s>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 -- Standard Operations
 --moving text
 -- Normal --

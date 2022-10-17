@@ -1,16 +1,19 @@
 local astro_plugins = {
 
 	["https://git.sr.ht/~whynothugo/lsp_lines.nvim"] = {
+		commit = "dbfd8e96ec2696e1ceedcd23fd70e842256e3dea",
 		config = function()
 			require("lsp_lines").setup()
 		end,
 	},
 	["braxtons12/blame_line.nvim"] = {
+		commit = "f77bd2d90b51c10eb70b36471f2207ae516fa84a",
 		config = function()
 			require("blame_line").disable()
 		end,
 	},
 	["bennypowers/nvim-regexplainer"] = {
+		commit = "0d7151ddd3ff2b2e9e8a69137b911c28fc7051a4",
 		config = function()
 			require("regexplainer").setup({
 				auto = true,
@@ -46,6 +49,7 @@ local astro_plugins = {
 	--vim be good
 	["ThePrimeagen/vim-be-good"] = {},
 	["kylechui/nvim-surround"] = {
+		commit = "81f672ad6525b5d8cc27bc6ff84636cc12664485",
 		config = function()
 			require("nvim-surround").setup({
 				-- Configuration here, or leave empty to use defaults
@@ -53,17 +57,24 @@ local astro_plugins = {
 		end,
 	},
 
-	["mg979/vim-visual-multi"] = {},
+	["mg979/vim-visual-multi"] = {
+		commit = "724bd53adfbaf32e129b001658b45d4c5c29ca1a",
+	},
 
-	["ellisonleao/gruvbox.nvim"] = {},
+	["ellisonleao/gruvbox.nvim"] = {
+		commit = "24f9e795bfac5fabbaba703116e747dcf2ad8d2f",
+	},
 
-	["hrsh7th/cmp-nvim-lsp-signature-help"] = {},
+	["Issafalcon/lsp-overloads.nvim"] = {
+		commit = "ad00f4e4e00cd8b2dd355587a9428330ca40de2b",
+	},
 
-	["luisiacc/gruvbox-baby"] = {},
-
-	["nvim-treesitter/nvim-treesitter-context"] = {},
+	["nvim-treesitter/nvim-treesitter-context"] = {
+		commit = "2466e8007290b6228183171965b6ce1a2f111995",
+	},
 
 	["folke/trouble.nvim"] = {
+		commit = "ed65f84abc4a1e5d8f368d7e02601fc0357ea15e",
 		requires = "kyazdani42/nvim-web-devicons",
 		config = function()
 			require("trouble").setup({
@@ -108,6 +119,7 @@ local astro_plugins = {
 	["wbthomason/packer.nvim"] = {},
 
 	["folke/tokyonight.nvim"] = {
+		commit = "9fba0cdd05382a427dafaa2b8ebb4aba99126bc0",
 		config = function()
 			require("tokyonight").setup({
 				style = "night", -- The theme comes in three styles, `storm`, a darker variant `night` and `day`

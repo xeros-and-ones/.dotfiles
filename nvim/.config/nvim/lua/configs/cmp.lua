@@ -54,6 +54,13 @@ setup(astronvim.user_plugin_opts("plugins.cmp", {
 				buffer = "[Buffer]",
 				path = "[Path]",
 			})[entry.source.name]
+			vim_item.dup = 0
+			-- ({
+			-- 	vsnip = 0,
+			-- 	nvim_lsp = 0,
+			-- 	nvim_lua = 0,
+			-- 	buffer = 0,
+			-- })[entry.source.name] or 0
 			return vim_item
 		end,
 	},
@@ -124,7 +131,6 @@ setup(astronvim.user_plugin_opts("plugins.cmp", {
 	},
 	sources = {
 		{ name = "nvim_lsp" },
-		{ name = "nvim_lsp_signature_help" },
 	},
 }))
 
