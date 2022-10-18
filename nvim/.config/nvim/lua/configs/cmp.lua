@@ -12,57 +12,73 @@ local function has_words_before()
 end
 
 local kind_icons = {
-	Text = "",
-	Method = "m",
+	Text = "",
+	Method = "",
 	Function = "",
-	Constructor = "",
-	Field = "",
-	Variable = "",
-	Class = "",
+	Constructor = "",
+	Field = "",
+	Variable = "",
+	Class = "ﴯ",
 	Interface = "",
 	Module = "",
-	Property = "",
+	Property = "ﰠ",
 	Unit = "",
 	Value = "",
 	Enum = "",
 	Keyword = "",
-	Snippet = "",
+	Snippet = "",
 	Color = "",
 	File = "",
 	Reference = "",
 	Folder = "",
 	EnumMember = "",
-	Constant = "",
+	Constant = "",
 	Struct = "",
 	Event = "",
 	Operator = "",
-	TypeParameter = "",
+	TypeParameter = "",
 }
--- find more here: https://www.nerdfonts.com/cheat-sheet
 
 setup(astronvim.user_plugin_opts("plugins.cmp", {
-	preselect = cmp.PreselectMode.None,
+	-- preselect = cmp.PreselectMode.None,
 	formatting = {
-		fields = { "kind", "abbr", "menu" },
+		fields = { "abbr", "kind", "menu" },
 		format = function(entry, vim_item)
 			-- Kind icons
-			vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
-			-- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
-			vim_item.menu = ({
-				nvim_lsp = "[LSP]",
-				luasnip = "[Snippet]",
-				buffer = "[Buffer]",
-				path = "[Path]",
-			})[entry.source.name]
+			-- vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
+			vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
+			vim_item.menu = ("")
+				-- ({
+				-- 	nvim_lsp = "[LSP]",
+				-- 	luasnip = "[Snippet]",
+				-- 	buffer = "[Buffer]",
+				-- 	path = "[Path]",
+				-- })
+				[entry.source.name]
 			vim_item.dup = 0
-			-- ({
-			-- 	vsnip = 0,
-			-- 	nvim_lsp = 0,
-			-- 	nvim_lua = 0,
-			-- 	buffer = 0,
-			-- })[entry.source.name] or 0
 			return vim_item
 		end,
+		----------------------------------------------------
+		-- format = function(_, vim_item)
+		-- 	vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind)
+		-- 	return vim_item
+		-- end,
+		----------------------------------------------------
+		-- fields = { "kind", "abbr", "menu" },
+		-- format = function(entry, vim_item)
+		-- 	local kind = require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
+		-- 	local strings = vim.split(kind.kind, "%s", { trimempty = false })
+		-- 	kind.kind = " " .. strings[1] .. " "
+		-- 	kind.menu = "    " .. strings[2] .. ""
+		--
+		-- 	return kind
+		-- end,
+	},
+	-- view = {
+	-- 	entries = "native",
+	-- },
+	experimental = {
+		ghost_text = true,
 	},
 	snippet = {
 		expand = function(args)
