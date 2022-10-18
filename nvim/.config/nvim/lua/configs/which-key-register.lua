@@ -6,6 +6,8 @@ local mappings = {
 			f = { name = "File" },
 			p = { name = "Packer" },
 			l = { name = "LSP" },
+			v = { name = "Blame_line" },
+			x = { name = "Trouble" },
 		},
 	},
 }
