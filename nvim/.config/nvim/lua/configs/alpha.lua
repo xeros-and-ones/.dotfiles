@@ -48,7 +48,7 @@ alpha.setup(astronvim.user_plugin_opts("plugins.alpha", {
 				alpha_button("LDR f n", "  New File  "),
 				alpha_button("LDR f m", "  Bookmarks  "),
 				alpha_button("LDR S l", "  Last Session  "),
-				alpha_button("LDR q", "  Quit"),
+				alpha_button("LDR q  ", "  Quit"),
 			},
 			opts = { spacing = 1 },
 		},
