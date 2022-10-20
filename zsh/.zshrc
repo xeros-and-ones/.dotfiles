@@ -88,6 +88,7 @@ plugins=(
     zsh-autosuggestions
     zsh-syntax-highlighting
     zsh-interactive-cd
+    zsh-autocomplete
     virtualenv
     aliases
     rust
