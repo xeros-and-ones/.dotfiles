@@ -1,0 +1,5 @@
+gui:
+  expandFocusedSidePanel: true
+  showIcons: true
+os:
+  openCommand: "xdg-open {{filename}} >/dev/null"
