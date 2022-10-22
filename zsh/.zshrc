@@ -88,11 +88,11 @@ plugins=(
     zsh-autosuggestions
     zsh-syntax-highlighting
     zsh-interactive-cd
-    zsh-autocomplete
+    # zsh-autocomplete
     virtualenv
     aliases
     rust
-    # fzf
+    fzf
     command-not-found
     alias-finder
     dotnet
