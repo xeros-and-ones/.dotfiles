@@ -350,6 +350,7 @@ local astro_plugins = {
 
 	-- LSP symbols
 	["stevearc/aerial.nvim"] = {
+		commit = "b9f6067529ef123b8ace705ea356869f66aad320",
 		module = "aerial",
 		cmd = { "AerialToggle", "AerialOpen", "AerialInfo" },
 		config = function()
