@@ -1,16 +1,16 @@
-local utils = require "default_theme.utils"
-
 local lsp = {
-  DiagnosticError = utils.parse_diagnostic_style { fg = C.red_1 },
-  DiagnosticHint = utils.parse_diagnostic_style { fg = C.yellow_1 },
-  DiagnosticInfo = utils.parse_diagnostic_style { fg = C.white_2 },
-  DiagnosticWarn = utils.parse_diagnostic_style { fg = C.orange_1 },
+  DiagnosticError = { fg = C.red_1 },
+  DiagnosticHint = { fg = C.yellow_1 },
+  DiagnosticInfo = { fg = C.white_2 },
+  DiagnosticWarn = { fg = C.orange_1 },
   DiagnosticInformation = { fg = C.yellow, bold = true },
   DiagnosticTruncateLine = { fg = C.white_1, bold = true },
   DiagnosticUnderlineError = { sp = C.red_2, undercurl = true },
   DiagnosticUnderlineHint = { sp = C.red_2, undercurl = true },
   DiagnosticUnderlineInfo = { sp = C.red_2, undercurl = true },
   DiagnosticUnderlineWarn = { sp = C.red_2, undercurl = true },
+  LspCodeLens = { fg = C.grey_2 },
+  LspCodeLensSeparator = { fg = C.grey },
   LspDiagnosticsFloatingError = { fg = C.red_1 },
   LspDiagnosticsFloatingHint = { fg = C.yellow_1 },
   LspDiagnosticsFloatingInfor = { fg = C.white_2 },

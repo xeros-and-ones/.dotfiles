@@ -1,8 +1,7 @@
-local status_ok, lspkind = pcall(require, "lspkind")
-if not status_ok then return end
 astronvim.lspkind = astronvim.user_plugin_opts("plugins.lspkind", {
   mode = "symbol",
   symbol_map = {
+    NONE = "",
     Array = "",
     Boolean = "⊨",
     Class = "",
@@ -21,4 +20,4 @@ astronvim.lspkind = astronvim.user_plugin_opts("plugins.lspkind", {
     Unit = "",
   },
 })
-lspkind.init(astronvim.lspkind)
+require("lspkind").init(astronvim.lspkind)
