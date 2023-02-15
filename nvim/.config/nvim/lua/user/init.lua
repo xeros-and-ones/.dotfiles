@@ -5,7 +5,6 @@
 -- normal format is "key = value". These also handle array like data structures
 -- where a value with no key simply has an implicit numeric key
 local config = {
-
   -- Configure AstroNvim updates
   updater = {
     remote = "origin", -- remote to use
@@ -24,20 +23,26 @@ local config = {
     --   ["remote3"] = "github_user", -- GitHub user assume AstroNvim fork
     -- },
   },
-
   -- Set colorscheme to use
   colorscheme = "gruvbox",
-
   -- Add highlight groups in any theme
   highlights = {
-    -- init = { -- this table overrides highlights in all themes
-    --   Normal = { bg = "#000000" },
-    -- }
+    init = { -- this table overrides highlights in all themes
+      Normal = { bg = "NONE", ctermbg = "NONE" },
+      NormalNC = { bg = "NONE", ctermbg = "NONE" },
+      NormalFloat = { bg = "NONE", ctermbg = "NONE" },
+      SignColumn = { bg = "NONE", ctermbg = "NONE" },
+      MsgArea = { bg = "NONE", ctermbg = "NONE" },
+      TreesitterContext = { bg = "#2F4F4F" },
+      TreesitterContextLineNumber = { bg = "#2F4F4F" },
+      -- TelescopeBorder = {bg = "NONE", ctermbg = "NONE"},
+      -- vim.cmd "au ColorScheme * hi NvimTreeNormal ctermbg=none guibg=none",
+      -- vim.cmd("let &fcs='eob: '"),
+    },
     -- duskfox = { -- a table of overrides/changes to the duskfox theme
     --   Normal = { bg = "#000000" },
     -- },
   },
-
   -- set vim options here (vim.<first_key>.<second_key> = value)
   options = {
     opt = {
@@ -99,7 +104,6 @@ local config = {
     -- "─████████──████████─██████████████─██████──██████████─██████████████─",
     -- "─────────────────────────────────────────────────────────────────────",
   },
-
   -- Default theme configuration
   default_theme = {
     -- Modify the color palette for the default theme
@@ -143,14 +147,12 @@ local config = {
       ["which-key"] = true,
     },
   },
-
   -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
   diagnostics = {
     virtual_text = false,
     --underline = true,
     undercurl = true,
   },
-
   -- Extend LSP configuration
   lsp = {
     -- enable servers that you already have installed without mason
@@ -231,7 +233,6 @@ local config = {
       -- },
     },
   },
-
   -- Mapping data with "desc" stored directly by vim.keymap.set().
   --
   -- Please use this mappings table to set keyboard mapping since this is the
@@ -254,7 +255,6 @@ local config = {
       -- ["<esc>"] = false,
     },
   },
-
   -- Configure plugins
   plugins = {
     init = {
@@ -278,22 +278,7 @@ local config = {
             DiagnosticVirtualTextHint = { fg = "#427b58", bg = "#043d40" },
             BufferLineBufferSelected = { fg = "#637CF7", bold = true },
           },
-          vim.cmd "colorscheme gruvbox",
-        },
-        vim.cmd "au ColorScheme * hi Normal ctermbg=none guibg=none",
-        vim.cmd "au ColorScheme * hi SignColumn ctermbg=none guibg=none",
-        vim.cmd "au ColorScheme * hi NormalNC ctermbg=none guibg=none",
-        vim.cmd "au ColorScheme * hi NormalFloat ctermbg=none guibg=none",
-        vim.cmd "au ColorScheme * hi MsgArea ctermbg=none guibg=none",
-        vim.cmd "au ColorScheme * hi TreesitterContext guibg=darkslategray",
-        vim.cmd "au ColorScheme * hi TreesitterContextLineNumber guibg=darkslategray",
-        -- vim.cmd "au ColorScheme * hi TelescopeBorder ctermbg=none guibg=none",
-        -- vim.cmd "au ColorScheme * hi NvimTreeNormal ctermbg=none guibg=none",
-        -- vim.cmd("let &fcs='eob: '"),
-        require("notify").setup {
-          background_colour = "Normal",
-          opacity = 20,
-          timeout = 3000,
+          -- vim.cmd "colorscheme gruvbox",
         },
       },
 
@@ -318,17 +303,6 @@ local config = {
         null_ls.builtins.formatting.goimports,
         null_ls.builtins.formatting.clang_format,
       }
-      -- set up null-ls's on_attach function
-      -- NOTE: You can remove this on attach function to disable format on save
-      config.on_attach = function(client)
-        if client.server_capabilities.document_formatting then
-          vim.api.nvim_create_autocmd("BufWritePre", {
-            desc = "Auto format before save",
-            pattern = "<buffer>",
-            callback = vim.lsp.buf.formatting_sync,
-          })
-        end
-      end
       return config -- return final config table to use in require("null-ls").setup(config)
     end,
     treesitter = { -- overrides `require("treesitter").setup(...)`
