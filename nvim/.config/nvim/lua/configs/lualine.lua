@@ -1,11 +1,7 @@
 local status_ok = pcall(require, "lualine")
-if not status_ok then
-	return
-end
+if not status_ok then return end
 
-local hide_in_width = function()
-	return vim.fn.winwidth(0) > 80
-end
+local hide_in_width = function() return vim.fn.winwidth(0) > 80 end
 
 local diagnostics = {
 	"diagnostics",
@@ -36,13 +32,11 @@ local lsp = {
 		local msg = "No Active Lsp"
 		local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
 		local clients = vim.lsp.get_active_clients()
-		if next(clients) == nil then
-			return msg
-		end
+		-- if next(clients) == nil then return msg end
 		for _, client in ipairs(clients) do
 			local filetypes = client.config.filetypes
-			if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-				return client.name
+			if client.name ~= "null-ls" then
+				if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then return client.name end
 			end
 		end
 		return msg
@@ -61,7 +55,7 @@ local treesitter = {
 --return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
 --end
 
-require("lualine").setup({
+require("lualine").setup {
 	options = {
 		icons_enabled = true,
 		theme = "powerline_custom",
@@ -140,4 +134,4 @@ require("lualine").setup({
 	winbar = {},
 	inactive_winbar = {},
 	extensions = {},
-})
+}
