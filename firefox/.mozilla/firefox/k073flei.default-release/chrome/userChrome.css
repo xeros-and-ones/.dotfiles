@@ -5,7 +5,7 @@
 }
 
 #urlbar-background {
-  background: #212635 !important;
+  background: #3b414b !important;
 }
 
 /* remove blue focus ring */
@@ -13,9 +13,11 @@
   outline-color: transparent !important;
 }
 
-/* remove blue focus ring */
 :root {
+  /* remove blue focus ring */
   --toolbar-field-focus-border-color: rgb(90, 90, 90) !important;
+  /* remove shadow under tab-bar */
+  --tabs-navbar-shadow-size: 0 !important;
 }
 
 /*** hide "open all in tabs" ***/
