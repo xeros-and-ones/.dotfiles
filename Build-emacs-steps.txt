@@ -12,4 +12,4 @@
 
 7-  make bootstrap -jN (N = number of cores you have in your cpu)
 
-8- sudo make install.sh
+8- sudo make install
