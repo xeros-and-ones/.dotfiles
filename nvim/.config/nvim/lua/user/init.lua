@@ -302,6 +302,7 @@ local config = {
         null_ls.builtins.formatting.djlint,
         null_ls.builtins.formatting.goimports,
         null_ls.builtins.formatting.clang_format,
+        null_ls.builtins.formatting.shfmt,
       }
       return config -- return final config table to use in require("null-ls").setup(config)
     end,
@@ -344,6 +345,7 @@ local config = {
           "goimports",
           "csharpier",
           "djlint",
+          "shfmt",
         },
       },
       ["mason-nvim-dap"] = { -- overrides `require("mason-nvim-dap").setup(...)`
