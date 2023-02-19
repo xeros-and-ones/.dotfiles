@@ -86,9 +86,10 @@ HIST_STAMPS="mm/dd/yyyy"
 plugins=(
     git
     zsh-autosuggestions
-    zsh-syntax-highlighting
-    zsh-interactive-cd
-    # zsh-autocomplete
+    # zsh-syntax-highlighting
+    fast-syntax-highlighting
+    # zsh-interactive-cd
+    zsh-autocomplete
     virtualenv
     aliases
     rust

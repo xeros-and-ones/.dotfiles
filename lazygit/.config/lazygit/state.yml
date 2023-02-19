@@ -1,6 +1,10 @@
 lastupdatecheck: 0
 recentrepos:
 - /home/xero/.dotfiles
+- /home/xero/.oh-my-zsh/custom/plugins/zsh-autocomplete
+- /home/xero/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+- /home/xero/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+- /home/xero/.oh-my-zsh
 startuppopupversion: 5
 customcommandshistory: []
 hidecommandlog: false
