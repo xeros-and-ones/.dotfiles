@@ -303,6 +303,7 @@ local config = {
         null_ls.builtins.formatting.goimports,
         null_ls.builtins.formatting.clang_format,
         null_ls.builtins.formatting.shfmt,
+        null_ls.builtins.formatting.rustfmt,
       }
       return config -- return final config table to use in require("null-ls").setup(config)
     end,
@@ -346,10 +347,11 @@ local config = {
           "csharpier",
           "djlint",
           "shfmt",
+          "rustfmt",
         },
       },
       ["mason-nvim-dap"] = { -- overrides `require("mason-nvim-dap").setup(...)`
-        -- ensure_installed = { "python" },
+        ensure_installed = { "cpptools", "debugpy", "js-debug-adapter", "netcoredbg" },
       },
     },
 
