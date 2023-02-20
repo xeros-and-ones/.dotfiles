@@ -126,7 +126,29 @@ LC_ALL=en_US.UTF-8
 ####### python aliases ##############----------------------------------------------------
 alias py="python3"
 
+# Remove python compiled byte-code and mypy/pytest cache in either the current
+# directory or in a list of specified directories (including sub directories).
+function pyclean() {
+  find "${@:-.}" -type f -name "*.py[co]" -delete
+  find "${@:-.}" -type d -name "__pycache__" -delete
+  find "${@:-.}" -depth -type d -name ".mypy_cache" -exec rm -r "{}" +
+  find "${@:-.}" -depth -type d -name ".pytest_cache" -exec rm -r "{}" +
+}
+
+# Find python file
+alias pyfind="find . -name '*.py'"
+
+# Grep among .py files
+alias pygrep='rg -pg "*.py"'
+# alias pygrep='grep -nr --include="*.py"'
+
 ###### Pip aliases ########------------------------
+alias pipin="pip install"
+alias pipup="pip install --upgrade"
+alias pipun="pip uninstall"
+alias pipgrep="pip freeze | rg"
+alias pipout="pip list --outdated"
+
 # Create requirements file
 alias pipreq="pip freeze > requirements.txt"
 
@@ -141,7 +163,7 @@ function pipupall {
   pip list --outdated | awk 'NR > 2 { print $1 }' | ${=xargs} pip install --upgrade
 }
 
-# Uninstalled all installed packages
+# Uninstall all installed packages
 function pipunall {
   # non-GNU xargs does not support nor need `--no-run-if-empty`
   local xargs="xargs --no-run-if-empty"
@@ -150,9 +172,9 @@ function pipunall {
 }
 
 ######### venv utilities #########-----------------
-# Activate a the python virtual environment specified.
+# Activate the python virtual environment specified.
 # If none specified, use 'venv'.
-function vrun() {
+function runvenv() {
   local name="${1:-venv}"
   local venvpath="${name:P}"
 
@@ -171,13 +193,13 @@ function vrun() {
 }
 
 # Create a new virtual environment, with default name 'venv'.
-function mkv() {
+function mkvenv() {
   local name="${1:-venv}"
   local venvpath="${name:P}"
 
   python3 -m venv "${name}" || return
   echo >&2 "Created venv in '${venvpath}'"
-  vrun "${name}"
+  runvenv "${name}"
 }
 
 
@@ -205,8 +227,8 @@ alias ytv-mp4='yt-dlp -f bestvideo\[height<=720]+bestaudio -o "//run//media//xer
 alias ytv-best='yt-dlp -f bestvideo+bestaudio -o "//run//media//xero//Data//Downloads//%(title)s.%(ext)s" --add-metadata --merge-output-format mp4'
 alias yta-mp3='yt-dlp -f bestaudio --extract-audio --audio-format mp3 -o "//run//media//xero//Data//Downloads//%(title)s.%(ext)s" --add-metadata'
 alias ytp-mkv-list-720="yt-dlp -f 'bv*[height=720]+ba' -o '//run//media//xero//Data//Downloads//%(playlist_title)s//%(title)s.%(ext)s' --add-metadata --merge-output-format mkv"
-alias ytp-mp4-list-720="yt-dlp -f 'bv*[height=720]+ba' -o '//run//media//xero//Data//Downloads//%(playlist_title)s//%(title)s.%(ext)s' --add-metadata --merge-output-format mp4"
 alias ytp-mkv-list-1080="yt-dlp -f 'bv*[height=1080]+ba' -o '//run//media//xero//Data//Downloads//%(playlist_title)s//%(title)s.%(ext)s' --add-metadata --merge-output-format mkv"
+alias ytp-mp4-list-720="yt-dlp -f 'bv*[height=720]+ba' -o '//run//media//xero//Data//Downloads//%(playlist_title)s//%(title)s.%(ext)s' --add-metadata --merge-output-format mp4"
 alias ytp-mp4-list-1080="yt-dlp -f 'bv*[height=1080]+ba' -o '//run//media//xero//Data//Downloads//%(playlist_title)s//%(title)s.%(ext)s' --add-metadata --merge-output-format mp4"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
