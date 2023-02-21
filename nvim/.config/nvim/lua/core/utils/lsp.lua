@@ -19,7 +19,7 @@ local user_registration = user_plugin_opts("lsp.server_registration", nil, false
 local skip_setup = user_plugin_opts "lsp.skip_setup"
 
 astronvim.lsp.formatting =
-  astronvim.user_plugin_opts("lsp.formatting", { format_on_save = { enabled = true }, disabled = {} })
+    astronvim.user_plugin_opts("lsp.formatting", { format_on_save = { enabled = true }, disabled = {} })
 if type(astronvim.lsp.formatting.format_on_save) == "boolean" then
   astronvim.lsp.formatting.format_on_save = { enabled = astronvim.lsp.formatting.format_on_save }
 end
@@ -109,9 +109,9 @@ astronvim.lsp.on_attach = function(client, bufnr)
     local autoformat = astronvim.lsp.formatting.format_on_save
     local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
     if
-      autoformat.enabled
-      and (tbl_isempty(autoformat.allow_filetypes or {}) or tbl_contains(autoformat.allow_filetypes, filetype))
-      and (tbl_isempty(autoformat.ignore_filetypes or {}) or not tbl_contains(autoformat.ignore_filetypes, filetype))
+        autoformat.enabled
+        and (tbl_isempty(autoformat.allow_filetypes or {}) or tbl_contains(autoformat.allow_filetypes, filetype))
+        and (tbl_isempty(autoformat.ignore_filetypes or {}) or not tbl_contains(autoformat.ignore_filetypes, filetype))
     then
       local autocmd_group = "auto_format_" .. bufnr
       vim.api.nvim_create_augroup(autocmd_group, { clear = true })
@@ -152,7 +152,7 @@ astronvim.lsp.on_attach = function(client, bufnr)
   end
 
   if capabilities.implementationProvider then
-    lsp_mappings.n["gI"] = { function() vim.lsp.buf.implementation() end, desc = "Implementation of current symbol" }
+    lsp_mappings.n["gm"] = { function() vim.lsp.buf.implementation() end, desc = "Implementation of current symbol" }
   end
 
   if capabilities.referencesProvider then
@@ -178,8 +178,8 @@ astronvim.lsp.on_attach = function(client, bufnr)
 
   if is_available "telescope.nvim" then -- setup telescope mappings if available
     if lsp_mappings.n.gd then lsp_mappings.n.gd[1] = function() require("telescope.builtin").lsp_definitions() end end
-    if lsp_mappings.n.gI then
-      lsp_mappings.n.gI[1] = function() require("telescope.builtin").lsp_implementations() end
+    if lsp_mappings.n.gm then
+      lsp_mappings.n.gm[1] = function() require("telescope.builtin").lsp_implementations() end
     end
     if lsp_mappings.n.gr then lsp_mappings.n.gr[1] = function() require("telescope.builtin").lsp_references() end end
     if lsp_mappings.n["<leader>lR"] then
@@ -225,7 +225,8 @@ function astronvim.lsp.server_settings(server_name)
   local server = require("lspconfig")[server_name]
   local opts = user_plugin_opts( -- get user server-settings
     "lsp.server-settings." .. server_name, -- TODO: RENAME lsp.server-settings to lsp.config in v3
-    user_plugin_opts("server-settings." .. server_name, { -- get default server-settings
+    user_plugin_opts("server-settings." .. server_name, {
+    -- get default server-settings
       capabilities = vim.tbl_deep_extend("force", astronvim.lsp.capabilities, server.capabilities or {}),
       flags = vim.tbl_deep_extend("force", astronvim.lsp.flags, server.flags or {}),
     }, true, "configs")
