@@ -1,6 +1,6 @@
 local is_available = astronvim.is_available
 
-local maps = { n = {}, v = {}, t = {}, [""] = {} }
+local maps = { n = {}, v = {}, t = {},[""] = {} }
 
 local keymap = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
@@ -57,15 +57,9 @@ maps.n["<leader>ps"] = { "<cmd>PackerSync<cr>", desc = "Packer Sync" }
 maps.n["<leader>pS"] = { "<cmd>PackerStatus<cr>", desc = "Packer Status" }
 maps.n["<leader>pu"] = { "<cmd>PackerUpdate<cr>", desc = "Packer Update" }
 
--- AstroNvim
-maps.n["<leader>pa"] = { "<cmd>AstroUpdatePackages<cr>", desc = "Update Packer and Mason" }
-maps.n["<leader>pA"] = { "<cmd>AstroUpdate<cr>", desc = "AstroNvim Update" }
-maps.n["<leader>pv"] = { "<cmd>AstroVersion<cr>", desc = "AstroNvim Version" }
-maps.n["<leader>pl"] = { "<cmd>AstroChangelog<cr>", desc = "AstroNvim Changelog" }
-
 -- Alpha
 if is_available "alpha-nvim" then
-  maps.n["<leader>d"] = { function() require("alpha").start() end, desc = "Alpha Dashboard" }
+  maps.n["<leader>a"] = { function() require("alpha").start() end, desc = "Alpha Dashboard" }
 end
 
 -- Bufdelete
@@ -172,7 +166,7 @@ if is_available "neovim-session-manager" then
   maps.n["<leader>Sd"] = { "<cmd>SessionManager! delete_session<cr>", desc = "Delete session" }
   maps.n["<leader>Sf"] = { "<cmd>SessionManager! load_session<cr>", desc = "Search sessions" }
   maps.n["<leader>S."] =
-    { "<cmd>SessionManager! load_current_dir_session<cr>", desc = "Load current directory session" }
+  { "<cmd>SessionManager! load_current_dir_session<cr>", desc = "Load current directory session" }
 end
 
 -- Package Manager
@@ -265,20 +259,12 @@ if is_available "telescope.nvim" then
     desc = "Git commits",
   }
   maps.n["<leader>ff"] = {
-    function() require("telescope.builtin").find_files() end,
-    desc = "Search files",
-  }
-  maps.n["<leader>fF"] = {
     function() require("telescope.builtin").find_files { hidden = true, no_ignore = true } end,
     desc = "Search all files",
   }
   maps.n["<leader>fb"] = {
     function() require("telescope.builtin").buffers() end,
     desc = "Search buffers",
-  }
-  maps.n["<leader>fh"] = {
-    function() require("telescope.builtin").help_tags() end,
-    desc = "Search help",
   }
   maps.n["<leader>fm"] = {
     function() require("telescope.builtin").marks() end,
@@ -291,10 +277,6 @@ if is_available "telescope.nvim" then
   maps.n["<leader>fc"] = {
     function() require("telescope.builtin").grep_string() end,
     desc = "Search for word under cursor",
-  }
-  maps.n["<leader>sb"] = {
-    function() require("telescope.builtin").git_branches() end,
-    desc = "Git branches",
   }
   maps.n["<leader>sh"] = {
     function() require("telescope.builtin").help_tags() end,
@@ -350,7 +332,6 @@ if is_available "toggleterm.nvim" then
   local toggle_term_cmd = astronvim.toggle_term_cmd
   if vim.fn.executable "lazygit" == 1 then
     maps.n["<leader>gg"] = { function() toggle_term_cmd "lazygit" end, desc = "ToggleTerm lazygit" }
-    maps.n["<leader>tl"] = { function() toggle_term_cmd "lazygit" end, desc = "ToggleTerm lazygit" }
   end
   if vim.fn.executable "node" == 1 then
     maps.n["<leader>tn"] = { function() toggle_term_cmd "node" end, desc = "ToggleTerm node" }
@@ -384,20 +365,20 @@ if is_available "nvim-dap" then
   maps.n["<F10>"] = { function() require("dap").step_over() end, desc = "Debugger: Step Over" }
   maps.n["<F11>"] = { function() require("dap").step_into() end, desc = "Debugger: Step Into" }
   maps.n["<F23>"] = { function() require("dap").step_out() end, desc = "Debugger: Step Out" } -- Shift+F11
-  maps.n["<leader>Db"] = { function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint (F9)" }
-  maps.n["<leader>DB"] = { function() require("dap").clear_breakpoints() end, desc = "Clear Breakpoints" }
-  maps.n["<leader>Dc"] = { function() require("dap").continue() end, desc = "Start/Continue (F5)" }
-  maps.n["<leader>Di"] = { function() require("dap").step_into() end, desc = "Step Into (F11)" }
-  maps.n["<leader>Do"] = { function() require("dap").step_over() end, desc = "Step Over (F10)" }
-  maps.n["<leader>DO"] = { function() require("dap").step_out() end, desc = "Step Out (S-F11)" }
-  maps.n["<leader>Dq"] = { function() require("dap").close() end, desc = "Close Session" }
-  maps.n["<leader>DQ"] = { function() require("dap").terminate() end, desc = "Terminate Session (S-F5)" }
-  maps.n["<leader>Dp"] = { function() require("dap").pause() end, desc = "Pause (F6)" }
-  maps.n["<leader>Dr"] = { function() require("dap").restart_frame() end, desc = "Restart (C-F5)" }
-  maps.n["<leader>DR"] = { function() require("dap").repl.toggle() end, desc = "Toggle REPL" }
+  maps.n["<leader>db"] = { function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint (F9)" }
+  maps.n["<leader>dB"] = { function() require("dap").clear_breakpoints() end, desc = "Clear Breakpoints" }
+  maps.n["<leader>dc"] = { function() require("dap").continue() end, desc = "Start/Continue (F5)" }
+  maps.n["<leader>di"] = { function() require("dap").step_into() end, desc = "Step Into (F11)" }
+  maps.n["<leader>do"] = { function() require("dap").step_over() end, desc = "Step Over (F10)" }
+  maps.n["<leader>dO"] = { function() require("dap").step_out() end, desc = "Step Out (S-F11)" }
+  maps.n["<leader>dq"] = { function() require("dap").close() end, desc = "Close Session" }
+  maps.n["<leader>dQ"] = { function() require("dap").terminate() end, desc = "Terminate Session (S-F5)" }
+  maps.n["<leader>dp"] = { function() require("dap").pause() end, desc = "Pause (F6)" }
+  maps.n["<leader>dr"] = { function() require("dap").restart_frame() end, desc = "Restart (C-F5)" }
+  maps.n["<leader>dR"] = { function() require("dap").repl.toggle() end, desc = "Toggle REPL" }
   if is_available "nvim-dap-ui" then
-    maps.n["<leader>Du"] = { function() require("dapui").toggle() end, desc = "Toggle Debugger UI" }
-    maps.n["<leader>Dh"] = { function() require("dap.ui.widgets").hover() end, desc = "Debugger Hover" }
+    maps.n["<leader>du"] = { function() require("dapui").toggle() end, desc = "Toggle Debugger UI" }
+    maps.n["<leader>dh"] = { function() require("dap.ui.widgets").hover() end, desc = "Debugger Hover" }
   end
 end
 
