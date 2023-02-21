@@ -317,6 +317,11 @@ if is_available "telescope.nvim" then
     function() require("telescope.builtin").lsp_workspace_symbols() end,
     desc = "Search workspace symbols",
   }
+  maps.n["<leader>lq"] = {
+    function() require("telescope.builtin").quickfix() end,
+    desc = "Search Quickfixes",
+  }
+
   maps.n["<leader>lR"] = {
     function() require("telescope.builtin").lsp_references() end,
     desc = "Search references",
