@@ -8,8 +8,8 @@
 
 5-  ./autogen.sh
 
-6-  ./configure --with-cairo --with-x-toolkit=gtk3 --without-compress-install --with-harfbuzz --with-mailutils --with-native-compilation --with-json --without-gsettings --without-gconf
+6-  ./configure --with-cairo --with-x-toolkit=gtk3 --without-compress-install --with-harfbuzz --with-native-compilation --with-json --without-gsettings --without-gconf
 
 7-  make bootstrap -jN (N = number of cores you have in your cpu)
 
-8- sudo make install
+8-  sudo make install
