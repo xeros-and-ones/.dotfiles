@@ -1,6 +1,7 @@
 lastupdatecheck: 0
 recentrepos:
 - /home/xero/.dotfiles
+- /home/xero/neovim
 - /home/xero/.oh-my-zsh
 - /home/xero/.oh-my-zsh/custom/plugins/zsh-autocomplete
 - /home/xero/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
