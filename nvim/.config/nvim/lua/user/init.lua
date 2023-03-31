@@ -302,7 +302,6 @@ local config = {
         null_ls.builtins.diagnostics.djlint,
         null_ls.builtins.diagnostics.jsonlint,
         null_ls.builtins.diagnostics.flake8,
-        null_ls.builtins.diagnostics.quick_lint_js,
         null_ls.builtins.formatting.goimports,
         null_ls.builtins.formatting.clang_format,
         null_ls.builtins.formatting.shfmt,
