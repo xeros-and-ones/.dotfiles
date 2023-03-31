@@ -7,16 +7,16 @@
 local config = {
   -- Configure AstroNvim updates
   updater = {
-    remote = "origin", -- remote to use
-    channel = "stable", -- "stable" or "nightly"
-    version = "latest", -- "latest", tag name, or regex search like "v1.*" to only do updates before v2 (STABLE ONLY)
-    branch = "main", -- branch name (NIGHTLY ONLY)
-    commit = nil, -- commit hash (NIGHTLY ONLY)
-    pin_plugins = nil, -- nil, true, false (nil will pin plugins on stable only)
-    skip_prompts = false, -- skip prompts about breaking changes
+    remote = "origin",     -- remote to use
+    channel = "stable",    -- "stable" or "nightly"
+    version = "latest",    -- "latest", tag name, or regex search like "v1.*" to only do updates before v2 (STABLE ONLY)
+    branch = "main",       -- branch name (NIGHTLY ONLY)
+    commit = nil,          -- commit hash (NIGHTLY ONLY)
+    pin_plugins = nil,     -- nil, true, false (nil will pin plugins on stable only)
+    skip_prompts = false,  -- skip prompts about breaking changes
     show_changelog = true, -- show the changelog after performing an update
-    auto_reload = false, -- automatically reload and sync packer after a successful update
-    auto_quit = false, -- automatically quit the current session after a successful update
+    auto_reload = false,   -- automatically reload and sync packer after a successful update
+    auto_quit = false,     -- automatically quit the current session after a successful update
     -- remotes = { -- easily add new remotes to track
     --   ["remote_name"] = "https://remote_url.come/repo.git", -- full remote url
     --   ["remote2"] = "github_user/repo", -- GitHub user/repo shortcut,
@@ -27,7 +27,8 @@ local config = {
   colorscheme = "gruvbox",
   -- Add highlight groups in any theme
   highlights = {
-    init = { -- this table overrides highlights in all themes
+    init = {
+      -- this table overrides highlights in all themes
       Normal = { bg = "NONE", ctermbg = "NONE" },
       NormalNC = { bg = "NONE", ctermbg = "NONE" },
       NormalFloat = { bg = "NONE", ctermbg = "NONE" },
@@ -48,21 +49,21 @@ local config = {
     opt = {
       -- set to true or false etc.
       relativenumber = true, -- sets vim.opt.relativenumber
-      number = true, -- sets vim.opt.number
-      spell = false, -- sets vim.opt.spell
-      signcolumn = "auto", -- sets vim.opt.signcolumn to auto
-      wrap = false, -- sets vim.opt.wrap
+      number = true,         -- sets vim.opt.number
+      spell = false,         -- sets vim.opt.spell
+      signcolumn = "auto",   -- sets vim.opt.signcolumn to auto
+      wrap = false,          -- sets vim.opt.wrap
     },
     g = {
-      mapleader = " ", -- sets vim.g.mapleader
-      autoformat_enabled = true, -- enable or disable auto formatting at start (lsp.formatting.format_on_save must be enabled)
-      cmp_enabled = true, -- enable completion at start
-      autopairs_enabled = true, -- enable autopairs at start
-      diagnostics_enabled = true, -- enable diagnostics at start
+      mapleader = " ",                   -- sets vim.g.mapleader
+      autoformat_enabled = true,         -- enable or disable auto formatting at start (lsp.formatting.format_on_save must be enabled)
+      cmp_enabled = true,                -- enable completion at start
+      autopairs_enabled = true,          -- enable autopairs at start
+      diagnostics_enabled = true,        -- enable diagnostics at start
       status_diagnostics_enabled = true, -- enable diagnostics in statusline
-      icons_enabled = true, -- disable icons in the UI (disable if no nerd font is available, requires :PackerSync after changing)
-      ui_notifications_enabled = true, -- disable notifications when toggling UI elements
-      heirline_bufferline = false, -- enable new heirline based bufferline (requires :PackerSync after changing)
+      icons_enabled = true,              -- disable icons in the UI (disable if no nerd font is available, requires :PackerSync after changing)
+      ui_notifications_enabled = true,   -- disable notifications when toggling UI elements
+      heirline_bufferline = false,       -- enable new heirline based bufferline (requires :PackerSync after changing)
     },
   },
   -- If you need more control, you can use the function()...end notation
@@ -162,7 +163,7 @@ local config = {
     formatting = {
       -- control auto formatting on save
       format_on_save = {
-        enabled = true, -- enable or disable format on save globally
+        enabled = true,     -- enable or disable format on save globally
         allow_filetypes = { -- enable format on save for specified filetypes only
           -- "go",
         },
@@ -211,7 +212,6 @@ local config = {
         })
       end
     end,
-
     -- override the mason server-registration function
     -- server_registration = function(server, opts)
     --   require("lspconfig")[server].setup(opts)
@@ -268,7 +268,7 @@ local config = {
           invert_signs = false,
           invert_tabline = false,
           invert_intend_guides = false,
-          inverse = true, -- invert background for search, diffs, statuslines and errors
+          inverse = true,    -- invert background for search, diffs, statuslines and errors
           contrast = "hard", -- can be "hard", "soft" or empty string
           transparent_mode = true,
           overrides = {
@@ -284,8 +284,8 @@ local config = {
 
       {
         require("treesitter-context").setup {
-          enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-          max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+          enable = true,        -- Enable this plugin (Can be enabled/disabled later via commands)
+          max_lines = 0,        -- How many lines the window should span. Values <= 0 mean no limit.
           trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
         },
       },
@@ -298,8 +298,11 @@ local config = {
         -- Set a formatter
         null_ls.builtins.formatting.stylua,
         null_ls.builtins.formatting.prettier,
-        null_ls.builtins.formatting.autopep8,
-        null_ls.builtins.formatting.djlint,
+        null_ls.builtins.formatting.black,
+        null_ls.builtins.diagnostics.djlint,
+        null_ls.builtins.diagnostics.jsonlint,
+        null_ls.builtins.diagnostics.flake8,
+        null_ls.builtins.diagnostics.quick_lint_js,
         null_ls.builtins.formatting.goimports,
         null_ls.builtins.formatting.clang_format,
         null_ls.builtins.formatting.shfmt,
@@ -307,7 +310,8 @@ local config = {
       }
       return config -- return final config table to use in require("null-ls").setup(config)
     end,
-    treesitter = { -- overrides `require("treesitter").setup(...)`
+    treesitter = {
+      -- overrides `require("treesitter").setup(...)`
       ensure_installed = {
         "lua",
         "python",
@@ -340,9 +344,8 @@ local config = {
         ensure_installed = {
           "prettier",
           "stylua",
-          "autopep8",
+          "black",
           "flake8",
-          "revive",
           "goimports",
           "csharpier",
           "djlint",
@@ -354,7 +357,6 @@ local config = {
         ensure_installed = { "cpptools", "debugpy", "js-debug-adapter", "netcoredbg" },
       },
     },
-
     -- LuaSnip Options
     luasnip = {
       -- Extend filetypes
@@ -367,7 +369,6 @@ local config = {
         paths = {},
       },
     },
-
     -- CMP Source Priorities
     -- modify here the priorities of default cmp sources
     -- higher value == higher priority
@@ -382,7 +383,6 @@ local config = {
         path = 250,
       },
     },
-
     -- Modify which-key registration (Use this with mappings table in the above.)
     ["which-key"] = {
       -- Add bindings which show up as group name
@@ -398,7 +398,6 @@ local config = {
         },
       },
     },
-
     -- This function is run last and is a good place to configuring
     -- augroups/autocommands and custom filetypes also this just pure lua so
     -- anything that doesn't fit in the normal config locations above can go here
