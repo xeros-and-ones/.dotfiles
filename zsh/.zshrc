@@ -1,3 +1,6 @@
+### RANDOM COLOR SCRIPT ###
+colorscript random
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -33,8 +36,6 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
 
-### RANDOM COLOR SCRIPT ###
-colorscript random
 
 # Uncomment one of the following lines to change the auto-update behavior
 # zstyle ':omz:update' mode disabled  # disable automatic updates
@@ -213,6 +214,7 @@ alias lg="lazygit"
 alias t="et"
 alias c="clear"
 alias q="exit"
+alias v="nvim"
 
 ########## folders aliases ########################-------------------------------------
 alias l="exa --long --grid --group-directories-first --git --header --icons --all"
