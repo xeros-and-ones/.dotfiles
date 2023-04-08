@@ -40,10 +40,10 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Uncomment one of the following lines to change the auto-update behavior
 # zstyle ':omz:update' mode disabled  # disable automatic updates
 # zstyle ':omz:update' mode auto      # update automatically without asking
-zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+zstyle ':omz:update' mode disabled  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
-zstyle ':omz:update' frequency 13
+# zstyle ':omz:update' frequency 13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS="true"
@@ -88,14 +88,9 @@ plugins=(
     git
     zsh-autosuggestions
     zsh-syntax-highlighting
-#     fast-syntax-highlighting
-    # zsh-interactive-cd
+    zsh-interactive-cd
     zsh-autocomplete
-    virtualenv
-    rust
-#     fzf
-    command-not-found
-    dotnet
+    # rust
     )
 
 source $ZSH/oh-my-zsh.sh
@@ -113,7 +108,7 @@ source $ZSH/oh-my-zsh.sh
 # else
 export EDITOR='nvim'
 # fi
-
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste up-line-or-search down-line-or-search expand-or-complete accept-line push-line-or-edit)
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
