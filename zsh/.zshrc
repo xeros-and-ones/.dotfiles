@@ -87,16 +87,14 @@ HIST_STAMPS="mm/dd/yyyy"
 plugins=(
     git
     zsh-autosuggestions
-    # zsh-syntax-highlighting
-    fast-syntax-highlighting
+    zsh-syntax-highlighting
+#     fast-syntax-highlighting
     # zsh-interactive-cd
     zsh-autocomplete
     virtualenv
-    aliases
     rust
-    fzf
+#     fzf
     command-not-found
-    alias-finder
     dotnet
     )
 

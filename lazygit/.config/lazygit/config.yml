@@ -1,5 +1,11 @@
 gui:
   expandFocusedSidePanel: true
   showIcons: true
+  theme:
+    selectedLineBgColor:
+        - default
+        - bold
+    selectedRangeBgColor:
+        - default
 os:
   openCommand: "xdg-open {{filename}} >/dev/null"
