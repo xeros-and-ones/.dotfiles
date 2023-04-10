@@ -88,9 +88,7 @@ plugins=(
     git
     zsh-autosuggestions
     zsh-syntax-highlighting
-    zsh-interactive-cd
     zsh-autocomplete
-    # rust
     )
 
 source $ZSH/oh-my-zsh.sh

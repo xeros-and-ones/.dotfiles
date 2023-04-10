@@ -10,8 +10,8 @@ local config = {
 		remote = "origin", -- remote to use
 		channel = "stable", -- "stable" or "nightly"
 		version = "latest", -- "latest", tag name, or regex search like "v1.*" to only do updates before v2 (STABLE ONLY)
-		branch = "main", -- branch name (NIGHTLY ONLY)
-		commit = nil, -- commit hash (NIGHTLY ONLY)
+		branch = "main",   -- branch name (NIGHTLY ONLY)
+		commit = nil,      -- commit hash (NIGHTLY ONLY)
 		pin_plugins = nil, -- nil, true, false (nil will pin plugins on stable only)
 		skip_prompts = false, -- skip prompts about breaking changes
 		show_changelog = true, -- show the changelog after performing an update
@@ -49,19 +49,19 @@ local config = {
 		opt = {
 			-- set to true or false etc.
 			relativenumber = true, -- sets vim.opt.relativenumber
-			number = true, -- sets vim.opt.number
-			spell = false, -- sets vim.opt.spell
+			number = true,   -- sets vim.opt.number
+			spell = false,   -- sets vim.opt.spell
 			signcolumn = "auto", -- sets vim.opt.signcolumn to auto
-			wrap = false, -- sets vim.opt.wrap
+			wrap = false,    -- sets vim.opt.wrap
 		},
 		g = {
-			mapleader = " ", -- sets vim.g.mapleader
-			autoformat_enabled = true, -- enable or disable auto formatting at start (lsp.formatting.format_on_save must be enabled)
-			cmp_enabled = true, -- enable completion at start
-			autopairs_enabled = true, -- enable autopairs at start
-			diagnostics_enabled = true, -- enable diagnostics at start
+			mapleader = " ",             -- sets vim.g.mapleader
+			autoformat_enabled = true,   -- enable or disable auto formatting at start (lsp.formatting.format_on_save must be enabled)
+			cmp_enabled = true,          -- enable completion at start
+			autopairs_enabled = true,    -- enable autopairs at start
+			diagnostics_enabled = true,  -- enable diagnostics at start
 			status_diagnostics_enabled = true, -- enable diagnostics in statusline
-			icons_enabled = true, -- disable icons in the UI (disable if no nerd font is available, requires :PackerSync after changing)
+			icons_enabled = true,        -- disable icons in the UI (disable if no nerd font is available, requires :PackerSync after changing)
 			ui_notifications_enabled = true, -- disable notifications when toggling UI elements
 			heirline_bufferline = false, -- enable new heirline based bufferline (requires :PackerSync after changing)
 		},
@@ -113,7 +113,7 @@ local config = {
 			bg = "#1e222a",
 		},
 		highlights = function(hl) -- or a function that returns a new table of colors to set
-			local C = require("default_theme.colors")
+			local C = require "default_theme.colors"
 
 			hl.Normal = { fg = C.fg, bg = C.bg }
 
@@ -259,7 +259,7 @@ local config = {
 	plugins = {
 		init = {
 			{
-				require("gruvbox").setup({
+				require("gruvbox").setup {
 					undercurl = true,
 					bold = true,
 					italic = true,
@@ -279,21 +279,21 @@ local config = {
 						BufferLineBufferSelected = { fg = "#637CF7", bold = true },
 					},
 					-- vim.cmd "colorscheme gruvbox",
-				}),
+				},
 			},
 
 			{
-				require("treesitter-context").setup({
+				require("treesitter-context").setup {
 					enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
 					max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
 					trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-				}),
+				},
 			},
 		},
 		-- All other entries override the require("<key>").setup({...}) call for default plugins
 		["null-ls"] = function(config) -- overrides `require("null-ls").setup(config)`
 			-- config variable is the default configuration table for the setup functino call
-			local null_ls = require("null-ls")
+			local null_ls = require "null-ls"
 			config.sources = {
 				-- Set a formatter
 				null_ls.builtins.formatting.prettier,
@@ -304,7 +304,6 @@ local config = {
 				null_ls.builtins.diagnostics.flake8,
 				null_ls.builtins.diagnostics.revive,
 				null_ls.builtins.formatting.goimports,
-				null_ls.builtins.formatting.beautysh,
 				null_ls.builtins.formatting.rustfmt,
 			}
 			return config -- return final config table to use in require("null-ls").setup(config)
