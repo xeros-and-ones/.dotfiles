@@ -3,9 +3,11 @@ gui:
   showIcons: true
   theme:
     selectedLineBgColor:
-        - default
-        - bold
+      - black
+      - bold
     selectedRangeBgColor:
-        - default
+      - black
+      - bold
+  border: "rounded"
 os:
   openCommand: "xdg-open {{filename}} >/dev/null"

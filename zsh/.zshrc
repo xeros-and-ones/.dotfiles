@@ -14,7 +14,7 @@ fi
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 export PATH=$PATH:/usr/local/go/bin
-export PATH="$HOME/.emacs.d/bin:$PATH"
+export PATH="$HOME/.config/emacs/bin:$PATH"
 export PATH="/home/xero/.detaspace/bin:$PATH"
 fpath+=~/.zfunc
 # Set name of the theme to load --- if set to "random", it will
@@ -108,7 +108,7 @@ source $ZSH/oh-my-zsh.sh
 # else
 export EDITOR='nvim'
 # fi
-ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste up-line-or-search down-line-or-search expand-or-complete accept-line push-line-or-edit)
+# ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste up-line-or-search down-line-or-search expand-or-complete accept-line push-line-or-edit)
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
