@@ -93,7 +93,8 @@ source $ZSHCONFIG/themes/powerlevel10k/powerlevel10k.zsh-theme
 #
 #
 #
-#
+###### Key Bindings #####------------------
+source $ZSHCONFIG/lib/key_bindings.zsh
 #
 #
 #
