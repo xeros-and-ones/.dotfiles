@@ -55,9 +55,9 @@ setopt pushdminus
 #
 #
 ####### exports ##########--------------------------------------------------------------
-export GOPATH=$PATH:/usr/local/go/bin
-export EMACSPATH="$HOME/.config/emacs/bin:$PATH"
-export DETAPATH="/home/xero/.detaspace/bin:$PATH"
+export PATH=$PATH:/usr/local/go/bin
+export PATH="$HOME/.config/emacs/bin:$PATH"
+export PATH="/home/xero/.detaspace/bin:$PATH"
 fpath+=~/.zfunc
 
 export EDITOR='nvim'
@@ -94,19 +94,7 @@ source $ZSHCONFIG/themes/powerlevel10k/powerlevel10k.zsh-theme
 #
 #
 ###### Key Bindings #####------------------
-# source $ZSHCONFIG/lib/key_bindings.zsh
-
-() {
-   local -a prefix=( '\e'{\[,O} )
-   local -a up=( ${^prefix}A ) down=( ${^prefix}B )
-   local key=
-   for key in $up[@]; do
-      bindkey "$key" up-line-or-history
-   done
-   for key in $down[@]; do
-      bindkey "$key" down-line-or-history
-   done
-}
+source $ZSHCONFIG/lib/key_bindings.zsh
 #
 #
 #
