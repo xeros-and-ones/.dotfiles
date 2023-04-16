@@ -15,25 +15,39 @@ fi
 #
 ####### Options ###########-------------------------------------------------------------
 # Changing/making/removing directory
-setopt auto_cd
+setopt AUTO_CD
 setopt auto_pushd
 setopt pushd_ignore_dups
 setopt pushdminus
-setopt interactivecomments
-#
-#
+setopt EXTENDED_GLOB
+# Use modern file-locking mechanisms, for better safety & performance.
+setopt HIST_FCNTL_LOCK
+# Keep only the most recent copy of each duplicate entry in history.
+setopt HIST_IGNORE_ALL_DUPS
+# Auto-sync history between concurrent sessions.
+setopt SHARE_HISTORY
+# Sort numbers numerically, not lexicographically.
+setopt NUMERIC_GLOB_SORT
+# Don't let > silently overwrite files. To overwrite, use >! instead.
+setopt NO_CLOBBER
+# Treat comments pasted into the command line as comments, not code.
+setopt INTERACTIVE_COMMENTS
 ####### exports ##########--------------------------------------------------------------
+export EDITOR=nvim
+export VISUAL=nvim
+# export PAGER=nvim
+export HISTFILE="$HOME/.zsh_history"    # History filepath
+# Max number of entries to keep in history file.
+SAVEHIST=$(( 100 * 1000 ))      # Use multiplication for readability.
+
+# Max number of history entries to keep in memory.
+HISTSIZE=$(( 1.2 * SAVEHIST ))  # Zsh recommended value
+
 export PATH=$PATH:/usr/local/go/bin
 export PATH="$HOME/.config/emacs/bin:$PATH"
 export PATH="/home/xero/.detaspace/bin:$PATH"
 fpath+=~/.config/zsh/zfunc
 
-export EDITOR=nvim
-export VISUAL=nvim
-# export PAGER=nvim
-export HISTFILE="$HOME/.zsh_history"    # History filepath
-export HISTSIZE=10000                   # Maximum events for internal history
-export SAVEHIST=10000                   # Maximum events in history file
 #
 #
 #
