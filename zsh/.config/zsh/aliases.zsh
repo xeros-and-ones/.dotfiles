@@ -90,6 +90,8 @@ alias t="et --hidden --icons --dirs-first"
 alias c="clear"
 alias q="exit"
 alias v="nvim"
+alias sv="sudoedit"
+alias snvim="sudoedit"
 
 alias -g ...='../..'
 alias -g ....='../../..'
