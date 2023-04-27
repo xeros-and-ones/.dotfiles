@@ -35,7 +35,7 @@ setopt INTERACTIVE_COMMENTS
 ####### exports ##########--------------------------------------------------------------
 export EDITOR=nvim
 export VISUAL=nvim
-# export PAGER=nvim
+# export PAGER=/usr/bin/moar
 export HISTFILE="$HOME/.zsh_history"    # History filepath
 # Max number of entries to keep in history file.
 SAVEHIST=$(( 100 * 1000 ))      # Use multiplication for readability.
