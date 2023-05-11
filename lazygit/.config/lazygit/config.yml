@@ -9,5 +9,9 @@ gui:
       - black
       - bold
   border: "rounded"
+git:
+  paging:
+    colorArgs: always
+    useConfig: true
 os:
   openCommand: "xdg-open {{filename}} >/dev/null"

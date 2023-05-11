@@ -8,3 +8,16 @@
 	email = mohamed96tarek@hotmail.com
 [credential]
 	helper = cache
+[core]
+    editor = nvim
+    pager = delta
+[interactive]
+    diffFilter = dilta --color-only
+[delta]
+    navigate = true
+    line-numbers = true
+    side-by-side = true
+[merge]
+    conflictstyle = diff3
+[diff]
+    colorMoved = default
