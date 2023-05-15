@@ -52,20 +52,19 @@ fpath+=~/.config/zsh/zfunc
 #
 #
 ######## PLUGINS & THEMES #############--------------------------------------------------
-export ZSHCONFIG=~/.config/zsh
-source $ZSHCONFIG/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
-source $ZSHCONFIG/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-source $ZSHCONFIG/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
-source $ZSHCONFIG/plugins/dotnet/dotnet.plugin.zsh
-source $ZSHCONFIG/plugins/git/git.plugin.zsh
-source $ZSHCONFIG/themes/powerlevel10k/powerlevel10k.zsh-theme
+source ~/.config/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+source ~/.config/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+source ~/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
+source ~/.config/zsh/plugins/dotnet/dotnet.plugin.zsh
+source ~/.config/zsh/plugins/git/git.plugin.zsh
+source ~/.config/zsh/themes/powerlevel10k/powerlevel10k.zsh-theme
 #
 #
 #
 ###### Key Bindings & Aliases & Functions #####------------------
-source $ZSHCONFIG/key_bindings.zsh
-source $ZSHCONFIG/aliases.zsh
-source $ZSHCONFIG/functions.zsh
+source ~/.config/zsh/key_bindings.zsh
+source ~/.config/zsh/aliases.zsh
+source ~/.config/zsh/functions.zsh
 #
 #
 #
