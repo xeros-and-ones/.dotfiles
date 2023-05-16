@@ -46,6 +46,7 @@ HISTSIZE=$(( 1.2 * SAVEHIST ))  # Zsh recommended value
 export PATH=$PATH:/usr/local/go/bin
 export PATH="$HOME/.config/emacs/bin:$PATH"
 export PATH="/home/xero/.detaspace/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 fpath+=~/.config/zsh/zfunc
 
 #
