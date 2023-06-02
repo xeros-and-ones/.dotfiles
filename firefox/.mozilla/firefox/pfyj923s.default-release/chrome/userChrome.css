@@ -78,7 +78,7 @@
 
 /* Show Tab Close buttons only when hovered */
 .tabbrowser-tab:not([pinned]):hover .tab-close-button {
-  display: -moz-box !important;
+  display: block !important;
 }
 
 #tabbrowser-tabs {
@@ -228,6 +228,6 @@ menupopup:not(.in-menulist) > menu {
 }
 
 /* remove space pre tabs */
-.titlebar-spacer[type="pre-tabs"] {
+#TabsToolbar *[type="pre-tabs"] {
   display: none !important;
 }
