@@ -86,7 +86,8 @@ alias printcolors='for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i
 alias nvidia="sudo optirun -b none nvidia-settings -c :8"
 alias smi="sudo nvidia-smi"
 alias lg="lazygit"
-alias t="erd --hidden --icons --dirs-first --inverted --follow --human"
+alias tl="erd -fI.H --long -yinverted -Cauto --dir-order=first"
+alias t="erd -fI.H -yinverted -Cauto --dir-order=first"
 alias c="clear"
 alias q="exit"
 alias v="nvim"
@@ -111,8 +112,8 @@ alias 9='cd -9'
 
 
 ########## folders aliases ###########---------------
-alias l="exa --long --grid --group-directories-first --git --header --icons --all"
-alias lf="exa --grid --group-directories-first --git --header --icons --all"
+alias l="eza --long --grid --group-directories-first --git --header --icons --all"
+alias lf="eza --grid --group-directories-first --git --header --icons --all"
 alias docs="cd ~/Documents/"
 alias data="cd /mnt/Data/"
 alias apps="cd /mnt/Data/Apps/"
