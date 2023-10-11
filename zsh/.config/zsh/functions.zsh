@@ -1,10 +1,10 @@
 ######## Functions ##########-----------------------------------------------------------
 # Figure out the SHORT hostname
 if [[ "$OSTYPE" = darwin* ]]; then
-  # macOS's $HOST changes with dhcp, etc. Use ComputerName if possible.
-  SHORT_HOST=$(scutil --get ComputerName 2>/dev/null) || SHORT_HOST="${HOST/.*/}"
+    # macOS's $HOST changes with dhcp, etc. Use ComputerName if possible.
+    SHORT_HOST=$(scutil --get ComputerName 2>/dev/null) || SHORT_HOST="${HOST/.*/}"
 else
-  SHORT_HOST="${HOST/.*/}"
+    SHORT_HOST="${HOST/.*/}"
 fi
 #
 #
@@ -44,18 +44,18 @@ function try_alias_value() {
 #
 # mkcd is equivalent to takedir
 function mkcd takedir() {
-  mkdir -p $@ && cd ${@:$#}
+    mkdir -p $@ && cd ${@:$#}
 }
 #
 #
 #
 #############################################################
 function d () {
-  if [[ -n $1 ]]; then
-    dirs "$@"
-  else
-    dirs -v | head -n 10
-  fi
+    if [[ -n $1 ]]; then
+        dirs "$@"
+    else
+        dirs -v | head -n 10
+    fi
 }
 compdef _dirs d
 #
@@ -99,22 +99,22 @@ function git_remote_status() {
 # Using '--quiet' with 'symbolic-ref' will not cause a fatal error (128) if
 # it's not a symbolic ref, but in a Git repo.
 function git_current_branch() {
-  local ref
-  ref=$(__git_prompt_git symbolic-ref --quiet HEAD 2> /dev/null)
-  local ret=$?
-  if [[ $ret != 0 ]]; then
-    [[ $ret == 128 ]] && return  # no git repo.
-    ref=$(__git_prompt_git rev-parse --short HEAD 2> /dev/null) || return
-  fi
-  echo ${ref#refs/heads/}
+    local ref
+    ref=$(__git_prompt_git symbolic-ref --quiet HEAD 2> /dev/null)
+    local ret=$?
+    if [[ $ret != 0 ]]; then
+        [[ $ret == 128 ]] && return  # no git repo.
+        ref=$(__git_prompt_git rev-parse --short HEAD 2> /dev/null) || return
+    fi
+    echo ${ref#refs/heads/}
 }
 #
 #
 # Output the name of the root directory of the git repository
 # Usage example: $(git_repo_name)
 function git_repo_name() {
-  local repo_path
-  if repo_path="$(__git_prompt_git rev-parse --show-toplevel 2>/dev/null)" && [[ -n "$repo_path" ]]; then
-    echo ${repo_path:t}
-  fi
+    local repo_path
+    if repo_path="$(__git_prompt_git rev-parse --show-toplevel 2>/dev/null)" && [[ -n "$repo_path" ]]; then
+        echo ${repo_path:t}
+    fi
 }
