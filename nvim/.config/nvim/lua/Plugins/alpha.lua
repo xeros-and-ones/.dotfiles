@@ -126,7 +126,7 @@ function M.config()
   theme.config.layout = {
     { type = "padding", val = 4 },
     { type = "padding", val = 4 },
-    get_header { headers.cool, headers.panda, headers.xero1, headers.xero2, headers.xerobig },
+    get_header { headers.cool, headers.panda, headers.xero1, headers.xero2, headers.xerobig, headers.beautiful },
     { type = "padding", val = 1 },
     links,
     { type = "padding", val = 2 },
