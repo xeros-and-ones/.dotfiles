@@ -23,6 +23,7 @@ M.opts = {
   contrast = "hard",
   transparent_mode = true,
   overrides = {
+    PMenu = { bg = "NONE" },
     DiagnosticVirtualTextError = { fg = "#fb4934", bg = "#400404" },
     DiagnosticVirtualTextWarn = { fg = "#fabd2f", bg = "#3f4004" },
     DiagnosticVirtualTextInfo = { fg = "#83a598", bg = "#040540" },

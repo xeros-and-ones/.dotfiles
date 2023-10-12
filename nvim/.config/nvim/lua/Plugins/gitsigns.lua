@@ -43,7 +43,7 @@ function M.config()
       end,
     },
     mode = { "n", "x" },
-    body = "<leader>G",
+    body = "<leader>gh",
     heads = {
       {
         "]",

@@ -43,37 +43,22 @@ end
 --
 --
 
-local user_terminals = {}
-M.toggle_term_cmd = function(opts)
-  local terms = user_terminals
-  -- if a command string is provided, create a basic table for Terminal:new() options
-  if type(opts) == "string" then
-    opts = {
-      cmd = opts,
-      hidden = true,
-      on_open = function(term)
-        vim.cmd "startinsert!"
-      end,
-      close_on_exit = true,
-      direction = "float",
-      float_opts = {
-        border = "rounded",
-      },
-    }
-  end
-  local num = vim.v.count > 0 and vim.v.count or 1
-  -- if terminal doesn't exist yet, create it
-  if not terms[opts.cmd] then
-    terms[opts.cmd] = {}
-  end
-  if not terms[opts.cmd][num] then
-    if not opts.count then
-      opts.count = vim.tbl_count(terms) * 100 + num
-    end
-    terms[opts.cmd][num] = require("toggleterm.terminal").Terminal:new(opts)
-  end
-  -- toggle the terminal
-  user_terminals[opts.cmd][num]:toggle()
+-- open toggleterm with lazygit
+M.toggle_lazygit = function()
+  local Terminal = require("toggleterm.terminal").Terminal
+  local lazygit = Terminal:new {
+    cmd = "lazygit",
+    hidden = true,
+    on_open = function(term)
+      vim.cmd "startinsert!"
+    end,
+    close_on_exit = true,
+    direction = "float",
+    float_opts = {
+      border = "single",
+    },
+  }
+  lazygit:toggle()
 end
 
 -- when grepping, cd to the project root directory first

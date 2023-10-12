@@ -81,9 +81,6 @@ function M.config()
   }, { prefix = "<leader>" })
 
   wk.register({
-    t = { name = "Terminal" },
-  }, { prefix = "<leader>" })
-  wk.register({
     s = { name = "Spectre Find & Replace" },
   }, { prefix = "<leader>" })
   wk.register({

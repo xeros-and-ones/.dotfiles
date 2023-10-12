@@ -18,7 +18,7 @@ opt.ignorecase = true
 opt.infercase = true
 opt.smartcase = true
 
-opt.pumblend = 2 -- Make builtin completion menus slightly transparent
+opt.pumblend = 0 -- Make builtin completion menus slightly transparent
 opt.pumheight = 10 -- Make popup menu smaller
 opt.completeopt = { "menuone", "noselect" } -- mostly just for cmp
 opt.winblend = 0
@@ -72,6 +72,24 @@ opt.whichwrap:append "<,>,[,],h,l" -- keys allowed to move to the previous/next 
 opt.iskeyword:append "-" -- treats words with `-` as single words
 opt.formatoptions:remove { "c", "r", "o" } -- This is a sequence of letters which describes how automatic formatting is to be done
 opt.linebreak = true
+
+vim.diagnostic.config {
+  -- disable virtual text
+  virtual_text = false,
+  virtual_lines = false,
+  update_in_insert = true,
+  underline = true,
+  severity_sort = true,
+  float = {
+    focusable = false,
+    style = "minimal",
+    border = "rounded",
+    source = "always",
+    header = "",
+    prefix = "",
+    suffix = "",
+  },
+}
 
 -- GUI
 opt.guifont = { "FiraCode_NF", "Source_Code_Pro", "Noto_Sans", "Sans_Serif", ":h11" }
