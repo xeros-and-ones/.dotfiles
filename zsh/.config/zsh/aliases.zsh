@@ -92,7 +92,7 @@ alias c="clear"
 alias q="exit"
 alias v="nvim"
 alias sv="sudoedit"
-alias snvim="sudoedit"
+alias vconf="cd ~/.dotfiles/nvim/.config/nvim/ && v"
 
 alias -g ...='../..'
 alias -g ....='../../..'
