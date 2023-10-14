@@ -131,7 +131,7 @@ function M.config()
                     require("noice").api.statusline.mode.get,
                     cond = require("noice").api.statusline.mode.has,
                     color = { fg = "#ff2800", bg = "#000000" },
-                    separator = { left = "" }
+                    separator = { left = "", right = "" }
                 },
                 {
                     function()
@@ -145,6 +145,7 @@ function M.config()
                             return true
                         end
                     end,
+                    color = { fg = "#000000", bg = "#ffffff" },
                     separator = { left = "", right = "" },
                 },
                 {
@@ -179,15 +180,14 @@ function M.config()
             lualine_z = {},
         },
         -- tabline = {},
-        -- winbar = {
-        --     lualine_a = {},
-        --     lualine_b = {},
-        --     lualine_c = {
-        --     },
-        --     lualine_x = {},
-        --     lualine_y = {},
-        --     lualine_z = {},
-        -- },
+        winbar = {
+            lualine_a = {},
+            lualine_b = {},
+            lualine_c = {},
+            lualine_x = {},
+            lualine_y = {},
+            lualine_z = {},
+        },
         -- inactive_winbar = {},
         extensions = {
             "toggleterm",

@@ -4,7 +4,6 @@ local M = {
     dependencies = {
         "nvim-lua/plenary.nvim",
         "nvim-tree/nvim-web-devicons",
-        "nvim-telescope/telescope-ui-select.nvim", -- Use telescope to override vim.ui.select
         "nvim-telescope/telescope-project.nvim",
         { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     },
@@ -109,6 +108,12 @@ function M.config()
                 },
             },
         },
+        pickers = {
+            find_files = {
+                -- `hidden = true` will still show the inside of `.git/` as it's not `.gitignore`d.
+                find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
+            },
+        },
         extensions = {
             -- fzf = {
             --   fuzzy = true, -- false will only do exact matching
@@ -116,10 +121,6 @@ function M.config()
             --   override_file_sorter = true, -- override the file sorter
             --   case_mode = "smart_case", -- or "ignore_case" or "respect_case"
             -- },
-            ["ui-select"] = {
-                require("telescope.themes").get_dropdown {
-                    -- even more opts
-                }, },
             project = {
                 base_dirs = {
                     "~",

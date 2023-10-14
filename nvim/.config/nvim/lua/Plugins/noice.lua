@@ -39,9 +39,16 @@ function M.config()
                 timeout = 3000,
             },
         },
-        mini = {
-            win_options = {
-                winblend = 30,
+        popupmenu = {
+            enabled = true,  -- enables the Noice popupmenu UI
+            ---@type 'nui'|'cmp'
+            backend = "cmp", -- backend to use to show regular cmdline completions
+        },
+        views = {
+            mini = {
+                win_options = {
+                    winblend = 5,
+                },
             },
         },
         routes = {
@@ -69,6 +76,17 @@ function M.config()
             lsp_doc_border = true,        -- add a border to hover docs and signature help
         },
     }
+    vim.keymap.set({ "n", "i", "s" }, "<c-d>", function()
+        if not require("noice.lsp").scroll(4) then
+            return "<c-d>"
+        end
+    end, { silent = true, expr = true })
+
+    vim.keymap.set({ "n", "i", "s" }, "<c-f>", function()
+        if not require("noice.lsp").scroll(-4) then
+            return "<c-f>"
+        end
+    end, { silent = true, expr = true })
 end
 
 return M

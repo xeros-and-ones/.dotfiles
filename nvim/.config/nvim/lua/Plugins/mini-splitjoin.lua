@@ -8,7 +8,7 @@ local M = {
 function M.config()
   require("mini.splitjoin").setup {
     mappings = {
-      toggle = "gS",
+      toggle = "gs",
       split = "",
       join = "",
     },

@@ -259,7 +259,6 @@ local function show_hover()
     end
 end
 keymap("n", "gh", show_hover, { desc = "Hover", silent = true }) -- mapped outside otherwise types w/o LSP won't get the bind
-
 -- Lsp lines
 keymap("n", "<leader>lL", function()
     require("lsp_lines").toggle()
@@ -329,5 +328,5 @@ keymap("n", "g#", [[g#<Cmd>lua require('hlslens').start()<CR>]])
 -- ╔═════════════════════════════════════════════════╗
 -- ║ Overseer                                        ║
 -- ╚═════════════════════════════════════════════════╝
-keymap("n", "<f5>", "<cmd>OverseerToggle<cr>", { desc = "Overseer List" })
-keymap("n", "<c-f5>", "<cmd>OverseerRun<cr>", { desc = "Overseer Run" })
+keymap("n", "<leader>co", "<cmd>OverseerToggle<cr>", { desc = "Overseer List" })
+keymap("n", "<leader>cr", "<cmd>OverseerRun<cr>", { desc = "Overseer Run" })

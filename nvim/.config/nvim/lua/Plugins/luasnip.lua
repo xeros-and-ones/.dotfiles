@@ -16,10 +16,8 @@ M.opts = {
     enable_autosnippets = true,
 }
 function M.config()
-    require("luasnip.loaders.from_vscode").lazy_load()
-    require 'luasnip'.filetype_extend("django", { "django", "djangohtml" })
-    require 'luasnip'.filetype_extend("djangohtml", { "djangohtml" })
-    require 'luasnip'.filetype_extend("python", { "pydoc" })
+    require("luasnip.loaders.from_vscode").lazy_load({
+        require 'luasnip'.filetype_extend("python", { "django", "djangohtml", "pydoc" }) })
 end
 
 return M

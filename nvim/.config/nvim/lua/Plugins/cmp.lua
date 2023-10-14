@@ -4,19 +4,14 @@ local M = {
     dependencies = {
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-buffer",
-        "hrsh7th/cmp-path",
+        "FelipeLema/cmp-async-path",
         "hrsh7th/cmp-nvim-lua",
         "hrsh7th/cmp-emoji",
-        {
-            "L3MON4D3/LuaSnip",
-            dependencies = {
-                "saadparwaiz1/cmp_luasnip",
-                "rafamadriz/friendly-snippets",
-            },
-        },
+        "saadparwaiz1/cmp_luasnip",
+        "hrsh7th/cmp-cmdline",
     },
 
-    event = { "InsertEnter" },
+    event = { "InsertEnter", "CmdlineEnter" },
 }
 
 local has_words_before = function()
@@ -61,7 +56,7 @@ function M.config()
     local luasnip = require "luasnip"
 
     cmp.setup {
-        preselect = cmp.PreselectMode.None,
+        preselect = cmp.PreselectMode.Item,
         completion = {
             completeopt = "menu,menuone,noinsert ",
         },
@@ -72,31 +67,46 @@ function M.config()
         },
         experimental = {
             ghost_text = true,
+            native_menu = false,
         },
         window = {
-            completion = {
-                winhighlight = "Normal:PMenu",
+            completion = cmp.config.window.bordered({
+                winhighlight = "Normal:Float",
                 border = "rounded",
-            },
-            documentation = {
-                winhighlight = "Normal:PMenu",
+            }),
+            documentation = cmp.config.window.bordered({
+                winhighlight = "Normal:Float",
                 border = "rounded",
-            },
+            }),
         },
         mapping = {
-            ["<Up>"] = cmp.mapping(cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select }, { "i", "c" }),
-            ["<Down>"] = cmp.mapping(cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select }, { "i", "c" }),
+            ["<Up>"] = cmp.mapping(cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert }, { "i", "c" }),
+            ["<Down>"] = cmp.mapping(cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert }, { "i", "c" }),
             ["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert }, { "i", "c" }),
             ["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert }, { "i", "c" }),
             ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
             ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
-            ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-            ["<C-y>"] = cmp.config.disable,
-            ["<C-e>"] = cmp.mapping {
-                i = cmp.mapping.abort(),
-                c = cmp.mapping.close(),
+            ["<c-space>"] = cmp.mapping {
+                i = cmp.mapping.complete(),
+                c = function(_) -- fallback
+                    if cmp.visible() then
+                        if not cmp.confirm { select = true } then
+                            return
+                        end
+                    else
+                        cmp.complete()
+                    end
+                end,
             },
-            ["<CR>"] = cmp.mapping.confirm { select = false },
+            ["<C-y>"] = cmp.mapping(
+                cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Insert, select = true },
+                { "i", "c" }
+            ),
+            ["<C-e>"] = cmp.mapping.close(),
+            ["<CR>"] = cmp.mapping.confirm {
+                behavior = cmp.ConfirmBehavior.Replace,
+                select = true,
+            },
             ["<Tab>"] = cmp.mapping(function(fallback)
                 if cmp.visible() then
                     cmp.select_next_item()
@@ -104,6 +114,8 @@ function M.config()
                     luasnip.expand()
                 elseif luasnip.expand_or_jumpable() then
                     luasnip.expand_or_jump()
+                elseif require("neogen").jumpable(1) then
+                    require("neogen").jump_next()
                 elseif has_words_before() then
                     cmp.complete()
                 else
@@ -118,6 +130,8 @@ function M.config()
                     cmp.select_prev_item()
                 elseif luasnip.jumpable(-1) then
                     luasnip.jump(-1)
+                elseif require("neogen").jumpable(-1) then
+                    require("neogen").jump_prev()
                 else
                     fallback()
                 end
@@ -128,26 +142,28 @@ function M.config()
         },
         sources = {
             { name = "nvim_lsp" },
+            { name = "luasnip",   option = { show_autosnippets = true } },
             { name = "buffer" },
-            { name = "path" },
-            { name = "luasnip",  option = { show_autosnippets = true } },
+            { name = "async_path" },
             { name = "crates" },
-            { name = "nvim_lua", ft = "lua" },
+            { name = "nvim_lua",  ft = "lua" },
+            { name = "emoji" }
         },
         formatting = {
-            fields = { "abbr", "kind", "menu" },
+            fields = { "menu", "abbr", "kind" },
             format = function(entry, vim_item)
                 -- concatonates the icons with the name of the item kind
                 vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind)
                 -- vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
                 vim_item.menu = --("")
                     ({
-                        nvim_lsp = "[LSP]",
-                        luasnip = "[Snippet]",
-                        buffer = "[Buffer]",
-                        path = "[Path]",
+                        nvim_lsp = 'λ',
+                        luasnip = '⋗',
+                        buffer = 'Ω',
+                        path = '🖫',
+                        nvim_lua = 'Π',
                     })[entry.source.name]
-                vim_item.dup = 0
+                -- vim_item.dup = 0
                 return vim_item
             end,
         },
@@ -177,15 +193,18 @@ function M.config()
                 cmp.config.compare.order,
             },
         },
-        confirm_opts = {
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = false,
-        },
     }
 
     cmp.setup.cmdline({ "/", "?" }, {
         sources = {
             { name = "buffer", keyword_length = 1 },
+        },
+    })
+    cmp.setup.cmdline(":", {
+        sources = {
+            { name = "path" },
+            { name = "nvim_lua" },
+            { name = "cmdline", keyword_length = 2 },
         },
     })
 
