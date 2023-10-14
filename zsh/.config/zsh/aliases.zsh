@@ -50,7 +50,7 @@ function pipunall {
 ######### venv utilities #########-----------------
 # Activate the python virtual environment specified.
 # If none specified, use 'venv'.
-function runvenv() {
+function vr() {
   local name="${1:-venv}"
   local venvpath="${name:P}"
 
@@ -75,7 +75,7 @@ function mkvenv() {
 
   python3 -m venv "${name}" || return
   echo >&2 "Created venv in '${venvpath}'"
-  runvenv "${name}"
+  vr "${name}"
 }
 
 

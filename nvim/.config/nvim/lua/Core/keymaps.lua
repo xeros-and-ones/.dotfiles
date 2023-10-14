@@ -315,15 +315,6 @@ keymap("n", "<leader>zs", "<cmd>lua require('luasnip.loaders').edit_snippet_file
 keymap("n", "<leader>zr", "<cmd>luafile %<CR>", { desc = "Source current file" })
 keymap("n", "<leader>zt", "<cmd>Inspect<CR>", { desc = "TS Inspect" })
 keymap("n", "<leader>zT", "<cmd>InspectTree<CR>", { desc = "TS Inspect Tree" })
--- ╔═════════════════════════════════════════════════╗
--- ║ Search                                          ║
--- ╚═════════════════════════════════════════════════╝
-keymap("n", "n", [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]])
-keymap("n", "N", [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]])
-keymap("n", "*", [[*<Cmd>lua require('hlslens').start()<CR>]])
-keymap("n", "#", [[#<Cmd>lua require('hlslens').start()<CR>]])
-keymap("n", "g*", [[g*<Cmd>lua require('hlslens').start()<CR>]])
-keymap("n", "g#", [[g#<Cmd>lua require('hlslens').start()<CR>]])
 
 -- ╔═════════════════════════════════════════════════╗
 -- ║ Overseer                                        ║

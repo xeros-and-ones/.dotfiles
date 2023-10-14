@@ -8,8 +8,8 @@ gui:
     selectedRangeBgColor:
       - black
       - bold
-  border: "rounded"
+  border: 'rounded'
 git:
   paging:
     colorArgs: always
-    useConfig: true
+    pager: delta --dark --paging=never
