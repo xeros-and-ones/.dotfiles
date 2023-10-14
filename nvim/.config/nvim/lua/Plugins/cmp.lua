@@ -157,11 +157,11 @@ function M.config()
                 -- vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
                 vim_item.menu = --("")
                     ({
-                        nvim_lsp = 'λ',
-                        luasnip = '⋗',
-                        buffer = 'Ω',
-                        path = '🖫',
-                        nvim_lua = 'Π',
+                        nvim_lsp = '[LSP]',
+                        luasnip = '[SNIP]',
+                        buffer = 'BUFF',
+                        path = '[PATH]',
+                        nvim_lua = '[LUA]',
                     })[entry.source.name]
                 -- vim_item.dup = 0
                 return vim_item
