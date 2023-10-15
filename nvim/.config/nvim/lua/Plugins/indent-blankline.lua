@@ -27,7 +27,6 @@ function M.init()
 				"lazy",
 				"NvimTree",
 				"packer",
-				"noice",
 				"notify",
 				"lspinfo",
 				"TelescopePrompt",

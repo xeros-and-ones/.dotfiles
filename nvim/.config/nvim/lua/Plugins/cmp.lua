@@ -9,6 +9,27 @@ local M = {
         "hrsh7th/cmp-emoji",
         "saadparwaiz1/cmp_luasnip",
         "hrsh7th/cmp-cmdline",
+        -- "hrsh7th/cmp-nvim-lsp-signature-help"
+        {
+            "rafamadriz/friendly-snippets",
+            config = function()
+                require("luasnip.loaders.from_vscode").lazy_load({
+                    require 'luasnip'.filetype_extend("python", { "django", "djangohtml", "pydoc" }) })
+            end,
+        },
+        {
+            "L3MON4D3/LuaSnip",
+            -- follow latest release.
+            version = "v2.*",
+            build = "make install_jsregexp",
+            opts = {
+                history = true,
+                update_events = "TextChanged,TextChangedI",
+                delete_check_events = "TextChanged,InsertLeave",
+                enable_autosnippets = true,
+            },
+        }
+
     },
 
     event = { "InsertEnter", "CmdlineEnter" },
@@ -147,7 +168,8 @@ function M.config()
             { name = "async_path" },
             { name = "crates" },
             { name = "nvim_lua",  ft = "lua" },
-            { name = "emoji" }
+            { name = "emoji" },
+            -- { name = "nvim_lsp_signature_help" },
         },
         formatting = {
             fields = { "menu", "abbr", "kind" },

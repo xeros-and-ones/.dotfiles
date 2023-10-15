@@ -4,7 +4,22 @@ local M = {
     enabled = true,
     dependencies = {
         "neovim/nvim-lspconfig",
-        "williamboman/mason.nvim",
+        {
+            "williamboman/mason.nvim",
+            opts = {
+                ui = {
+                    border = "rounded",
+                    icons = {
+                        package_installed = "✓",
+                        package_uninstalled = "✗",
+                        package_pending = "⟳",
+                    },
+                },
+                log_level = vim.log.levels.INFO,
+                max_concurrent_installers = 4,
+
+            }
+        },
         "jay-babu/mason-null-ls.nvim",
         "hrsh7th/cmp-nvim-lsp",
         "folke/neodev.nvim",
@@ -46,19 +61,6 @@ local ensure_installed = {
     "prettier",
 }
 function M.config()
-    -- setup mason for tool installation
-    require("mason").setup {
-        ui = {
-            border = "rounded",
-            icons = {
-                package_installed = "✓",
-                package_uninstalled = "✗",
-                package_pending = "⟳",
-            },
-        },
-        log_level = vim.log.levels.INFO,
-        max_concurrent_installers = 4,
-    }
     require("lspconfig.ui.windows").default_options.border = "rounded"
     -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
     local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -82,47 +84,24 @@ function M.config()
             { desc = "Implementation", buffer = bufnr })
         keymap("n", "gk", "<cmd>lua vim.diagnostic.open_float()<CR>", { desc = "Float Diagnostics", buffer = bufnr })
         keymap("n", "<leader>lc", "<cmd>lua vim.lsp.buf.code_action()<cr>", { desc = "Code Actions", buffer = bufnr })
-        keymap(
-            "n",
-            "]d",
-            "<cmd>lua vim.diagnostic.goto_next({buffer=0})<cr>",
-            { desc = "Diagnostics Next", buffer = bufnr }
-        )
-        keymap(
-            "n",
-            "[d",
-            "<cmd>lua vim.diagnostic.goto_prev({buffer=0})<cr>",
-            { desc = "Diagnostics Prev", buffer = bufnr }
-        )
+        keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next({buffer=0})<cr>",
+            { desc = "Diagnostics Next", buffer = bufnr })
+        keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev({buffer=0})<cr>",
+            { desc = "Diagnostics Prev", buffer = bufnr })
         keymap("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<cr>", { desc = "rename", buffer = bufnr })
         keymap("n", "<leader>ls", "<cmd>lua vim.lsp.buf.signature_help()<CR>",
             { desc = "Signature Help", buffer = bufnr })
-        keymap(
-            "n",
-            "<leader>ll",
-            "<cmd>lua vim.diagnostic.setloclist()<CR>",
-            { desc = "Diagnostics loclist", buffer = bufnr }
-        )
+        keymap("n", "<leader>ll", "<cmd>lua vim.diagnostic.setloclist()<CR>",
+            { desc = "Diagnostics loclist", buffer = bufnr })
         keymap("n", "<leader>lq", "<cmd>TroubleToggle quickfix<cr>", { desc = "Quickfix [Trouble]", buffer = bufnr })
-        keymap(
-            "n",
-            "<leader>ld",
-            "<cmd>TroubleToggle lsp_definitions<cr>",
-            { desc = "Definition [Trouble]", buffer = bufnr }
-        )
-        keymap(
-            "n",
-            "<leader>lt",
-            "<cmd>TroubleToggle lsp_type_definitions<cr>",
-            { desc = "Type Definition [Trouble]", buffer = bufnr }
-        )
-        keymap(
-            "n",
-            "<leader>lf",
-            "<cmd>TroubleToggle lsp_references<cr>",
-            { desc = "Find references [Trouble]", buffer = bufnr }
-        )
-        keymap("n", "<leader>lx", "<cmd>TroubleToggle document_diagnostics<cr>", { desc = "Error List [Trouble]", buffer = bufnr })
+        keymap("n", "<leader>ld", "<cmd>TroubleToggle lsp_definitions<cr>",
+            { desc = "Definition [Trouble]", buffer = bufnr })
+        keymap("n", "<leader>lt", "<cmd>TroubleToggle lsp_type_definitions<cr>",
+            { desc = "Type Definition [Trouble]", buffer = bufnr })
+        keymap("n", "<leader>lf", "<cmd>TroubleToggle lsp_references<cr>",
+            { desc = "Find references [Trouble]", buffer = bufnr })
+        keymap("n", "<leader>lx", "<cmd>TroubleToggle document_diagnostics<cr>",
+            { desc = "Error List [Trouble]", buffer = bufnr })
         keymap({ "n", "i" }, "<c-f>", vim.lsp.buf.format, { desc = "format code", buffer = bufnr })
     end
 
@@ -171,14 +150,6 @@ function M.config()
         --     }
         -- end,
         ["pylsp"] = function()
-            -- local venv_path = os.getenv('VIRTUAL_ENV')
-            -- local py_path = nil
-            -- -- decide which python executable to use for mypy
-            -- if venv_path ~= nil then
-            --     py_path = venv_path .. "/bin/python3"
-            -- else
-            --     py_path = vim.g.python3_host_prog
-            -- end
             require("lspconfig").pylsp.setup {
                 on_attach = on_attach,
                 settings = {
@@ -190,17 +161,17 @@ function M.config()
                             yapf = { enabled = false },
                             -- linter options
                             pylint = { enabled = true, executable = "pylint" },
-                                -- ruff = { enabled = true, extendSelect = "I" },
+                            -- ruff = { enabled = true, extendSelect = "I" },
                             pyflakes = { enabled = false },
                             pycodestyle = { enabled = false },
                             pydocstyle = { enabled = false },
                             -- type checker
-                            mypy = {enabled = true,},
+                            mypy = { enabled = true, },
                             -- auto-completion options
                             jedi_completion = { fuzzy = true },
                             -- import sorting
                             isort = { enabled = true },
-                            rope = {enabled = true}
+                            rope = { enabled = true }
                         },
                     },
                 },

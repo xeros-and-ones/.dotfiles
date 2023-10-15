@@ -259,10 +259,6 @@ local function show_hover()
     end
 end
 keymap("n", "gh", show_hover, { desc = "Hover", silent = true }) -- mapped outside otherwise types w/o LSP won't get the bind
--- Lsp lines
-keymap("n", "<leader>lL", function()
-    require("lsp_lines").toggle()
-end, { desc = "Toggle Lsp_lines" })
 
 -- ╔═════════════════════════════════════════════════╗
 -- ║ Code                                            ║

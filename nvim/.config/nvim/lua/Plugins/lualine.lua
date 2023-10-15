@@ -70,7 +70,7 @@ function M.config()
     --local spaces = function()
     --return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
     --end
-    require("lualine").setup {
+    lualine.setup {
         options = {
             icons_enabled = true,
             theme = "powerline_custom",
@@ -127,12 +127,6 @@ function M.config()
                 },
             },
             lualine_x = {
-                {
-                    require("noice").api.statusline.mode.get,
-                    cond = require("noice").api.statusline.mode.has,
-                    color = { fg = "#ff2800", bg = "#000000" },
-                    separator = { left = "", right = "" }
-                },
                 {
                     function()
                         return "⚒"

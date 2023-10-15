@@ -22,9 +22,9 @@ autocmd("FileType", {
 local help_group = vim.api.nvim_create_augroup("help_window_right", { clear = true })
 autocmd("BufWinEnter", {
     group = help_group,
-    pattern = { "*.txt" },
+    pattern = { "*.txt", "man", "*.md" },
     callback = function()
-        if vim.o.filetype == "help" then
+        if vim.o.filetype == "help" or "man" or "markdown" then
             vim.cmd.wincmd("L")
         end
     end,
