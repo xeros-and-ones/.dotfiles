@@ -41,6 +41,7 @@ function M.config()
             file_ignore_patterns = {
                 "node_modules",
                 "venv",
+                ".mypy_cache"
             },
             preview = {
                 filesize_limit = 2,

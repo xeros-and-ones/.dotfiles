@@ -74,16 +74,26 @@ function M.config()
     local runtime_path = vim.split(package.path, ";")
     table.insert(runtime_path, "lua/?.lua")
     table.insert(runtime_path, "lua/?/init.lua")
-
+    local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+    local format_group = vim.api.nvim_create_augroup("autoformat", { clear = true })
     local keymap = require("uts").map
+
     -- on_attach function to be added to each server
     local on_attach = function(client, bufnr)
+        --
+        --
+        --
+
+        --
+        --
+        --
         -- Buffer mappings for LSP servers
         keymap("n", "<leader>lD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { desc = "Declaration", buffer = bufnr })
         keymap("n", "<leader>lI", "<cmd>lua vim.lsp.buf.implementation()<CR>",
             { desc = "Implementation", buffer = bufnr })
         keymap("n", "gk", "<cmd>lua vim.diagnostic.open_float()<CR>", { desc = "Float Diagnostics", buffer = bufnr })
-        keymap("n", "<leader>lc", "<cmd>lua vim.lsp.buf.code_action()<cr>", { desc = "Code Actions", buffer = bufnr })
+        keymap({ "n", "v" }, "<leader>lc", "<cmd>lua vim.lsp.buf.code_action()<cr>",
+            { desc = "Code Actions", buffer = bufnr })
         keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next({buffer=0})<cr>",
             { desc = "Diagnostics Next", buffer = bufnr })
         keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev({buffer=0})<cr>",
@@ -102,8 +112,11 @@ function M.config()
             { desc = "Find references [Trouble]", buffer = bufnr })
         keymap("n", "<leader>lx", "<cmd>TroubleToggle document_diagnostics<cr>",
             { desc = "Error List [Trouble]", buffer = bufnr })
-        keymap({ "n", "i" }, "<c-f>", vim.lsp.buf.format, { desc = "format code", buffer = bufnr })
+        --
+        --
+        --
     end
+    keymap({ "n", "i" }, "<c-f>", vim.lsp.buf.format, { desc = "format code" })
 
     --setup neodev
     require("neodev").setup {
@@ -155,22 +168,24 @@ function M.config()
                 settings = {
                     pylsp = {
                         plugins = {
+                            configurationSources = { "ruff" },
                             -- formatter options
                             black = { enabled = true, line_length = 120, cache_config = true },
                             autopep8 = { enabled = false },
                             yapf = { enabled = false },
                             -- linter options
-                            pylint = { enabled = true, executable = "pylint" },
-                            -- ruff = { enabled = true, extendSelect = "I" },
+                            pylint = { enabled = false, executable = "pylint" },
+                            ruff = { enabled = true, extendSelect = "I" },
                             pyflakes = { enabled = false },
                             pycodestyle = { enabled = false },
                             pydocstyle = { enabled = false },
+                            mccabe = { enabled = false },
                             -- type checker
                             mypy = { enabled = true, },
                             -- auto-completion options
-                            jedi_completion = { fuzzy = true },
+                            jedi_completion = { enabled = true, fuzzy = true },
                             -- import sorting
-                            isort = { enabled = true },
+                            isort = { enabled = false },
                             rope = { enabled = true }
                         },
                     },
@@ -254,6 +269,34 @@ function M.config()
     none_ls.setup {
         border = "rounded",
 
+        on_attach = function(client, bufnr)
+            -- Custom command to use null-ls as the formatter.
+            local format_cmd = function(input)
+                vim.lsp.buf.format({
+                    id = client.id,
+                    timeout_ms = 5000,
+                    async = input.bang,
+                })
+            end
+
+            local bufcmd = vim.api.nvim_buf_create_user_command
+            bufcmd(bufnr, "NullFormat", format_cmd, {
+                bang = true,
+                range = true,
+            })
+
+            -- format on save
+            -- if client.supports_method("textDocument/formatting") then
+            -- 	local format_group = vim.api.nvim_create_augroup("autoformat", { clear = true })
+            -- 	vim.api.nvim_create_autocmd("BufWritePre", {
+            -- 		group = format_group,
+            -- 		buffer = bufnr,
+            -- 		callback = function()
+            -- 			vim.cmd("NullFormat")
+            -- 		end,
+            -- 	})
+            -- end
+        end,
         sources = {
             --formatting
             none_ls.builtins.formatting.prettier.with {

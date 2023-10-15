@@ -31,7 +31,7 @@ autocmd("BufWinEnter", {
     desc = "Open help pages in a vertical split",
 })
 -- Automatically close tab/vim when nvim-tree is the last window in the tab
-vim.cmd "autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif"
+vim.cmd "autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'Neotree_' . tabpagenr() | quit | endif"
 
 autocmd({ "BufWritePost" }, {
     pattern = { "*.java" },
