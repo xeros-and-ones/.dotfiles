@@ -38,7 +38,7 @@ local M = {
     event = { "BufRead", "BufNewFile" },
 }
 local ensure_installed = {
-    -- lsp
+    -- lsp ---------------------------------------
     "lua_ls",
     "taplo",
     "vimls",
@@ -46,7 +46,13 @@ local ensure_installed = {
     -- "pyright",
     "yamlls",
     "gopls",
-    -- linters
+
+
+    -- debuggers ---------------------------------
+    "debugpy",
+
+
+    -- linters -----------------------------------
     "eslint_d",
     "markdownlint",
     "djlint",
@@ -54,7 +60,8 @@ local ensure_installed = {
     "jsonlint",
     -- "flake8",
 
-    -- formatters
+
+    -- formatters -------------------------------
     "beautysh",
     -- "black",
     -- "isort",
@@ -204,7 +211,6 @@ function M.config()
                         format = {
                             enable = true,
                             -- Put format options here
-                            -- NOTE: the value should be String!
                             defaultConfig = {
                                 indent_style = "space",
                                 indent_size = "4",
