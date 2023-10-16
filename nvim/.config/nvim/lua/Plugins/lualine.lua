@@ -107,7 +107,7 @@ function M.config()
                 {
                     "diff",
                     colored = true,
-                    symbols = { added = " ", modified = " ", removed = " " }, -- changes diff symbols
+                    symbols = { added = " ", modified = " ", removed = " " }, -- changes diff symbols
                     cond = hide_in_width,
                 },
             },

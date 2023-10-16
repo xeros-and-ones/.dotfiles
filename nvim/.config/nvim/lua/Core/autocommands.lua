@@ -56,13 +56,13 @@ autocmd({ "BufWinEnter" }, {
 })
 
 -- highlight yanked text
-autocmd("TextYankPost", {
-    desc = "Highlight on yank",
-    group = augroup("text_yank_hl", { clear = true }),
-    callback = function()
-        vim.highlight.on_yank { higroup = "Visual", timeout = 200 }
-    end,
-})
+-- autocmd("TextYankPost", {
+--     desc = "Highlight on yank",
+--     group = augroup("text_yank_hl", { clear = true }),
+--     callback = function()
+--         vim.highlight.on_yank { higroup = "Visual", timeout = 200 }
+--     end,
+-- })
 
 -- resize splits if window got resized
 autocmd({ "VimResized" }, {

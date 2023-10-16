@@ -51,8 +51,6 @@ keymap("n", "<leader>q", "<cmd>q<cr>", { desc = "Quit" })
 keymap({ "n", "i", "x" }, "<C-S>", "<Cmd>w<CR>", { desc = "Save" })
 keymap("n", "<esc>", "<cmd>nohlsearch<cr>", { desc = "Clear highlights" }) -- Clear highlights on ESC
 
--- Better paste
-keymap("v", "p", "P", opts)
 
 -- Insert --
 -- Press jk fast to enter
@@ -75,6 +73,15 @@ keymap("n", "<C-Down>", ":resize -2<CR>", opts)
 keymap("n", "<C-Left>", ":vertical resize +2<CR>", opts)
 keymap("n", "<C-Right>", ":vertical resize -2<CR>", opts)
 
+-- ╔═════════════════════════════════════════════════╗
+-- ║ Yanky                                           ║
+-- ╚═════════════════════════════════════════════════╝
+keymap({ "n", "x" }, "<leader>y", "<cmd>YankyRingHistory<cr>", { desc = "Yank History" })
+keymap({ "n", "x" }, "y", "<Plug>(YankyYank)")
+keymap({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
+keymap({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
+keymap("n", "[y", "<Plug>(YankyCycleBackward)", { desc = "Previous yank" })
+keymap("n", "]y", "<Plug>(YankyCycleForward)", { desc = "Next yank" })
 -- ╔═════════════════════════════════════════════════╗
 -- ║ Bufferline                                      ║
 -- ╚═════════════════════════════════════════════════╝

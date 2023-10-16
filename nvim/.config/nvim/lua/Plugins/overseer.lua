@@ -3,7 +3,7 @@ local M = {
     enabled = true,
     cmd = { "OverseerRun", "OverseerToggle" },
 }
-
+-- FIXME: FIX OVERSEER CONFIG TO RUN PYTHON CODE PROPERLY
 function M.config()
     require("overseer").setup {
         strategy = {

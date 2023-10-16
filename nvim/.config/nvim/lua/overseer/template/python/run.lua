@@ -3,7 +3,7 @@ return {
 	builder = function()
 		local file = vim.fn.expand("%:p")
 		return {
-			cmd = { "python" },
+			cmd = { "py" },
 			args = { file },
 			components = { { "on_complete_notify" }, "default" },
 		}
