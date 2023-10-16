@@ -128,8 +128,14 @@ function M.config()
             },
             lualine_x = {
                 {
+                    require("noice").api.statusline.mode.get,
+                    cond = require("noice").api.statusline.mode.has,
+                    color = { fg = "#ff2800", bg = "#000000" },
+                    separator = { left = "", right = "" }
+                },
+                {
                     function()
-                        return "⚒"
+                        return "  "
                     end,
                     cond = function()
                         local tasks = require("overseer").list_tasks()
@@ -139,14 +145,16 @@ function M.config()
                             return true
                         end
                     end,
-                    color = { fg = "#000000", bg = "#ffffff" },
-                    separator = { left = "", right = "" },
+                    color = { fg = "#000000", bg = "#5a5ad8" },
+                    separator = { left = "" },
                 },
                 {
                     "overseer",
                     on_click = function()
                         vim.cmd("OverseerToggle")
                     end,
+                    color = { fg = "#000000", bg = "#5a5ad8" },
+                    separator = { right = "" },
                 },
             },
             lualine_y = { diagnostics, treesitter, lsp },
