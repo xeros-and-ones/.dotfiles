@@ -55,7 +55,7 @@ M.toggle_lazygit = function()
     close_on_exit = true,
     direction = "float",
     float_opts = {
-      border = "single",
+      border = "rounded",
     },
   }
   lazygit:toggle()

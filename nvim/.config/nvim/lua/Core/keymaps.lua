@@ -292,18 +292,12 @@ end, { desc = "Show output" })
 -- ╔═════════════════════════════════════════════════╗
 -- ║ Terminal                                        ║
 -- ╚═════════════════════════════════════════════════╝
-keymap("n", "<leader>t", function()
-    require("uts").UI_select {
-        ["(⤢) Float"] = "vim.cmd('ToggleTerm direction=float')",
-        ["(→) Vertical"] = "vim.cmd('ToggleTerm direction=vertical')",
-        ["(↓) Horizontal"] = "vim.cmd('ToggleTerm size=20 direction=horizontal')",
-    }
-end, { desc = "Terminal" })
-
-keymap("n", "<c-`>", "<cmd>ToggleTerm size=20 direction=horizontal<cr>")
-keymap("t", "<c-`>", "<cmd>ToggleTerm size=20 direction=horizontal<cr>")
-keymap("n", "<F7>", "<cmd>ToggleTerm size=70 direction=vertical<cr>")
-keymap("t", "<F7>", "<cmd>ToggleTerm size=70 direction=vertical<cr>")
+keymap("n", "<c-\\>", "<cmd>ToggleTerm direction=float<cr>")
+keymap("t", "<c-\\>", "<cmd>ToggleTerm direction=float<cr>")
+keymap("n", "<c-[>", "<cmd>ToggleTerm size=20 direction=horizontal<cr>")
+keymap("t", "<c-[>", "<cmd>ToggleTerm size=20 direction=horizontal<cr>")
+keymap("n", "<c-]>", "<cmd>ToggleTerm size=70 direction=vertical<cr>")
+keymap("t", "<c-]>", "<cmd>ToggleTerm size=70 direction=vertical<cr>")
 keymap("n", "<leader>gg", "<cmd>lua require('uts').toggle_lazygit()<cr>", { desc = "Lazygit" })
 
 -- ╔═════════════════════════════════════════════════╗
