@@ -37,6 +37,16 @@ function M.config()
     -- 	end,
     -- }
 
+
+    local is_hydra_active = function()
+        if require("hydra.statusline").is_active() then
+            mode = require("hydra.statusline").get_name()
+        else
+            return
+        end
+    end
+
+
     local lsp = {
         -- Lsp server name .
         function()
@@ -96,7 +106,18 @@ function M.config()
         },
 
         sections = {
-            lualine_a = { { "mode", separator = { right = "" } } },
+            lualine_a = {
+                {
+                    function()
+                        if require("hydra.statusline").is_active() then
+                            return require("hydra.statusline").get_name()
+                        else
+                            return require('lualine.utils.mode').get_mode()
+                        end
+                    end,
+                    separator = { right = "" }
+                }
+            },
             lualine_b = {
                 {
                     "branch",

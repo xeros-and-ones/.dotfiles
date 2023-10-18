@@ -123,7 +123,7 @@ function M.config()
         --
         --
     end
-    keymap({ "n", "i" }, "<c-f>", vim.lsp.buf.format, { desc = "format code" })
+    keymap({ "n", "i" }, "<c-a>", vim.lsp.buf.format, { desc = "format code" })
 
     --setup neodev
     require("neodev").setup {
@@ -182,7 +182,7 @@ function M.config()
                             yapf = { enabled = false },
                             -- linter options
                             pylint = { enabled = false, executable = "pylint" },
-                            ruff = { enabled = true, extendSelect = "I" },
+                            ruff = { enabled = true, extendSelect = "I", lineLength = 120 },
                             pyflakes = { enabled = false },
                             pycodestyle = { enabled = false },
                             pydocstyle = { enabled = false },
