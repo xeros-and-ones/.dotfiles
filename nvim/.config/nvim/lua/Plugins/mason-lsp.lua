@@ -45,6 +45,7 @@ local ensure_installed = {
     "pylsp",
     -- "pyright",
     "yamlls",
+    "jsonls",
     "gopls",
 
 

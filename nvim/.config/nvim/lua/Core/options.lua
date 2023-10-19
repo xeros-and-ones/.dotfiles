@@ -68,7 +68,7 @@ opt.sidescrolloff = 8                      -- minimal number of screen columns t
 opt.guifont = "monospace:h17"              -- the font used in graphical neovim applications
 opt.fillchars = { eob = " " }              -- show empty lines at the end of a buffer as ` ` {default `~`}
 opt.fillchars:append { diff = "╱" }
-opt.whichwrap:append "<,>,[,],h,l"         -- keys allowed to move to the previous/next line when the beginning/end of line is reached
+opt.whichwrap:append "[,],b,s"             -- keys allowed to move to the previous/next line when the beginning/end of line is reached
 opt.iskeyword:append "-"                   -- treats words with `-` as single words
 opt.formatoptions:remove { "c", "r", "o" } -- This is a sequence of letters which describes how automatic formatting is to be done
 opt.linebreak = true
