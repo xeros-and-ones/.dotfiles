@@ -13,8 +13,8 @@ function M.config()
     height = 15,
     padding = false,
     action_keys = { -- key mappings for actions in the trouble list
-      close = "q", -- close the list
-      cancel = "<esc>", -- cancel the preview and get back to your last window / buffer / cursor
+      close = {"q", "<esc>"}, -- close the list
+      -- cancel = "<esc>", -- cancel the preview and get back to your last window / buffer / cursor
       refresh = "r", -- manually refresh
       jump = { "<cr>", "<tab>" }, -- jump to the diagnostic or open / close folds
       open_split = { "<c-x>" }, -- open buffer in new split

@@ -266,6 +266,7 @@ local function show_hover()
     end
 end
 keymap("n", "gh", show_hover, { desc = "Hover", silent = true }) -- mapped outside otherwise types w/o LSP won't get the bind
+keymap('n', "<c-`>", '<cmd>TroubleToggle<cr>', opts)
 
 -- ╔═════════════════════════════════════════════════╗
 -- ║ Code                                            ║

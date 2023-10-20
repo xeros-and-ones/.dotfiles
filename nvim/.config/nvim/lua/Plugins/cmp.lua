@@ -77,7 +77,7 @@ function M.config()
     local luasnip = require "luasnip"
 
     cmp.setup {
-        preselect = cmp.PreselectMode.Item,
+        preselect = cmp.PreselectMode.None,
         completion = {
             completeopt = "menu,menuone,noinsert ",
         },
@@ -89,6 +89,10 @@ function M.config()
         experimental = {
             ghost_text = true,
             native_menu = false,
+        },
+        confirm_opts = {
+            behavior = cmp.ConfirmBehavior.Replace,
+            select = false,
         },
         window = {
             completion = cmp.config.window.bordered({
@@ -129,9 +133,9 @@ function M.config()
                 select = true,
             },
             ["<Tab>"] = cmp.mapping(function(fallback)
-                if cmp.visible() then
-                    cmp.select_next_item()
-                elseif luasnip.expandable() then
+                -- if cmp.visible() then
+                --     cmp.select_next_item()
+                if luasnip.expandable() then
                     luasnip.expand()
                 elseif luasnip.expand_or_jumpable() then
                     luasnip.expand_or_jump()
@@ -147,9 +151,9 @@ function M.config()
                 "s",
             }),
             ["<S-Tab>"] = cmp.mapping(function(fallback)
-                if cmp.visible() then
-                    cmp.select_prev_item()
-                elseif luasnip.jumpable(-1) then
+                -- if cmp.visible() then
+                --     cmp.select_prev_item()
+                if luasnip.jumpable(-1) then
                     luasnip.jump(-1)
                 elseif require("neogen").jumpable(-1) then
                     require("neogen").jump_prev()
@@ -181,7 +185,7 @@ function M.config()
                     ({
                         nvim_lsp = '[LSP]',
                         luasnip = '[SNIP]',
-                        buffer = 'BUFF',
+                        buffer = '[BUFF]',
                         path = '[PATH]',
                         nvim_lua = '[LUA]',
                     })[entry.source.name]
