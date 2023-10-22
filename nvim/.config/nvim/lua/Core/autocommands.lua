@@ -24,7 +24,7 @@ autocmd("BufWinEnter", {
     group = help_group,
     pattern = { "*.txt", "man", "*.md" },
     callback = function()
-        if vim.o.filetype == "help" or "man" or "markdown" then
+        if vim.o.filetype == "help" or "markdown" then
             vim.cmd.wincmd("L")
         end
     end,

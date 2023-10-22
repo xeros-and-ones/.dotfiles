@@ -18,33 +18,6 @@ vim.g.mapleader = " "
 -- ╔═════════════════════════════════════════════════╗
 -- ║ General                                         ║
 -- ╚═════════════════════════════════════════════════╝
---moving text
--- Normal --
-keymap("n", "<A-j>", "<ESC>:m .+1<CR>==", opts)
-keymap("n", "<A-Down>", "<ESC>:m .+1<CR>==", opts)
-keymap("n", "<A-k>", "<ESC>:m .-2<CR>==", opts)
-keymap("n", "<A-Up>", "<ESC>:m .-2<CR>==", opts)
-
--- insert
--- Move text up and down
-keymap("i", "<A-j>", "<Esc>:m .+1<CR>==gi", opts)
-keymap("i", "<A-Down>", "<Esc>:m .+1<CR>==gi", opts)
-keymap("i", "<A-k>", "<Esc>:m .-2<CR>==gi", opts)
-keymap("i", "<A-Up>", "<Esc>:m .-2<CR>==gi", opts)
-
-keymap("v", "<A-j>", ":m .+1<CR>==", opts)
-keymap("v", "<A-Down>", ":m .+1<CR>==", opts)
-keymap("v", "<A-k>", ":m .-2<CR>==", opts)
-keymap("v", "<A-Up>", ":m .-2<CR>==", opts)
-keymap("v", "p", '"_dP', opts)
--- Visual Block --
--- Move text up and down
-keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
-keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
-keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
-keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
-keymap("x", "<A-Down>", ":move '>+1<CR>gv-gv", opts)
-keymap("x", "<A-Up>", ":move '<-2<CR>gv-gv", opts)
 
 keymap("n", "<leader>w", "<cmd>w<cr>", { desc = "Save" })
 keymap("n", "<leader>q", "<cmd>q<cr>", { desc = "Quit" })
@@ -103,8 +76,8 @@ keymap("n", "<leader>bp", "<cmd>BufferLineTogglePin<cr>", { desc = "Pin" })
 keymap("n", "<leader>bf", "<cmd>lua require('telescope.builtin').buffers()<cr>", { desc = "Find" })
 keymap("n", "H", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev" })
 keymap("n", "L", "<cmd>BufferLineCycleNext<cr>", { desc = "Next" })
-keymap("n", "<leader>bH", "<cmd>BufferLineMovePrev<cr>", { desc = "Move Prev" })
-keymap("n", "<leader>bL", "<cmd>BufferLineMoveNext<cr>", { desc = "Move Next" })
+keymap("n", "<leader>bh", "<cmd>BufferLineMovePrev<cr>", { desc = "Move Prev" })
+keymap("n", "<leader>bl", "<cmd>BufferLineMoveNext<cr>", { desc = "Move Next" })
 
 for i = 1, 9 do
     keymap(

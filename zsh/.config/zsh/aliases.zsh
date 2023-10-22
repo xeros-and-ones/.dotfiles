@@ -5,10 +5,10 @@ alias py="python3"
 # Remove python compiled byte-code and mypy/pytest cache in either the current
 # directory or in a list of specified directories (including sub directories).
 function pyclean() {
-  find "${@:-.}" -type f -name "*.py[co]" -delete
-  find "${@:-.}" -type d -name "__pycache__" -delete
-  find "${@:-.}" -depth -type d -name ".mypy_cache" -exec rm -r "{}" +
-  find "${@:-.}" -depth -type d -name ".pytest_cache" -exec rm -r "{}" +
+    find "${@:-.}" -type f -name "*.py[co]" -delete
+    find "${@:-.}" -type d -name "__pycache__" -delete
+    find "${@:-.}" -depth -type d -name ".mypy_cache" -exec rm -r "{}" +
+    find "${@:-.}" -depth -type d -name ".pytest_cache" -exec rm -r "{}" +
 }
 
 # Find python file
@@ -33,49 +33,49 @@ alias pipir="pip install -r requirements.txt"
 
 # Update all installed packages
 function pipupall {
-  # non-GNU xargs does not support nor need `--no-run-if-empty`
-  local xargs="xargs --no-run-if-empty"
-  xargs --version 2>/dev/null | grep -q GNU || xargs="xargs"
-  pip list --outdated | awk 'NR > 2 { print $1 }' | ${=xargs} pip install --upgrade
+    # non-GNU xargs does not support nor need `--no-run-if-empty`
+    local xargs="xargs --no-run-if-empty"
+    xargs --version 2>/dev/null | grep -q GNU || xargs="xargs"
+    pip list --outdated | awk 'NR > 2 { print $1 }' | ${=xargs} pip install --upgrade
 }
 
 # Uninstall all installed packages
 function pipunall {
-  # non-GNU xargs does not support nor need `--no-run-if-empty`
-  local xargs="xargs --no-run-if-empty"
-  xargs --version 2>/dev/null | grep -q GNU || xargs="xargs"
-  pip list --format freeze | cut -d= -f1 | ${=xargs} pip uninstall
+    # non-GNU xargs does not support nor need `--no-run-if-empty`
+    local xargs="xargs --no-run-if-empty"
+    xargs --version 2>/dev/null | grep -q GNU || xargs="xargs"
+    pip list --format freeze | cut -d= -f1 | ${=xargs} pip uninstall
 }
 
 ######### venv utilities #########-----------------
 # Activate the python virtual environment specified.
 # If none specified, use 'venv'.
 function vr() {
-  local name="${1:-venv}"
-  local venvpath="${name:P}"
+    local name="${1:-venv}"
+    local venvpath="${name:P}"
 
-  if [[ ! -d "$venvpath" ]]; then
-    echo >&2 "Error: no such venv in current directory: $name"
-    return 1
-  fi
+    if [[ ! -d "$venvpath" ]]; then
+        echo >&2 "Error: no such venv in current directory: $name"
+        return 1
+    fi
 
-  if [[ ! -f "${venvpath}/bin/activate" ]]; then
-    echo >&2 "Error: '${name}' is not a proper virtual environment"
-    return 1
-  fi
+    if [[ ! -f "${venvpath}/bin/activate" ]]; then
+        echo >&2 "Error: '${name}' is not a proper virtual environment"
+        return 1
+    fi
 
-  . "${venvpath}/bin/activate" || return $?
-  echo "Activated virtual environment ${name}"
+    . "${venvpath}/bin/activate" || return $?
+    echo "Activated virtual environment ${name}"
 }
 
 # Create a new virtual environment, with default name 'venv'.
 function mkvenv() {
-  local name="${1:-venv}"
-  local venvpath="${name:P}"
+    local name="${1:-venv}"
+    local venvpath="${name:P}"
 
-  python3 -m venv "${name}" || return
-  echo >&2 "Created venv in '${venvpath}'"
-  vr "${name}"
+    python3 -m venv "${name}" || return
+    echo >&2 "Created venv in '${venvpath}'"
+    vr "${name}"
 }
 
 
@@ -93,6 +93,7 @@ alias q="exit"
 alias v="nvim"
 alias sv="sudoedit"
 alias vconf="cd ~/.dotfiles/nvim/.config/nvim/ && v"
+alias vd='deactivate'
 
 alias -g ...='../..'
 alias -g ....='../../..'
