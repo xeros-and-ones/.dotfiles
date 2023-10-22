@@ -31,8 +31,8 @@ keymap("i", "jk", "<ESC>", opts)
 
 -- Visual --
 -- Stay in indent mode
-keymap("v", "<", "<gv", opts)
-keymap("v", ">", ">gv", opts)
+-- keymap("v", "<", "<gv", opts)
+-- keymap("v", ">", ">gv", opts)
 -- Normal --
 -- Better window navigation
 keymap("n", "<C-h>", "<C-w>h", opts)

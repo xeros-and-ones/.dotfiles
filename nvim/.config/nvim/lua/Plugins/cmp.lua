@@ -176,20 +176,20 @@ function M.config()
             -- { name = "nvim_lsp_signature_help" },
         },
         formatting = {
-            fields = { "menu", "abbr", "kind" },
+            fields = { --[[ "menu", ]] "abbr", "kind" },
             format = function(entry, vim_item)
-                -- concatonates the icons with the name of the item kind
+                --     -- concatonates the icons with the name of the item kind
                 vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind)
                 -- vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
-                vim_item.menu = --("")
-                    ({
-                        nvim_lsp = '[LSP]',
-                        luasnip = '[SNIP]',
-                        buffer = '[BUFF]',
-                        path = '[PATH]',
-                        nvim_lua = '[LUA]',
-                    })[entry.source.name]
-                -- vim_item.dup = 0
+                --     vim_item.menu = ("")
+                --     -- ({
+                --     --     nvim_lsp = '[LSP]',
+                --     --     luasnip = '[SNIP]',
+                --     --     buffer = '[BUFF]',
+                --     --     path = '[PATH]',
+                --     --     nvim_lua = '[LUA]',
+                --     -- })[entry.source.name]
+                --     -- vim_item.dup = 0
                 return vim_item
             end,
         },
