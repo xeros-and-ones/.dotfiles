@@ -212,7 +212,7 @@ function M.config()
                             jedi_completion = { enabled = true, fuzzy = true },
                             -- import sorting
                             isort = { enabled = false },
-                            pylsp_rope = { enabled = true }
+                            rope = { enabled = false }
                         },
                     },
                 },
