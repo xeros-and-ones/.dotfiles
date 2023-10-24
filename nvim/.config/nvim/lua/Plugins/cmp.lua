@@ -13,8 +13,12 @@ local M = {
         {
             "rafamadriz/friendly-snippets",
             config = function()
-                require("luasnip.loaders.from_vscode").lazy_load({
-                    require 'luasnip'.filetype_extend("python", { "django", "djangohtml", "pydoc" }) })
+                require("luasnip.loaders.from_vscode").lazy_load(
+                    {
+                        require 'luasnip'.filetype_extend("python", { "django", "pydoc" }),
+                        require 'luasnip'.filetype_extend("htmldjango", { "html", "djangohtml" }),
+                    }
+                )
             end,
         },
         {

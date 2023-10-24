@@ -42,7 +42,9 @@ local ensure_installed = {
     "lua_ls",
     "taplo",
     "vimls",
-    "pylsp",
+    "python-lsp-server",
+    "cssls",
+    "html-lsp",
     -- "pyright",
     "yamlls",
     "jsonls",
@@ -72,6 +74,7 @@ function M.config()
     require("lspconfig.ui.windows").default_options.border = "rounded"
     -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
     local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities.textDocument.completion.completionItem.snippetSupport = true
     capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
     capabilities["textDocument"]["foldingRange"] = {
         dynamicRegistration = false,
@@ -91,7 +94,6 @@ function M.config()
         --
         --
         --
-
         --
         --
         --
@@ -170,6 +172,23 @@ function M.config()
         --         capabilities = capabilities
         --     }
         -- end,
+        ['html'] = function()
+            require('lspconfig').html.setup {
+                on_attach = on_attach,
+                init_options = {
+                    provideFormatter = false
+                },
+                settings = {
+                    html = {
+                        format = {
+                            enable = false
+                        }
+                    }
+                },
+                filetypes = { 'html', 'htmldjango' },
+                capabilities = capabilities
+            }
+        end,
         ["pylsp"] = function()
             local venv_path = os.getenv('VIRTUAL_ENV')
             local py_path = nil
@@ -246,6 +265,8 @@ function M.config()
                         },
                         workspace = {
                             checkThirdParty = false,
+                            maxPreload = 2500,
+                            preloadFileSize = 500,
                             library = {
                                 -- Make the server aware of Neovim runtime files
                                 vim.fn.expand "$VIMRUNTIME/lua",

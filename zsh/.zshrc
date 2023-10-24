@@ -41,12 +41,23 @@ SAVEHIST=$(( 100 * 1000 ))      # Use multiplication for readability.
 # Max number of history entries to keep in memory.
 HISTSIZE=$(( 1.2 * SAVEHIST ))  # Zsh recommended value
 
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:$HOME/.config/emacs/bin
-export PATH=$PATH:$HOME/.detaspace/bin
-export PATH=$PATH:$HOME/.local/bin
-export PATH=$PATH:$HOME/.config/zsh/shell-colorscripts/bin
-export FPATH=$FPATH:$HOME/.config/zsh/zfunc
+
+path=(
+    /usr/local/go/bin(N-/)
+    $HOME/.rustup/toolchains/*/bin(N-/)
+    $HOME/.config/emacs/bin(N-/)
+    $HOME/.detaspace/bin(N-/)
+    $HOME/.local/bin(N-/)
+    $HOME/.config/zsh/shell-colorscripts/bin(N-/)
+    $path
+)
+export PATH
+
+fpath=(
+    $HOME/.config/zsh/zfunc(N-/)
+    $fpath
+)
+export FPATH
 #
 #
 ### RANDOM COLOR SCRIPT ###
