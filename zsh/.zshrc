@@ -67,8 +67,6 @@ colorscript random
 source ~/.config/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 source ~/.config/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 source ~/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
-source ~/.config/zsh/plugins/dotnet/dotnet.plugin.zsh
-source ~/.config/zsh/plugins/git/git.plugin.zsh
 source ~/.config/zsh/plugins/aliases/aliases.plugin.zsh
 source ~/.config/zsh/themes/powerlevel10k/powerlevel10k.zsh-theme
 #

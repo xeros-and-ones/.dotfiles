@@ -46,6 +46,9 @@ keymap("n", "<C-Down>", ":resize -2<CR>", opts)
 keymap("n", "<C-Left>", ":vertical resize +2<CR>", opts)
 keymap("n", "<C-Right>", ":vertical resize -2<CR>", opts)
 
+
+keymap({ "n", 'v' }, 'gR', "<cmd>RegexplainerToggle<cr>", { desc = "Toggle Regexplainer", silent = true })
+keymap({ "n", 'v' }, 'gP', "<cmd>RegexplainerShowPopup<cr>", { desc = "Regexplainer Popup", silent = true })
 -- ╔═════════════════════════════════════════════════╗
 -- ║ Yanky                                           ║
 -- ╚═════════════════════════════════════════════════╝

@@ -81,7 +81,7 @@ function M.config()
                 -- ["v"] = "vsplit_with_window_picker",
                 -- ["<cr>"] = "open_drop",
                 -- ["t"] = "open_tab_drop",
-                ["w"] = "open_with_window_picker",
+                -- ["w"] = "open_with_window_picker",
                 ["d"] = "delete",
                 ["r"] = "rename",
                 H = "prev_source",

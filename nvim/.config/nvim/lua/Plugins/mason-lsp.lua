@@ -42,10 +42,9 @@ local ensure_installed = {
     "lua_ls",
     "taplo",
     "vimls",
-    "python-lsp-server",
     "cssls",
     "html-lsp",
-    -- "pyright",
+    "pyright",
     "yamlls",
     "jsonls",
     "gopls",
@@ -61,13 +60,13 @@ local ensure_installed = {
     "djlint",
     "shellcheck",
     "jsonlint",
-    -- "flake8",
+    "flake8",
 
 
     -- formatters -------------------------------
     "beautysh",
-    -- "black",
-    -- "isort",
+    "black",
+    "isort",
     "prettier",
 }
 function M.config()
@@ -155,23 +154,26 @@ function M.config()
                 capabilities = capabilities,
             }
         end,
-        -- ["pyright"] = function()
-        --     require("lspconfig").pyright.setup {
-        --         on_attach = on_attach,
-        --         settings = {
-        --             python = {
-        --                 analysis = {
-        --                     autoImportCompletion = true,
-        --                     autoSearchPaths = true,
-        --                     diagnosticMode = 'openFilesOnly',
-        --                     useLibraryCodeForTypes = true,
-        --                     typeCheckingMode = 'basic'
-        --                 }
-        --             }
-        --         },
-        --         capabilities = capabilities
-        --     }
-        -- end,
+        ["pyright"] = function()
+            require("lspconfig").pyright.setup {
+                on_attach = on_attach,
+                settings = {
+                    python = {
+                        analysis = {
+                            autoImportCompletion = true,
+                            autoSearchPaths = true,
+                            diagnosticMode = 'openFilesOnly',
+                            useLibraryCodeForTypes = true,
+                            typeCheckingMode = 'basic'
+                        }
+                    }
+                },
+                flags = {
+                    debounce_text_changes = 200,
+                },
+                capabilities = capabilities
+            }
+        end,
         ['html'] = function()
             require('lspconfig').html.setup {
                 on_attach = on_attach,
@@ -189,58 +191,58 @@ function M.config()
                 capabilities = capabilities
             }
         end,
-        ["pylsp"] = function()
-            local venv_path = os.getenv('VIRTUAL_ENV')
-            local py_path = nil
-            -- decide which python executable to use for mypy
-            if venv_path ~= nil then
-                py_path = venv_path .. "/bin/python3"
-            else
-                py_path = vim.g.python3_host_prog
-            end
-            require("lspconfig").pylsp.setup {
-                on_attach = on_attach,
-                settings = {
-                    pylsp = {
-                        plugins = {
-                            configurationSources = { "ruff" },
-                            -- formatter options
-                            black = { enabled = true, line_length = 120, cache_config = true },
-                            autopep8 = { enabled = false },
-                            yapf = { enabled = false },
-                            -- linter options
-                            pylint = { enabled = false, executable = "pylint" },
-                            ruff = {
-                                enabled = true,
-                                select = { "E4", "E7", "E9", "F" },
-                                format = "I",
-                                lineLength = 120
-                            },
-                            pyflakes = { enabled = false },
-                            pycodestyle = { enabled = false },
-                            pydocstyle = { enabled = false },
-                            mccabe = { enabled = false },
-                            -- type checker
-                            pylsp_mypy = {
-                                enabled = true,
-                                overrides = { "--python-executable", py_path, true },
-                                report_progress = true,
-                                live_mode = false
-                            },
-                            -- auto-completion options
-                            jedi_completion = { enabled = true, fuzzy = true },
-                            -- import sorting
-                            isort = { enabled = false },
-                            rope = { enabled = true }
-                        },
-                    },
-                },
-                flags = {
-                    debounce_text_changes = 200,
-                },
-                capabilities = capabilities,
-            }
-        end,
+        -- ["pylsp"] = function()
+        --     local venv_path = os.getenv('VIRTUAL_ENV')
+        --     local py_path = nil
+        --     -- decide which python executable to use for mypy
+        --     if venv_path ~= nil then
+        --         py_path = venv_path .. "/bin/python3"
+        --     else
+        --         py_path = vim.g.python3_host_prog
+        --     end
+        --     require("lspconfig").pylsp.setup {
+        --         on_attach = on_attach,
+        --         settings = {
+        --             pylsp = {
+        --                 plugins = {
+        --                     configurationSources = { "ruff" },
+        --                     -- formatter options
+        --                     black = { enabled = true, line_length = 120, cache_config = true },
+        --                     autopep8 = { enabled = false },
+        --                     yapf = { enabled = false },
+        --                     -- linter options
+        --                     pylint = { enabled = false, executable = "pylint" },
+        --                     ruff = {
+        --                         enabled = true,
+        --                         select = { "E4", "E7", "E9", "F" },
+        --                         format = "I",
+        --                         lineLength = 120
+        --                     },
+        --                     pyflakes = { enabled = false },
+        --                     pycodestyle = { enabled = false },
+        --                     pydocstyle = { enabled = false },
+        --                     mccabe = { enabled = false },
+        --                     -- type checker
+        --                     pylsp_mypy = {
+        --                         enabled = true,
+        --                         overrides = { "--python-executable", py_path, true },
+        --                         report_progress = false,
+        --                         live_mode = false
+        --                     },
+        --                     -- auto-completion options
+        --                     jedi_completion = { enabled = true, fuzzy = true },
+        --                     -- import sorting
+        --                     isort = { enabled = false },
+        --                     rope = { enabled = true }
+        --                 },
+        --             },
+        --         },
+        --         -- flags = {
+        --         --     debounce_text_changes = 200,
+        --         -- },
+        --         capabilities = capabilities,
+        --     }
+        -- end,
         ["lua_ls"] = function()
             require("lspconfig").lua_ls.setup {
                 on_attach = on_attach,
@@ -312,6 +314,9 @@ function M.config()
     require("mason-null-ls").setup { ensure_installed = ensure_installed }
 
     local none_ls = require "null-ls"
+    local formatting = none_ls.builtins.formatting
+    local diagnostics = none_ls.builtins.diagnostics
+    local code_actions = none_ls.builtins.code_actions
     none_ls.setup {
         border = "rounded",
 
@@ -349,18 +354,21 @@ function M.config()
                 extra_filetypes = { "toml" },
                 extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" },
             },
-            none_ls.builtins.formatting.djlint,
-            none_ls.builtins.formatting.markdownlint,
-            none_ls.builtins.formatting.beautysh,
-            -- none_ls.builtins.formatting.black,
-            -- none_ls.builtins.formatting.isort,
+            formatting.djlint,
+            formatting.markdownlint,
+            formatting.beautysh,
+            formatting.black.with({ extra_args = { "--line-length 100" } }),
+            formatting.isort,
             --diagnostics
-            none_ls.builtins.diagnostics.eslint_d,
-            none_ls.builtins.diagnostics.markdownlint,
-            none_ls.builtins.diagnostics.djlint,
-            -- none_ls.builtins.diagnostics.flake8,
-            none_ls.builtins.diagnostics.shellcheck,
-            none_ls.builtins.diagnostics.jsonlint,
+            diagnostics.eslint_d,
+            diagnostics.markdownlint,
+            diagnostics.djlint,
+            diagnostics.flake8.with({ extra_args = { "--max-line-length", "100" } }),
+            diagnostics.shellcheck,
+            diagnostics.jsonlint,
+
+            -- code_actions
+            code_actions.refactoring
         },
     }
 
