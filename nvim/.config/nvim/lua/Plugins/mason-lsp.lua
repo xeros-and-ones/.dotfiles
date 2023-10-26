@@ -44,7 +44,8 @@ local ensure_installed = {
     "vimls",
     "cssls",
     "html-lsp",
-    "pyright",
+    "python-lsp-server",
+    -- "pyright",
     "yamlls",
     "jsonls",
     "gopls",
@@ -60,13 +61,13 @@ local ensure_installed = {
     "djlint",
     "shellcheck",
     "jsonlint",
-    "flake8",
+    -- "flake8",
 
 
     -- formatters -------------------------------
     "beautysh",
-    "black",
-    "isort",
+    -- "black",
+    -- "isort",
     "prettier",
 }
 function M.config()
@@ -80,12 +81,10 @@ function M.config()
         lineFoldingOnly = true,
     }
 
-    -- settings for specific lsp servers
+    -- -- settings for specific lsp servers
     local runtime_path = vim.split(package.path, ";")
     table.insert(runtime_path, "lua/?.lua")
     table.insert(runtime_path, "lua/?/init.lua")
-    local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-    local format_group = vim.api.nvim_create_augroup("autoformat", { clear = true })
     local keymap = require("uts").map
 
     -- on_attach function to be added to each server
@@ -125,7 +124,7 @@ function M.config()
         --
         --
     end
-    keymap({ "n", "i" }, "<c-a>", vim.lsp.buf.format, { desc = "format code" })
+    keymap({ "n", "i" }, "<c-a>", "<cmd>lua vim.lsp.buf.format { async = true }<cr>", { desc = "format code" })
 
     --setup neodev
     require("neodev").setup {
@@ -154,26 +153,26 @@ function M.config()
                 capabilities = capabilities,
             }
         end,
-        ["pyright"] = function()
-            require("lspconfig").pyright.setup {
-                on_attach = on_attach,
-                settings = {
-                    python = {
-                        analysis = {
-                            autoImportCompletion = true,
-                            autoSearchPaths = true,
-                            diagnosticMode = 'openFilesOnly',
-                            useLibraryCodeForTypes = true,
-                            typeCheckingMode = 'basic'
-                        }
-                    }
-                },
-                flags = {
-                    debounce_text_changes = 200,
-                },
-                capabilities = capabilities
-            }
-        end,
+        -- ["pyright"] = function()
+        --     require("lspconfig").pyright.setup {
+        --         on_attach = on_attach,
+        --         settings = {
+        --             python = {
+        --                 analysis = {
+        --                     autoImportCompletion = true,
+        --                     autoSearchPaths = true,
+        --                     diagnosticMode = 'openFilesOnly',
+        --                     useLibraryCodeForTypes = true,
+        --                     typeCheckingMode = 'basic'
+        --                 }
+        --             }
+        --         },
+        --         flags = {
+        --             debounce_text_changes = 200,
+        --         },
+        --         capabilities = capabilities
+        --     }
+        -- end,
         ['html'] = function()
             require('lspconfig').html.setup {
                 on_attach = on_attach,
@@ -191,58 +190,61 @@ function M.config()
                 capabilities = capabilities
             }
         end,
-        -- ["pylsp"] = function()
-        --     local venv_path = os.getenv('VIRTUAL_ENV')
-        --     local py_path = nil
-        --     -- decide which python executable to use for mypy
-        --     if venv_path ~= nil then
-        --         py_path = venv_path .. "/bin/python3"
-        --     else
-        --         py_path = vim.g.python3_host_prog
-        --     end
-        --     require("lspconfig").pylsp.setup {
-        --         on_attach = on_attach,
-        --         settings = {
-        --             pylsp = {
-        --                 plugins = {
-        --                     configurationSources = { "ruff" },
-        --                     -- formatter options
-        --                     black = { enabled = true, line_length = 120, cache_config = true },
-        --                     autopep8 = { enabled = false },
-        --                     yapf = { enabled = false },
-        --                     -- linter options
-        --                     pylint = { enabled = false, executable = "pylint" },
-        --                     ruff = {
-        --                         enabled = true,
-        --                         select = { "E4", "E7", "E9", "F" },
-        --                         format = "I",
-        --                         lineLength = 120
-        --                     },
-        --                     pyflakes = { enabled = false },
-        --                     pycodestyle = { enabled = false },
-        --                     pydocstyle = { enabled = false },
-        --                     mccabe = { enabled = false },
-        --                     -- type checker
-        --                     pylsp_mypy = {
-        --                         enabled = true,
-        --                         overrides = { "--python-executable", py_path, true },
-        --                         report_progress = false,
-        --                         live_mode = false
-        --                     },
-        --                     -- auto-completion options
-        --                     jedi_completion = { enabled = true, fuzzy = true },
-        --                     -- import sorting
-        --                     isort = { enabled = false },
-        --                     rope = { enabled = true }
-        --                 },
-        --             },
-        --         },
-        --         -- flags = {
-        --         --     debounce_text_changes = 200,
-        --         -- },
-        --         capabilities = capabilities,
-        --     }
-        -- end,
+        ["pylsp"] = function()
+            local venv_path = os.getenv('VIRTUAL_ENV')
+            local py_path = nil
+            -- decide which python executable to use for mypy
+            if venv_path ~= nil then
+                py_path = venv_path .. "/bin/python3"
+            else
+                py_path = vim.g.python3_host_prog
+            end
+            require("lspconfig").pylsp.setup {
+                on_attach = on_attach,
+                settings = {
+                    pylsp = {
+                        plugins = {
+                            configurationSources = { "pycodestyle" },
+                            -- formatter options
+                            black = { enabled = true, line_length = 100, cache_config = true },
+                            autopep8 = { enabled = false },
+                            yapf = { enabled = false },
+                            -- linter options
+                            pylint = { enabled = false, executable = "pylint" },
+                            ruff = {
+                                enabled = true,
+                                select = { "E4", "E7", "E9", "F" },
+                                format = "I",
+                                lineLength = 100
+                            },
+                            pyflakes = { enabled = false },
+                            pycodestyle = { enabled = false },
+                            pydocstyle = { enabled = false },
+                            mccabe = { enabled = false },
+                            -- type checker
+                            pylsp_mypy = {
+                                enabled = true,
+                                overrides = { "--python-executable", py_path, true },
+                                report_progress = true,
+                                live_mode = false
+                            },
+                            -- auto-completion options
+                            jedi_completion = {
+                                enabled = true,
+                                fuzzy = true,
+                                include_params = false,
+                            },
+                            -- import sorting
+                            pyls_isort = { enabled = true },
+                        },
+                    },
+                },
+                flags = {
+                    debounce_text_changes = 200,
+                },
+                capabilities = capabilities,
+            }
+        end,
         ["lua_ls"] = function()
             require("lspconfig").lua_ls.setup {
                 on_attach = on_attach,
@@ -267,8 +269,8 @@ function M.config()
                         },
                         workspace = {
                             checkThirdParty = false,
-                            maxPreload = 2500,
-                            preloadFileSize = 500,
+                            maxPreload = 1000,
+                            preloadFileSize = 100,
                             library = {
                                 -- Make the server aware of Neovim runtime files
                                 vim.fn.expand "$VIMRUNTIME/lua",
@@ -357,18 +359,16 @@ function M.config()
             formatting.djlint,
             formatting.markdownlint,
             formatting.beautysh,
-            formatting.black.with({ extra_args = { "--line-length 100" } }),
-            formatting.isort,
+            -- formatting.black.with({ extra_args = { "--line-length 100" } }),
+            -- formatting.isort,
             --diagnostics
             diagnostics.eslint_d,
             diagnostics.markdownlint,
             diagnostics.djlint,
-            diagnostics.flake8.with({ extra_args = { "--max-line-length", "100" } }),
+            -- diagnostics.flake8.with({ extra_args = { "--max-line-length", "100" } }),
             diagnostics.shellcheck,
             diagnostics.jsonlint,
 
-            -- code_actions
-            code_actions.refactoring
         },
     }
 

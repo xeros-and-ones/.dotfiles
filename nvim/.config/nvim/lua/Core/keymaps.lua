@@ -243,6 +243,7 @@ local function show_hover()
 end
 keymap("n", "gh", show_hover, { desc = "Hover", silent = true }) -- mapped outside otherwise types w/o LSP won't get the bind
 keymap('n', "<c-`>", '<cmd>TroubleToggle<cr>', opts)
+keymap("n", "<F5>", "<cmd>TermExec cmd='python %' go_back=0 direction=horizontal<cr>", opts)
 
 -- ╔═════════════════════════════════════════════════╗
 -- ║ Code                                            ║

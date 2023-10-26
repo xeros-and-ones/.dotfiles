@@ -142,8 +142,8 @@ function M.config()
                     symbols = {
                         modified = "[+]",
                         readonly = "[-]",
-                        unnamed = "[No Name]",
-                        newfile = "[New]",
+                        unnamed = "No Name",
+                        newfile = "New",
                     },
                 },
             },
@@ -197,8 +197,8 @@ function M.config()
         inactive_sections = {
             lualine_a = {},
             lualine_b = {},
-            lualine_c = { { "filename", color = { fg = "#cccccc" } } },
-            lualine_x = { { "location", color = { fg = "#cccccc" } } },
+            lualine_c = { "filename" },
+            lualine_x = { "location" },
             lualine_y = {},
             lualine_z = {},
         },

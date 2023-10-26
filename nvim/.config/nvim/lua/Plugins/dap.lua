@@ -52,12 +52,6 @@ function M.config()
     -- python debugpy setup
     local path_debugpy = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python"
     require("dap-python").setup(path_debugpy)
-    -- require("dap-python").resolve_python = function()
-    --     local path_python = vim.api.nvim_exec("!which python.exe", true)
-    --     path_python = vim.split(path_python, "\r\n\n")[2] -- get result of the command
-    --     path_python = path_python:gsub("^/(%a+)/", "%1://"):gsub("\n", "")
-    --     return path_python
-    -- end
 
     -- rust and codelldb setup
     local dap = require("dap")
