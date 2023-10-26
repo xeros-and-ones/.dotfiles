@@ -85,7 +85,7 @@ function M.config()
         },
         highlights = {
             buffer_selected = {
-                fg = "#637CF7",
+                fg = "#8cbe7a",
                 bold = true,
                 bg = "#000000"
             },
