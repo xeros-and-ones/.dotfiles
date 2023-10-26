@@ -12,21 +12,21 @@ local M = {
 function M.config()
     require("bufferline").setup {
         options = {
-            mode = "buffers", -- set to "tabs" to only show tabpages instead
+            mode = "buffers",                    -- set to "tabs" to only show tabpages instead
             numbers = "none",
-            left_mouse_command = "buffer %d", -- can be a string | function, see "Mouse actions"
-            close_command = "Bdelete! %d", -- can be a string | function, see "Mouse actions"
+            left_mouse_command = "buffer %d",    -- can be a string | function, see "Mouse actions"
+            close_command = "Bdelete! %d",       -- can be a string | function, see "Mouse actions"
             right_mouse_command = "Bdelete! %d", -- can be a string | function, see "Mouse actions"
             indicator = {
                 icon = "▎", -- this should be omitted if indicator style is not 'icon'
-                style = "icon",
+                style = 'icon',
             },
             buffer_close_icon = "",
             modified_icon = "●",
             close_icon = "",
             left_trunc_marker = "",
             right_trunc_marker = "",
-            max_name_length = 18,
+            max_name_length = 22,
             max_prefix_length = 15, -- prefix used when a buffer is de-duplicated
             truncate_names = true,  -- whether or not tab names should be truncated
             tab_size = 22,
@@ -51,7 +51,7 @@ function M.config()
             show_tab_indicators = true,
             show_duplicate_prefix = true, -- whether to show duplicate buffer prefix
             persist_buffer_sort = true,   -- whether or not custom sorted buffers should persist
-            separator_style = "thick",
+            separator_style = "thin",
             enforce_regular_tabs = false,
             always_show_bufferline = true,
             sort_by = "directory",
@@ -92,6 +92,52 @@ function M.config()
             close_button_selected = {
                 fg = "#f35858",
                 bg = "#000000"
+            },
+            diagnostic_selected = {
+                bg = '#000000',
+                bold = true,
+            },
+            tab_selected = {
+                bg = '#000000',
+            },
+            numbers_selected = {
+                bg = '#000000',
+                bold = true,
+            },
+            hint_selected = {
+                bg = '#000000',
+                bold = true,
+            },
+            hint_diagnostic_selected = {
+                bg = '#000000',
+                bold = true,
+            },
+            info_diagnostic_selected = {
+                bg = '#000000',
+                bold = true,
+            },
+            info_selected = {
+                bg = '#000000',
+                bold = true,
+            },
+            warning_diagnostic_selected = {
+                bg = '#000000',
+                bold = true,
+            },
+            warning_selected = {
+                bg = '#000000',
+                bold = true,
+            },
+            error_diagnostic_selected = {
+                bg = '#000000',
+                bold = true,
+            },
+            error_selected = {
+                bg = '#000000',
+                bold = true,
+            },
+            modified_selected = {
+                bg = '#000000',
             },
         },
     }

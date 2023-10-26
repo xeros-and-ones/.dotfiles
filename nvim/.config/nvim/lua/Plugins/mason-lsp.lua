@@ -260,7 +260,7 @@ function M.config()
                         },
                         telemetry = { enable = false },
                         runtime = {
-                            version = "LuaJIT",
+                            version = "Lua 5.4",
                             path = runtime_path,
                         },
                         diagnostics = {
@@ -269,8 +269,8 @@ function M.config()
                         },
                         workspace = {
                             checkThirdParty = false,
-                            maxPreload = 1000,
-                            preloadFileSize = 100,
+                            maxPreload = 5000,
+                            preloadFileSize = 1000,
                             library = {
                                 -- Make the server aware of Neovim runtime files
                                 vim.fn.expand "$VIMRUNTIME/lua",
