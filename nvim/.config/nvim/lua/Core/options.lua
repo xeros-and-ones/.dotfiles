@@ -30,7 +30,7 @@ opt.undodir = vim.fn.stdpath "data" .. "/undo"
 
 opt.verbose = 0
 opt.report = 99999
-opt.shortmess:append "astWAIcFS"
+opt.shortmess:append "astWAIcF"
 opt.sessionoptions = "buffers,curdir,folds,tabpages,winsize,winpos,localoptions,globals,options"
 
 -- Yank to system clipboard

@@ -1,10 +1,10 @@
 lastupdatecheck: 0
 recentrepos:
 - /home/xero/.dotfiles
+- /home/xero/Builds/Neovim
 - /home/xero/Documents/Python/web_scraper_books
 - /home/xero/Documents/Python/web_scraper_quotes
 - /home/xero/Documents/Python/todo-website-flask
-- /home/xero/Builds/Neovim
 startuppopupversion: 5
 customcommandshistory: []
 hidecommandlog: false

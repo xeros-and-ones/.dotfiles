@@ -8,7 +8,7 @@ local M = {
 M.keys = {
   { "<C-g>", "<CMD>DiffviewOpen<CR>", mode = { "n", "i", "v" } },
 }
-M.config = {
+M.opts = {
   enhanced_diff_hl = true,
   keymaps = {
     view = {
