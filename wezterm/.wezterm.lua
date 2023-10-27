@@ -46,11 +46,29 @@ config.cursor_blink_rate = 0
 
 -- FONTS
 config.font = wezterm.font(
-    "JetbrainsMono Nerd Font", {
+    "FiraCode Nerd Font", {
         style = "Normal",
-        weight = "Bold",
+        weight = "DemiBold",
     })
-config.font_size = 10.5
+config.font_size = 11
+config.bold_brightens_ansi_colors = true
+config.font_rules = {
+    {
+        intensity = "Bold",
+        italic = true,
+        font = wezterm.font("CaskaydiaCove Nerd Font", { weight = "Bold", style = "Italic" }),
+    },
+    {
+        italic = true,
+        intensity = "Half",
+        font = wezterm.font("CaskaydiaCove Nerd Font", { style = "Italic" }),
+    },
+    {
+        italic = true,
+        intensity = "Normal",
+        font = wezterm.font("CaskaydiaCove Nerd Font", { weight = "DemiBold", style = "Italic" }),
+    },
+}
 
 -- KEY_BINDING
 config.keys = {

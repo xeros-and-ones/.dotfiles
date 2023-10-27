@@ -1,15 +1,15 @@
 gui:
   expandFocusedSidePanel: true
-  showIcons: true
+  nerdFontsVersion: "3"
+  border: 'rounded'
   theme:
     selectedLineBgColor:
       - black
       - bold
     selectedRangeBgColor:
-      - black
+      - green
       - bold
-  border: 'rounded'
 git:
   paging:
-    colorArgs: always
+    colorArg: always
     pager: delta --dark --paging=never

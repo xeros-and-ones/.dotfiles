@@ -187,6 +187,10 @@ function M.config()
                     }
                 },
                 filetypes = { 'html', 'htmldjango' },
+                flags = {
+                    debounce_text_changes = 200,
+                    allow_incremental_sync = true,
+                },
                 capabilities = capabilities
             }
         end,
@@ -241,6 +245,7 @@ function M.config()
                 },
                 flags = {
                     debounce_text_changes = 200,
+                    allow_incremental_sync = true,
                 },
                 capabilities = capabilities,
             }
@@ -269,7 +274,7 @@ function M.config()
                         },
                         workspace = {
                             checkThirdParty = false,
-                            maxPreload = 5000,
+                            maxPreload = 10000,
                             preloadFileSize = 1000,
                             library = {
                                 -- Make the server aware of Neovim runtime files
@@ -281,6 +286,10 @@ function M.config()
                             callSnippet = "Replace",
                         },
                     },
+                },
+                flags = {
+                    allow_incremental_sync = true,
+                    debounce_text_changes = 200,
                 },
                 capabilities = capabilities,
             }
