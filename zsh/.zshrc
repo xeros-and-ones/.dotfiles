@@ -1,7 +1,3 @@
-
-#
-#
-#
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -33,6 +29,7 @@ setopt INTERACTIVE_COMMENTS
 ####### exports ##########--------------------------------------------------------------
 export EDITOR=nvim
 export VISUAL=nvim
+export TERM=wezterm
 # export PAGER=/usr/bin/moar
 export HISTFILE="$HOME/.zsh_history"    # History filepath
 # Max number of entries to keep in history file.
