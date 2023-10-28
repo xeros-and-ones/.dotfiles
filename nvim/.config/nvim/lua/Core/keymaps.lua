@@ -24,16 +24,9 @@ keymap("n", "<leader>q", "<cmd>q<cr>", { desc = "Quit" })
 keymap({ "n", "i", "x" }, "<C-S>", "<Cmd>w<CR>", { desc = "Save" })
 keymap("n", "<esc>", "<cmd>nohlsearch<cr>", { desc = "Clear highlights" }) -- Clear highlights on ESC
 
-
--- Insert --
 -- Press jk fast to enter
 keymap("i", "jk", "<ESC>", opts)
 
--- Visual --
--- Stay in indent mode
--- keymap("v", "<", "<gv", opts)
--- keymap("v", ">", ">gv", opts)
--- Normal --
 -- Better window navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
