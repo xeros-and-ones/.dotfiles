@@ -4,6 +4,7 @@ local M = {
     enabled = true,
     dependencies = {
         "neovim/nvim-lspconfig",
+        "b0o/schemastore.nvim",
         {
             "williamboman/mason.nvim",
             opts = {
@@ -173,6 +174,32 @@ function M.config()
         --         capabilities = capabilities
         --     }
         -- end,
+        ['jsonls'] = function()
+            require('lspconfig').jsonls.setup {
+                settings = {
+                    json = {
+                        schemas = require('schemastore').json.schemas(),
+                        validate = { enable = true },
+                    },
+                },
+            }
+        end,
+        ['yamlls'] = function()
+            require('lspconfig').yamlls.setup {
+                settings = {
+                    yaml = {
+                        schemaStore = {
+                            -- You must disable built-in schemaStore support if you want to use
+                            -- this plugin and its advanced options like `ignore`.
+                            enable = false,
+                            -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+                            url = "",
+                        },
+                        schemas = require('schemastore').yaml.schemas(),
+                    },
+                },
+            }
+        end,
         ['html'] = function()
             require('lspconfig').html.setup {
                 on_attach = on_attach,
@@ -377,6 +404,7 @@ function M.config()
             -- diagnostics.flake8.with({ extra_args = { "--max-line-length", "100" } }),
             diagnostics.shellcheck,
             diagnostics.jsonlint,
+            code_actions.refactoring,
 
         },
     }

@@ -13,7 +13,7 @@ function M.init()
 	blank.setup({
 		indent = { char = "▏", smart_indent_cap = true },
 		scope = {
-			enabled = true,
+			enabled = false,
 			show_start = true,
 			show_end = false,
 			injected_languages = true,
