@@ -33,6 +33,10 @@ opt.report = 99999
 opt.shortmess:append "astWAIcF"
 opt.sessionoptions = "buffers,curdir,folds,tabpages,winsize,winpos,localoptions,globals,options"
 
+opt.title = true
+opt.titlelen = 0 -- do not shorten title
+opt.titlestring = 'NVIM => %t%( %M%)'
+
 -- Yank to system clipboard
 opt.clipboard = "unnamedplus"              -- allows neovim to access the system clipboard
 

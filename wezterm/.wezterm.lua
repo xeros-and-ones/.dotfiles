@@ -18,15 +18,81 @@ config.initial_rows = 40
 config.scrollback_lines = 10000
 
 
+wezterm.on("update-right-status", function(window, pane)
+    -- demonstrates shelling out to get some external status.
+    -- wezterm will parse escape sequences output by the
+    -- child process and include them in the status area, too.
+    local success, date, stderr = wezterm.run_child_process({ "date" });
+
+    -- However, if all you need is to format the date/time, then:
+    date = wezterm.strftime("%Y-%m-%d %H:%M:%S");
+
+    -- Make it italic and underlined
+    window:set_right_status(wezterm.format({
+        { Text = date },
+    }));
+end);
+
+
+
+
 
 -- GUI
 config.adjust_window_size_when_changing_font_size = false
 config.color_scheme = "GruvboxDark"
+config.colors = {
+    -- background = '#16162e',
+    tab_bar = {
+        background = '#000000',
+        -- The color of the strip that goes along the top of the window
+        -- (does not apply when fancy tab bar is in use)
+
+        -- The active tab is the one that has focus in the window
+        active_tab = {
+            -- The color of the background area for the tab
+            bg_color = '#8fd479',
+            -- The color of the text for the tab
+            fg_color = '#000000',
+
+            -- "Half", "Normal" or "Bold"
+            intensity = 'Bold',
+        },
+
+        -- Inactive tabs are the tabs that do not have focus
+        inactive_tab = {
+            bg_color = '#000000',
+            fg_color = '#adadad',
+            intensity = 'Half'
+            -- The same options that were listed under the `active_tab` section above
+            -- can also be used for `inactive_tab`.
+        },
+    },
+}
+
+function tab_title(tab_info)
+    local title = tab_info.tab_title
+    -- if the tab title is explicitly set, take that
+    if title and #title > 0 then
+        return title
+    end
+    -- Otherwise, use the title from the active pane
+    -- in that tab
+    return tab_info.active_pane.title
+end
+
+wezterm.on(
+    'format-tab-title',
+    function(tab, tabs, panes, config, hover, max_width)
+        local title = tab_title(tab)
+        return " " .. title .. ' '
+    end
+)
 config.window_background_opacity = 0.85
 config.hide_tab_bar_if_only_one_tab = true
 config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
-config.tab_max_width = 22
+config.tab_max_width = 40
+config.show_tab_index_in_tab_bar = false
 config.window_padding = {
     left = 0,
     right = 0,
@@ -48,9 +114,9 @@ config.cursor_blink_rate = 0
 config.font = wezterm.font(
     "JetbrainsMono Nerd Font", {
         style = "Normal",
-        weight = "DemiBold",
+        weight = "Bold",
     })
-config.font_size = 11
+config.font_size = 10.5
 config.bold_brightens_ansi_colors = true
 -- config.font_rules = {
 --     {
