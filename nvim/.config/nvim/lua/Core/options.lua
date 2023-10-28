@@ -85,7 +85,17 @@ vim.diagnostic.config {
     severity_sort = true,
     float = {
         focusable = false,
-        style = "minimal",
+        -- style = "minimal",
+        format = function(diagnostic)
+            return string.format(
+                "%s (%s) [%s]",
+                diagnostic.message,
+                diagnostic.source,
+                diagnostic.code or diagnostic.user_data.lsp.code
+            )
+        end,
+        signs = true,
+        show_header = true,
         border = "rounded",
         source = "always",
         header = "",

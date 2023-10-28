@@ -10,31 +10,12 @@ config.disable_default_key_bindings = true
 -- CORE
 config.front_end = "WebGpu"
 config.warn_about_missing_glyphs = false
-config.enable_kitty_keyboard = true
+-- config.enable_kitty_keyboard = true
 config.mouse_wheel_scrolls_tabs = false
 config.underline_position = -3
 config.initial_cols = 165
 config.initial_rows = 40
 config.scrollback_lines = 10000
-
-
-wezterm.on("update-right-status", function(window, pane)
-    -- demonstrates shelling out to get some external status.
-    -- wezterm will parse escape sequences output by the
-    -- child process and include them in the status area, too.
-    local success, date, stderr = wezterm.run_child_process({ "date" });
-
-    -- However, if all you need is to format the date/time, then:
-    date = wezterm.strftime("%Y-%m-%d %H:%M:%S");
-
-    -- Make it italic and underlined
-    window:set_right_status(wezterm.format({
-        { Text = date },
-    }));
-end);
-
-
-
 
 
 -- GUI
@@ -137,6 +118,7 @@ config.bold_brightens_ansi_colors = true
 -- }
 
 -- KEY_BINDING
+config.swap_backspace_and_delete = false
 config.keys = {
     { key = 'Enter',     mods = 'ALT',        action = act.ToggleFullScreen },
     { key = 'T',         mods = 'SHIFT|CTRL', action = act.SpawnTab 'CurrentPaneDomain' },
