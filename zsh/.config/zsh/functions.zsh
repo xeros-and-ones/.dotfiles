@@ -6,9 +6,16 @@
 # else
 #     SHORT_HOST="${HOST/.*/}"
 # fi
-# precmd () {print -Pn "\e]0;%n@%m: %~\a"}
+# precmd () {echo -ne "\e]1;$PWD\a"}
 #
+function xtitle () {
+    builtin print -n -- "\e]0;$@\a"
+}
 
+# updates the window title whenever a command is run
+function precmd () {
+    xtitle "$(print -P $USER: %3~)"
+}
 #########################################################
 # Get the value of an alias.
 #

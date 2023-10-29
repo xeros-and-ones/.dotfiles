@@ -6,6 +6,7 @@ local M = {
     "b0o/schemastore.nvim",
     {
       "williamboman/mason.nvim",
+      event = "VimEnter",
       opts = {
         ui = {
           border = "rounded",
