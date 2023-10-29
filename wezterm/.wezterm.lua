@@ -26,8 +26,8 @@ config.initial_rows = 40
 config.scrollback_lines = 10000
 config.max_fps = 100
 config.inactive_pane_hsb = {
-	saturation = 0.5,
-	brightness = 0.5,
+	saturation = 0.9,
+	brightness = 0.4,
 }
 
 -- GUI
