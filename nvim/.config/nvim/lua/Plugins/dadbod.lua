@@ -1,6 +1,5 @@
 local M = {
     "tpope/vim-dadbod",
-    commit = "95fd22469507e86b78aa55d868c14108adee2881",
     enabled = true,
     dependencies = {
         "kristijanhusak/vim-dadbod-ui",
