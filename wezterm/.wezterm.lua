@@ -18,7 +18,7 @@ config.webgpu_preferred_adapter = {
 }
 config.front_end = "WebGpu"
 config.warn_about_missing_glyphs = false
--- config.enable_kitty_keyboard = true
+config.enable_kitty_keyboard = true
 config.mouse_wheel_scrolls_tabs = false
 config.underline_position = -3
 config.initial_cols = 165
@@ -34,7 +34,7 @@ config.inactive_pane_hsb = {
 config.adjust_window_size_when_changing_font_size = false
 config.color_scheme = "GruvboxDark"
 config.colors = {
-	-- background = '#16162e',
+	background = '#222222',
 	tab_bar = {
 		background = "#000000",
 		-- The color of the strip that goes along the top of the window
@@ -99,12 +99,12 @@ config.cursor_blink_ease_out = "Constant"
 config.cursor_blink_rate = 0
 
 -- FONTS
+config.font_size = 10.5
+config.bold_brightens_ansi_colors = true
 config.font = wezterm.font("JetbrainsMono Nerd Font", {
 	style = "Normal",
 	weight = "Bold",
 })
-config.font_size = 10.5
-config.bold_brightens_ansi_colors = true
 -- config.font_rules = {
 --     {
 --         intensity = "Bold",
@@ -130,6 +130,7 @@ config.keys = {
 	{ key = "T", mods = "SHIFT|CTRL", action = act.SpawnTab("CurrentPaneDomain") },
 	{ key = "{", mods = "SHIFT|CTRL", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
 	{ key = "}", mods = "SHIFT|CTRL", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+    { key = 'Enter', mods = 'SHIFT|CTRL', action = act.RotatePanes 'Clockwise' },
 	{ key = "Tab", mods = "CTRL", action = act.ActivateTabRelative(1) },
 	{ key = "Tab", mods = "SHIFT|CTRL", action = act.ActivateTabRelative(-1) },
 	{ key = "Backspace", mods = "SHIFT|CTRL", action = act.ResetFontSize },
