@@ -16,11 +16,13 @@ config.webgpu_preferred_adapter = {
 	name = "Intel(R) HD Graphics 4400 (HSW GT2)",
 	vendor = 32902,
 }
+config.show_new_tab_button_in_tab_bar = false
+config.hyperlink_rules = wezterm.default_hyperlink_rules()
 config.front_end = "WebGpu"
 config.warn_about_missing_glyphs = false
 -- config.enable_kitty_keyboard = true
 config.mouse_wheel_scrolls_tabs = false
-config.underline_position = -3
+config.underline_position = -4
 config.initial_cols = 165
 config.initial_rows = 40
 config.scrollback_lines = 10000
@@ -34,7 +36,7 @@ config.inactive_pane_hsb = {
 config.adjust_window_size_when_changing_font_size = false
 config.color_scheme = "GruvboxDark"
 config.colors = {
-	background = '#222222',
+	background = "#222222",
 	tab_bar = {
 		background = "#000000",
 		-- The color of the strip that goes along the top of the window
@@ -77,11 +79,11 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 	local title = tab_title(tab)
 	return " " .. title .. " "
 end)
-config.window_background_opacity = 0.85
+config.window_background_opacity = 0.80
 config.hide_tab_bar_if_only_one_tab = true
 config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
-config.tab_max_width = 40
+config.tab_max_width = 60
 config.show_tab_index_in_tab_bar = false
 config.window_padding = {
 	left = 0,
@@ -100,6 +102,7 @@ config.cursor_blink_rate = 0
 
 -- FONTS
 config.font_size = 10.5
+config.freetype_load_flags = "NO_HINTING"
 config.bold_brightens_ansi_colors = true
 config.font = wezterm.font("JetbrainsMono Nerd Font", {
 	style = "Normal",
@@ -127,10 +130,10 @@ config.font = wezterm.font("JetbrainsMono Nerd Font", {
 config.swap_backspace_and_delete = false
 config.keys = {
 	{ key = "Enter", mods = "ALT", action = act.ToggleFullScreen },
-	{ key = "T", mods = "SHIFT|CTRL", action = act.SpawnTab("CurrentPaneDomain") },
+	{ key = "T", mods = "SHIFT|CTRL", action = act.SpawnTab("DefaultDomain") },
 	{ key = "{", mods = "SHIFT|CTRL", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
 	{ key = "}", mods = "SHIFT|CTRL", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
-    { key = 'Enter', mods = 'SHIFT|CTRL', action = act.RotatePanes 'Clockwise' },
+	{ key = "Enter", mods = "SHIFT|CTRL", action = act.RotatePanes("Clockwise") },
 	{ key = "Tab", mods = "CTRL", action = act.ActivateTabRelative(1) },
 	{ key = "Tab", mods = "SHIFT|CTRL", action = act.ActivateTabRelative(-1) },
 	{ key = "Backspace", mods = "SHIFT|CTRL", action = act.ResetFontSize },
@@ -146,6 +149,8 @@ config.keys = {
 	{ key = "N", mods = "SHIFT|CTRL", action = act.SpawnWindow },
 	{ key = "P", mods = "SHIFT|CTRL", action = act.ActivateCommandPalette },
 	{ key = "R", mods = "SHIFT|CTRL", action = act.ReloadConfiguration },
+	{ key = "T", mods = "SHIFT|CTRL|ALT", action = act.ShowTabNavigator },
+	{ key = "S", mods = "SHIFT|CTRL", action = act.PaneSelect },
 	{
 		key = "U",
 		mods = "SHIFT|CTRL",
@@ -164,10 +169,10 @@ config.keys = {
 	{ key = "RightArrow", mods = "SHIFT|CTRL", action = act.ActivatePaneDirection("Right") },
 	{ key = "UpArrow", mods = "SHIFT|CTRL", action = act.ActivatePaneDirection("Up") },
 	{ key = "DownArrow", mods = "SHIFT|CTRL", action = act.ActivatePaneDirection("Down") },
-	{ key = "LeftArrow", mods = "SHIFT|ALT|CTRL", action = act.AdjustPaneSize({ "Left", 1 }) },
-	{ key = "RightArrow", mods = "SHIFT|ALT|CTRL", action = act.AdjustPaneSize({ "Right", 1 }) },
-	{ key = "UpArrow", mods = "SHIFT|ALT|CTRL", action = act.AdjustPaneSize({ "Up", 1 }) },
-	{ key = "DownArrow", mods = "SHIFT|ALT|CTRL", action = act.AdjustPaneSize({ "Down", 1 }) },
+	{ key = "LeftArrow", mods = "SHIFT|ALT|CTRL", action = act.AdjustPaneSize({ "Left", 3 }) },
+	{ key = "RightArrow", mods = "SHIFT|ALT|CTRL", action = act.AdjustPaneSize({ "Right", 3 }) },
+	{ key = "UpArrow", mods = "SHIFT|ALT|CTRL", action = act.AdjustPaneSize({ "Up", 3 }) },
+	{ key = "DownArrow", mods = "SHIFT|ALT|CTRL", action = act.AdjustPaneSize({ "Down", 3 }) },
 }
 
 config.key_tables = {
