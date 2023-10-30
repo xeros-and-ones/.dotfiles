@@ -18,7 +18,7 @@ config.webgpu_preferred_adapter = {
 }
 config.front_end = "WebGpu"
 config.warn_about_missing_glyphs = false
-config.enable_kitty_keyboard = true
+-- config.enable_kitty_keyboard = true
 config.mouse_wheel_scrolls_tabs = false
 config.underline_position = -3
 config.initial_cols = 165
