@@ -3,7 +3,6 @@ local M = {
   enabled = true,
   dependencies = {
     "nvim-lua/plenary.nvim",
-    "folke/neodev.nvim",
     "nvim-treesitter/nvim-treesitter",
     "microsoft/vscode-codicons",
     "nvim-neotest/neotest-python",

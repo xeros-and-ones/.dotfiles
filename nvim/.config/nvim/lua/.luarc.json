@@ -1,6 +1,7 @@
 {
   "workspace.library": [
     "/home/xero/.local/share/nvim/lazy/neodev.nvim/types/stable",
-    "/usr/local/share/nvim/runtime/lua"
+    "/usr/local/share/nvim/runtime/lua",
+        "${3rd}/luv/library"
   ]
 }

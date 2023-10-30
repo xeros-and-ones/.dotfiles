@@ -22,7 +22,6 @@ local M = {
     },
     "jay-babu/mason-null-ls.nvim",
     "hrsh7th/cmp-nvim-lsp",
-    "folke/neodev.nvim",
     "simrat39/rust-tools.nvim",
     {
       "nvimtools/none-ls.nvim",
@@ -46,6 +45,7 @@ local ensure_installed = {
   "html-lsp",
   "python-lsp-server",
   -- "pyright",
+  "tsserver",
   "yamlls",
   "jsonls",
   "gopls",
@@ -54,7 +54,6 @@ local ensure_installed = {
   "debugpy",
 
   -- linters -----------------------------------
-  "eslint_d",
   "markdownlint",
   "djlint",
   "shellcheck",
@@ -144,24 +143,6 @@ function M.config()
   end
   keymap({ "n", "i" }, "<c-a>", "<cmd>lua vim.lsp.buf.format { async = true }<cr>", { desc = "format code" })
 
-  --setup neodev
-  require("neodev").setup {
-    library = {
-      enabled = true, -- when not enabled, neodev will not change any settings to the LSP server
-      -- these settings will be used for your Neovim config directory
-      runtime = true, -- runtime path
-      types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
-      plugins = { "nvim-treesitter", "plenary.nvim", "telescope.nvim", "neotest" },
-    },
-    setup_jsonls = true, -- configures jsonls to provide completion for project specific .luarc.json files
-    -- for your Neovim config directory, the config.library settings will be used as is
-    -- for plugin directories (root_dirs having a /lua directory), config.library.plugins will be disabled
-    -- for any other directory, config.library.enabled will be set to false
-    override = function(root_dir, options) end,
-    lspconfig = true,
-    pathStrict = true,
-  }
-
   ------------------------ Pyright-lsp-server Config ------------------------------
   -- setup lsp servers
   -- require("lspconfig").pyright.setup {
@@ -208,6 +189,10 @@ function M.config()
           url = "",
         },
         schemas = require("schemastore").yaml.schemas(),
+        format = { enabled = false },
+        validate = false,
+        completion = true,
+        hover = true,
       },
     },
     capabilities = capabilities,
@@ -290,43 +275,44 @@ function M.config()
     capabilities = capabilities,
   }
 
-  ---------------------- Lua-language-server Config ----------------------------
-  local runtime_path = vim.split(package.path, ";")
-  table.insert(runtime_path, "lua/?.lua")
-  table.insert(runtime_path, "lua/?/init.lua")
-  require("lspconfig").lua_ls.setup {
+  ---------------------- Typescript-lsp ----------------------------------------
+  require("lspconfig").tsserver.setup {
     on_attach = on_attach,
-    settings = {
-      Lua = {
-        format = {
-          enable = false,
-        },
-        telemetry = { enable = false },
-        runtime = {
-          version = "Lua 5.4",
-          path = runtime_path,
-        },
-        diagnostics = {
-          -- Get the language server to recognize the `vim` global
-          globals = { "vim" },
-        },
-        workspace = {
-          checkThirdParty = false,
-          maxPreload = 10000,
-          preloadFileSize = 1000,
-          library = {
-            -- Make the server aware of Neovim runtime files
-            vim.fn.expand "$VIMRUNTIME/lua",
-            vim.fn.stdpath "config" .. "/lua",
-          },
-        },
-        completion = {
-          callSnippet = "Replace",
-        },
+    javascript = {
+      inlayHints = {
+        includeInlayEnumMemberValueHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+        includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayVariableTypeHints = true,
       },
     },
+    typescript = {
+      inlayHints = {
+        includeInlayEnumMemberValueHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+        includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayVariableTypeHints = true,
+      },
+    },
+    capabilities = capabilities,
+  }
+  ---------------------- Lua-language-server Config ----------------------------
+  require("lspconfig").lua_ls.setup {
+    on_attach = on_attach,
+    lua = {
+      hint = { enable = true },
+      telemetry = { enable = false },
+      diagnostics = { globals = { "vim" } },
+      workspace = { checkThirdParty = false },
+    },
     flags = {
-      allow_incremental_sync = true,
+      -- allow_incremental_sync = true,
       debounce_text_changes = 200,
     },
     capabilities = capabilities,
@@ -360,6 +346,24 @@ function M.config()
   --------------------- css-lsp Config --------------------------------------
   require("lspconfig").cssls.setup {
     on_attach = on_attach,
+    css = {
+      validate = true,
+      lint = {
+        unknownAtRules = "ignore",
+      },
+    },
+    scss = {
+      validate = true,
+      lint = {
+        unknownAtRules = "ignore",
+      },
+    },
+    less = {
+      validate = true,
+      lint = {
+        unknownAtRules = "ignore",
+      },
+    },
     capabilities = capabilities,
   }
 
@@ -378,6 +382,24 @@ function M.config()
   --------------------- go-lsp Config --------------------------------------
   require("lspconfig").gopls.setup {
     on_attach = on_attach,
+    gopls = {
+      completeUnimported = true,
+      usePlaceholders = true,
+      gofumpt = true,
+      staticcheck = true,
+      analyses = {
+        unusedparams = true,
+      },
+      hints = {
+        assignVariableTypes = true,
+        compositeLiteralFields = true,
+        compositeLiteralTypes = true,
+        constantValues = true,
+        functionTypeParameters = true,
+        parameterNames = true,
+        rangeVariableTypes = true,
+      },
+    },
     capabilities = capabilities,
   }
   ---
@@ -438,7 +460,7 @@ function M.config()
       },
 
       --diagnostics
-      diagnostics.eslint_d,
+      -- diagnostics.eslint_d,
       diagnostics.markdownlint,
       diagnostics.djlint,
       -- diagnostics.flake8.with({ extra_args = { "--max-line-length", "100" } }),
