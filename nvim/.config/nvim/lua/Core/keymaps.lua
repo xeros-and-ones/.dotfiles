@@ -19,6 +19,16 @@ vim.g.mapleader = " "
 -- ║ General                                         ║
 -- ╚═════════════════════════════════════════════════╝
 
+keymap("n", "<Up>", "<Nop>" )
+keymap("n", "<Down>", "<Nop>" )
+keymap("n", "<Left>", "<Nop>" )
+keymap("n", "<Right>", "<Nop>" )
+
+keymap("i", "<Up>", "<Nop>" )
+keymap("i", "<Down>", "<Nop>" )
+keymap("i", "<Left>", "<Nop>" )
+keymap("i", "<Right>", "<Nop>" )
+
 keymap("n", "<leader>w", "<cmd>w<cr>", { desc = "Save" })
 keymap("n", "<leader>q", "<cmd>q<cr>", { desc = "Quit" })
 keymap({ "n", "i", "x" }, "<C-S>", "<Cmd>w<CR>", { desc = "Save" })
