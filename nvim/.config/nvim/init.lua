@@ -7,5 +7,5 @@ else
     require "Core.keymaps"
     require "Core.autocommands"
 
-    vim.cmd("colorscheme gruvbox")
+    vim.cmd "colorscheme gruvbox"
 end
