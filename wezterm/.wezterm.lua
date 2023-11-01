@@ -8,7 +8,7 @@ config.front_end = "WebGpu"
 config.disable_default_key_bindings = true
 
 -- CORE
-config.enable_wayland = false
+-- config.enable_wayland = false
 config.show_new_tab_button_in_tab_bar = false
 config.hyperlink_rules = wezterm.default_hyperlink_rules()
 config.warn_about_missing_glyphs = false
@@ -18,7 +18,7 @@ config.underline_position = -4
 config.initial_cols = 165
 config.initial_rows = 40
 config.scrollback_lines = 10000
--- config.max_fps = 60
+config.max_fps = 100
 config.inactive_pane_hsb = {
 	saturation = 0.9,
 	brightness = 0.4,
