@@ -4,21 +4,13 @@ local act = wezterm.action
 
 -- This table will hold the configuration.
 local config = {}
+config.front_end = "WebGpu"
 config.disable_default_key_bindings = true
 
 -- CORE
-config.webgpu_preferred_adapter = {
-	backend = "Vulkan",
-	device = 2582,
-	device_type = "IntegratedGpu",
-	driver = "Intel open-source Mesa driver",
-	driver_info = "Mesa 23.2.1-arch1.2",
-	name = "Intel(R) HD Graphics 4400 (HSW GT2)",
-	vendor = 32902,
-}
+config.enable_wayland = false
 config.show_new_tab_button_in_tab_bar = false
 config.hyperlink_rules = wezterm.default_hyperlink_rules()
-config.front_end = "WebGpu"
 config.warn_about_missing_glyphs = false
 -- config.enable_kitty_keyboard = true
 config.mouse_wheel_scrolls_tabs = false
@@ -26,7 +18,7 @@ config.underline_position = -4
 config.initial_cols = 165
 config.initial_rows = 40
 config.scrollback_lines = 10000
-config.max_fps = 100
+-- config.max_fps = 60
 config.inactive_pane_hsb = {
 	saturation = 0.9,
 	brightness = 0.4,

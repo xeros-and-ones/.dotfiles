@@ -94,6 +94,8 @@ alias v="nvim"
 alias sv="sudoedit"
 alias vconf="cd ~/.dotfiles/nvim/.config/nvim/ && v"
 alias vd='deactivate'
+alias stows='stow -vSt ~'
+alias stowd='stow -vDt ~'
 
 alias -g ...='../..'
 alias -g ....='../../..'

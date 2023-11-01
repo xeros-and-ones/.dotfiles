@@ -1,19 +1,10 @@
 ######## Functions ##########-----------------------------------------------------------
-# Figure out the SHORT hostname
-# if [[ "$OSTYPE" = darwin* ]]; then
-#     # macOS's $HOST changes with dhcp, etc. Use ComputerName if possible.
-#     SHORT_HOST=$(scutil --get ComputerName 2>/dev/null) || SHORT_HOST="${HOST/.*/}"
-# else
-#     SHORT_HOST="${HOST/.*/}"
-# fi
-# precmd () {echo -ne "\e]1;$PWD\a"}
-#
 function xtitle () {
     builtin print -n -- "\e]0;$@\a"
 }
 
 # updates the window title whenever a command is run
-function precmd () {
+precmd () {
     xtitle "$(print -P $USER: %3~)"
 }
 #########################################################

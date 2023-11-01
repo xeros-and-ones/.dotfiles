@@ -317,33 +317,42 @@ function M.config()
     table.insert(lua_rtp, "lua/?.lua")
     table.insert(lua_rtp, "lua/?/init.lua")
     require("lspconfig").lua_ls.setup {
+        on_init = function(client)
+            client.server_capabilities.documentFormattingProvider = false
+            client.server_capabilities.documentFormattingRangeProvider = false
+        end,
         on_attach = on_attach,
-        lua = {
-            hint = { enable = true },
-            runtime = {
-                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                version = "LuaJIT",
-                -- Setup your lua path
-                path = lua_rtp,
-            },
-            diagnostics = {
-                -- Get the language server to recognize the `vim` global
-                globals = { "vim" },
-            },
-            workspace = {
-                -- Make the server aware of Neovim runtime files
-                library = vim.api.nvim_get_runtime_file("", true),
-            },
-            -- Do not send telemetry data containing a randomized but unique identifier
-            telemetry = {
-                enable = false,
+        capabilities = capabilities,
+        settings = {
+            lua = {
+                format = {
+                    enable = false,
+                },
+                hint = { enable = true },
+                runtime = {
+                    -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+                    version = "LuaJIT",
+                    -- Setup your lua path
+                    path = lua_rtp,
+                },
+                diagnostics = {
+                    -- Get the language server to recognize the `vim` global
+                    globals = { "vim" },
+                },
+                workspace = {
+                    -- Make the server aware of Neovim runtime files
+                    library = vim.api.nvim_get_runtime_file("", true),
+                },
+                -- Do not send telemetry data containing a randomized but unique identifier
+                telemetry = {
+                    enable = false,
+                },
             },
         },
         -- flags = {
         --     -- allow_incremental_sync = true,
         --     debounce_text_changes = 200,
         -- },
-        capabilities = capabilities,
     }
 
     --------------------- Rust-Tools Config --------------------------------------
