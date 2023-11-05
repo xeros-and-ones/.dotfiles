@@ -9,7 +9,6 @@ local M = {
         "hrsh7th/cmp-emoji",
         "saadparwaiz1/cmp_luasnip",
         "hrsh7th/cmp-cmdline",
-        -- "hrsh7th/cmp-nvim-lsp-signature-help"
         {
             "rafamadriz/friendly-snippets",
             config = function()
@@ -194,7 +193,6 @@ function M.config()
             { name = "crates" },
             { name = "nvim_lua", ft = "lua" },
             { name = "emoji" },
-            -- { name = "nvim_lsp_signature_help" },
         },
         formatting = {
             fields = { --[[ "menu", ]]

@@ -6,7 +6,7 @@ local M = {
 function M.config()
     require("bufferline").setup {
         options = {
-            mode = "buffers", -- set to "tabs" to only show tabpages instead
+            mode = "tabs", -- set to "tabs" to only show tabpages instead
             numbers = "none",
             left_mouse_command = "buffer %d", -- can be a string | function, see "Mouse actions"
             close_command = "Bdelete! %d", -- can be a string | function, see "Mouse actions"

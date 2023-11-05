@@ -1,5 +1,6 @@
 local M = {
     "folke/neodev.nvim",
+    enabled = false,
 }
 
 M.opts = {

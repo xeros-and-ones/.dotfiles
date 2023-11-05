@@ -47,19 +47,19 @@ function M.config()
         icons = {
             breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
             separator = "➜", -- symbol used between a key and it's label
-            group = "+", -- symbol prepended to a group
+            group = "_", -- symbol prepended to a group
         },
     }
 
     wk.register({
-        t = { name = "Testing" },
-        l = { name = " LSP " },
-        z = { name = "Utilities" },
-        s = { name = "Spectre Find & Replace" },
-        D = { name = "Dadbod Database" },
-        g = { name = "Git Control" },
-        f = { name = "Find" },
-        b = { name = "Buffers" },
+        t = { name = "_Testing" },
+        l = { name = "_LSP" },
+        z = { name = "_Utilities" },
+        s = { name = "_Spectre Find & Replace" },
+        D = { name = "_Dadbod Database" },
+        g = { name = "_Git Control" },
+        f = { name = "_Find" },
+        b = { name = "_Buffers" },
     }, { prefix = "<leader>" })
 end
 

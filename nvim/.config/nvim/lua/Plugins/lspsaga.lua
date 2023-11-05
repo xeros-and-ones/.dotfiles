@@ -34,6 +34,7 @@ M.opts = {
 
     rename = {
         quit = "<Esc>",
+        close = "<Esc>",
         exec = "<CR>",
         in_select = false,
     },

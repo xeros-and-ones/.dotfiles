@@ -16,7 +16,7 @@ autocmd("FileType", {
 
 -- Hide folds and Disable statuscolumn in these filetypes
 autocmd("FileType", {
-    pattern = { "sagaoutline", "Alpha", "alpha", "Dashboard" },
+    pattern = { "sagaoutline", "Alpha", "alpha", "Dashboard", "scratch", "Scratch" },
     callback = function()
         vim.opt_local.foldcolumn = "0" -- hides the fold
         vim.opt_local.stc = "" -- not really important
