@@ -40,7 +40,11 @@ function M.config()
         cond = hide_in_width,
         function()
             local ts_avail, ts = pcall(require, "nvim-treesitter.parsers")
-            return (ts_avail and ts.has_parser()) and " TS" or " No TS"
+            if not (ts_avail and ts.has_parser()) then
+                return " No TS"
+            else
+                return ""
+            end
         end,
     }
     --local spaces = function()
@@ -162,12 +166,12 @@ function M.config()
                             return table.concat(clients, ", ")
                         end
                     end,
+                    cond = hide_in_width,
                     icon = " ",
                     color = { gui = "bold" },
                     on_click = function()
                         vim.cmd "LspInfo"
                     end,
-                    -- separator = { left = "", right = "" },
                 },
             },
             lualine_z = {
@@ -181,17 +185,17 @@ function M.config()
                 {
                     "location", --'%l:%c ‖ %p%%',
                     cond = hide_in_width,
-                    separator = { left = "", right = "" },
+                    separator = { left = "" },
                 },
             },
         },
         inactive_sections = {
-            lualine_a = {},
+            lualine_a = { "filename" },
             lualine_b = {},
-            lualine_c = { "filename" },
-            lualine_x = { "location" },
+            lualine_c = {},
+            lualine_x = {},
             lualine_y = {},
-            lualine_z = {},
+            lualine_z = { "location" },
         },
         -- tabline = {},
         winbar = {

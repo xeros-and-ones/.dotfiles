@@ -168,7 +168,7 @@ keymap("n", "<C-Right>", ":vertical resize -2<CR>", opts)
 keymap("v", "p", '"_dP', opts)
 keymap("x", "p", 'p:let @+=@0<CR>:let @"=@0<CR>', opts)
 
-keymap({ "n", "i", "v" }, "<C-a>", "<cmd>lua vim.lsp.buf.format { async = true }<cr>", opts)
+keymap({ "n", "i", "v" }, "<C-Space>", "<cmd>lua vim.lsp.buf.format { async = true }<cr>", opts)
 
 keymap({ "n", "i", "v" }, "<F5>", RunCode, opts)
 
@@ -308,16 +308,16 @@ Hydra {
     mode = { "n", "x" },
     body = "<leader>d",
     heads = {
-        { "<f6>", cmd "lua require('dap').step_over()", { exit = false, desc = "Step over" } },
-        { "<f7>", cmd "lua require('dap').step_into()", { exit = false, desc = "Step into" } },
-        { "<f8>", cmd "lua require('dap').step_out()", { exit = false, desc = "Step out" } },
-        { "b", cmd "lua require('dap').toggle_breakpoint()", { exit = false, desc = "Toggle breakpoint" } },
-        { "<cr>", cmd "lua require('dap').continue()", { exit = false, desc = "Continue" } },
-        { "r", cmd "lua require('dap').repl.toggle()", { exit = false, desc = "REPL" } },
-        { "q", cmd "lua require('dap').terminate()", { exit = true, desc = "Stop debugging" } },
-        { "l", cmd "lua require('dap').run_last()", { exit = true, desc = "Run last" } },
-        { "h", cmd "lua require('dap.ui.widgets').hover()", { exit = true, desc = "Hover" } },
-        { "p", cmd "lua require('dap.ui.widgets').preview()", { exit = true, desc = "Preview" } },
+        { "<f6>", cmd "lua require('dap').step_over()",          { exit = false, desc = "Step over" } },
+        { "<f7>", cmd "lua require('dap').step_into()",          { exit = false, desc = "Step into" } },
+        { "<f8>", cmd "lua require('dap').step_out()",           { exit = false, desc = "Step out" } },
+        { "b",    cmd "lua require('dap').toggle_breakpoint()",  { exit = false, desc = "Toggle breakpoint" } },
+        { "<cr>", cmd "lua require('dap').continue()",           { exit = false, desc = "Continue" } },
+        { "r",    cmd "lua require('dap').repl.toggle()",        { exit = false, desc = "REPL" } },
+        { "q",    cmd "lua require('dap').terminate()",          { exit = true, desc = "Stop debugging" } },
+        { "l",    cmd "lua require('dap').run_last()",           { exit = true, desc = "Run last" } },
+        { "h",    cmd "lua require('dap.ui.widgets').hover()",   { exit = true, desc = "Hover" } },
+        { "p",    cmd "lua require('dap.ui.widgets').preview()", { exit = true, desc = "Preview" } },
         {
             "f",
             function()
