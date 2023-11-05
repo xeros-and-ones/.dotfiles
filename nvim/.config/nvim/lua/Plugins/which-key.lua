@@ -1,42 +1,29 @@
 local M = {
     "folke/which-key.nvim",
-    commit = "7ccf476ebe0445a741b64e36c78a682c1c6118b7",
     enabled = true,
     event = "VeryLazy",
 }
-
-M.init = function()
-    vim.o.timeout = true
-    vim.o.timeoutlen = 300
-end
 
 function M.config()
     local wk = require "which-key"
     wk.setup {
         plugins = {
-            marks = true,     -- shows a list of your marks on ' and `
+            marks = true, -- shows a list of your marks on ' and `
             registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
             -- the presets plugin, adds help for a bunch of default keybindings in Neovim
             spelling = {
-                enabled = true,   -- enabling this will show WhichKey when pressing z= to select spelling suggestions
+                enabled = true, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
                 suggestions = 20, -- how many suggestions should be shown in the list?
             },
             presets = {
-                operators = true,    -- adds help for operators like d, y, ...
-                motions = true,      -- adds help for motions
+                operators = true, -- adds help for operators like d, y, ...
+                motions = true, -- adds help for motions
                 text_objects = true, -- help for text objects triggered after entering an operator
-                windows = true,      -- default bindings on <c-w>
-                nav = true,          -- misc bindings to work with windows
-                z = true,            -- bindings for folds, spelling and others prefixed with z
-                g = true,            -- bindings for prefixed with g
+                windows = true, -- default bindings on <c-w>
+                nav = true, -- misc bindings to work with windows
+                z = true, -- bindings for folds, spelling and others prefixed with z
+                g = true, -- bindings for prefixed with g
             },
-        },
-        key_labels = {
-            -- override the label used to display some keys. It doesn't effect WK in any other way.
-            -- For example:
-            ["<leader>"] = "LDR",
-            ["<cr>"] = "RET",
-            ["<tab>"] = "TAB",
         },
         defaults = {
             color_devicons = true,
@@ -53,9 +40,9 @@ function M.config()
         },
         layout = {
             height = { min = 4, max = 25 }, -- min and max height of the columns
-            width = { min = 5, max = 40 },  -- min and max width of the columns
-            spacing = 1,                    -- spacing between columns
-            align = "left",                 -- align columns left, center or right
+            width = { min = 5, max = 40 }, -- min and max width of the columns
+            spacing = 1, -- spacing between columns
+            align = "left", -- align columns left, center or right
         },
         icons = {
             breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
@@ -63,40 +50,17 @@ function M.config()
             group = "+", -- symbol prepended to a group
         },
     }
-    wk.register({
-        l = { name = "LSP" },
-    }, { prefix = "<leader>" })
 
     wk.register({
+        t = { name = "Testing" },
+        l = { name = " LSP " },
+        z = { name = "Utilities" },
+        s = { name = "Spectre Find & Replace" },
+        D = { name = "Dadbod Database" },
+        g = { name = "Git Control" },
+        f = { name = "Find" },
         b = { name = "Buffers" },
     }, { prefix = "<leader>" })
-
-    wk.register({
-        f = { name = "Find" },
-    }, { prefix = "<leader>" })
-
-    wk.register({
-        g = { name = "Git Control" },
-    }, { prefix = "<leader>" })
-
-    wk.register({
-        D = { name = "Dadbod Database" },
-    }, { prefix = "<leader>" })
-
-
-    wk.register({
-        s = { name = "Spectre Find & Replace" },
-    }, { prefix = "<leader>" })
-
-    wk.register({
-        z = { name = "Utilities" },
-    }, { prefix = "<leader>" })
-    wk.register(
-        {
-            c = { name = "Code", t = { name = "Neotest" } }
-        },
-        { prefix = "<leader>" }
-    )
 end
 
 return M

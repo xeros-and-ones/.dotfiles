@@ -96,27 +96,27 @@ config.cursor_blink_rate = 0
 config.font_size = 10.5
 config.freetype_load_flags = "NO_HINTING"
 config.bold_brightens_ansi_colors = true
-config.font = wezterm.font("JetbrainsMono Nerd Font", {
+config.font = wezterm.font("FiraCode Nerd Font", {
 	style = "Normal",
-	weight = "Bold",
+	weight = "DemiBold",
 })
--- config.font_rules = {
---     {
---         intensity = "Bold",
---         italic = true,
---         font = wezterm.font("CaskaydiaCove Nerd Font", { weight = "Bold", style = "Italic" }),
---     },
---     {
---         italic = true,
---         intensity = "Half",
---         font = wezterm.font("CaskaydiaCove Nerd Font", { style = "Italic" }),
---     },
---     {
---         italic = true,
---         intensity = "Normal",
---         font = wezterm.font("CaskaydiaCove Nerd Font", { weight = "DemiBold", style = "Italic" }),
---     },
--- }
+config.font_rules = {
+	{
+		italic = true,
+		intensity = "Bold",
+		font = wezterm.font("CaskaydiaCove Nerd Font", { weight = "Bold", style = "Italic" }),
+	},
+	{
+		italic = true,
+		intensity = "Half",
+		font = wezterm.font("CaskaydiaCove Nerd Font", { style = "Italic" }),
+	},
+	{
+		italic = true,
+		intensity = "Normal",
+		font = wezterm.font("CaskaydiaCove Nerd Font", { weight = "DemiBold", style = "Italic" }),
+	},
+}
 
 -- KEY_BINDING
 config.swap_backspace_and_delete = false

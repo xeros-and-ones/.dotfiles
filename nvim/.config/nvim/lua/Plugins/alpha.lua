@@ -8,9 +8,8 @@ local M = {
 
 function M.config()
     local headers = require "headers"
-    local quotes = require "quotes"
     local theme = require "alpha.themes.theta"
-    local path_ok, plenary_path = pcall(require, "plenary.path")
+    local path_ok, _ = pcall(require, "plenary.path")
     if not path_ok then
         return
     end
@@ -18,8 +17,48 @@ function M.config()
     math.randomseed(os.time())
 
     -- Header
-    local function apply_gradient_hl(text)
-        local gradient = require("uts").create_gradient("#DCA561", "#658594", #text)
+    -- string padding
+    -- local pad_string = function(str, len, align)
+    --     local str_len = #str
+    --     if str_len >= len then
+    --         return str
+    --     end
+
+    --     local pad_len = len - str_len
+    --     local pad = string.rep(" ", pad_len)
+
+    --     if align == "left" then
+    --         return str .. pad
+    --     elseif align == "right" then
+    --         return pad .. str
+    --     elseif align == "center" then
+    --         local left_pad = math.floor(pad_len / 2)
+    --         local right_pad = pad_len - left_pad
+    --         return string.rep(" ", left_pad) .. str .. string.rep(" ", right_pad)
+    --     end
+    -- end
+    local create_gradient = function(start, finish, steps)
+        local r1, g1, b1 =
+            tonumber("0x" .. start:sub(2, 3)), tonumber("0x" .. start:sub(4, 5)), tonumber("0x" .. start:sub(6, 7))
+        local r2, g2, b2 =
+            tonumber("0x" .. finish:sub(2, 3)), tonumber("0x" .. finish:sub(4, 5)), tonumber("0x" .. finish:sub(6, 7))
+
+        local r_step = (r2 - r1) / steps
+        local g_step = (g2 - g1) / steps
+        local b_step = (b2 - b1) / steps
+
+        local gradient = {}
+        for i = 1, steps do
+            local r = math.floor(r1 + r_step * i)
+            local g = math.floor(g1 + g_step * i)
+            local b = math.floor(b1 + b_step * i)
+            table.insert(gradient, string.format("#%02x%02x%02x", r, g, b))
+        end
+
+        return gradient
+    end
+    local apply_gradient_hl = function(text)
+        local gradient = create_gradient("#DCA561", "#658594", #text)
 
         local lines = {}
         for i, line in ipairs(text) do
@@ -44,29 +83,9 @@ function M.config()
             opts = { position = "center" },
         }
     end
-
     local function get_header(headers)
         local header_text = headers[math.random(#headers)]
         return apply_gradient_hl(header_text)
-    end
-
-    -- Footer
-    local function get_footer(quotes, width)
-        local quote_text = quotes[math.random(#quotes)]
-
-        local max_width = width or 35
-
-        local tbl = {}
-        for _, text in ipairs(quote_text) do
-            local padded_text = require("uts").pad_string(text, max_width, "right")
-            table.insert(tbl, { type = "text", val = padded_text, opts = { hl = "Comment", position = "center" } })
-        end
-
-        return {
-            type = "group",
-            val = tbl,
-            opts = {},
-        }
     end
 
     -- Info section
@@ -98,8 +117,11 @@ function M.config()
             dashboard.button("f", " " .. " Find file", ":Telescope find_files <CR>"),
             dashboard.button("r", "󰄉 " .. " Recent files", ":Telescope oldfiles <CR>"),
             dashboard.button("n", " " .. " New File", ":enew <CR>"),
-            dashboard.button("s", " " .. " Restore Session",
-                "<CMD>lua require('persistence').load({ last = true })<CR>"),
+            dashboard.button(
+                "s",
+                " " .. " Restore Session",
+                "<CMD>lua require('persistence').load({ last = true })<CR>"
+            ),
             dashboard.button("t", " " .. " Find text", ":Telescope live_grep <CR>"),
             dashboard.button("l", "󰒲 " .. " Lazy", "<cmd>Lazy<CR>"),
             dashboard.button("m", " " .. " Mason", "<cmd>Mason<CR>"),
@@ -128,13 +150,20 @@ function M.config()
     theme.config.layout = {
         { type = "padding", val = 4 },
         { type = "padding", val = 4 },
-        get_header { headers.cool, headers.panda, headers.xero1, headers.xero2, headers.xerobig, headers.beautiful },
+        get_header {
+            headers.header,
+            headers.cool,
+            headers.panda,
+            headers.xero1,
+            headers.xero2,
+            headers.xerobig,
+            headers.beautiful,
+        },
         { type = "padding", val = 1 },
         links,
         { type = "padding", val = 2 },
         get_mru(7),
         { type = "padding", val = 3 },
-        get_footer({ quotes.roar, quotes.path }, 50),
     }
     require("alpha").setup(theme.config)
 end

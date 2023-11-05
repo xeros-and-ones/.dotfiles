@@ -1,7 +1,7 @@
 local M = {
     "ellisonleao/gruvbox.nvim",
     commit = "a569160337aa309db4cfe21ba4e088f0e6676fb4",
-    lazy = false,    -- make sure we load this during startup if it is your main colorscheme
+    lazy = false, -- make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- make sure to load this before all the other start plugins
 }
 
@@ -50,6 +50,7 @@ M.opts = {
         TroubleTextError = { link = "DiagnosticError" },
         TroubleTextWarning = { link = "DiagnosticWarn" },
         TroubleTextInformation = { link = "DiagnosticInfo" },
+        FlashPrompt = { link = "DiagnosticVirtualTextHint" },
     },
 }
 

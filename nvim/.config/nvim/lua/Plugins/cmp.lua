@@ -13,12 +13,22 @@ local M = {
         {
             "rafamadriz/friendly-snippets",
             config = function()
-                require("luasnip.loaders.from_vscode").lazy_load(
-                    {
-                        require 'luasnip'.filetype_extend("python", { "django", "pydoc" }),
-                        require 'luasnip'.filetype_extend("htmldjango", { "html", "djangohtml" }),
-                    }
-                )
+                require("luasnip.loaders.from_vscode").lazy_load {
+                    require("luasnip").filetype_extend("python", { "django", "pydoc" }),
+                    require("luasnip").filetype_extend("htmldjango", { "html", "djangohtml" }),
+
+                    -- vscode format
+                    require("luasnip.loaders.from_vscode").lazy_load(),
+                    require("luasnip.loaders.from_vscode").lazy_load { paths = vim.g.vscode_snippets_path or "" },
+
+                    -- snipmate format
+                    require("luasnip.loaders.from_snipmate").load(),
+                    require("luasnip.loaders.from_snipmate").lazy_load { paths = vim.g.snipmate_snippets_path or "" },
+
+                    -- lua format
+                    require("luasnip.loaders.from_lua").load(),
+                    require("luasnip.loaders.from_lua").lazy_load { paths = vim.g.lua_snippets_path or "" },
+                }
             end,
         },
         {
@@ -32,8 +42,7 @@ local M = {
                 delete_check_events = "TextChanged,InsertLeave",
                 enable_autosnippets = true,
             },
-        }
-
+        },
     },
 
     event = { "InsertEnter", "CmdlineEnter" },
@@ -81,7 +90,6 @@ function M.config()
     local luasnip = require "luasnip"
 
     cmp.setup {
-        preselect = cmp.PreselectMode.None,
         completion = {
             completeopt = "menu,menuone,noinsert ",
         },
@@ -99,20 +107,29 @@ function M.config()
             select = false,
         },
         window = {
-            completion = cmp.config.window.bordered({
+            completion = cmp.config.window.bordered {
                 winhighlight = "Normal:Float",
                 border = "rounded",
-            }),
-            documentation = cmp.config.window.bordered({
+            },
+            documentation = cmp.config.window.bordered {
                 winhighlight = "Normal:Float",
                 border = "rounded",
-            }),
+            },
         },
         mapping = {
             ["<Up>"] = cmp.mapping(cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select }, { "i", "c" }),
-            ["<Down>"] = cmp.mapping(cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select }, { "i", "c" }),
-            ["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert }, { "i", "c" }),
-            ["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert }, { "i", "c" }),
+            ["<Down>"] = cmp.mapping(
+                cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select },
+                { "i", "c" }
+            ),
+            ["<C-k>"] = cmp.mapping(
+                cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
+                { "i", "c" }
+            ),
+            ["<C-j>"] = cmp.mapping(
+                cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
+                { "i", "c" }
+            ),
             ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
             ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
             ["<c-space>"] = cmp.mapping {
@@ -171,16 +188,19 @@ function M.config()
         },
         sources = {
             { name = "nvim_lsp" },
-            { name = "luasnip",   option = { show_autosnippets = true } },
+            { name = "luasnip", option = { show_autosnippets = true } },
             { name = "buffer" },
             { name = "async_path" },
             { name = "crates" },
-            { name = "nvim_lua",  ft = "lua" },
+            { name = "nvim_lua", ft = "lua" },
             { name = "emoji" },
             -- { name = "nvim_lsp_signature_help" },
         },
         formatting = {
-            fields = { --[[ "menu", ]] "abbr", "kind" },
+            fields = { --[[ "menu", ]]
+                "abbr",
+                "kind",
+            },
             format = function(entry, vim_item)
                 --     -- concatonates the icons with the name of the item kind
                 vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind)

@@ -12,15 +12,13 @@ mpc-qt
 nvidia-390xx-dkms
 nvidia-390xx-settings
 nvidia-390xx-utils
+onlyoffice-bin
 opencl-nvidia-390xx
 optimus-manager
 optimus-manager-qt
 otf-rubik
 pamac-aur
 pollymc
-python-lsp-ruff
-python-pylsp-mypy
-python-pylsp-rope
 tauon-music-box
 visual-studio-code-bin
 xdman8

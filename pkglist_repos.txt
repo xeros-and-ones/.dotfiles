@@ -24,6 +24,7 @@ bluez-utils
 breeze-gtk
 btrfs-progs
 cantarell-fonts
+clang
 cmake
 cryptsetup
 curl
@@ -79,6 +80,7 @@ gst-libav
 gst-plugin-pipewire
 gst-plugins-bad
 gst-plugins-ugly
+gvim
 gwenview
 haruna
 haveged
@@ -119,6 +121,7 @@ libwnck3
 linux-firmware
 linux-lts
 linux-lts-headers
+llvm
 logrotate
 lsb-release
 lsscsi
@@ -173,8 +176,6 @@ pv
 python
 python-capng
 python-defusedxml
-python-lsp-black
-python-lsp-server
 python-packaging
 python-pip
 python-poetry

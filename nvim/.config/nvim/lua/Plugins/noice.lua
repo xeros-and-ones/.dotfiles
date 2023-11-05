@@ -11,6 +11,15 @@ local M = {
 function M.config()
     require("noice").setup {
         lsp = {
+            progress = {
+                enabled = true,
+                -- Lsp Progress is formatted using the builtins for lsp_progress. See config.format.builtin
+                -- See the section on formatting for more details on how to customize.
+                format = "lsp_progress",
+                format_done = "lsp_progress_done",
+                throttle = 1000 / 30, -- frequency to update lsp progress message
+                view = "mini",
+            },
             -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
             override = {
                 ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
@@ -18,15 +27,15 @@ function M.config()
                 ["cmp.entry.get_documentation"] = true,
             },
             hover = {
-                enabled = true,
+                enabled = false,
             },
             signature = {
-                enabled = true,
+                enabled = false,
                 auto_open = {
                     enabled = true,
                     trigger = true, -- Automatically show signature help when typing a trigger character from the LSP
                     luasnip = true, -- Will open signature help when jumping to Luasnip insert nodes
-                    throttle = 50,  -- Debounce lsp signature help request by 50ms
+                    throttle = 50, -- Debounce lsp signature help request by 50ms
                 },
             },
         },
@@ -40,7 +49,7 @@ function M.config()
             },
         },
         popupmenu = {
-            enabled = true,  -- enables the Noice popupmenu UI
+            enabled = true, -- enables the Noice popupmenu UI
             ---@type 'nui'|'cmp'
             backend = "cmp", -- backend to use to show regular cmdline completions
         },
@@ -69,11 +78,11 @@ function M.config()
             -- },
         },
         presets = {
-            bottom_search = false,        -- use a classic bottom cmdline for search
-            command_palette = true,       -- position the cmdline and popupmenu together
+            bottom_search = false, -- use a classic bottom cmdline for search
+            command_palette = true, -- position the cmdline and popupmenu together
             long_message_to_split = true, -- long messages will be sent to a split
-            inc_rename = false,           -- enables an input dialog for inc-rename.nvim
-            lsp_doc_border = true,        -- add a border to hover docs and signature help
+            inc_rename = false, -- enables an input dialog for inc-rename.nvim
+            lsp_doc_border = false, -- add a border to hover docs and signature help
         },
     }
     vim.keymap.set({ "n", "i", "s" }, "<c-d>", function()

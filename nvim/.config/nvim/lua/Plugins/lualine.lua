@@ -36,40 +36,6 @@ function M.config()
     -- 		return chars[index]
     -- 	end,
     -- }
-
-
-    local is_hydra_active = function()
-        if require("hydra.statusline").is_active() then
-            mode = require("hydra.statusline").get_name()
-        else
-            return
-        end
-    end
-
-
-    local lsp = {
-        -- Lsp server name .
-        function()
-            local msg = "No Active Lsp"
-            local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
-            local clients = vim.lsp.get_active_clients()
-            -- if next(clients) == nil then return msg end
-            for _, client in ipairs(clients) do
-                local filetypes = client.config.filetypes
-                if client.name ~= "none-ls" then
-                    if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-                        return client.name
-                    end
-                end
-            end
-            return msg
-        end,
-        icon = " ",
-        color = { gui = "bold" },
-        on_click = function()
-            vim.cmd("LspInfo")
-        end,
-    }
     local treesitter = {
         cond = hide_in_width,
         function()
@@ -112,11 +78,11 @@ function M.config()
                         if require("hydra.statusline").is_active() then
                             return require("hydra.statusline").get_name()
                         else
-                            return require('lualine.utils.mode').get_mode()
+                            return require("lualine.utils.mode").get_mode()
                         end
                     end,
-                    separator = { right = "" }
-                }
+                    separator = { right = "" },
+                },
             },
             lualine_b = {
                 {
@@ -152,7 +118,7 @@ function M.config()
                     require("noice").api.statusline.mode.get,
                     cond = require("noice").api.statusline.mode.has,
                     color = { fg = "#ff2800", bg = "#000000" },
-                    separator = { left = "", right = "" }
+                    separator = { left = "", right = "" },
                 },
                 {
                     function()
@@ -172,13 +138,38 @@ function M.config()
                 {
                     "overseer",
                     on_click = function()
-                        vim.cmd("OverseerToggle")
+                        vim.cmd "OverseerToggle"
                     end,
                     color = { fg = "#000000", bg = "#5a5ad8" },
                     separator = { right = "" },
                 },
             },
-            lualine_y = { diagnostics, treesitter, lsp },
+            lualine_y = {
+                diagnostics,
+                treesitter,
+                {
+                    function()
+                        local clients = {}
+                        local buf = vim.api.nvim_get_current_buf()
+
+                        -- Iterate through all the clients for the current buffer
+                        for _, client in pairs(vim.lsp.get_active_clients { bufnr = buf }) do
+                            table.insert(clients, client.name)
+                        end
+                        if #clients == 0 then
+                            return "No Active Lsp"
+                        else
+                            return table.concat(clients, ", ")
+                        end
+                    end,
+                    icon = " ",
+                    color = { gui = "bold" },
+                    on_click = function()
+                        vim.cmd "LspInfo"
+                    end,
+                    -- separator = { left = "", right = "" },
+                },
+            },
             lualine_z = {
                 {
                     function()

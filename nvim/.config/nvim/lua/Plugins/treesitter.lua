@@ -1,30 +1,29 @@
 local M = {
     "nvim-treesitter/nvim-treesitter",
     enabled = true,
+    cmd = {
+        "TSInstall",
+        "TSUninstall",
+        "TSInstallInfo",
+        "TSUpdate",
+        "TSBufEnable",
+        "TSBufDisable",
+        "TSEnable",
+        "TSDisable",
+        "TSModuleInfo",
+        "TSToggle",
+        "TSBufToggle",
+    },
     build = function()
         require("nvim-treesitter.install").update { with_sync = true }
     end,
-    event = { "BufReadPost", "BufNewFile" },
     dependencies = {
         "nvim-treesitter/nvim-treesitter-textobjects",
-        {
-            'nvim-treesitter/nvim-treesitter-context',
-            config = function()
-                vim.keymap.set("n", "<leader>cc", "<cmd>TSContextToggle<cr>", { desc = "Toggle TS Context" })
-                vim.keymap.set(
-                    "n",
-                    "<leader>cg",
-                    function()require("treesitter-context").go_to_context()end,
-                    { silent = true, desc = "goto Context" }
-                )
-            end
-        },
-    }
+    },
 }
 
 function M.config()
     require("nvim-treesitter.install").compilers = { "gcc", "clang", "mingw" }
-
     require("nvim-treesitter.configs").setup {
         ensure_installed = {
             "bash",
@@ -58,12 +57,13 @@ function M.config()
             "vim",
             "vimdoc",
             "yaml",
+            "java",
         },
         auto_install = true, -- disable if no tree-sitter cli installed
         ignore_install = {}, -- list of parsers to ignore installing
         highlight = {
             enable = true,
-            additional_vim_regex_highlighting = false,
+            additional_vim_regex_highlighting = true,
         },
         indent = { enabled = true },
         incremental_selection = {
@@ -75,7 +75,20 @@ function M.config()
                 node_decremental = "_",
             },
         },
+        context_commentstring = {
+            enable = true,
+            enable_autocmd = false,
+        },
         textobjects = {
+            swap = {
+                enable = false,
+                swap_next = {
+                    ["<leader>a"] = "@parameter.inner",
+                },
+                swap_previous = {
+                    ["<leader>A"] = "@parameter.inner",
+                },
+            },
             select = {
                 enable = true,
                 lookahead = true,
@@ -88,20 +101,17 @@ function M.config()
                     ["ic"] = { query = "@class.inner", desc = "inner part of a class" },
                     ["ai"] = { query = "@conditional.outer", desc = "around an if statement" },
                     ["ii"] = { query = "@conditional.inner", desc = "inner part of an if statement" },
-                    ["al"] = { query = "@loop.outer", desc = "around a loop" },
-                    ["il"] = { query = "@loop.inner", desc = "inner part of a loop" },
-                    ["ap"] = { query = "@parameter.outer", desc = "around parameter" },
-                    ["ip"] = { query = "@parameter.inner", desc = "inside a parameter" },
+                    ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
                 },
                 selection_modes = {
-                    ["@parameter.outer"] = "v",   -- charwise
-                    ["@parameter.inner"] = "v",   -- charwise
-                    ["@function.outer"] = "v",    -- charwise
+                    ["@parameter.outer"] = "v", -- charwise
+                    ["@parameter.inner"] = "v", -- charwise
+                    ["@function.outer"] = "v", -- charwise
                     ["@conditional.outer"] = "V", -- linewise
-                    ["@loop.outer"] = "V",        -- linewise
-                    ["@class.outer"] = "<c-v>",   -- blockwise
+                    ["@loop.outer"] = "V", -- linewise
+                    ["@class.outer"] = "<c-v>", -- blockwise
                 },
-                include_surrounding_whitespace = false,
+                include_surrounding_whitespace = true,
             },
             move = {
                 enable = true,
@@ -109,12 +119,14 @@ function M.config()
                 goto_previous_start = {
                     ["[f"] = { query = "@function.outer", desc = "Previous function" },
                     ["[c"] = { query = "@class.outer", desc = "Previous class" },
-                    ["[p"] = { query = "@parameter.inner", desc = "Previous parameter" },
+                    ["[s"] = { query = "@scope", query_group = "locals", desc = "Previous scope" },
+                    ["[z"] = { query = "@fold", query_group = "folds", desc = "Previous fold" },
                 },
                 goto_next_start = {
                     ["]f"] = { query = "@function.outer", desc = "Next function" },
                     ["]c"] = { query = "@class.outer", desc = "Next class" },
-                    ["]p"] = { query = "@parameter.inner", desc = "Next parameter" },
+                    ["]s"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
+                    ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
                 },
             },
         },

@@ -2,23 +2,40 @@ local M = {
     "nvim-telescope/telescope.nvim",
     enabled = true,
     dependencies = {
-        "nvim-lua/plenary.nvim",
-        "nvim-tree/nvim-web-devicons",
         "nvim-telescope/telescope-project.nvim",
+        "debugloop/telescope-undo.nvim",
         { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     },
     cmd = "Telescope",
 }
 
-function M.config()
+M.config = function()
+    local telescope = require "telescope"
     local actions = require "telescope.actions"
+    local trouble = require "trouble.providers.telescope"
     local project_actions = require "telescope._extensions.project.actions"
+    local extensions_list = { "fzf", "project", "undo" }
 
+    -- load extensions
+    for _, ext in ipairs(extensions_list) do
+        telescope.load_extension(ext)
+    end
     require("telescope").setup {
         defaults = {
-            prompt_prefix = " ",
-            selection_caret = "❯ ",
-            path_display = { "truncate" },
+            vimgrep_arguments = {
+                "rg",
+                "-L",
+                "--color=never",
+                "--no-heading",
+                "--with-filename",
+                "--line-number",
+                "--column",
+                "--smart-case",
+            },
+            prompt_prefix = "   ",
+            selection_caret = " ❯ ",
+            entry_prefix = "  ",
+            initial_mode = "insert",
             -- selection_strategy = "reset",
             -- sorting_strategy = "ascending",
             layout_strategy = "horizontal",
@@ -35,87 +52,85 @@ function M.config()
                 height = 0.80,
                 preview_cutoff = 120,
             },
-            -- borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
-            wrap_results = false,
             dynamic_preview_title = true,
+            file_sorter = require("telescope.sorters").get_fuzzy_file,
             file_ignore_patterns = {
                 "node_modules",
                 "venv",
                 ".mypy_cache",
                 "__pycache__",
             },
-            preview = {
-                filesize_limit = 2,
-                timeout = 200,
-            },
+            wrap_results = false,
+            generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
+            path_display = { "truncate" },
+            winblend = 0,
+            border = {},
+            borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+            color_devicons = true,
+            set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
+            file_previewer = require("telescope.previewers").vim_buffer_cat.new,
+            grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
+            qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
+            -- Developer configurations: Not meant for general override
+            buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
             mappings = {
-                i = {
-                    ["<C-n>"] = actions.cycle_history_next,
-                    ["<C-p>"] = actions.cycle_history_prev,
-
-                    ["<C-j>"] = actions.move_selection_next,
-                    ["<C-k>"] = actions.move_selection_previous,
-
-                    ["<C-c>"] = actions.close,
-
-                    ["<Down>"] = actions.move_selection_next,
-                    ["<Up>"] = actions.move_selection_previous,
-
-                    ["<CR>"] = actions.select_default,
-                    ["<C-x>"] = actions.select_horizontal,
-                    ["<C-v>"] = actions.select_vertical,
-                    ["<C-t>"] = actions.select_tab,
-
-                    ["<C-f>"] = actions.preview_scrolling_up,
-                    ["<C-d>"] = actions.preview_scrolling_down,
-
-                    ["<PageUp>"] = actions.results_scrolling_up,
-                    ["<PageDown>"] = actions.results_scrolling_down,
-
-                    ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
-                    ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
-                    ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
-                    ["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
-                    ["<C-l>"] = actions.complete_tag,
-                },
-
                 n = {
+                    ["q"] = actions.close,
                     ["<esc>"] = actions.close,
                     ["<CR>"] = actions.select_default,
                     ["<C-x>"] = actions.select_horizontal,
                     ["<C-v>"] = actions.select_vertical,
                     ["<C-t>"] = actions.select_tab,
-
                     ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
                     ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
-                    ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
-                    ["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
-
+                    ["<C-q>"] = trouble.open_with_trouble,
                     ["j"] = actions.move_selection_next,
                     ["k"] = actions.move_selection_previous,
                     ["H"] = actions.move_to_top,
                     ["M"] = actions.move_to_middle,
                     ["L"] = actions.move_to_bottom,
-
                     ["<Down>"] = actions.move_selection_next,
                     ["<Up>"] = actions.move_selection_previous,
                     ["gg"] = actions.move_to_top,
                     ["G"] = actions.move_to_bottom,
-
                     ["<C-f>"] = actions.preview_scrolling_up,
                     ["<C-d>"] = actions.preview_scrolling_down,
 
                     ["<PageUp>"] = actions.results_scrolling_up,
                     ["<PageDown>"] = actions.results_scrolling_down,
                 },
+                i = {
+                    ["<C-q>"] = trouble.open_with_trouble,
+                    ["<C-n>"] = actions.cycle_history_next,
+                    ["<C-p>"] = actions.cycle_history_prev,
+                    ["<C-j>"] = actions.move_selection_next,
+                    ["<C-k>"] = actions.move_selection_previous,
+                    ["<C-c>"] = actions.close,
+                    ["<Down>"] = actions.move_selection_next,
+                    ["<Up>"] = actions.move_selection_previous,
+                    ["<CR>"] = actions.select_default,
+                    ["<C-x>"] = actions.select_horizontal,
+                    ["<C-v>"] = actions.select_vertical,
+                    ["<C-t>"] = actions.select_tab,
+                    ["<C-f>"] = actions.preview_scrolling_up,
+                    ["<C-d>"] = actions.preview_scrolling_down,
+                    ["<PageUp>"] = actions.results_scrolling_up,
+                    ["<PageDown>"] = actions.results_scrolling_down,
+                    ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
+                    ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
+                    ["<C-l>"] = actions.complete_tag,
+                },
             },
         },
         pickers = {
+            oldfiles = {
+                prompt_title = "Recent Files",
+            },
             find_files = {
-                -- `hidden = true` will still show the inside of `.git/` as it's not `.gitignore`d.
                 find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
             },
         },
+
         extensions = {
             -- fzf = {
             --   fuzzy = true, -- false will only do exact matching
