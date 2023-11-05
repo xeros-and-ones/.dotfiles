@@ -50,7 +50,7 @@ function M.config()
         options = {
             icons_enabled = true,
             theme = "powerline_gruvbox",
-            component_separators = { left = "┃", right = "┃" },
+            -- component_separators = { left = "┃", right = "┃" },
             section_separators = { left = "", right = "" },
             disabled_filetypes = {
                 "alpha",
@@ -181,7 +181,7 @@ function M.config()
                 {
                     "location", --'%l:%c ‖ %p%%',
                     cond = hide_in_width,
-                    separator = { left = "" },
+                    separator = { left = "", right = "" },
                 },
             },
         },

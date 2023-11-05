@@ -1,23 +1,23 @@
 local M = {
-    'echasnovski/mini.move',
+    "echasnovski/mini.move",
     version = false,
-    event = "BufRead"
+    event = "BufRead",
 }
 
 M.opts = {
     -- Module mappings. Use `''` (empty string) to disable one.
     mappings = {
         -- Move visual selection in Visual mode. Defaults are Alt (Meta) + hjkl.
-        left = '<A-Left>',
-        right = '<A-Right>',
-        down = '<A-Down>',
-        up = '<A-Up>',
+        left = "<A-h>",
+        right = "<A-l>",
+        down = "<A-j>",
+        up = "<A-k>",
 
         -- Move current line in Normal mode
-        line_left = '<A-Left>',
-        line_right = '<A-Right>',
-        line_down = '<A-Down>',
-        line_up = '<A-Up>',
+        line_left = "<A-h>",
+        line_right = "<A-l>",
+        line_down = "<A-j>",
+        line_up = "<A-k>",
     },
 
     -- Options which control moving behavior
@@ -26,6 +26,5 @@ M.opts = {
         reindent_linewise = true,
     },
 }
-
 
 return M

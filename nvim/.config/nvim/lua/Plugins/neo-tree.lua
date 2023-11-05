@@ -77,6 +77,7 @@ function M.config()
                 -- ["<space>"] = false, -- disable space until we figure out which-key disabling
                 ["<esc>"] = "cancel", -- close preview or floating neo-tree window
                 ["<cr>"] = "open",
+                ["l"] = "open",
                 ["p"] = { "toggle_preview", config = { use_float = true } },
                 ["s"] = "open_split",
                 ["v"] = "open_vsplit",
