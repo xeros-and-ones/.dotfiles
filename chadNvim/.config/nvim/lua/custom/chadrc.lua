@@ -24,7 +24,7 @@ M.ui = {
   theme = "gruvchad",
   theme_toggle = { "gruvchad", "one_light" },
   transparency = true,
-  lsp_semantic_tokens = true, -- needs nvim v0.9, just adds highlight groups for lsp semantic tokens
+  lsp_semantic_tokens = false, -- needs nvim v0.9, just adds highlight groups for lsp semantic tokens
   hl_override = highlights.override,
   hl_add = highlights.add,
   extended_integrations = {
@@ -36,7 +36,7 @@ M.ui = {
     lspkind_text = true,
     style = "default", -- default/flat_light/flat_dark/atom/atom_colored
     border_color = "grey_fg", -- only applicable for "default" style, use color names from base30 variables
-    selected_item_bg = "colored", -- colored / simple
+    selected_item_bg = "simple", -- colored / simple
   },
   statusline = {
     theme = "minimal", -- default/vscode/vscode_colored/minimal
@@ -97,7 +97,7 @@ M.ui = {
         end
 
         if #clients == 0 then
-          return ""
+          return "No Active Server"
         else
           return (
             vim.o.columns > 100
