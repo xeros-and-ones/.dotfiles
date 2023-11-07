@@ -1,6 +1,7 @@
 lastupdatecheck: 0
 recentrepos:
 - /home/xero/.dotfiles
+- /home/xero/.config/nvim
 - /home/xero/Documents/Rust/test_project
 - /home/xero/Builds/Neovim
 - /home/xero/Documents/Python/web_scraper_books
