@@ -19,11 +19,11 @@ M.override = {
   LspReferenceRead = { link = "Underlined" },
   LspReferenceText = { link = "Underlined" },
   LspReferenceWrite = { link = "Underlined" },
-  Underlined = { undercurl = true, sp = "white" },
 }
 
 ---@type HLTable
 M.add = {
+  Underlined = { undercurl = true, sp = "white" },
   NvimTreeOpenedFolderName = { fg = "green", bold = true },
   DiagnosticUnderlineWarn = { undercurl = true, sp = "yellow" },
   DiagnosticUnderlineOk = { undercurl = true, sp = "green" },

@@ -374,10 +374,7 @@ M.ufo = {
     },
     ["zh"] = {
       function()
-        local winid = require("ufo").peekFoldedLinesUnderCursor()
-        if not winid then
-          return
-        end
+        require("ufo").peekFoldedLinesUnderCursor()
       end,
       "Fold preview",
       opts = { silent = true },
