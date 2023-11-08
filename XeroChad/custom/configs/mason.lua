@@ -55,5 +55,7 @@ return {
     "gofumpt",
     "clang-format",
     "prettier",
+    "black",
+    "isort",
   },
 }

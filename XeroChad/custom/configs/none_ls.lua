@@ -43,6 +43,8 @@ require("null-ls").setup {
     formatting.markdownlint,
     formatting.beautysh,
     formatting.stylua,
+    formatting.black,
+    formatting.isort,
     formatting.clang_format.with {
       filetypes = {
         "c",

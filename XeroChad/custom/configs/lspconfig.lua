@@ -64,7 +64,9 @@ local function lsp_keymaps(bufnr)
   map("n", "<leader>lF", "<cmd>Lspsaga finder tyd+ref+imp+def<cr>", { desc = "LspSaga Finder", buffer = bufnr })
   map("n", "<leader>lq", "<cmd>TroubleToggle quickfix<cr>", { desc = "Quickfix [Trouble]", buffer = bufnr })
   if vim.lsp.inlay_hint then
-    map("n", "<leader>lh", "<cmd>lua vim.lsp.inlay_hint(0, nil)<cr>", { desc = "Inlay Hint", buffer = bufnr })
+    map("n", "<leader>lh", function()
+      vim.lsp.inlay_hint(0, nil)
+    end, { desc = "Inlay Hint" })
   end
   map("n", "<leader>lD", "<cmd>TroubleToggle lsp_definitions<cr>", { desc = "Definition [Trouble]", buffer = bufnr })
   map(
@@ -102,6 +104,7 @@ local function lsp_keymaps(bufnr)
   end, { "LSP declaration", buffer = bufnr })
 end
 ---------------------------------------------------------
+local inlay_hint = vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint
 local on_attach = function(client, bufnr)
   client.server_capabilities.documentFormattingProvider = false
   client.server_capabilities.documentRangeFormattingProvider = false
@@ -142,6 +145,7 @@ capabilities["textDocument"]["foldingRange"] = {
 ---------------------------------------------------------
 
 local mason_lspconfig = require "mason-lspconfig"
+mason_lspconfig.setup()
 
 local disabled_servers = {
   "pyright",
