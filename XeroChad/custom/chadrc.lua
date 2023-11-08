@@ -84,8 +84,7 @@ M.ui = {
 					or ""
 				local removed = (git_status.removed and git_status.removed ~= 0) and ("  " .. git_status.removed)
 					or ""
-				local branch_name = " " .. git_status.head
-				-- local lf = {  .. branch_name }
+				local branch_name = git_status.head
 				local rg = {
 					"%#St_lsp_txt#" .. added,
 					"%#St_file_txt#" .. removed,
@@ -94,13 +93,13 @@ M.ui = {
 				return (
 					vim.o.columns > 100
 						and gen_block(
-							branch_name,
-							table.concat(rg, ""),
+							"",
+							branch_name .. " ⟶" .. table.concat(rg, ""),
 							"%#St_lsp_sep#",
 							"%#St_lsp_bg#",
 							"%#St_lsp_txt#"
 						)
-					or "" .. added .. removed
+					or "" .. added .. changed .. removed
 				)
 			end)()
 
@@ -146,7 +145,7 @@ M.ui = {
 							"%#St_lsp_bg#",
 							"%#St_lsp_txt#"
 						)
-					) or "  LSP "
+					) or ("%#St_lsp_txt#" .. "  LSP ")
 				end
 			end)()
 			modules[11] = (function()
