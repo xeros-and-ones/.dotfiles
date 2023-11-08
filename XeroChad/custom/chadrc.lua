@@ -95,7 +95,7 @@ M.ui = {
 					vim.o.columns > 100
 						and gen_block(
 							branch_name,
-							table.concat(rg, " "),
+							table.concat(rg, ""),
 							"%#St_lsp_sep#",
 							"%#St_lsp_bg#",
 							"%#St_lsp_txt#"

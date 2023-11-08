@@ -189,6 +189,7 @@ local plugins = {
 	{
 		"nvim-lua/plenary.nvim",
 	},
+	{ "tenxsoydev/karen-yank.nvim", config = true },
 	------------------------------------------------------------------------------------------
 	-- Native LSP
 	{
@@ -314,7 +315,6 @@ local plugins = {
 	------------------------------------------------------------------------------------------
 	{
 		"echasnovski/mini.move",
-		version = false,
 		event = "BufRead",
 		opts = {
 			-- Module mappings. Use `''` (empty string) to disable one.
@@ -342,8 +342,7 @@ local plugins = {
 	------------------------------------------------------------------------------------------
 	{
 		"echasnovski/mini.splitjoin",
-		version = false,
-		enabled = true,
+		event = "BufRead",
 		opts = {
 			mappings = {
 				toggle = "gs",

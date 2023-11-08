@@ -299,7 +299,7 @@ M.LSP = {
 		["<C-Space>"] = { "<cmd>NullFormat<cr>", "Format", opts = { silent = true } },
 		["<F5>"] = {
 			function()
-				require("custom.core.utilities").RunCode()
+				RunCode()
 			end,
 			"Run Code",
 			opts = { silent = true },
@@ -422,6 +422,7 @@ M.Git = {
 		},
 	},
 }
+
 M.Comment = {
 	-- toggle comment in both modes
 	n = {
@@ -440,6 +441,7 @@ M.Comment = {
 		},
 	},
 }
+
 M.General = {
 	i = {
 		["jk"] = { "<ESC>", "escape Insert Mode", opts = { silent = true } },
@@ -469,15 +471,12 @@ M.General = {
 		["<C-Down>"] = { "<cmd>resize -2<CR>", "resize down", opts = { silent = true } },
 		["<C-Left>"] = { "<cmd>vertical resize +2<CR>", "resize left", opts = { silent = true } },
 		["<C-Right>"] = { "<cmd>vertical resize -2<CR>", "resize right", opts = { silent = true } },
-
-		["p"] = { '"_dP', "Better Paste", opts = { silent = true } },
 	},
 	v = {
-		["p"] = { '"_dP', "Better Paste", opts = { silent = true } },
+		["<C-s>"] = { "<cmd>w<CR>", "Save file" },
 	},
 	x = {
 		["<C-s>"] = { "<cmd>w<CR>", "Save file" },
-		["p"] = { 'p:let @+=@0<CR>:let @"=@0<CR>', "Dont copy replaced text", opts = { silent = true } },
 	},
 	c = {
 		["<Tab>"] = {

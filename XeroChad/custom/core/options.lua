@@ -6,8 +6,10 @@ local opt = vim.opt
 
 g.mkdp_auto_close = false -- Don't Exit Preview When Switching Buffers
 g.mapleader = " " -- Set mapleader to space
-g.snipmate_snippets_path = vim.fn.stdpath "config" .. "/lua/custom/snippets/snipmate"
-g.random_header = false -- Show random header
+g.snipmate_snippets_path = vim.fn.stdpath("config") .. "/lua/custom/snippets/snipmate"
+g.vscode_snippets_path = vim.fn.stdpath("config") .. "/lua/custom/snippets/vscode"
+g.lua_snippets_path = vim.fn.stdpath("config") .. "/lua/custom/snippets/luasnippets"
+g.random_header = true -- Show random header
 -------------------------------------- options ------------------------------------------
 opt.tabstop = 4
 opt.softtabstop = 4
@@ -36,11 +38,11 @@ opt.mousemoveevent = false -- screws with toggleterm input
 
 opt.autochdir = false
 opt.undofile = true
-opt.undodir = vim.fn.stdpath "data" .. "/undo"
+opt.undodir = vim.fn.stdpath("data") .. "/undo"
 
 opt.verbose = 0
 opt.report = 99999
-opt.shortmess:append "sIAc"
+opt.shortmess:append("sIAc")
 opt.sessionoptions = "buffers,curdir,folds,tabpages,winsize,winpos,localoptions,globals,options"
 
 opt.title = true
@@ -79,8 +81,8 @@ opt.scrolloff = 8 -- minimal number of screen lines to keep above and below the 
 opt.sidescrolloff = 8 -- minimal number of screen columns to keep to the left and right of the cursor if wrap is `false`
 opt.guifont = "monospace:h17" -- the font used in graphical neovim applications
 opt.fillchars =
-  { diff = "╱", eob = " ", fold = " ", foldopen = "", foldsep = " ", foldclose = "", lastline = " " } -- make EndOfBuffer invisible
-opt.whichwrap:append "<,>,[,],h,l"
-opt.iskeyword:append "-" -- treats words with `-` as single words
-opt.formatoptions:remove { "c", "r", "o" } -- This is a sequence of letters which describes how automatic formatting is to be done
+	{ diff = "╱", eob = " ", fold = " ", foldopen = "", foldsep = " ", foldclose = "", lastline = " " } -- make EndOfBuffer invisible
+opt.whichwrap:append("<,>,[,],h,l")
+opt.iskeyword:append("-") -- treats words with `-` as single words
+opt.formatoptions:remove({ "c", "r", "o" }) -- This is a sequence of letters which describes how automatic formatting is to be done
 opt.linebreak = true
