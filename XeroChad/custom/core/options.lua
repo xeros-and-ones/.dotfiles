@@ -32,7 +32,7 @@ opt.smartcase = true
 
 opt.pumblend = 0 -- Make builtin completion menus slightly transparent
 opt.pumheight = 10 -- Make popup menu smaller
-opt.completeopt = { "menuone", "noselect" } -- mostly just for cmp
+opt.completeopt = { "menuone" } -- mostly just for cmp
 -- opt.winblend = 0
 opt.mousemoveevent = false -- screws with toggleterm input
 

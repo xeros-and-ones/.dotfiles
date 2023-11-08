@@ -59,6 +59,7 @@ M.ui = {
 				block = { left = "█", right = "█" },
 			}
 
+			local fn = vim.fn
 			local separators = (type(sep_style) == "table" and sep_style) or default_sep_icons[sep_style]
 
 			local sep_l = separators["left"]
@@ -99,7 +100,7 @@ M.ui = {
 							"%#St_lsp_bg#",
 							"%#St_lsp_txt#"
 						)
-					or "" .. added .. changed .. removed
+					or "%#DiffAdded#" .. added .. "%#DiffModified#" .. changed .. "%#DiffRemoved#" .. removed
 				)
 			end)()
 
@@ -137,7 +138,7 @@ M.ui = {
 					return ""
 				else
 					return (
-						vim.o.columns > 100
+						vim.o.columns > 130
 						and gen_block(
 							" ",
 							table.concat(clients, ", "),
@@ -145,11 +146,34 @@ M.ui = {
 							"%#St_lsp_bg#",
 							"%#St_lsp_txt#"
 						)
-					) or ("%#St_lsp_txt#" .. "  LSP ")
+					) or gen_block("", clients[1], "%#St_lsp_sep#", "%#St_lsp_bg#", "%#St_lsp_txt#")
 				end
 			end)()
+			modules[10] = (function()
+				return (
+					vim.o.columns > 140
+					and gen_block(
+						"",
+						fn.fnamemodify(fn.getcwd(), ":r:t"),
+						"%#St_cwd_sep#",
+						"%#St_cwd_bg#",
+						"%#St_cwd_txt#"
+					)
+				)
+					or gen_block(
+						"",
+						fn.fnamemodify(fn.getcwd(), ":t"),
+						"%#St_cwd_sep#",
+						"%#St_cwd_bg#",
+						"%#St_cwd_txt#"
+					)
+			end)()
 			modules[11] = (function()
-				return gen_block("", "%p%% ‖  %l:%L", "%#St_Pos_sep#", "%#St_Pos_bg#", "%#St_Pos_txt#")
+				return (
+					vim.o.columns > 120
+						and gen_block("", "%p%% ‖  %l:%L", "%#St_Pos_sep#", "%#St_Pos_bg#", "%#St_Pos_txt#")
+					or gen_block("", "%l", "%#St_Pos_sep#", "%#St_Pos_bg#", "%#St_Pos_txt#")
+				)
 			end)()
 		end,
 	},
@@ -159,11 +183,21 @@ M.ui = {
 		show_numbers = false,
 		enabled = true,
 		lazyload = true,
-		-- overriden_modules = function(modules)
-		--   modules[3] = (function()
-		--     return "%#TblineFill#%@v:lua.ClickUpdate@  %#TblineFill#%@v:lua.ToggleLazygit@  %#TblineFill#%@v:lua.RunCode@  %#TblineFill#%@v:lua.ClickSplit@ "
-		--   end)()
-		-- end,
+		overriden_modules = function(modules)
+			local api = vim.api
+			local function getNvimTreeWidth()
+				for _, win in pairs(api.nvim_tabpage_list_wins(0)) do
+					if vim.bo[api.nvim_win_get_buf(win)].ft == "neo-tree" then
+						return api.nvim_win_get_width(win) + 1
+					end
+				end
+				return 0
+			end
+			modules[1] = (function()
+				return "%#NeoTreeNormal#"
+					.. (vim.g.nvimtree_side == "right" and "" or string.rep(" ", getNvimTreeWidth()))
+			end)()
+		end,
 	},
 
 	nvdash = {
