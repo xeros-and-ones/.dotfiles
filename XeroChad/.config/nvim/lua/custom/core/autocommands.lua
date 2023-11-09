@@ -18,6 +18,13 @@ autocmd("FileType", {
 	desc = "set cursorColumn for python only on the current buffer",
 })
 
+autocmd("BufEnter", {
+	callback = function()
+		if #vim.api.nvim_list_wins() == 1 and vim.api.nvim_buf_get_name(0):match("NvimTree_") ~= nil then
+			vim.cmd.quit()
+		end
+	end,
+})
 -- Hide folds and Disable statuscolumn in these filetypes
 autocmd("FileType", {
 	pattern = { "nvcheatsheet", "nvdash", "sagaoutline" },
@@ -79,12 +86,6 @@ autocmd("BufWinEnter", {
 		end
 	end,
 	desc = "Open help pages in a vertical split",
-})
-
-autocmd({ "VimEnter" }, {
-	callback = function()
-		vim.cmd("hi link illuminatedWord LspReferenceText")
-	end,
 })
 
 autocmd({ "BufWinEnter" }, {

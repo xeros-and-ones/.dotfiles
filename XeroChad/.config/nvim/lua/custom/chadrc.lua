@@ -71,8 +71,78 @@ M.ui = {
 			local function gen_block(icon, txt, sep_l_hlgroup, iconHl_group, txt_hl_group)
 				return sep_l_hlgroup .. sep_l .. iconHl_group .. icon .. " " .. txt_hl_group .. " " .. txt .. sep_r
 			end
-
+			local function is_activewin()
+				return vim.api.nvim_get_current_win() == vim.g.statusline_winid
+			end
 			local noice_ok, noice = pcall(require, "noice.api")
+			local modes = {
+				["n"] = { "NORMAL", "St_NormalMode" },
+				["no"] = { "NORMAL (no)", "St_NormalMode" },
+				["nov"] = { "NORMAL (nov)", "St_NormalMode" },
+				["noV"] = { "NORMAL (noV)", "St_NormalMode" },
+				["noCTRL-V"] = { "NORMAL", "St_NormalMode" },
+				["niI"] = { "NORMAL i", "St_NormalMode" },
+				["niR"] = { "NORMAL r", "St_NormalMode" },
+				["niV"] = { "NORMAL v", "St_NormalMode" },
+				["nt"] = { "NTERMINAL", "St_NTerminalMode" },
+				["ntT"] = { "NTERMINAL (ntT)", "St_NTerminalMode" },
+
+				["v"] = { "VISUAL", "St_VisualMode" },
+				["vs"] = { "V-CHAR (Ctrl O)", "St_VisualMode" },
+				["V"] = { "V-LINE", "St_VisualMode" },
+				["Vs"] = { "V-LINE", "St_VisualMode" },
+				[""] = { "V-BLOCK", "St_VisualMode" },
+
+				["i"] = { "INSERT", "St_InsertMode" },
+				["ic"] = { "INSERT (completion)", "St_InsertMode" },
+				["ix"] = { "INSERT completion", "St_InsertMode" },
+
+				["t"] = { "TERMINAL", "St_TerminalMode" },
+
+				["R"] = { "REPLACE", "St_ReplaceMode" },
+				["Rc"] = { "REPLACE (Rc)", "St_ReplaceMode" },
+				["Rx"] = { "REPLACEa (Rx)", "St_ReplaceMode" },
+				["Rv"] = { "V-REPLACE", "St_ReplaceMode" },
+				["Rvc"] = { "V-REPLACE (Rvc)", "St_ReplaceMode" },
+				["Rvx"] = { "V-REPLACE (Rvx)", "St_ReplaceMode" },
+
+				["s"] = { "SELECT", "St_SelectMode" },
+				["S"] = { "S-LINE", "St_SelectMode" },
+				[""] = { "S-BLOCK", "St_SelectMode" },
+				["c"] = { "COMMAND", "St_CommandMode" },
+				["cv"] = { "COMMAND", "St_CommandMode" },
+				["ce"] = { "COMMAND", "St_CommandMode" },
+				["r"] = { "PROMPT", "St_ConfirmMode" },
+				["rm"] = { "MORE", "St_ConfirmMode" },
+				["r?"] = { "CONFIRM", "St_ConfirmMode" },
+				["x"] = { "CONFIRM", "St_ConfirmMode" },
+				["!"] = { "SHELL", "St_TerminalMode" },
+			}
+
+			modules[1] = (function()
+				if not is_activewin() then
+					return ""
+				end
+				local m = vim.api.nvim_get_mode().mode
+				if require("hydra.statusline").is_active() then
+					return gen_block(
+						"󱔎",
+						require("hydra.statusline").get_name(),
+						"%#St_InsertModeSep#",
+						"%#St_InsertMode#",
+						"%#St_InsertModeText#"
+					)
+				else
+					return gen_block(
+						"",
+						modes[m][1],
+						"%#" .. modes[m][2] .. "Sep#",
+						"%#" .. modes[m][2] .. "#",
+						"%#" .. modes[m][2] .. "Text#"
+					)
+				end
+			end)()
+
 			modules[3] = (function()
 				if not vim.b[stbufnr()].gitsigns_head or vim.b[stbufnr()].gitsigns_git_status then
 					return ""
@@ -80,22 +150,23 @@ M.ui = {
 
 				local git_status = vim.b[stbufnr()].gitsigns_status_dict
 
-				local added = (git_status.added and git_status.added ~= 0) and ("  " .. git_status.added) or ""
-				local changed = (git_status.changed and git_status.changed ~= 0) and ("  " .. git_status.changed)
+				local added = (git_status.added and git_status.added ~= 0) and ("  " .. git_status.added) or ""
+				local changed = (git_status.changed and git_status.changed ~= 0) and ("  " .. git_status.changed)
 					or ""
-				local removed = (git_status.removed and git_status.removed ~= 0) and ("  " .. git_status.removed)
+				local removed = (git_status.removed and git_status.removed ~= 0) and ("  " .. git_status.removed)
 					or ""
 				local branch_name = git_status.head
 				local rg = {
+					" ⟶",
 					"%#St_lsp_txt#" .. added,
+                    "%#St_Pos_txt#" .. changed,
 					"%#St_file_txt#" .. removed,
-					"%#St_Pos_txt#" .. changed,
 				}
 				return (
 					vim.o.columns > 100
 						and gen_block(
 							"",
-							branch_name .. " ⟶" .. table.concat(rg, ""),
+							branch_name .. table.concat(rg, ""),
 							"%#St_lsp_sep#",
 							"%#St_lsp_bg#",
 							"%#St_lsp_txt#"
@@ -171,8 +242,8 @@ M.ui = {
 			modules[11] = (function()
 				return (
 					vim.o.columns > 120
-						and gen_block("", "%p%% ┃ %l:%L", "%#St_Pos_sep#", "%#St_Pos_bg#", "%#St_Pos_txt#")
-					or gen_block("", "%l", "%#St_Pos_sep#", "%#St_Pos_bg#", "%#St_Pos_txt#")
+						and gen_block("", "%p%% ┃ %l:%L", "%#St_Pos_sep#", "%#St_Pos_bg#", "%#St_Pos_txt#")
+					or gen_block("", "%l", "%#St_Pos_sep#", "%#St_Pos_bg#", "%#St_Pos_txt#")
 				)
 			end)()
 		end,
@@ -183,21 +254,6 @@ M.ui = {
 		show_numbers = false,
 		enabled = true,
 		lazyload = true,
-		-- overriden_modules = function(modules)
-		-- 	local api = vim.api
-		-- 	local function getNvimTreeWidth()
-		-- 		for _, win in pairs(api.nvim_tabpage_list_wins(0)) do
-		-- 			if vim.bo[api.nvim_win_get_buf(win)].ft == "neo-tree" then
-		-- 				return api.nvim_win_get_width(win) + 1
-		-- 			end
-		-- 		end
-		-- 		return 0
-		-- 	end
-		-- 	modules[1] = (function()
-		-- 		return "%#NeoTreeNormal#"
-		-- 			.. (vim.g.nvimtree_side == "right" and "" or string.rep(" ", getNvimTreeWidth()))
-		-- 	end)()
-		-- end,
 	},
 
 	nvdash = {

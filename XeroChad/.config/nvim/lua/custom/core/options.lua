@@ -35,7 +35,6 @@ opt.pumheight = 10 -- Make popup menu smaller
 opt.completeopt = { "menuone" } -- mostly just for cmp
 -- opt.winblend = 0
 opt.mousemoveevent = false -- screws with toggleterm input
-
 opt.autochdir = false
 opt.undofile = true
 opt.undodir = vim.fn.stdpath("data") .. "/undo"

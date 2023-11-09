@@ -1,5 +1,4 @@
 dofile(vim.g.base46_cache .. "lsp")
--- require("nvchad.lsp")
 
 local map = function(mode, lhs, rhs, opts)
 	local options = { silent = true }
@@ -42,7 +41,13 @@ require("lspconfig.ui.windows").default_options.border = "rounded"
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 	border = "rounded",
 })
-
+vim.lsp.handlers["window/logMessage"] = function(_, content, _)
+	if content.type == 3 then
+		if content.message:find("pythonPath") then
+			vim.notify(content.message)
+		end
+	end
+end
 -- LSP Keymapping
 local function lsp_keymaps(bufnr)
 	map("n", "gk", "<cmd>Lspsaga show_line_diagnostics<CR>", { desc = "Line Diagnostic", buffer = bufnr })
@@ -102,8 +107,6 @@ local function lsp_keymaps(bufnr)
 end
 ---------------------------------------------------------
 local on_attach = function(client, bufnr)
-	client.server_capabilities.documentFormattingProvider = false
-	client.server_capabilities.documentRangeFormattingProvider = false
 	lsp_keymaps(bufnr)
 	-- if client.server_capabilities.signatureHelpProvider then
 	-- 	require("nvchad.signature").setup(client)
@@ -139,7 +142,6 @@ capabilities.textDocument.foldingRange = {
 }
 
 ---------------------------------------------------------
-
 local mason_lspconfig = require("mason-lspconfig")
 mason_lspconfig.setup()
 
@@ -157,7 +159,6 @@ mason_lspconfig.setup_handlers({
 		local opts = {
 			on_attach = on_attach,
 			capabilities = capabilities,
-			single_file_support = true,
 		}
 
 		local require_ok, server = pcall(require, "custom.configs.lsp_servers." .. server_name)

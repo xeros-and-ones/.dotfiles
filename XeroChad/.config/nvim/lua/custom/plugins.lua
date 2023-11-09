@@ -200,6 +200,7 @@ local plugins = {
 		end,
 		dependencies = {
 			-- Formatting
+			{ "microsoft/python-type-stubs" },
 			{
 				"stevearc/conform.nvim",
 				enabled = false,
@@ -756,7 +757,22 @@ local plugins = {
 		},
 		-- Show diffs
 		dependencies = {
-			{ "sindrets/diffview.nvim", event = "VeryLazy" },
+			{
+				"sindrets/diffview.nvim",
+				event = "VeryLazy",
+				cmd = {
+					"DiffviewOpen",
+					"DiffviewFocusFiles",
+					"DiffviewToggleFiles",
+					"DiffviewClose",
+					"DiffviewRefresh",
+					"DiffviewToggle",
+					"DiffviewFileHistory",
+				},
+				config = function()
+					require("custom.configs.diffview")
+				end,
+			},
 		},
 	},
 

@@ -1,5 +1,10 @@
 return {
 	-- before_init = require("neodev.lsp").before_init,
+	single_file_support = true,
+	on_init = function(client)
+		client.server_capabilities.documentFormattingProvider = false
+		client.server_capabilities.documentFormattingRangeProvider = false
+	end,
 	settings = {
 		Lua = {
 			semantic = {
