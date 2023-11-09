@@ -110,6 +110,7 @@ local plugins = {
 				native_menu = false,
 			}
 			opts.window.documentation.winhighlight = "Normal:CmpPmenu"
+			opts.window.completion.scrollbar = true
 
 			opts.completion["completeopt"] = "menu,menuone" -- disable autoselect
 			require("cmp").setup(opts)
@@ -215,14 +216,6 @@ local plugins = {
 			{
 				"nvimtools/none-ls.nvim",
 				event = "BufReadPre",
-				dependecies = {
-					{
-						"ThePrimeagen/refactoring.nvim",
-						config = function()
-							require("refactoring").setup()
-						end,
-					},
-				},
 				config = function()
 					require("custom.configs.none_ls")
 				end,
@@ -271,9 +264,17 @@ local plugins = {
 			-- For Plugin Development
 			{
 				"folke/neodev.nvim",
+				enabled = true,
 				opts = require("custom.configs.neodev"),
 			},
 		},
+	},
+	------------------------------------------------------------------------------------------
+	{
+		"ThePrimeagen/refactoring.nvim",
+		config = function()
+			require("refactoring").setup()
+		end,
 	},
 	------------------------------------------------------------------------------------------
 	-- Commenter
@@ -293,35 +294,41 @@ local plugins = {
 	-- File Explorer
 	{
 		"nvim-tree/nvim-tree.lua",
-		enabled = false,
-		-- init = function()
-		-- 	require("core.utils").load_mappings("NvimTree")
-		-- end,
-		-- cmd = {
-		-- 	"NvimTreeOpen",
-		-- 	"NvimTreeToggle",
-		-- 	"NvimTreeFocus",
-		-- 	"NvimTreeFindFile",
-		-- 	"NvimTreeFindFileToggle",
-		-- },
-		-- opts = require("custom.configs.nvimtree"),
+		enabled = true,
+		init = function()
+			require("core.utils").load_mappings("Nvimtree")
+		end,
+		cmd = {
+			"NvimTreeOpen",
+			"NvimTreeToggle",
+			"NvimTreeFocus",
+			"NvimTreeFindFile",
+			"NvimTreeFindFileToggle",
+		},
+		opts = function()
+			return require("custom.configs.nvimtree")
+		end,
+		config = function(_, opts)
+			dofile(vim.g.base46_cache .. "nvimtree")
+			require("nvim-tree").setup(opts)
+		end,
 	},
 	---------------------------
 	{
 		"nvim-neo-tree/neo-tree.nvim",
-		enabled = true,
-		branch = "v3.x",
-		dependencies = {
-			"MunifTanjim/nui.nvim",
-		},
-		event = "VeryLazy",
-		init = function()
-			require("core.utils").load_mappings("Neotree")
-		end,
+		enabled = false,
+		-- branch = "v3.x",
+		-- dependencies = {
+		-- 	"MunifTanjim/nui.nvim",
+		-- },
+		-- event = "VeryLazy",
+		-- init = function()
+		-- 	require("core.utils").load_mappings("Neotree")
+		-- end,
 
-		config = function()
-			require("custom.configs.neo-tree")
-		end,
+		-- config = function()
+		-- 	require("custom.configs.neo-tree")
+		-- end,
 	},
 	------------------------------------------------------------------------------------------
 	{
@@ -432,7 +439,6 @@ local plugins = {
 		config = function()
 			require("illuminate").configure({
 				under_cursor = true,
-				max_file_lines = nil,
 				delay = 100,
 				providers = {
 					"lsp",
@@ -790,7 +796,7 @@ local plugins = {
 	-----------------------------------------------------------------
 	{
 		"folke/which-key.nvim",
-		keys = { "<leader>", "<c-r>", "<c-w>", '"', "'", "`", "c", "v", "g" },
+		event = "VeryLazy",
 		init = function() end,
 		cmd = "WhichKey",
 		opts = require("custom.configs.whichkey"),

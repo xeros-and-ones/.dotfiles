@@ -9,19 +9,17 @@ M.override = {
 	Comment = {
 		italic = true,
 	},
-	Search = { fg = "black", bg = "blue" },
-	IncSearch = { fg = "black", bg = "red" },
-	CurSearch = { fg = "black", bg = "blue" },
+	Search = { fg = "black2", bg = "yellow" },
+	IncSearch = { fg = "black2", bg = "orange" },
+	CurSearch = { link = "IncSearch" },
 	Substitute = { fg = "black", bg = "green" },
 	NvDashAscii = { bg = "NONE", fg = "blue" },
 	NvDashButtons = { bg = "NONE" },
 	FoldColumn = { bg = "NONE" },
-	LspReferenceRead = { link = "Underlined" },
-	LspReferenceText = { link = "Underlined" },
-	LspReferenceWrite = { link = "Underlined" },
-	Underlined = { undercurl = true, sp = "white" },
+	Underlined = { undercurl = true, sp = "blue" },
 	CursorLine = { link = "ColorColumn" },
 	CursorColumn = { link = "ColorColumn" },
+	CursorLineNr = { link = "CursorColumn" },
 	NeoTreeCursorColumn = { link = "ColorColumn" },
 	NeoTreeDirectoryIcon = { link = "NvimTreeFolderIcon" },
 	NeoTreeDirectoryName = { link = "NvimTreeOpenedFolderName" },
@@ -29,12 +27,10 @@ M.override = {
 	NeoTreeRootName = { link = "NvimTreeRootFolder" },
 	NeoTreeFileNameOpened = { link = "NvimTreeOpenedFile" },
 	-- linked groups for all themes
-	TroubleCount = { link = "DiagnosticOk" },
-	TroubleTextHint = { link = "DiagnosticHint" },
-	TroubleTextError = { link = "DiagnosticError" },
-	TroubleTextWarning = { link = "DiagnosticWarn" },
-	TroubleTextInformation = { link = "DiagnosticInfo" },
 	FlashPrompt = { link = "DiagnosticVirtualTextHint" },
+	LspReferenceRead = { fg = "yellow", bg = "one_bg", bold = true },
+	LspReferenceText = { fg = "yellow", bg = "one_bg", bold = true },
+	LspReferenceWrite = { fg = "orange", bg = "one_bg", bold = true },
 }
 
 ---@type HLTable
@@ -50,7 +46,6 @@ M.add = {
 	DiagnosticUnderlineError = { undercurl = true, sp = "red" },
 	DiagnosticUnderlineHint = { undercurl = true, sp = "light_grey" },
 	DiagnosticUnderlineInfo = { undercurl = true, sp = "blue" },
-	Underlined = { undercurl = true, sp = "white" },
 }
 
 return M

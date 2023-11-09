@@ -21,9 +21,9 @@ end
 local highlights = require("custom.highlights")
 
 M.ui = {
-	theme = "gruvbox",
+	theme = "gruvchad",
 	transparency = true,
-	theme_toggle = { "gruvbox", "one_light" },
+	theme_toggle = { "gruvchad", "one_light" },
 	lsp_semantic_tokens = true, -- needs nvim v0.9, just adds highlight groups for lsp semantic tokens
 	hl_override = highlights.override,
 	hl_add = highlights.add,
@@ -171,7 +171,7 @@ M.ui = {
 			modules[11] = (function()
 				return (
 					vim.o.columns > 120
-						and gen_block("", "%p%% ‖  %l:%L", "%#St_Pos_sep#", "%#St_Pos_bg#", "%#St_Pos_txt#")
+						and gen_block("", "%p%% ┃ %l:%L", "%#St_Pos_sep#", "%#St_Pos_bg#", "%#St_Pos_txt#")
 					or gen_block("", "%l", "%#St_Pos_sep#", "%#St_Pos_bg#", "%#St_Pos_txt#")
 				)
 			end)()
@@ -183,21 +183,21 @@ M.ui = {
 		show_numbers = false,
 		enabled = true,
 		lazyload = true,
-		overriden_modules = function(modules)
-			local api = vim.api
-			local function getNvimTreeWidth()
-				for _, win in pairs(api.nvim_tabpage_list_wins(0)) do
-					if vim.bo[api.nvim_win_get_buf(win)].ft == "neo-tree" then
-						return api.nvim_win_get_width(win) + 1
-					end
-				end
-				return 0
-			end
-			modules[1] = (function()
-				return "%#NeoTreeNormal#"
-					.. (vim.g.nvimtree_side == "right" and "" or string.rep(" ", getNvimTreeWidth()))
-			end)()
-		end,
+		-- overriden_modules = function(modules)
+		-- 	local api = vim.api
+		-- 	local function getNvimTreeWidth()
+		-- 		for _, win in pairs(api.nvim_tabpage_list_wins(0)) do
+		-- 			if vim.bo[api.nvim_win_get_buf(win)].ft == "neo-tree" then
+		-- 				return api.nvim_win_get_width(win) + 1
+		-- 			end
+		-- 		end
+		-- 		return 0
+		-- 	end
+		-- 	modules[1] = (function()
+		-- 		return "%#NeoTreeNormal#"
+		-- 			.. (vim.g.nvimtree_side == "right" and "" or string.rep(" ", getNvimTreeWidth()))
+		-- 	end)()
+		-- end,
 	},
 
 	nvdash = {
@@ -215,6 +215,11 @@ M.ui = {
 	},
 
 	cheatsheet = { theme = "grid" }, -- simple/grid
+	lsp = {
+		signature = {
+			disabled = true,
+		},
+	},
 }
 
 M.lazy_nvim = require("custom.core.lazy") -- config for lazy.nvim startup options
