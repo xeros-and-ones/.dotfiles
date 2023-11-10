@@ -367,13 +367,29 @@ M.Tabufline = {
 			"Goto prev buffer",
 			opts = { silent = true },
 		},
-		["<A-l>"] = {
+		["<leader>bn"] = {
+			function()
+				require("nvchad.tabufline").tabuflineNext()
+			end,
+			"Goto next buffer",
+			opts = { silent = true },
+		},
+
+		["<leader>bp"] = {
+			function()
+				require("nvchad.tabufline").tabuflinePrev()
+			end,
+			"Goto prev buffer",
+			opts = { silent = true },
+		},
+
+		["<leader>b."] = {
 			function()
 				require("nvchad.tabufline").move_buf(1)
 			end,
 			"Move Buffer Right",
 		},
-		["<A-h>"] = {
+		["<leader>b,"] = {
 			function()
 				require("nvchad.tabufline").move_buf(1)
 			end,
@@ -381,7 +397,7 @@ M.Tabufline = {
 		},
 
 		-- close buffer + hide terminal buffer
-		["<leader>x"] = {
+		["<leader>bk"] = {
 			function()
 				require("nvchad.tabufline").close_buffer()
 			end,

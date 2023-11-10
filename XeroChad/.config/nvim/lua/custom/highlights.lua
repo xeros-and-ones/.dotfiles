@@ -31,6 +31,7 @@ M.override = {
 	LspReferenceRead = { fg = "yellow", bg = "one_bg", bold = true },
 	LspReferenceText = { fg = "yellow", bg = "one_bg", bold = true },
 	LspReferenceWrite = { fg = "orange", bg = "one_bg", bold = true },
+	TbLineBufOn = { fg = "red" },
 }
 
 ---@type HLTable

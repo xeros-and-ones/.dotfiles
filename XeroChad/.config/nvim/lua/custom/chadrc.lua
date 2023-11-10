@@ -159,7 +159,7 @@ M.ui = {
 				local rg = {
 					" ⟶",
 					"%#St_lsp_txt#" .. added,
-                    "%#St_Pos_txt#" .. changed,
+					"%#St_Pos_txt#" .. changed,
 					"%#St_file_txt#" .. removed,
 				}
 				return (

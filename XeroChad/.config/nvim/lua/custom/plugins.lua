@@ -3,6 +3,7 @@ local plugins = {
 	-- Autocompletion
 	{
 		"hrsh7th/nvim-cmp",
+		version = false,
 		event = { "InsertEnter", "CmdlineEnter" },
 		opts = function()
 			local cmp = require("cmp")
@@ -282,9 +283,12 @@ local plugins = {
 	{
 		"numToStr/Comment.nvim",
 		init = function() end,
+		keys = {
+			{ "gc", mode = { "n", "o", "x" }, desc = "Comment toggle linewise" },
+			{ "gb", mode = { "n", "o", "x" }, desc = "Comment toggle blockwise" },
+		},
 		config = function()
 			require("Comment").setup({
-				-- ignores empty lines
 				ignore = "^$",
 				pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
 			})
@@ -364,13 +368,29 @@ local plugins = {
 		event = "BufRead",
 		opts = {
 			mappings = {
-				toggle = "gs",
+				toggle = "ga",
 				split = "",
 				join = "",
 			},
 		},
 	},
 	------------------------------------------------------------------------------------------
+	{
+		"echasnovski/mini.surround",
+		event = "BufRead",
+		opts = {
+			mappings = {
+				add = "gsa", -- Add surrounding in Normal and Visual modes
+				delete = "gsd", -- Delete surrounding
+				find = "gsf", -- Find surrounding (to the right)
+				find_left = "gsF", -- Find surrounding (to the left)
+				highlight = "gsh", -- Highlight surrounding
+				replace = "gsr", -- Replace surrounding
+				update_n_lines = "gsn", -- Update `n_lines`
+			},
+		},
+	},
+	-----------------------------------------------------------------
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		version = "",
@@ -777,15 +797,7 @@ local plugins = {
 	},
 
 	-----------------------------------------------------------------
-	{
-		"kylechui/nvim-surround",
-		version = "*", -- Use for stability; omit to use `main` branch for the latest features
-		event = "VeryLazy",
-		config = function()
-			require("nvim-surround").setup()
-		end,
-	},
-	-----------------------------------------------------------------
+
 	-- Debugging
 	{
 		"rcarriga/nvim-dap-ui",
@@ -820,6 +832,7 @@ local plugins = {
 			dofile(vim.g.base46_cache .. "whichkey")
 			require("which-key").setup(opts)
 			require("which-key").register({
+				b = { name = "_Buffers" },
 				D = { name = "_Dadbod Database" },
 				f = { name = "_Find" },
 				g = { name = "_Git Control" },
