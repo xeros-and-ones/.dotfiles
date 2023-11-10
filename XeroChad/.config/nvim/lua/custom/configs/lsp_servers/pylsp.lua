@@ -51,6 +51,8 @@ return {
 				},
 				-- import sorting
 				pyls_isort = { enabled = false },
+				rope_completion = { enabled = true },
+				rope_autoimport = { enabled = true },
 			},
 		},
 	},

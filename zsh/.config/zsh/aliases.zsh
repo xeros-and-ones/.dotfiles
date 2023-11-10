@@ -93,6 +93,7 @@ alias q="exit"
 alias v="nvim"
 alias sv="sudoedit"
 alias vconf="cd ~/.config/nvim/ && nvim"
+alias chadconf="cd ~/.dotfiles/XeroChad/ && nvim"
 alias vd='deactivate'
 alias stows='stow -vSt ~'
 alias stowd='stow -vDt ~'

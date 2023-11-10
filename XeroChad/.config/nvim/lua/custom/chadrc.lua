@@ -220,29 +220,10 @@ M.ui = {
 					) or gen_block("", clients[1], "%#St_lsp_sep#", "%#St_lsp_bg#", "%#St_lsp_txt#")
 				end
 			end)()
-			modules[10] = (function()
-				return (
-					vim.o.columns > 140
-					and gen_block(
-						"",
-						fn.fnamemodify(fn.getcwd(), ":r:t"),
-						"%#St_cwd_sep#",
-						"%#St_cwd_bg#",
-						"%#St_cwd_txt#"
-					)
-				)
-					or gen_block(
-						"",
-						fn.fnamemodify(fn.getcwd(), ":t"),
-						"%#St_cwd_sep#",
-						"%#St_cwd_bg#",
-						"%#St_cwd_txt#"
-					)
-			end)()
 			modules[11] = (function()
 				return (
 					vim.o.columns > 120
-						and gen_block("", "%p%% ┃ %l:%L", "%#St_Pos_sep#", "%#St_Pos_bg#", "%#St_Pos_txt#")
+						and gen_block("", "%p%% %l:%L", "%#St_Pos_sep#", "%#St_Pos_bg#", "%#St_Pos_txt#")
 					or gen_block("", "%l", "%#St_Pos_sep#", "%#St_Pos_bg#", "%#St_Pos_txt#")
 				)
 			end)()
