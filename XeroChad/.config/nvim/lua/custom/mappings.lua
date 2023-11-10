@@ -95,6 +95,9 @@ M.Neovim = {
 		["<leader>nf"] = {
 			function()
 				require("telescope.builtin").find_files({
+					follow = true,
+					hidden = true,
+					no_ignore = true,
 					prompt_title = "Config Files",
 					search_dirs = config_dir,
 					cwd = cwd,
