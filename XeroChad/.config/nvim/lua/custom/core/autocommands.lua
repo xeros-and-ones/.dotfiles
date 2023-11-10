@@ -10,15 +10,6 @@ local general = augroup("General Settings", { clear = true })
 -- local cmd = vim.api.nvim_create_user_command
 -- local namespace = vim.api.nvim_create_namespace
 
-autocmd("FileType", {
-	group = general,
-	pattern = ".py",
-	callback = function()
-		vim.opt.cursorColumn = true
-	end,
-	desc = "set cursorColumn for python only on the current buffer",
-})
-
 autocmd("BufEnter", {
 	callback = function()
 		if #vim.api.nvim_list_wins() == 1 and vim.api.nvim_buf_get_name(0):match("NvimTree_") ~= nil then

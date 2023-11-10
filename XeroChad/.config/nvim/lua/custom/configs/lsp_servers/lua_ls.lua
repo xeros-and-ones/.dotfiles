@@ -7,6 +7,9 @@ return {
 	end,
 	settings = {
 		Lua = {
+			format = {
+				enable = false,
+			},
 			semantic = {
 				enable = true,
 			},
@@ -26,8 +29,6 @@ return {
 					[vim.fn.stdpath("data") .. "/lazy/ui/nvchad_types"] = true,
 				},
 				checkThirdParty = false,
-				maxPreload = 5000,
-				preloadFileSize = 10000,
 			},
 		},
 	},
