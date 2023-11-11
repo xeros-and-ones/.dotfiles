@@ -7,11 +7,14 @@ return {
 	end,
 	settings = {
 		Lua = {
-			format = {
-				enable = false,
-			},
 			semantic = {
 				enable = true,
+			},
+			runtime = {
+				version = "LuaJIT",
+				special = {
+					reload = "require",
+				},
 			},
 			hint = { enable = true },
 			diagnostics = {
@@ -29,6 +32,8 @@ return {
 					[vim.fn.stdpath("data") .. "/lazy/ui/nvchad_types"] = true,
 				},
 				checkThirdParty = false,
+				maxPreload = 10000,
+				preloadFileSize = 1000,
 			},
 		},
 	},
