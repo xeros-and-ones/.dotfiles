@@ -170,29 +170,3 @@ autocmd("BufWritePre", {
 	end,
 	desc = "create directories when needed, when saving a file",
 })
-
--- autocmd("BufEnter", {
--- 	desc = "Open Neo-Tree on startup with directory",
--- 	group = augroup("neotree_start", { clear = true }),
--- 	callback = function()
--- 		local stats = vim.loop.fs_stat(vim.api.nvim_buf_get_name(0))
--- 		if stats and stats.type == "directory" then
--- 			require("neo-tree.setup.netrw").hijack()
--- 		end
--- 	end,
--- })
-autocmd("VimEnter", {
-	callback = function(data)
-		-- buffer is a directory
-		local directory = vim.fn.isdirectory(data.file) == 1
-
-		-- change to the directory
-		if directory then
-			vim.cmd.cd(data.file)
-			-- open the tree
-			require("nvim-tree.api").tree.open()
-		end
-	end,
-	group = general,
-	desc = "Open NvimTree when it's a Directory",
-})
