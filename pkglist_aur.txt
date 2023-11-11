@@ -19,6 +19,7 @@ optimus-manager-qt
 otf-rubik
 pamac-aur
 pollymc
+pyinstaller
 tauon-music-box
 visual-studio-code-bin
 xdman8

@@ -62,12 +62,12 @@ M.dapui = function()
 		dapui.open()
 		vim.keymap.set({ "v", "n" }, "K", [[<Cmd>lua require("dapui").eval()<CR>]], { buffer = 0 })
 	end
-	-- dap.listeners.before.event_terminated["dapui_config"] = function()
-	-- 	dapui.close()
-	-- end
-	-- dap.listeners.before.event_exited["dapui_config"] = function()
-	-- 	dapui.close()
-	-- end
+	dap.listeners.before.event_terminated["dapui_config"] = function()
+		dapui.close()
+	end
+	dap.listeners.before.event_exited["dapui_config"] = function()
+		dapui.close()
+	end
 end
 
 return M

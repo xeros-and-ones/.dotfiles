@@ -43,6 +43,7 @@ duf
 e2fsprogs
 efibootmgr
 efitools
+elixir
 endeavouros-keyring
 endeavouros-mirrorlist
 endeavouros-theming
@@ -134,9 +135,11 @@ meld
 mesa-utils
 mlocate
 modemmanager
+mono
 mtools
 nano
 nano-syntax-highlighting
+nasm
 neofetch
 netctl
 networkmanager
@@ -150,6 +153,7 @@ noto-fonts
 nss-mdns
 ntfs-3g
 ntp
+nuitka
 okular
 openssh
 os-prober
@@ -173,6 +177,7 @@ power-profiles-daemon
 powerdevil
 print-manager
 pv
+pyright
 python
 python-capng
 python-defusedxml
