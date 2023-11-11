@@ -28,7 +28,6 @@ local plugins = {
 				if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
 					return false
 				end
-				---@diagnostic disable-next-line: deprecated
 				local line, col = unpack(vim.api.nvim_win_get_cursor(0))
 				return col ~= 0
 					and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
@@ -110,10 +109,32 @@ local plugins = {
 				ghost_text = true,
 				native_menu = false,
 			}
+			opts.sorting = {
+				comparators = {
+					cmp.config.compare.offset,
+					cmp.config.compare.exact,
+					cmp.config.compare.score,
+					function(entry1, entry2)
+						local _, entry1_under = entry1.completion_item.label:find("^_+")
+						local _, entry2_under = entry2.completion_item.label:find("^_+")
+						entry1_under = entry1_under or 0
+						entry2_under = entry2_under or 0
+						if entry1_under > entry2_under then
+							return false
+						elseif entry1_under < entry2_under then
+							return true
+						end
+					end,
+					cmp.config.compare.kind,
+					cmp.config.compare.sort_text,
+					cmp.config.compare.length,
+					cmp.config.compare.order,
+				},
+			}
 			opts.window.documentation.winhighlight = "Normal:CmpPmenu"
 			opts.window.completion.scrollbar = true
 
-			opts.completion["completeopt"] = "menu,menuone" -- disable autoselect
+			opts.completion["completeopt"] = "menu,menuone,noinsert"
 			require("cmp").setup(opts)
 		end,
 		dependencies = {
@@ -191,6 +212,7 @@ local plugins = {
 	{
 		"nvim-lua/plenary.nvim",
 	},
+	-------------------------------------------------------------------------------
 	{ "tenxsoydev/karen-yank.nvim", config = true },
 	------------------------------------------------------------------------------------------
 	-- Native LSP
@@ -318,23 +340,6 @@ local plugins = {
 			dofile(vim.g.base46_cache .. "nvimtree")
 			require("nvim-tree").setup(opts)
 		end,
-	},
-	---------------------------
-	{
-		"nvim-neo-tree/neo-tree.nvim",
-		enabled = false,
-		-- branch = "v3.x",
-		-- dependencies = {
-		-- 	"MunifTanjim/nui.nvim",
-		-- },
-		-- event = "VeryLazy",
-		-- init = function()
-		-- 	require("core.utils").load_mappings("Neotree")
-		-- end,
-
-		-- config = function()
-		-- 	require("custom.configs.neo-tree")
-		-- end,
 	},
 	------------------------------------------------------------------------------------------
 	{
@@ -551,7 +556,7 @@ local plugins = {
 			require("custom.configs.folds")
 		end,
 	},
-
+	-------------------------------------------------------------------------------
 	-- Syntax Highlighting
 	{
 		"nvim-treesitter/nvim-treesitter",
@@ -580,7 +585,7 @@ local plugins = {
 			"nvim-treesitter/nvim-treesitter-textobjects",
 		},
 	},
-
+	-------------------------------------------------------------------------------
 	{
 		"nvim-pack/nvim-spectre",
 		cmd = "Spectre",
@@ -601,16 +606,16 @@ local plugins = {
 			},
 		},
 	},
-
+	-------------------------------------------------------------------------------
 	-- Schemas
 	{ "b0o/schemastore.nvim" },
-
+	-------------------------------------------------------------------------------
 	-- Buffer Delete
 	{
 		"moll/vim-bbye",
 		cmd = { "Bdelete", "Bwipeout" },
 	},
-
+	-------------------------------------------------------------------------------
 	-- Highlight, List and Search Todo comments in your projects
 	{
 		"folke/todo-comments.nvim",
@@ -656,7 +661,7 @@ local plugins = {
 			require("custom.configs.neotest")
 		end,
 	},
-
+	-------------------------------------------------------------------------------
 	-- Notification
 	{
 		"rcarriga/nvim-notify",
@@ -673,10 +678,19 @@ local plugins = {
 			})
 		end,
 	},
-
+	-------------------------------------------------------------------------------
+	-----------------  Compiler
+	{
+		"Zeioth/compiler.nvim",
+		cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
+		-- opts = {},
+	},
+	--------------------------
 	{
 		"stevearc/overseer.nvim",
-		cmd = { "OverseerRun", "OverseerToggle" },
+		commit = "400e762648b70397d0d315e5acaf0ff3597f2d8b",
+
+		cmd = { "OverseerRun", "OverseerToggle", "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
 		config = function()
 			require("overseer").setup({
 				strategy = {
@@ -692,29 +706,35 @@ local plugins = {
 					-- being rendered in the toggleable window
 					hidden = false,
 				},
+				task_list = {
+					direction = "bottom",
+					min_height = 25,
+					max_height = 25,
+					default_detail = 1,
+				},
 				dap = true,
 				auto_scroll = true,
 				close_on_exit = false,
 				open_on_start = true,
-				templates = { "builtin", "scripts", "python" },
+				templates = { "builtin", "scripts", "python", "terraform" },
 			})
 		end,
 	},
-
+	-------------------------------------------------------------------------------
 	-- Improve UI
 	{
 		"stevearc/dressing.nvim",
 		event = "VeryLazy",
 		opts = require("custom.configs.dressing"),
 	},
-
+	-------------------------------------------------------------------------------
 	-- Search motions
 	{
 		"folke/flash.nvim",
 		event = "VeryLazy",
 		opts = require("custom.configs.flash"),
 	},
-
+	-------------------------------------------------------------------------------
 	-- Fuzzy Finder
 	{
 		"nvim-telescope/telescope.nvim",
@@ -738,14 +758,14 @@ local plugins = {
 			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		},
 	},
-
+	-------------------------------------------------------------------------------
 	-- Pretty Diagnostics and Lists
 	{
 		"folke/trouble.nvim",
 		cmd = { "TroubleToggle", "Trouble" },
 		opts = require("custom.configs.trouble"),
 	},
-
+	-------------------------------------------------------------------------------
 	-- Git Signs
 	{
 		"lewis6991/gitsigns.nvim",
@@ -801,26 +821,25 @@ local plugins = {
 
 	-- Debugging
 	{
-		"rcarriga/nvim-dap-ui",
-		-- init = function()
-		--   require("core.utils").load_mappings "Dap"
-		-- end,
+		"mfussenegger/nvim-dap",
+		event = "VeryLazy",
+		config = function()
+			require("custom.configs.dap").dap()
+		end,
 		dependencies = {
 			{
-				"mfussenegger/nvim-dap",
+				"theHamsta/nvim-dap-virtual-text",
 				config = function()
-					require("custom.configs.dap_adapters.setup")
+					require("nvim-dap-virtual-text").setup()
 				end,
 			},
 			{
-				"theHamsta/nvim-dap-virtual-text",
-				enabled = true,
+				"rcarriga/nvim-dap-ui",
 				config = function()
-					require("custom.configs.dap_adapters.dab_virt_text")
+					require("custom.configs.dap").dapui()
 				end,
 			},
 		},
-		opts = require("custom.configs.dap_adapters.dap_ui"),
 	},
 	-----------------------------------------------------------------
 	{
@@ -834,6 +853,7 @@ local plugins = {
 			require("which-key").setup(opts)
 			require("which-key").register({
 				b = { name = "Buffers" },
+				c = { name = "Code" },
 				D = { name = "Dadbod Database" },
 				f = { name = "Find" },
 				g = { name = "Git Control" },

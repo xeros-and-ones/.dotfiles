@@ -124,23 +124,24 @@ M.ui = {
 					return ""
 				end
 				local m = vim.api.nvim_get_mode().mode
-				if require("hydra.statusline").is_active() then
-					return gen_block(
-						"󱔎",
-						require("hydra.statusline").get_name(),
-						"%#St_InsertModeSep#",
-						"%#St_InsertMode#",
-						"%#St_InsertModeText#"
-					)
-				else
-					return gen_block(
+
+				return (
+					require("hydra.statusline").is_active()
+						and gen_block(
+							"󱔎",
+							require("hydra.statusline").get_name(),
+							"%#St_InsertModeSep#",
+							"%#St_InsertMode#",
+							"%#St_InsertModeText#"
+						)
+					or gen_block(
 						"",
 						modes[m][1],
 						"%#" .. modes[m][2] .. "Sep#",
 						"%#" .. modes[m][2] .. "#",
 						"%#" .. modes[m][2] .. "Text#"
 					)
-				end
+				)
 			end)()
 
 			modules[3] = (function()
@@ -200,7 +201,9 @@ M.ui = {
 						table.insert(clients, 1, client.name)
 					elseif client.name == "null-ls" then
 						for _, source in pairs(require("null-ls.sources").get_available(vim.bo.filetype)) do
-							table.insert(clients, source.name)
+							if source.name ~= "refactoring" and source.name ~= "gitsigns" then
+								table.insert(clients, source.name)
+							end
 						end
 					end
 				end

@@ -7,17 +7,21 @@ return {
 	end,
 	settings = {
 		Lua = {
+			format = { enable = false },
 			semantic = {
 				enable = true,
 			},
 			runtime = {
+				pathStrict = true,
 				version = "LuaJIT",
-				special = {
-					reload = "require",
-				},
 			},
-			hint = { enable = true },
+			hint = {
+				arrayIndex = "Disable",
+				enable = true,
+				setType = true,
+			},
 			diagnostics = {
+				libraryFiles = "Disable",
 				globals = { "vim" },
 			},
 			telemetry = { enable = false },

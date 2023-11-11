@@ -43,8 +43,18 @@ require("null-ls").setup({
 		formatting.markdownlint,
 		formatting.beautysh,
 		formatting.stylua,
-		formatting.black,
-		formatting.isort,
+		formatting.cmake_format.with({
+			cmd = "cmake-format",
+		}),
+		formatting.black.with({
+			extra_args = function(_)
+				return {
+					"--fast",
+					"--quiet",
+				}
+			end,
+		}),
+		-- formatting.isort,
 		formatting.clang_format.with({
 			filetypes = {
 				"c",
@@ -73,15 +83,18 @@ require("null-ls").setup({
 			extra_filetypes = { "toml" },
 			extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" },
 		}),
-
+		--------------------------------------------------------------------------------------
 		--diagnostics
 		diagnostics.markdownlint,
 		diagnostics.djlint,
 		diagnostics.shellcheck,
 		diagnostics.jsonlint,
+		diagnostics.cppcheck,
 		diagnostics.zsh,
-
+		--------------------------------------------------------------------------------------
 		-- code_actions
-		-- code_actions.refactoring,
+		code_actions.refactoring,
+		code_actions.gitsigns,
+		code_actions.shellcheck,
 	},
 })

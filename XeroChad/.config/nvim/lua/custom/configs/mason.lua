@@ -19,6 +19,10 @@ return {
 			cancel_installation = "<C-c>",
 		},
 	},
+	registries = {
+		"github:mason-org/mason-registry",
+		"lua:custom.configs.lsp_servers.custom",
+	},
 
 	max_concurrent_installers = 3,
 	ensure_installed = {
@@ -29,7 +33,6 @@ return {
 		"css-lsp",
 		"html-lsp",
 		"python-lsp-server",
-		-- "pyright",
 		"typescript-language-server",
 		"yaml-language-server",
 		"json-lsp",
@@ -47,7 +50,7 @@ return {
 		"djlint",
 		"shellcheck",
 		"jsonlint",
-		-- "flake8",
+		"cppcheck",
 
 		-- formatters -------------------------------
 		"beautysh",
@@ -56,6 +59,7 @@ return {
 		"clang-format",
 		"prettier",
 		"black",
-		"isort",
+		"cmakelang",
+		-- "isort",
 	},
 }

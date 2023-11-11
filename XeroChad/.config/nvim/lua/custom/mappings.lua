@@ -316,8 +316,8 @@ end
 M.LSP = {
 	n = {
 		["<C-`>"] = { "<cmd>TroubleToggle<cr>", "Toggle Trouble", opts = { silent = true } },
-		["<C-Space>"] = { "<cmd>NullFormat<cr>", "Format", opts = { silent = true } },
-		["<F5>"] = {
+		["<leader>cf"] = { "<cmd>NullFormat<cr>", "Format", opts = { silent = true } },
+		["<leader>cr"] = {
 			function()
 				RunCode()
 			end,
@@ -325,12 +325,23 @@ M.LSP = {
 			opts = { silent = true },
 		},
 		["gh"] = { show_hover, "Hover Action", opts = { silent = true } },
+		["<leader>cc"] = { "<cmd>CompilerOpen<cr>", "Compile", opts = { noremap = true, silent = true } },
+		["<leader>cs"] = {
+			"<cmd>CompilerStop | CompilerRedo<cr>",
+			"Stop & Redo Compilation",
+			opts = { noremap = true, silent = true },
+		},
+		["<leader>co"] = {
+			"<cmd>CompilerToggleResults<cr>",
+			"Compilation Results",
+			opts = { noremap = true, silent = true },
+		},
 	},
 
 	i = {
 		["<C-`>"] = { "<cmd>TroubleToggle<cr>", "Toggle Trouble", opts = { silent = true } },
-		["<C-Space>"] = { "<cmd>NullFormat<cr>", "Format", opts = { silent = true } },
-		["<F5>"] = {
+		["<leader>cf"] = { "<cmd>NullFormat<cr>", "Format", opts = { silent = true } },
+		["<leader>cr"] = {
 			function()
 				RunCode()
 			end,
@@ -341,8 +352,8 @@ M.LSP = {
 
 	v = {
 		["<C-`>"] = { "<cmd>TroubleToggle<cr>", "Toggle Trouble", opts = { silent = true } },
-		["<C-Space>"] = { "<cmd>NullFormat<cr>", "Format", opts = { silent = true } },
-		["<F5>"] = {
+		["<leader>cf"] = { "<cmd>NullFormat<cr>", "Format", opts = { silent = true } },
+		["<leader>cr"] = {
 			function()
 				RunCode()
 			end,
