@@ -833,17 +833,20 @@ local plugins = {
 			dofile(vim.g.base46_cache .. "whichkey")
 			require("which-key").setup(opts)
 			require("which-key").register({
-				b = { name = "_Buffers" },
-				D = { name = "_Dadbod Database" },
-				f = { name = "_Find" },
-				g = { name = "_Git Control" },
-				n = { name = "_Neovim" },
-				o = { name = "_Options" },
-				s = { name = "_Spectre" },
-				z = { name = "_Utilities" },
-				t = { name = "_Testing" },
-				l = { name = "_LSP" },
+				b = { name = "Buffers" },
+				D = { name = "Dadbod Database" },
+				f = { name = "Find" },
+				g = { name = "Git Control" },
+				n = { name = "Neovim" },
+				o = { name = "Options" },
+				s = { name = "Spectre" },
+				z = { name = "Utilities" },
+				t = { name = "Testing" },
+				l = { name = "LSP" },
 			}, { prefix = "<leader>" })
+			require("which-key").register({
+				s = { name = "Surround" },
+			}, { prefix = "g" })
 		end,
 	},
 	-----------------------------------------------------------------
