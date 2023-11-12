@@ -6,16 +6,8 @@ if venv_path ~= nil then
 else
 	py_path = vim.g.python3_host_prog
 end
-local path = require("mason-core.path")
 return {
 	single_file_support = true,
-	before_init = function(_, config)
-		config.settings.python.analysis.stubPath = path.concat({
-			vim.fn.stdpath("data"),
-			"lazy",
-			"python-type-stubs",
-		})
-	end,
 	settings = {
 		pylsp = {
 			plugins = {

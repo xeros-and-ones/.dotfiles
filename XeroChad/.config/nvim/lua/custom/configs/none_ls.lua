@@ -6,16 +6,14 @@ require("null-ls").setup({
 
 	on_attach = function(client, bufnr)
 		-- Custom command to use null-ls as the formatter.
-		local format_cmd = function(input)
+		local bufcmd = vim.api.nvim_buf_create_user_command
+		bufcmd(bufnr, "NullFormat", function(input)
 			vim.lsp.buf.format({
 				id = client.id,
 				timeout_ms = 5000,
 				async = input.bang,
 			})
-		end
-
-		local bufcmd = vim.api.nvim_buf_create_user_command
-		bufcmd(bufnr, "NullFormat", format_cmd, {
+		end, {
 			bang = true,
 			range = true,
 		})
@@ -47,12 +45,8 @@ require("null-ls").setup({
 			cmd = "cmake-format",
 		}),
 		formatting.black.with({
-			extra_args = function(_)
-				return {
-					"--fast",
-					"--quiet",
-				}
-			end,
+			"--fast",
+			"--quiet",
 		}),
 		-- formatting.isort,
 		formatting.clang_format.with({

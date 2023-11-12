@@ -340,14 +340,6 @@ M.LSP = {
 
 	i = {
 		["<C-`>"] = { "<cmd>TroubleToggle<cr>", "Toggle Trouble", opts = { silent = true } },
-		["<leader>cf"] = { "<cmd>NullFormat<cr>", "Format", opts = { silent = true } },
-		["<leader>cr"] = {
-			function()
-				RunCode()
-			end,
-			"Run Code",
-			opts = { silent = true },
-		},
 	},
 
 	v = {

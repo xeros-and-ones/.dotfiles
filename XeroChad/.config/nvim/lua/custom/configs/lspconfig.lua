@@ -160,11 +160,20 @@ require("lspconfig").pylance.setup({
 	on_attach = on_attach,
 
 	on_init = function(client)
+		-- local venv_path = os.getenv("VIRTUAL_ENV")
+		-- local py_path = nil
+		-- -- decide which python executable to use for mypy
+		-- if venv_path ~= nil then
+		-- 	py_path = venv_path .. "/bin/python3"
+		-- else
+		-- 	py_path = vim.g.python3_host_prog
+		-- end
+
 		client.config.settings.python.pythonPath = (function(workspace)
+			local poetry_lock_path = vim.fs.joinpath(workspace, "poetry.lock")
 			if vim.env.VIRTUAL_ENV then
 				return path.join(vim.env.VIRTUAL_ENV, "bin", "python")
 			end
-			local poetry_lock_path = vim.fs.joinpath(workspace, "poetry.lock")
 			if vim.fn.filereadable(poetry_lock_path) then
 				local venv = vim.fn.trim(vim.fn.system("poetry env info -p"))
 				return path.concat({ venv, "bin", "python" })
@@ -172,13 +181,13 @@ require("lspconfig").pylance.setup({
 			return vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
 		end)(client.config.root_dir)
 	end,
-	before_init = function(_, config)
-		config.settings.python.analysis.stubPath = path.concat({
-			vim.fn.stdpath("data"),
-			"lazy",
-			"python-type-stubs",
-		})
-	end,
+	-- before_init = function(_, config)
+	-- 	config.settings.python.analysis.stubPath = path.concat({
+	-- 		vim.fn.stdpath("data"),
+	-- 		"lazy",
+	-- 		"python-type-stubs",
+	-- 	})
+	-- end,
 })
 ---------------------------------------------------------
 local mason_lspconfig = require("mason-lspconfig")
