@@ -50,7 +50,6 @@ return {
 		"djlint",
 		"shellcheck",
 		"jsonlint",
-		"cppcheck",
 
 		-- formatters -------------------------------
 		"beautysh",

@@ -4,32 +4,32 @@ local code_actions = require("null-ls").builtins.code_actions
 require("null-ls").setup({
 	border = "rounded",
 
-	on_attach = function(client, bufnr)
-		-- Custom command to use null-ls as the formatter.
-		local bufcmd = vim.api.nvim_buf_create_user_command
-		bufcmd(bufnr, "NullFormat", function(input)
-			vim.lsp.buf.format({
-				id = client.id,
-				timeout_ms = 5000,
-				async = input.bang,
-			})
-		end, {
-			bang = true,
-			range = true,
-		})
+	-- on_attach = function(client, bufnr)
+	-- 	-- Custom command to use null-ls as the formatter.
+	-- 	local bufcmd = vim.api.nvim_buf_create_user_command
+	-- 	bufcmd(bufnr, "NullFormat", function(input)
+	-- 		vim.lsp.buf.format({
+	-- 			id = client.id,
+	-- 			timeout_ms = 5000,
+	-- 			async = input.bang,
+	-- 		})
+	-- 	end, {
+	-- 		bang = true,
+	-- 		range = true,
+	-- 	})
 
-		-- format on save
-		if client.supports_method("textDocument/formatting") then
-			local format_group = vim.api.nvim_create_augroup("autoformat", { clear = true })
-			vim.api.nvim_create_autocmd("BufWritePre", {
-				group = format_group,
-				buffer = bufnr,
-				callback = function()
-					vim.cmd("NullFormat")
-				end,
-			})
-		end
-	end,
+	-- 	-- format on save
+	-- 	if client.supports_method("textDocument/formatting") then
+	-- 		local format_group = vim.api.nvim_create_augroup("autoformat", { clear = true })
+	-- 		vim.api.nvim_create_autocmd("BufWritePre", {
+	-- 			group = format_group,
+	-- 			buffer = bufnr,
+	-- 			callback = function()
+	-- 				vim.cmd("NullFormat")
+	-- 			end,
+	-- 		})
+	-- 	end
+	-- end,
 	sources = {
 		--formatting
 		formatting.djlint.with({
@@ -83,7 +83,6 @@ require("null-ls").setup({
 		diagnostics.djlint,
 		diagnostics.shellcheck,
 		diagnostics.jsonlint,
-		diagnostics.cppcheck,
 		diagnostics.zsh,
 		--------------------------------------------------------------------------------------
 		-- code_actions

@@ -30,6 +30,7 @@ setopt INTERACTIVE_COMMENTS
 export ZDOTDIR="$HOME/.config/zsh"
 export EDITOR=nvim
 export VISUAL=nvim
+# export TERM=wezterm
 # export PAGER=/usr/bin/moar
 export HISTFILE="$HOME/.zsh_history"    # History filepath
 # Max number of entries to keep in history file.

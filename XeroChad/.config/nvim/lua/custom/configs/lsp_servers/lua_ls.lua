@@ -7,27 +7,17 @@ return {
 	end,
 	settings = {
 		Lua = {
-			format = { enable = false },
 			semantic = {
 				enable = true,
 			},
-			runtime = {
-				pathStrict = true,
-				version = "LuaJIT",
-			},
 			hint = {
-				arrayIndex = "Disable",
 				enable = true,
-				setType = true,
 			},
 			diagnostics = {
 				libraryFiles = "Disable",
 				globals = { "vim" },
 			},
 			telemetry = { enable = false },
-			completion = {
-				callSnippet = "Replace",
-			},
 			workspace = {
 				library = {
 					[vim.fn.expand("$VIMRUNTIME/lua")] = true,
@@ -36,8 +26,8 @@ return {
 					[vim.fn.stdpath("data") .. "/lazy/ui/nvchad_types"] = true,
 				},
 				checkThirdParty = false,
-				maxPreload = 10000,
-				preloadFileSize = 1000,
+				maxPreload = 100000,
+				preloadFileSize = 10000,
 			},
 		},
 	},

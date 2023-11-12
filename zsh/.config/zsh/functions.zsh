@@ -1,12 +1,14 @@
 ######## Functions ##########-----------------------------------------------------------
+DISABLE_AUTO_TITLE="true"
 function xtitle () {
-    builtin print -n -- "\e]0;$@\a"
+    echo -en "\e]0;$@\a"
 }
-
+autoload -Uz add-zsh-hook
 # updates the window title whenever a command is run
-precmd () {
-    xtitle "$(print -P $USER: %3~)"
+precmd_update_title () {
+    xtitle "$(print -P $USER @ %3~)"
 }
+add-zsh-hook precmd precmd_update_title
 #########################################################
 # Get the value of an alias.
 #

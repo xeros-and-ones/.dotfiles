@@ -4,7 +4,7 @@ local py_path = nil
 if venv_path ~= nil then
 	py_path = venv_path .. "/bin/python3"
 else
-	py_path = vim.g.python3_host_prog
+	py_path = vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
 end
 return {
 	single_file_support = true,
@@ -39,7 +39,6 @@ return {
 				jedi_completion = {
 					enabled = true,
 					fuzzy = true,
-					include_params = false,
 				},
 				-- import sorting
 				pyls_isort = { enabled = false },

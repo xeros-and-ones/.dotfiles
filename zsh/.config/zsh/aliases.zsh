@@ -16,13 +16,12 @@ alias pyfind="find . -name '*.py'"
 
 # Grep among .py files
 alias pygrep='rg -pg "*.py"'
-# alias pygrep='grep -nr --include="*.py"'
 
 ###### Pip aliases ########------------------------
 alias pipin="pip install"
 alias pipup="pip install --upgrade"
 alias pipun="pip uninstall"
-alias pipgrep="pip freeze | rg"
+alias piprg="pip freeze | rg"
 alias pipout="pip list --outdated"
 
 # Create requirements file
@@ -51,12 +50,18 @@ function pipunall {
 # Activate the python virtual environment specified.
 # If none specified, use 'venv'.
 function vr() {
-    local name="${1:-venv}"
+    local name="${1:-.venv}"
     local venvpath="${name:P}"
 
-    if [[ ! -d "$venvpath" ]]; then
-        echo >&2 "Error: no such venv in current directory: $name"
+    # Check if 'venv' or '.venv' exists
+    if [[ ! -d "${venvpath}" && ! -d "${venvpath}/.venv" ]]; then
+        echo >&2 "Error: no such venv in current directory: ${name}"
         return 1
+    fi
+
+    # Set venvpath to the existing directory
+    if [[ -d "${venvpath}/.venv" ]]; then
+        venvpath="${venvpath}/.venv"
     fi
 
     if [[ ! -f "${venvpath}/bin/activate" ]]; then
@@ -70,7 +75,17 @@ function vr() {
 
 # Create a new virtual environment, with default name 'venv'.
 function mkvenv() {
-    local name="${1:-venv}"
+    local name="${1:-.venv}"
+    local venvpath="${name:P}"
+
+    python3 -m venv "${name}" || return
+    echo >&2 "Created venv in '${venvpath}'"
+    vr "${name}"
+}
+
+# Create a new virtual environment, with default name 'venv'.
+function mkvenv() {
+    local name="${1:-.venv}"
     local venvpath="${name:P}"
 
     python3 -m venv "${name}" || return

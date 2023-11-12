@@ -223,7 +223,7 @@ local plugins = {
 		end,
 		dependencies = {
 			-- Formatting
-			-- { "microsoft/python-type-stubs" },
+			{ "microsoft/python-type-stubs" },
 			{
 				"stevearc/conform.nvim",
 				enabled = false,
@@ -462,6 +462,7 @@ local plugins = {
 	-----------------------------------------------------------------
 	{
 		"RRethy/vim-illuminate",
+		enabled = false,
 		event = { "CursorHold", "CursorHoldI" },
 		config = function()
 			require("illuminate").configure({

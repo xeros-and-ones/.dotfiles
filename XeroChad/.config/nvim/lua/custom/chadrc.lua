@@ -58,8 +58,6 @@ M.ui = {
 				round = { left = "", right = "" },
 				block = { left = "█", right = "█" },
 			}
-
-			local fn = vim.fn
 			local separators = (type(sep_style) == "table" and sep_style) or default_sep_icons[sep_style]
 
 			local sep_l = separators["left"]
@@ -71,78 +69,7 @@ M.ui = {
 			local function gen_block(icon, txt, sep_l_hlgroup, iconHl_group, txt_hl_group)
 				return sep_l_hlgroup .. sep_l .. iconHl_group .. icon .. " " .. txt_hl_group .. " " .. txt .. sep_r
 			end
-			local function is_activewin()
-				return vim.api.nvim_get_current_win() == vim.g.statusline_winid
-			end
 			local noice_ok, noice = pcall(require, "noice.api")
-			local modes = {
-				["n"] = { "NORMAL", "St_NormalMode" },
-				["no"] = { "NORMAL (no)", "St_NormalMode" },
-				["nov"] = { "NORMAL (nov)", "St_NormalMode" },
-				["noV"] = { "NORMAL (noV)", "St_NormalMode" },
-				["noCTRL-V"] = { "NORMAL", "St_NormalMode" },
-				["niI"] = { "NORMAL i", "St_NormalMode" },
-				["niR"] = { "NORMAL r", "St_NormalMode" },
-				["niV"] = { "NORMAL v", "St_NormalMode" },
-				["nt"] = { "NTERMINAL", "St_NTerminalMode" },
-				["ntT"] = { "NTERMINAL (ntT)", "St_NTerminalMode" },
-
-				["v"] = { "VISUAL", "St_VisualMode" },
-				["vs"] = { "V-CHAR (Ctrl O)", "St_VisualMode" },
-				["V"] = { "V-LINE", "St_VisualMode" },
-				["Vs"] = { "V-LINE", "St_VisualMode" },
-				[""] = { "V-BLOCK", "St_VisualMode" },
-
-				["i"] = { "INSERT", "St_InsertMode" },
-				["ic"] = { "INSERT (completion)", "St_InsertMode" },
-				["ix"] = { "INSERT completion", "St_InsertMode" },
-
-				["t"] = { "TERMINAL", "St_TerminalMode" },
-
-				["R"] = { "REPLACE", "St_ReplaceMode" },
-				["Rc"] = { "REPLACE (Rc)", "St_ReplaceMode" },
-				["Rx"] = { "REPLACEa (Rx)", "St_ReplaceMode" },
-				["Rv"] = { "V-REPLACE", "St_ReplaceMode" },
-				["Rvc"] = { "V-REPLACE (Rvc)", "St_ReplaceMode" },
-				["Rvx"] = { "V-REPLACE (Rvx)", "St_ReplaceMode" },
-
-				["s"] = { "SELECT", "St_SelectMode" },
-				["S"] = { "S-LINE", "St_SelectMode" },
-				[""] = { "S-BLOCK", "St_SelectMode" },
-				["c"] = { "COMMAND", "St_CommandMode" },
-				["cv"] = { "COMMAND", "St_CommandMode" },
-				["ce"] = { "COMMAND", "St_CommandMode" },
-				["r"] = { "PROMPT", "St_ConfirmMode" },
-				["rm"] = { "MORE", "St_ConfirmMode" },
-				["r?"] = { "CONFIRM", "St_ConfirmMode" },
-				["x"] = { "CONFIRM", "St_ConfirmMode" },
-				["!"] = { "SHELL", "St_TerminalMode" },
-			}
-
-			modules[1] = (function()
-				if not is_activewin() then
-					return ""
-				end
-				local m = vim.api.nvim_get_mode().mode
-
-				return (
-					require("hydra.statusline").is_active()
-						and gen_block(
-							"󱔎",
-							require("hydra.statusline").get_name(),
-							"%#St_InsertModeSep#",
-							"%#St_InsertMode#",
-							"%#St_InsertModeText#"
-						)
-					or gen_block(
-						"",
-						modes[m][1],
-						"%#" .. modes[m][2] .. "Sep#",
-						"%#" .. modes[m][2] .. "#",
-						"%#" .. modes[m][2] .. "Text#"
-					)
-				)
-			end)()
 
 			modules[3] = (function()
 				if not vim.b[stbufnr()].gitsigns_head or vim.b[stbufnr()].gitsigns_git_status then
@@ -176,6 +103,25 @@ M.ui = {
 				)
 			end)()
 
+			modules[5] = (function()
+				if vim.bo.filetype ~= "python" then
+					return " "
+				end
+
+				local conda_env = os.getenv("CONDA_DEFAULT_ENV")
+				local venv_path = os.getenv("VIRTUAL_ENV")
+
+				if venv_path == nil then
+					if conda_env == nil then
+						return " "
+					else
+						return "%#St_pos_text#" .. string.format("  %s (conda)", conda_env) .. " "
+					end
+				else
+					local venv_name = vim.fn.fnamemodify(venv_path, ":t")
+					return "%#St_pos_text#" .. string.format("  %s (venv)", venv_name) .. " "
+				end
+			end)()
 			modules[6] = (function()
 				if noice_ok and noice.status.mode.has() then
 					return "%#St_lsp_sep#" .. noice.status.mode.get() .. " "

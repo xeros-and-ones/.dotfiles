@@ -32,6 +32,8 @@ M.override = {
 	LspReferenceWrite = { fg = "orange", bg = "one_bg", bold = true },
 	TbLineBufOn = { fg = "blue" },
 	NvimTreeOpenedFolderName = { fg = "green", bold = false },
+	CmpBorder = { fg = "blue" },
+	CmpDocBorder = { link = "CmpBorder" },
 }
 
 ---@type HLTable
