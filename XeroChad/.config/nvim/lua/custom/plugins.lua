@@ -583,6 +583,7 @@ local plugins = {
 			require("nvim-treesitter.configs").setup(opts)
 		end,
 		dependencies = {
+			"windwp/nvim-ts-autotag",
 			"nvim-treesitter/nvim-treesitter-textobjects",
 		},
 	},

@@ -83,18 +83,16 @@ Hydra({
 		{ "<Esc>", nil, { exit = true, nowait = true, desc = false } },
 	},
 })
-
+local dap = require("dap")
 local dap_hint = [[
- _<f9>_: step back     _b_: Breakpoint      _h_: Hover         _f_: Frames
- _<f6>_: Step over     _r_: Toggle REPL     _p_: Preview       _s_: Scopes
- _<f7>_: Step into     _l_: Run last
- _<f8>_: Step out               _<cr>_: Continue            ^_q_: Quit
+_<F7>_: Step over  _<F8>_: Step into  _<F9>_: Step out  _h_: Hover          _f_: Frames  _s_: Scopes
+_r_: Toggle REPL   _p_: Preview       _l_: Run last     _<F6>_: Continue    ^_q_: Quit
 ]]
 Hydra({
 	name = "Debug",
 	hint = dap_hint,
 	config = {
-		color = "red",
+		color = "pink",
 		invoke_on_body = true,
 		hint = {
 			position = "bottom",
@@ -104,17 +102,15 @@ Hydra({
 	mode = { "n", "x" },
 	body = "<leader>d",
 	heads = {
-		{ "<cr>", cmd("lua require('dap').continue()"), { exit = false, desc = "Continue" } },
-		{ "<f6>", cmd("lua require('dap').step_over()"), { exit = false, desc = "Step over" } },
-		{ "<f7>", cmd("lua require('dap').step_into()"), { exit = false, desc = "Step into" } },
-		{ "<f8>", cmd("lua require('dap').step_out()"), { exit = false, desc = "Step out" } },
-		{ "<f9>", cmd("lua require('dap').step_back()"), { exit = false, desc = "Step out" } },
-		{ "q", cmd("lua require('dap').terminate()"), { exit = true, desc = "Stop debugging" } },
-		{ "b", cmd("lua require('dap').toggle_breakpoint()"), { exit = false, desc = "Toggle breakpoint" } },
-		{ "r", cmd("lua require('dap').repl.toggle()"), { exit = true, desc = "REPL" } },
-		{ "l", cmd("lua require('dap').run_last()"), { exit = true, desc = "Run last" } },
-		{ "h", cmd("lua require('dap.ui.widgets').hover()"), { exit = true, desc = "Hover" } },
-		{ "p", cmd("lua require('dap.ui.widgets').preview()"), { exit = true, desc = "Preview" } },
+		{ "<F6>", "<cmd>DapContinue<cr>", { exit = false, desc = "Continue" } },
+		{ "<F7>", "<cmd>DapStepOver<cr>", { exit = false, desc = "Step over" } },
+		{ "<F8>", "<cmd>DapStepInto<cr>", { exit = false, desc = "Step into" } },
+		{ "<F9>", "<cmd>DapStepOut<cr>", { exit = false, desc = "Step out" } },
+		{ "q", "<cmd>DapTerminate<cr>", { exit = true, desc = "Stop debugging" } },
+		{ "r", "<cmd>DapToggleRepl<cr>", { exit = true, desc = "REPL" } },
+		{ "l", dap.run_last, { exit = false, desc = "Run last" } },
+		{ "h", require('dap.ui.widgets').hover, { exit = true, desc = "Hover" } },
+		{ "p", require('dap.ui.widgets').preview, { exit = true, desc = "Preview" } },
 		{
 			"f",
 			function()

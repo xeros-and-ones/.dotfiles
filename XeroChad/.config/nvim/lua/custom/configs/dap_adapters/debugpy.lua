@@ -1,10 +1,35 @@
 local dap = require("dap")
+local path = ""
 
-dap.adapters.python = {
-	type = "executable",
-	command = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python",
-	args = { "-m", "debugpy.adapter" },
-}
+if vim.fn.has("win32") == 1 then
+	path = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/Scripts/python"
+else
+	path = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python"
+end
+
+dap.adapters.python = function(cb, config)
+	if config.request == "attach" then
+		local port = (config.connect or config).port
+		local host = (config.connect or config).host or "127.0.0.1"
+		cb({
+			type = "server",
+			port = assert(port, "`connect.port` is required for a python `attach` configuration"),
+			host = host,
+			options = {
+				source_filetype = "python",
+			},
+		})
+	else
+		cb({
+			type = "executable",
+			command = path,
+			args = { "-m", "debugpy.adapter" },
+			options = {
+				source_filetype = "python",
+			},
+		})
+	end
+end
 
 local get_python_path = function()
 	local venv_path = os.getenv("VIRTUAL_ENV")

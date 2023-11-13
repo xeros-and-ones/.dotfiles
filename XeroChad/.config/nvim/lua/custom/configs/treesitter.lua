@@ -34,6 +34,9 @@ return {
 		"yaml",
 		"java",
 	},
+	autotag = {
+		enable = true,
+	},
 	auto_install = true, -- disable if no tree-sitter cli installed
 	ignore_install = {}, -- list of parsers to ignore installing
 	highlight = {

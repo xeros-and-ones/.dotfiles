@@ -1,6 +1,6 @@
 return {
 	ui = {
-		check_outdated_packages_on_open = false,
+		check_outdated_packages_on_open = true,
 		border = "rounded",
 		icons = {
 			package_pending = " ",
@@ -45,6 +45,12 @@ return {
 		"cpptools",
 		"debugpy",
 		"go-debug-adapter",
+		"firefox-debug-adapter",
+		"chrome-debug-adapter",
+		"js-debug-adapter",
+		"node-debug2-adapter",
+		"dart-debug-adapte",
+		"netcoredbg",
 		-- linters -----------------------------------
 		"markdownlint",
 		"djlint",

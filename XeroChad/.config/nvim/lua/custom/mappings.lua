@@ -315,8 +315,20 @@ end
 
 M.LSP = {
 	n = {
+		["<F5>"] = { "<cmd>DapToggleBreakpoint<cr>", "Toggle Breakpoint" },
 		["<C-`>"] = { "<cmd>TroubleToggle<cr>", "Toggle Trouble", opts = { silent = true } },
-		["<leader>cf"] = { "<cmd>NullFormat<cr>", "Format", opts = { silent = true } },
+		["<leader>cf"] = {
+			function()
+				vim.lsp.buf.format({
+					timeout_ms = 5000,
+					filter = function(c)
+						return c.name == "null-ls"
+					end,
+				})
+			end,
+			"Format",
+			opts = { silent = true },
+		},
 		["<leader>cr"] = {
 			function()
 				RunCode()
@@ -340,11 +352,24 @@ M.LSP = {
 
 	i = {
 		["<C-`>"] = { "<cmd>TroubleToggle<cr>", "Toggle Trouble", opts = { silent = true } },
+		["<F5>"] = { "<cmd>DapToggleBreakpoint<cr>", "Toggle Breakpoint" },
 	},
 
 	v = {
 		["<C-`>"] = { "<cmd>TroubleToggle<cr>", "Toggle Trouble", opts = { silent = true } },
-		["<leader>cf"] = { "<cmd>NullFormat<cr>", "Format", opts = { silent = true } },
+		["<F5>"] = { "<cmd>DapToggleBreakpoint<cr>", "Toggle Breakpoint" },
+		["<leader>cf"] = {
+			function()
+				vim.lsp.buf.format({
+					timeout_ms = 5000,
+					filter = function(c)
+						return c.name == "null-ls"
+					end,
+				})
+			end,
+			"Format",
+			opts = { silent = true },
+		},
 		["<leader>cr"] = {
 			function()
 				RunCode()

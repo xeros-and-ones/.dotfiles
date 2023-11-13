@@ -34,6 +34,8 @@ M.override = {
 	NvimTreeOpenedFolderName = { fg = "green", bold = false },
 	CmpBorder = { fg = "blue" },
 	CmpDocBorder = { link = "CmpBorder" },
+	SagaBorder = { link = "FloatBorder" },
+	SagaNormal = { link = "NormalFloat" },
 }
 
 ---@type HLTable
