@@ -121,9 +121,47 @@ end
 
 ---------------------------------------------------------
 local on_attach = function(client, buffer)
+	local caps = client.server_capabilities
+
 	lsp_mappings(buffer)
+
 	if not utils.load_config().ui.lsp_semantic_tokens and client.supports_method("textDocument/semanticTokens") then
 		client.server_capabilities.semanticTokensProvider = nil
+	end
+
+	vim.bo[buffer].formatexpr = "" --  yikes
+
+	if caps.documentHighlightProvider then
+		local group = vim.api.nvim_create_augroup("DocumentHighlight", {})
+		vim.api.nvim_create_autocmd("CursorHold", {
+			group = group,
+			buffer = 0,
+			callback = vim.lsp.buf.document_highlight,
+		})
+		vim.api.nvim_create_autocmd("CursorMoved", {
+			group = group,
+			buffer = 0,
+			callback = vim.lsp.buf.clear_references,
+		})
+	end
+
+	if caps.documentFormattingProvider then
+		local group = vim.api.nvim_create_augroup("Formatting", {})
+		vim.api.nvim_create_autocmd("BufWritePre", {
+			group = group,
+			buffer = 0,
+			callback = function()
+				if vim.g.format_on_save then
+					require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()] = nil
+					vim.lsp.buf.format({
+						timeout_ms = 3000,
+						filter = function(c)
+							return c.name == "null-ls"
+						end,
+					})
+				end
+			end,
+		})
 	end
 end
 -- --------------------------------------------------------
@@ -150,49 +188,6 @@ capabilities.textDocument.foldingRange = {
 	dynamicRegistration = false,
 	lineFoldingOnly = true,
 }
-----------------------------------------------------------------------
-vim.api.nvim_create_autocmd("LspAttach", {
-	callback = function(args)
-		local buffer = args.buf
-		local client = vim.lsp.get_client_by_id(args.data.client_id)
-		local caps = client.server_capabilities
-
-		vim.bo[buffer].formatexpr = "" --  yikes
-
-		if caps.documentHighlightProvider then
-			local group = vim.api.nvim_create_augroup("DocumentHighlight", {})
-			vim.api.nvim_create_autocmd("CursorHold", {
-				group = group,
-				buffer = 0,
-				callback = vim.lsp.buf.document_highlight,
-			})
-			vim.api.nvim_create_autocmd("CursorMoved", {
-				group = group,
-				buffer = 0,
-				callback = vim.lsp.buf.clear_references,
-			})
-		end
-
-		if caps.documentFormattingProvider then
-			local group = vim.api.nvim_create_augroup("Formatting", {})
-			vim.api.nvim_create_autocmd("BufWritePre", {
-				group = group,
-				buffer = 0,
-				callback = function()
-					if vim.g.format_on_save then
-						require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()] = nil
-						vim.lsp.buf.format({
-							timeout_ms = 3000,
-							filter = function(c)
-								return c.name == "null-ls" or c.name == "matlab_ls"
-							end,
-						})
-					end
-				end,
-			})
-		end
-	end,
-})
 ---------------------------------------------------------
 -- require("custom.configs.lsp_servers.custom")
 -- local path = require("mason-core.path")
@@ -206,16 +201,16 @@ vim.api.nvim_create_autocmd("LspAttach", {
 -- 			if not workspace then
 -- 				return vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
 -- 			end
--- 			local poetry_lock_path = vim.fs.joinpath(workspace, "poetry.lock")
--- 			if vim.env.VIRTUAL_ENV then
--- 				return path.join(vim.env.VIRTUAL_ENV, "bin", "python")
--- 			elseif vim.fn.filereadable(poetry_lock_path) then
--- 				local venv = vim.fn.trim(vim.fn.system("poetry env info -p"))
--- 				if venv and venv ~= "" and vim.fn.isdirectory(venv) then
--- 					return venv .. "/bin/python"
--- 				end
+-- 			-- local poetry_lock_path = vim.fs.joinpath(workspace, "poetry.lock")
+-- 			local venv_path = os.getenv("VIRTUAL_ENV")
+-- 			local py_path = nil
+-- 			-- decide which python executable to use for mypy
+-- 			if venv_path ~= nil then
+-- 				py_path = venv_path .. "/bin/python3"
+-- 			else
+-- 				py_path = vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
 -- 			end
--- 			return vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
+-- 			return py_path
 -- 		end)(client.config.root_dir)
 -- 	end,
 -- 	-- before_init = function(_, config)

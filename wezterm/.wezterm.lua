@@ -4,7 +4,6 @@ local act = wezterm.action
 
 -- This table will hold the configuration.
 local config = {}
-config.front_end = "WebGpu"
 config.disable_default_key_bindings = true
 
 -- CORE
@@ -17,8 +16,7 @@ config.mouse_wheel_scrolls_tabs = false
 config.underline_position = -4
 config.initial_cols = 165
 config.initial_rows = 40
-config.scrollback_lines = 10000
-config.max_fps = 100
+config.scrollback_lines = 5000
 config.inactive_pane_hsb = {
 	saturation = 0.9,
 	brightness = 0.4,
@@ -88,35 +86,32 @@ config.window_padding = {
 config.command_palette_font_size = 12
 
 -- CURSOR
-config.cursor_blink_ease_in = "Constant"
-config.cursor_blink_ease_out = "Constant"
 config.cursor_blink_rate = 0
 
 -- FONTS
-config.font_size = 10.5
-config.freetype_load_flags = "NO_HINTING"
-config.bold_brightens_ansi_colors = true
+config.font_size = 10
+-- config.bold_brightens_ansi_colors = true
 config.font = wezterm.font("FiraCode Nerd Font", {
 	style = "Normal",
 	weight = "DemiBold",
 })
--- config.font_rules = {
--- 	{
--- 		italic = true,
--- 		intensity = "Bold",
--- 		font = wezterm.font("CaskaydiaCove Nerd Font", { weight = "Bold", style = "Italic" }),
--- 	},
--- 	{
--- 		italic = true,
--- 		intensity = "Half",
--- 		font = wezterm.font("CaskaydiaCove Nerd Font", { style = "Italic" }),
--- 	},
--- 	{
--- 		italic = true,
--- 		intensity = "Normal",
--- 		font = wezterm.font("CaskaydiaCove Nerd Font", { weight = "DemiBold", style = "Italic" }),
--- 	},
--- }
+config.font_rules = {
+	{
+		italic = true,
+		intensity = "Bold",
+		font = wezterm.font("CaskaydiaCove Nerd Font", { weight = "Bold", style = "Italic" }),
+	},
+	{
+		italic = true,
+		intensity = "Half",
+		font = wezterm.font("CaskaydiaCove Nerd Font", { style = "Italic" }),
+	},
+	{
+		italic = true,
+		intensity = "Normal",
+		font = wezterm.font("CaskaydiaCove Nerd Font", { weight = "DemiBold", style = "Italic" }),
+	},
+}
 
 -- KEY_BINDING
 config.swap_backspace_and_delete = false

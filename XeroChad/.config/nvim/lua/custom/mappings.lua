@@ -542,29 +542,6 @@ M.General = {
 	x = {
 		["<C-s>"] = { "<cmd>w<CR>", "Save file" },
 	},
-	c = {
-		["<Tab>"] = {
-			function()
-				if fn.getcmdtype() == "/" or fn.getcmdtype() == "?" then
-					return "<CR>/<C-r>/"
-				end
-				return "<C-z>"
-			end,
-			"Word Search Increment",
-			opts = { expr = true },
-		},
-
-		["<S-Tab>"] = {
-			function()
-				if fn.getcmdtype() == "/" or fn.getcmdtype() == "?" then
-					return "<CR>?<C-r>/"
-				end
-				return "<S-Tab>"
-			end,
-			"Word Search Decrement",
-			opts = { expr = true },
-		},
-	},
 }
 
 -- In order to disable a default keymap, use

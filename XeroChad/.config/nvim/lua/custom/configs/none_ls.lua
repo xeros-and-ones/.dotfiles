@@ -19,10 +19,12 @@ require("null-ls").setup({
 			cmd = "cmake-format",
 		}),
 		formatting.black.with({
-			extra_args = {
-				"--fast",
-				"--quiet",
-			},
+			extra_args = function(_)
+				return {
+					"--fast",
+					"--quiet",
+				}
+			end,
 		}),
 		-- formatting.isort,
 		formatting.clang_format.with({
