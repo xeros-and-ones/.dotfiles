@@ -103,25 +103,6 @@ M.ui = {
 				)
 			end)()
 
-			modules[5] = (function()
-				if vim.bo.filetype ~= "python" then
-					return " "
-				end
-
-				local conda_env = os.getenv("CONDA_DEFAULT_ENV")
-				local venv_path = os.getenv("VIRTUAL_ENV")
-
-				if venv_path == nil then
-					if conda_env == nil then
-						return " "
-					else
-						return "%#St_pos_text#" .. string.format("  %s (conda)", conda_env) .. " "
-					end
-				else
-					local venv_name = vim.fn.fnamemodify(venv_path, ":t")
-					return "%#St_pos_text#" .. string.format("  %s (venv)", venv_name) .. " "
-				end
-			end)()
 			modules[6] = (function()
 				if noice_ok and noice.status.mode.has() then
 					return "%#St_lsp_sep#" .. noice.status.mode.get() .. " "
@@ -139,6 +120,24 @@ M.ui = {
 			modules[9] = (function()
 				local clients = {}
 				local buf = vim.api.nvim_get_current_buf()
+				local conda_env = os.getenv("CONDA_DEFAULT_ENV")
+				local venv_path = os.getenv("VIRTUAL_ENV")
+				local current_venv = " "
+
+				if vim.bo.filetype ~= "python" then
+					current_venv = ""
+				else
+					if venv_path == nil then
+						if conda_env == nil then
+							current_venv = ""
+						else
+							current_venv = "%#St_Pos_txt#" .. string.format("( conda: %s)", conda_env)
+						end
+					else
+						local venv_name = vim.fn.fnamemodify(venv_path, ":t")
+						current_venv = "%#St_Pos_txt#" .. string.format("( venv: %s)", venv_name)
+					end
+				end
 
 				-- Iterate through all the clients for the current buffer
 				for _, client in pairs(vim.lsp.get_active_clients({ bufnr = buf })) do
@@ -152,6 +151,9 @@ M.ui = {
 							end
 						end
 					end
+				end
+				if current_venv ~= "" then
+					table.insert(clients, current_venv)
 				end
 
 				if #clients == 0 then

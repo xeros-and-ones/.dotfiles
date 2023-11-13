@@ -36,6 +36,7 @@ return {
 	},
 	autotag = {
 		enable = true,
+		filetypes = { "html", "javascriptreact", "typescriptreact", "xml" },
 	},
 	auto_install = true, -- disable if no tree-sitter cli installed
 	ignore_install = {}, -- list of parsers to ignore installing
