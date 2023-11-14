@@ -1,6 +1,5 @@
 ---@type MappingsTable
 local M = {}
-local fn = vim.fn
 local cwd = vim.fn.stdpath("config") .. "/"
 local config_dir = { cwd }
 
@@ -28,6 +27,22 @@ M.Nvimtree = {
 	},
 }
 
+M.MarkdownPreview = {
+	plugin = true,
+	n = {
+		["<leader>m"] = {
+			function()
+				if vim.bo.filetype == "markdown" then
+					vim.cmd("MarkdownPreviewToggle")
+				else
+					vim.notify("Only available in markdown", vim.log.levels.WARN, { title = "Markdown-Preview" })
+				end
+			end,
+			"Markdown Preview",
+			opts = { silent = true },
+		},
+	},
+}
 M.Neotest = {
 	plugin = true,
 	n = {

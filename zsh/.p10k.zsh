@@ -33,16 +33,17 @@
     typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
         # =========================[ Line #1 ]=========================
         virtualenv              # python virtual environment (https://docs.python.org/3/library/venv.html)
-        #         anaconda                # conda environment (https://conda.io/)
-        #         pyenv                   # python environment (https://github.com/pyenv/pyenv)
+        anaconda                # conda environment (https://conda.io/)
+        pyenv                   # python environment (https://github.com/pyenv/pyenv)
         goenv                   # go environment (https://github.com/syndbg/goenv)
         os_icon                 # os identifier
         context                 # user@hostname
         dir                     # current directory
         vcs                     # git status
-        # terraform_version     # terraform version (https://www.terraform.io)
-        # java_version          # java version (https://www.java.com/)
-        # package               # name@version from package.json (https://docs.npmjs.com/files/package.json)
+        kubecontext             # current kubernetes context (https://kubernetes.io/)
+        terraform               # terraform workspace (https://www.terraform.io)
+        terraform_version     # terraform version (https://www.terraform.io)
+        package               # name@version from package.json (https://docs.npmjs.com/files/package.json)
         node_version
         go_version            # go version (https://golang.org)
         rust_version          # rustc version (https://www.rust-lang.org)
@@ -68,8 +69,7 @@
         # asdf                    # asdf version manager (https://github.com/asdf-vm/asdf)
         # fvm                     # flutter version management (https://github.com/leoafarias/fvm)
         # luaenv                  # lua version from luaenv (https://github.com/cehoffman/luaenv)
-        # kubecontext             # current kubernetes context (https://kubernetes.io/)
-        # terraform               # terraform workspace (https://www.terraform.io)
+        # java_version          # java version (https://www.java.com/)
         # aws                     # aws profile (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
         # aws_eb_env              # aws elastic beanstalk environment (https://aws.amazon.com/elasticbeanstalk/)
         # azure                   # azure account name (https://docs.microsoft.com/en-us/cli/azure)

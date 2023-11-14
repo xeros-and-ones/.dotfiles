@@ -62,10 +62,11 @@ export FPATH
 colorscript random
 #
 ######## PLUGINS & THEMES #############--------------------------------------------------
-source ~/.config/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
-source ~/.config/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-source ~/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
-source ~/.config/zsh/themes/powerlevel10k/powerlevel10k.zsh-theme
+source $ZDOTDIR/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+source $ZDOTDIR/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+source $ZDOTDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
+source $ZDOTDIR/themes/powerlevel10k/powerlevel10k.zsh-theme
+source $ZDOTDIR/plugins/conda-zsh-completion/conda-zsh-completion.plugin.zsh
 #
 #
 #
@@ -80,3 +81,4 @@ source ~/.config/zsh/functions.zsh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh

@@ -213,7 +213,7 @@ local plugins = {
 		"nvim-lua/plenary.nvim",
 	},
 	-------------------------------------------------------------------------------
-	{ "tenxsoydev/karen-yank.nvim", config = true },
+	{ "tenxsoydev/karen-yank.nvim", lazy = false, config = true },
 	------------------------------------------------------------------------------------------
 	-- Native LSP
 	{
@@ -296,7 +296,7 @@ local plugins = {
 	------------------------------------------------------------------------------------------
 	{
 		"ThePrimeagen/refactoring.nvim",
-		enabled = false,
+		enabled = true,
 		config = function()
 			require("refactoring").setup()
 		end,
@@ -916,6 +916,17 @@ local plugins = {
 				end,
 			})
 		end,
+	},
+	-- Preview Markdown
+	{
+		"iamcco/markdown-preview.nvim",
+		init = function()
+			require("core.utils").load_mappings("MarkdownPreview")
+		end,
+		build = function()
+			vim.fn["mkdp#util#install"]()
+		end,
+		ft = "markdown",
 	},
 }
 

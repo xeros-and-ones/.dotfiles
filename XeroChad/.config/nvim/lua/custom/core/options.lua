@@ -10,6 +10,7 @@ g.vscode_snippets_path = vim.fn.stdpath("config") .. "/lua/custom/snippets/vscod
 g.lua_snippets_path = vim.fn.stdpath("config") .. "/lua/custom/snippets/luasnippets"
 g.random_header = true -- Show random header
 g.format_on_save = true
+g.mkdp_auto_close = false
 -------------------------------------- options ------------------------------------------
 opt.tabstop = 4
 opt.softtabstop = 4
