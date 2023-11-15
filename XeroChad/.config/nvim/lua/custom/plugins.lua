@@ -544,9 +544,31 @@ local plugins = {
 							"toggleterm",
 						},
 						segments = {
-							{ text = { "%s" }, click = "v:lua.ScSa" },
-							{ text = { builtin.foldfunc, " " }, click = "v:lua.ScFa" },
-							{ text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+							-- { text = { "%s" }, click = "v:lua.ScSa" },
+							-- { text = { builtin.foldfunc, " " }, click = "v:lua.ScFa" },
+							-- { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+							{
+								text = { " " },
+								condition = { true },
+							},
+							{
+								sign = { name = { "Dap*" }, namespace = { "bulb*" } },
+								click = "v:lua.ScSa",
+							},
+							{
+								sign = { namespace = { "gitsign*" }, colwidth = 1 },
+								click = "v:lua.ScSa",
+							},
+							{
+								text = { builtin.foldfunc, "  " },
+								condition = { true, builtin.not_empty },
+								click = "v:lua.ScFa",
+							},
+							{
+								text = { builtin.lnumfunc, " " },
+								condition = { true, builtin.not_empty },
+								click = "v:lua.ScLa",
+							},
 						},
 					})
 				end,
