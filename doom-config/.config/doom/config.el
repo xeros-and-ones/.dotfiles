@@ -11,7 +11,8 @@
 ;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
 ;;
 (setq doom-font (font-spec :family "FiraCode Nerd Font" :size 14 :weight 'semibold)
-      doom-variable-pitch-font (font-spec :family "Rubik" :size 15 :weight 'medium))
+      doom-variable-pitch-font (font-spec :family "Rubik" :size 15 :weight 'medium)
+      doom-symbol-font (font-spec :family "FiraCode Nerd Font" :size 14))
 
 ;; --------------------- Theme -----------------------------
 (setq doom-theme 'doom-gruvbox)
@@ -26,6 +27,18 @@
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 (setq confirm-kill-emacs nil) ; Disable exit confirmation.
+
+
+;; ------------------ Config ----------------------------
+(after! lsp-ui-mode
+  :init
+  (setq lsp-ui-doc-mode 1))
+
+(setq lsp-ui-sideline-update-mode 'line
+      lsp-ui-sideline-delay 0.5
+      lsp-ui-doc-show-with-cursor t
+      lsp-ui-doc-show-with-mouse t)
+
 
 ;; ------------------ Mappings --------------------------
 (map! :leader

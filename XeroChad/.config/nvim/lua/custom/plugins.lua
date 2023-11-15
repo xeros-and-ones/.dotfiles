@@ -9,7 +9,7 @@ local plugins = {
 			local cmp = require("cmp")
 			cmp.setup.cmdline(":", {
 				sources = {
-					{ name = "cmdline", keyword_length = 2 },
+					{ name = "cmdline", keyword_length = 1 },
 					{ name = "path" },
 					{ name = "nvim_lua" },
 				},
