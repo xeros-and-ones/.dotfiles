@@ -21,11 +21,11 @@
 ;; --------------------- Options --------------------------
 (setq display-line-numbers-type 'relative)
 (setq org-directory "~/org/")
-
 (setq native-comp-jit-compilation t)
 (add-to-list 'default-frame-alist '(alpha-background . 80)) ; For all new frames henceforth
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
+
 (setq confirm-kill-emacs nil) ; Disable exit confirmation.
 
 
