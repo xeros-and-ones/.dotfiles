@@ -12,7 +12,7 @@
 ;;
 (setq doom-font (font-spec :family "FiraCode Nerd Font" :size 14 :weight 'semibold)
       doom-variable-pitch-font (font-spec :family "Rubik" :size 15 :weight 'medium)
-      doom-symbol-font (font-spec :family "FiraCode Nerd Font" :size 14))
+      doom-symbol-font (font-spec :family "JetbrainsMono Nerd Font" :size 14))
 
 ;; --------------------- Theme -----------------------------
 (setq doom-theme 'doom-gruvbox)

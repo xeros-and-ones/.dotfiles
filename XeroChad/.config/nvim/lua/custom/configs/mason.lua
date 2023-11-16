@@ -27,8 +27,8 @@ return {
 	max_concurrent_installers = 3,
 	ensure_installed = {
 		-- lsp ---------------------------------------
-		"lua-language-server", --
-		"taplo", --
+		"lua-language-server",
+		"taplo",
 		"vim-language-server",
 		"css-lsp",
 		"html-lsp",
@@ -39,6 +39,7 @@ return {
 		"gopls",
 		"sqlls",
 		"clangd",
+		"asm-lsp",
 
 		-- debuggers ---------------------------------
 		"codelldb",
@@ -66,5 +67,6 @@ return {
 		"black",
 		"cmakelang",
 		"isort",
+		"asmfmt",
 	},
 }

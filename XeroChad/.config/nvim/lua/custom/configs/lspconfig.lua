@@ -167,6 +167,7 @@ end
 -- --------------------------------------------------------
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = cmp_nvim_lsp.default_capabilities()
+capabilities.offsetEncoding = { "utf-16" }
 capabilities.textDocument.completion.completionItem = {
 	documentationFormat = { "markdown", "plaintext" },
 	snippetSupport = true,

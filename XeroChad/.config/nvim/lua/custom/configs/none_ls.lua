@@ -12,6 +12,7 @@ require("null-ls").setup({
 				"jinja",
 			},
 		}),
+		formatting.asmfmt,
 		formatting.markdownlint,
 		formatting.beautysh,
 		formatting.stylua,

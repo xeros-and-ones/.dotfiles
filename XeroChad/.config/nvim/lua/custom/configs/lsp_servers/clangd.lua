@@ -1,5 +1,4 @@
 return {
-	single_file_support = true,
 	cmd = {
 		"clangd",
 		"--all-scopes-completion",

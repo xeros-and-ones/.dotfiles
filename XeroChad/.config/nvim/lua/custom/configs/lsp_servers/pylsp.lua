@@ -7,7 +7,6 @@ else
 	py_path = vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
 end
 return {
-	single_file_support = true,
 	settings = {
 		pylsp = {
 			plugins = {
