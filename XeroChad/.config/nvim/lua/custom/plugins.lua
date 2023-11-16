@@ -548,10 +548,6 @@ local plugins = {
 							-- { text = { builtin.foldfunc, " " }, click = "v:lua.ScFa" },
 							-- { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
 							{
-								text = { " " },
-								condition = { true },
-							},
-							{
 								sign = { name = { "Dap*" }, namespace = { "bulb*" } },
 								click = "v:lua.ScSa",
 							},
@@ -563,6 +559,10 @@ local plugins = {
 								text = { builtin.foldfunc, "  " },
 								condition = { true, builtin.not_empty },
 								click = "v:lua.ScFa",
+							},
+							{
+								text = { " " },
+								condition = { true },
 							},
 							{
 								text = { builtin.lnumfunc, " " },
@@ -949,6 +949,13 @@ local plugins = {
 			vim.fn["mkdp#util#install"]()
 		end,
 		ft = "markdown",
+	},
+	{
+		"max397574/better-escape.nvim",
+		event = "BufReadPre",
+		config = function()
+			require("better_escape").setup({ mapping = "jk" })
+		end,
 	},
 }
 

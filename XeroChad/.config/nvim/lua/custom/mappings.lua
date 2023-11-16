@@ -523,7 +523,6 @@ M.Comment = {
 
 M.General = {
 	i = {
-		["jk"] = { "<ESC>", "escape Insert Mode", opts = { silent = true } },
 		-- navigate within insert mode
 		["<C-h>"] = { "<Left>", "Move left", opts = { silent = true } },
 		["<C-l>"] = { "<Right>", "Move right", opts = { silent = true } },

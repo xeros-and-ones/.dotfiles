@@ -40,6 +40,31 @@
       lsp-ui-doc-show-with-mouse t)
 
 
+
+(setq lsp-pylsp-plugins-black-enabled nil)
+(setq lsp-pylsp-plugins-flake8-enabled nil)
+(setq lsp-pylsp-plugins-isort-enabled nil)
+(setq lsp-pylsp-plugins-autopep8-enabled nil)
+(setq lsp-pylsp-plugins-yapf-enabled nil)
+(setq lsp-pylsp-plugins-ruff-enabled t)
+(setq lsp-pylsp-plugins-ruff-lineLength 100)
+(setq lsp-pylsp-plugins-ruff-format "I")
+(setq lsp-pylsp-plugins-pyflakes-enabled nil)
+(setq lsp-pylsp-plugins-pycodestyle-enabled nil)
+(setq lsp-pylsp-plugins-pydocstyle-enabled nil)
+(setq lsp-pylsp-plugins-mccabe-enabled nil)
+(setq lsp-pylsp-plugins-mypy-enabled t)
+
+
+(after! web-mode
+  (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.jinja2\\'" . web-mode))
+  (add-to-list 'web-mode-engines-alist '("\\.jinja2\\'" . "django"))
+  (setq web-mode-enable-auto-pairing t)
+  (setq web-mode-enable-auto-closing t)
+  (setq web-mode-enable-auto-indentation t))
+
+(add-hook 'python-mode-hook 'pony-mode)
 ;; ------------------ Mappings --------------------------
 (map! :leader
       :desc "Open Treemacs" "e" #'treemacs)

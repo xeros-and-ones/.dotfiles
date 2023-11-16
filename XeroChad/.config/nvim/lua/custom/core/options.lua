@@ -12,6 +12,12 @@ g.random_header = true -- Show random header
 g.format_on_save = true
 g.mkdp_auto_close = false
 -------------------------------------- options ------------------------------------------
+-- Override filetypes
+vim.filetype.add({
+	extension = {
+		html = "htmldjango",
+	},
+})
 opt.tabstop = 4
 opt.softtabstop = 4
 opt.shiftwidth = 4

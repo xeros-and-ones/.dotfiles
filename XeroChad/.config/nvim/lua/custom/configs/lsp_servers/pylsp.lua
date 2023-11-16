@@ -28,7 +28,7 @@ return {
 				pydocstyle = { enabled = false },
 				mccabe = { enabled = false },
 				-- type checker
-				pylsp_mypy = {
+				mypy = {
 					enabled = true,
 					overrides = { "--python-executable", py_path, true },
 					report_progress = true,

@@ -10,6 +10,7 @@ require("null-ls").setup({
 			filetypes = {
 				"django",
 				"jinja",
+				"htmldjango",
 			},
 		}),
 		formatting.asmfmt,
