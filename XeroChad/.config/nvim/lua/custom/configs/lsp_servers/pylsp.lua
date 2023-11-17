@@ -2,7 +2,7 @@ local venv_path = os.getenv("VIRTUAL_ENV")
 local py_path = nil
 -- decide which python executable to use for mypy
 if venv_path ~= nil then
-	py_path = venv_path .. "/bin/python3"
+	py_path = venv_path .. "/bin/python"
 else
 	py_path = vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
 end
@@ -30,7 +30,8 @@ return {
 				-- type checker
 				mypy = {
 					enabled = true,
-					overrides = { "--python-executable", py_path, true },
+					overrides = { "--python-executable", { py_path } },
+					print(py_path),
 					report_progress = true,
 					live_mode = false,
 				},
