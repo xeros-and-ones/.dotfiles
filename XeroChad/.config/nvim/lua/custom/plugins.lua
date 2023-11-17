@@ -388,7 +388,7 @@ local plugins = {
 		event = "BufRead",
 		opts = {
 			mappings = {
-				toggle = "gs",
+				toggle = "gj",
 				split = "",
 				join = "",
 			},

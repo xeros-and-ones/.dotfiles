@@ -5,6 +5,7 @@ if venv_path ~= nil then
 	py_path = venv_path .. "/bin/python"
 else
 	py_path = vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
+	print(py_path)
 end
 return {
 	settings = {
@@ -28,10 +29,10 @@ return {
 				pydocstyle = { enabled = false },
 				mccabe = { enabled = false },
 				-- type checker
-				mypy = {
+				pylsp_mypy = {
 					enabled = true,
-					overrides = { "--python-executable", { py_path } },
-					print(py_path),
+					python_executable = py_path,
+					overrides = { "--python-executable", py_path, true },
 					report_progress = true,
 					live_mode = false,
 				},

@@ -19,10 +19,10 @@ return {
 			cancel_installation = "<C-c>",
 		},
 	},
-	registries = {
-		"github:mason-org/mason-registry",
-		"lua:custom.configs.lsp_servers.custom",
-	},
+	-- registries = {
+	-- 	"github:mason-org/mason-registry",
+	-- 	"lua:custom.configs.lsp_servers.custom",
+	-- },
 
 	max_concurrent_installers = 3,
 	ensure_installed = {
