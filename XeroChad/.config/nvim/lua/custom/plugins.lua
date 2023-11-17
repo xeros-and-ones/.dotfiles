@@ -388,7 +388,7 @@ local plugins = {
 		event = "BufRead",
 		opts = {
 			mappings = {
-				toggle = "ga",
+				toggle = "gs",
 				split = "",
 				join = "",
 			},
@@ -400,13 +400,13 @@ local plugins = {
 		event = "BufRead",
 		opts = {
 			mappings = {
-				add = "gsa", -- Add surrounding in Normal and Visual modes
-				delete = "gsd", -- Delete surrounding
-				find = "gsf", -- Find surrounding (to the right)
-				find_left = "gsF", -- Find surrounding (to the left)
-				highlight = "gsh", -- Highlight surrounding
-				replace = "gsr", -- Replace surrounding
-				update_n_lines = "gsn", -- Update `n_lines`
+				add = "ga", -- Add surrounding in Normal and Visual modes
+				delete = "gd", -- Delete surrounding
+				find = "", -- Find surrounding (to the right)
+				find_left = "", -- Find surrounding (to the left)
+				highlight = "", -- Highlight surrounding
+				replace = "gr", -- Replace surrounding
+				update_n_lines = "", -- Update `n_lines`
 			},
 		},
 	},
