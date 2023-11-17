@@ -76,7 +76,7 @@ Hydra({
 		{
 			"g",
 			function()
-				require("core.utils").ToggleLazygit()
+				ToggleLazygit()
 			end,
 			{ exit = true, nowait = true, desc = "Open Lazygit" },
 		},
@@ -109,8 +109,8 @@ Hydra({
 		{ "q", "<cmd>DapTerminate<cr>", { exit = true, desc = "Stop debugging" } },
 		{ "r", "<cmd>DapToggleRepl<cr>", { exit = true, desc = "REPL" } },
 		{ "l", dap.run_last, { exit = false, desc = "Run last" } },
-		{ "h", require('dap.ui.widgets').hover, { exit = true, desc = "Hover" } },
-		{ "p", require('dap.ui.widgets').preview, { exit = true, desc = "Preview" } },
+		{ "h", require("dap.ui.widgets").hover, { exit = true, desc = "Hover" } },
+		{ "p", require("dap.ui.widgets").preview, { exit = true, desc = "Preview" } },
 		{
 			"f",
 			function()

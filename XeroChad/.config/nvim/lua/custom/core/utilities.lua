@@ -1,7 +1,6 @@
 -- #############################
 -- #   Utilities  and Commands #
 -- #############################
-
 local command = vim.api.nvim_create_user_command
 
 function ClickUpdate()
@@ -183,3 +182,5 @@ function RunCode()
 		vim.notify("The filetype isn't included in the list", vim.log.levels.WARN, { title = "Code Runner" })
 	end
 end
+
+return M

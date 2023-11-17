@@ -132,13 +132,6 @@ M.Neovim = {
 			"Grep Config Files",
 			opts = { silent = true },
 		},
-		["<leader>nc"] = {
-			"<cmd>NvCheatsheet<cr>",
-			"Cheatsheet",
-			opts = { silent = true },
-		},
-		["<leader>ni"] = { "<cmd>Inspect<CR>", "TS Inspect", opts = { silent = true } },
-		["<leader>nI"] = { "<cmd>InspectTree<CR>", "TS Inspect Tree", opts = { silent = true } },
 		["<leader>nm"] = { "<cmd>messages<cr>", "Messages", opts = { silent = true } },
 		["<leader>nh"] = { "<cmd>checkhealth<cr>", "Health", opts = { silent = true } },
 		["<Leader>na"] = { "<cmd>Nvdash<cr>", "NvDash", opts = { silent = true } },
@@ -148,6 +141,13 @@ M.Neovim = {
 				return vim.notify(version, vim.log.levels.INFO, { title = "Neovim Version" })
 			end,
 			"Version",
+			opts = { silent = true },
+		},
+		["<leader>nu"] = {
+			function()
+				ClickUpdate()
+			end,
+			"Update Nvchad",
 			opts = { silent = true },
 		},
 	},
@@ -179,6 +179,8 @@ M.Options = {
 
 M.Tools = {
 	n = {
+		["<leader>zi"] = { "<cmd>Inspect<CR>", "TS Inspect", opts = { silent = true } },
+		["<leader>zI"] = { "<cmd>InspectTree<CR>", "TS Inspect Tree", opts = { silent = true } },
 		["<leader>zc"] = { "<cmd>CccPick<cr>", "Colour picker", opts = { silent = true } },
 		["<leader>zs"] = {
 			"<cmd>lua require('luasnip.loaders').edit_snippet_files()<cr>",
@@ -189,6 +191,11 @@ M.Tools = {
 		["<leader>zO"] = { "<cmd>OverseerToggle<cr>", "Overseer List", opts = { silent = true } },
 		["<leader>zo"] = { "<cmd>OverseerRun<cr>", "Overseer Run", opts = { silent = true } },
 		["<Leader>zd"] = { "<cmd>lua require('neogen').generate()<CR>", "Generate docs", opts = { silent = true } },
+		["<leader>zC"] = {
+			"<cmd>NvCheatsheet<cr>",
+			"Cheatsheet",
+			opts = { silent = true },
+		},
 	},
 }
 
