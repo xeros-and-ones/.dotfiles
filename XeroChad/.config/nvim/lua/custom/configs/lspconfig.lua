@@ -65,7 +65,12 @@ local function lsp_mappings(buffer)
 	vim.keymap.set("n", "<leader>li", "<cmd>Lspsaga incoming_calls<cr>", { desc = "Incoming Calls", buffer = buffer })
 	vim.keymap.set("n", "<leader>lo", "<cmd>Lspsaga outgoing_calls<cr>", { desc = "Outgoing Calls" })
 	vim.keymap.set("n", "<leader>lr", "<cmd>Lspsaga rename<cr>", { desc = "Rename", buffer = buffer })
-	vim.keymap.set("n", "<leader>lR", "<cmd>Lspsaga rename ++project<cr>", { desc = "Rename", buffer = buffer })
+	vim.keymap.set(
+		"n",
+		"<leader>lR",
+		"<cmd>Lspsaga rename ++project<cr>",
+		{ desc = "Rename [Project Wide]", buffer = buffer }
+	)
 	vim.keymap.set("n", "<leader>lz", "<cmd>LspRestart<cr>", { desc = "Restart LSP", buffer = buffer })
 
 	vim.keymap.set(
