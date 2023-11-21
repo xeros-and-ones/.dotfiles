@@ -85,7 +85,7 @@ return {
 	},
 	git = {
 		enable = true,
-		ignore = false,
+		ignore = true,
 		show_on_dirs = true,
 		show_on_open_dirs = true,
 		timeout = 5000,
