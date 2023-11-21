@@ -102,6 +102,13 @@ M.Neotest = {
 			"Stop",
 			opts = { silent = true },
 		},
+		["<leader>tw"] = {
+			function()
+				vim.cmd('lua require("neotest").run.watch.toggle(vim.fn.expand("%")')
+			end,
+			"watch file",
+			opts = { silent = true },
+		},
 	},
 }
 
