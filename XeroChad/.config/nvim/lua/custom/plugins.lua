@@ -558,30 +558,23 @@ local plugins = {
 							"toggleterm",
 						},
 						segments = {
-							-- { text = { "%s" }, click = "v:lua.ScSa" },
-							-- { text = { builtin.foldfunc, " " }, click = "v:lua.ScFa" },
-							-- { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+							-- {
+							-- 	sign = { name = { "Dap*" }, namespace = { "bulb*" } },
+							-- 	click = "v:lua.ScSa",
+							-- },
 							{
-								sign = { name = { "Dap*" }, namespace = { "bulb*" } },
+								sign = { name = { ".*" }, maxwidth = 1, colwidth = 1 },
 								click = "v:lua.ScSa",
 							},
+							{
+								sign = { name = { "Diagnostic" }, maxwidth = 2 },
+								click = "v:lua.ScSa",
+							},
+							{ text = { builtin.lnumfunc }, click = "v:lua.ScLa" },
+							{ text = { builtin.foldfunc, " " }, click = "v:lua.ScFa" },
 							{
 								sign = { namespace = { "gitsign*" }, colwidth = 1 },
 								click = "v:lua.ScSa",
-							},
-							{
-								text = { builtin.foldfunc, "  " },
-								condition = { true, builtin.not_empty },
-								click = "v:lua.ScFa",
-							},
-							{
-								text = { " " },
-								condition = { true },
-							},
-							{
-								text = { builtin.lnumfunc, " " },
-								condition = { true, builtin.not_empty },
-								click = "v:lua.ScLa",
 							},
 						},
 					})
@@ -712,7 +705,7 @@ local plugins = {
 				render = "default",
 				stages = "fade_in_slide_out",
 				timeout = 3000,
-				top_down = true,
+				top_down = false,
 			})
 		end,
 	},
