@@ -21,9 +21,9 @@ end
 local highlights = require("custom.highlights")
 
 M.ui = {
-	theme = "gruvchad",
-	transparency = true,
-	theme_toggle = { "gruvchad", "one_light" },
+	theme = "gruvbox",
+	transparency = false,
+	theme_toggle = { "gruvbox", "one_light" },
 	lsp_semantic_tokens = true, -- needs nvim v0.9, just adds highlight groups for lsp semantic tokens
 	hl_override = highlights.override,
 	hl_add = highlights.add,
