@@ -46,19 +46,14 @@ dap.configurations.python = {
 		name = "Launch file",
 		program = "${file}",
 		pythonPath = function()
-			local cwd = vim.fn.getcwd()
-			if vim.fn.glob(cwd .. "/poetry.lock") then
-				local venv = vim.fn.trim(vim.fn.system("poetry env info -p"))
-				return venv .. "/bin" .. "/python"
-			end
-			if vim.fn.executable(cwd .. "/venv/bin/python") == 1 then
-				return cwd .. "/venv/bin/python"
-			elseif vim.fn.executable(cwd .. "/.venv/bin/python") == 1 then
-				return cwd .. "/.venv/bin/python"
-			elseif vim.fn.exists("$VIRTUAL_ENV") then
-				return get_python_path()
+			local venv_path = os.getenv("VIRTUAL_ENV")
+			local py_path = nil
+			-- decide which python executable to use for mypy
+			if venv_path ~= nil then
+				py_path = venv_path .. "/bin/python"
 			else
-				return "/usr/bin/python"
+				py_path = vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
+				print(py_path)
 			end
 		end,
 	},
