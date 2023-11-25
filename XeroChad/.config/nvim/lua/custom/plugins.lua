@@ -711,45 +711,24 @@ local plugins = {
 	},
 	-------------------------------------------------------------------------------
 	-----------------  Compiler
-	{
+	{ -- This plugin
 		"Zeioth/compiler.nvim",
 		cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
-		-- opts = {},
+		dependencies = { "stevearc/overseer.nvim" },
+		opts = {},
 	},
-	--------------------------
-	{
+	{ -- The task runner we use
 		"stevearc/overseer.nvim",
 		commit = "400e762648b70397d0d315e5acaf0ff3597f2d8b",
-
-		cmd = { "OverseerRun", "OverseerToggle", "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
-		config = function()
-			require("overseer").setup({
-				strategy = {
-					"toggleterm",
-					-- load your default shell before starting the task
-					use_shell = true,
-					-- overwrite the default toggleterm "direction" parameter
-					direction = "horizontal",
-					close_on_exit = false,
-					-- open the toggleterm window when a task starts
-					open_on_start = true,
-					-- mirrors the toggleterm "hidden" parameter, and keeps the task from
-					-- being rendered in the toggleable window
-					hidden = false,
-				},
-				task_list = {
-					direction = "bottom",
-					min_height = 25,
-					max_height = 25,
-					default_detail = 1,
-				},
-				dap = true,
-				auto_scroll = true,
-				close_on_exit = false,
-				open_on_start = true,
-				templates = { "builtin", "scripts", "python", "terraform" },
-			})
-		end,
+		cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
+		opts = {
+			task_list = {
+				direction = "bottom",
+				min_height = 25,
+				max_height = 25,
+				default_detail = 1,
+			},
+		},
 	},
 	-------------------------------------------------------------------------------
 	-- Improve UI

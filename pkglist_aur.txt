@@ -1,13 +1,13 @@
 chromedriver
 corerenamer
 ddcui
-discord_arch_electron
 emote
 etcher-bin
 google-chrome
 jdk17-temurin
 lib32-nvidia-390xx-utils
 lib32-opencl-nvidia-390xx
+miniconda3
 mpc-qt
 nvidia-390xx-dkms
 nvidia-390xx-settings
@@ -20,6 +20,9 @@ otf-rubik
 pamac-aur
 pollymc
 pyinstaller
+python-lsp-ruff
+python-pylsp-mypy
+python-pylsp-rope
 tauon-music-box
 visual-studio-code-bin
 xdman8
