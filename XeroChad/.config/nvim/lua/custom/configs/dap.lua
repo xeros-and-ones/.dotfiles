@@ -11,11 +11,11 @@ M.dap = function()
 	require("custom.configs.dap_adapters.chrome-debug-adapter")
 	require("custom.configs.dap_adapters.firefox-debug-adapter")
 	-- require("custom.configs.dap_adapters.dart-debug-adapter.lua")
-    -- require("custom.configs.dap_adapters.gdb")
-    -- require("custom.configs.dap_adapters.godot")
-    require("custom.configs.dap_adapters.netcoredbg")
-    require("custom.configs.dap_adapters.js-debug")
-    require("custom.configs.dap_adapters.node-debug2")
+	-- require("custom.configs.dap_adapters.gdb")
+	-- require("custom.configs.dap_adapters.godot")
+	require("custom.configs.dap_adapters.netcoredbg")
+	require("custom.configs.dap_adapters.js-debug")
+	require("custom.configs.dap_adapters.node-debug2")
 end
 
 M.dapui = function()
@@ -36,12 +36,12 @@ M.dapui = function()
 		layouts = {
 			{
 				elements = {
-					{ id = "scopes", size = 0.25 },
+					{ id = "scopes", size = 0.50 },
 					"breakpoints",
 					"stacks",
 					"watches",
 				},
-				size = 50,
+				size = 60,
 				position = "left",
 			},
 			{

@@ -1,6 +1,7 @@
 lastupdatecheck: 0
 recentrepos:
 - /home/xero/.dotfiles
+- /home/xero/Documents/Python/django_test
 - /home/xero/.config/nvim
 - /home/xero/Builds/Neovim
 - /home/xero/Documents/Rust/test_project

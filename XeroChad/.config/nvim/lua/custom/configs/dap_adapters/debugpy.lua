@@ -46,14 +46,13 @@ dap.configurations.python = {
 		name = "Launch file",
 		program = "${file}",
 		pythonPath = function()
-			local venv_path = os.getenv("VIRTUAL_ENV")
-			local py_path = nil
-			-- decide which python executable to use for mypy
-			if venv_path ~= nil then
-				py_path = venv_path .. "/bin/python"
+			local cwd = vim.fn.getcwd()
+			if vim.fn.executable(cwd .. "/venv/bin/python") == 1 then
+				return cwd .. "/venv/bin/python"
+			elseif vim.fn.executable(cwd .. "/.venv/bin/python") == 1 then
+				return cwd .. "/.venv/bin/python"
 			else
-				py_path = vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
-				print(py_path)
+				return path
 			end
 		end,
 	},

@@ -22,6 +22,7 @@
 (setq display-line-numbers-type 'relative)
 (setq org-directory "~/org/")
 (setq native-comp-jit-compilation t)
+(set-frame-parameter nil 'alpha-background 80)
 (add-to-list 'default-frame-alist '(alpha-background . 80)) ; For all new frames henceforth
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
@@ -30,17 +31,13 @@
 
 
 ;; ------------------ Config ----------------------------
-(after! lsp-ui-mode
-  :init
-  (setq lsp-ui-doc-mode 1))
-
-(setq lsp-ui-sideline-update-mode 'line
-      lsp-ui-sideline-delay 0.5
-      lsp-ui-doc-show-with-cursor t
-      lsp-ui-doc-show-with-mouse t)
-
-
-
+(defun toggle-transparency ()
+  "Toggle transparency."
+  (interactive)
+  (let ((alpha-transparency 80))
+    (pcase (frame-parameter nil 'alpha-background)
+      (alpha-transparency (set-frame-parameter nil 'alpha-background 100))
+      (t (set-frame-parameter nil 'alpha-background alpha-transparency)))))
 (setq lsp-pylsp-plugins-black-enabled nil)
 (setq lsp-pylsp-plugins-flake8-enabled nil)
 (setq lsp-pylsp-plugins-isort-enabled nil)
@@ -64,7 +61,7 @@
   (setq web-mode-enable-auto-closing t)
   (setq web-mode-enable-auto-indentation t))
 
-(add-hook 'python-mode-hook 'pony-mode)
 ;; ------------------ Mappings --------------------------
 (map! :leader
-      :desc "Open Treemacs" "e" #'treemacs)
+      :desc "Open Treemacs" "e" #'treemacs
+      :desc "Toggle Transparency" "t t" 'toggle-transparency)
