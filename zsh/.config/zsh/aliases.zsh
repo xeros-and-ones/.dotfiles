@@ -112,7 +112,7 @@ alias chadconf="cd ~/.dotfiles/XeroChad/ && nvim"
 alias vd='deactivate'
 alias stows='stow -vSt ~'
 alias stowd='stow -vDt ~'
-alias z='zellij options --serialization-interval=1'
+alias z='zellij'
 
 alias -g ...='../..'
 alias -g ....='../../..'
