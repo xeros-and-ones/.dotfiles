@@ -456,27 +456,27 @@ map kitty_mod+x scroll_to_prompt 1
 #: Window management {{{
 
 
-map kitty_mod+enter no_op
+map kitty_mod+enter layout_action rotate
 map kitty_mod+n new_os_window
 map kitty_mod+w close_window
 
-map ctrl+shift+h no_op
-map ctrl+shift+l no_op
-map ctrl+shift+k no_op
-map ctrl+shift+j no_op
+map ctrl+shift+h neighboring_window left
+map ctrl+shift+l neighboring_window right
+map ctrl+shift+k neighboring_window up
+map ctrl+shift+j neighboring_window down
 
-map ctrl+shift+up no_op
-map ctrl+shift+left no_op
-map ctrl+shift+right no_op
-map ctrl+shift+down no_op
+map ctrl+shift+up move_window up
+map ctrl+shift+left move_window left
+map ctrl+shift+right move_window right
+map ctrl+shift+down move_window down
 
-map kitty_mod+r no_op
-map kitty_mod+f8 no_op
+map kitty_mod+r start_resizing_window
+map kitty_mod+f8 swap_with_window
 
-map ctrl+shift+alt+left no_op
-map ctrl+shift+alt+right no_op
-map ctrl+shift+alt+up no_op
-map ctrl+shift+alt+down no_op
+map ctrl+shift+alt+left resize_window narrower
+map ctrl+shift+alt+right resize_window wider
+map ctrl+shift+alt+up resize_window taller
+map ctrl+shift+alt+down resize_window shorter 3
 
 
 #: }}}
@@ -484,14 +484,14 @@ map ctrl+shift+alt+down no_op
 #: Tab management {{{
 
 
-map ctrl+tab no_op
-map ctrl+shift+tab no_op
-map kitty_mod+t no_op
+map ctrl+tab        next_tab
+map ctrl+shift+tab previous_tab
+map kitty_mod+t new_tab_with_cwd
 map kitty_mod+q no_op
 # map kitty_mod+w       close_tab
-map kitty_mod+. no_op
-map kitty_mod+, no_op
-map kitty_mod+alt+t no_op
+map kitty_mod+. move_tab_forward
+map kitty_mod+, move_tab_backward
+map kitty_mod+alt+t set_tab_title
 #: }}}
 
 
