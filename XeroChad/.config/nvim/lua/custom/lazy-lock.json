@@ -58,6 +58,7 @@
   "persistence.nvim": { "branch": "main", "commit": "ad538bfd5336f1335cdb6fd4e0b0eebfa6e12f32" },
   "plenary.nvim": { "branch": "master", "commit": "366b0837486f60ae0e7550c15de8ff66d057c4cd" },
   "promise-async": { "branch": "main", "commit": "e94f35161b8c5d4a4ca3b6ff93dd073eb9214c0e" },
+  "python-type-stubs": { "branch": "main", "commit": "e328827329a072baac06e287bd6146ff80796e5e" },
   "refactoring.nvim": { "branch": "master", "commit": "156532476deb10b1b2a32cb38e1078b3f9951c42" },
   "rustaceanvim": { "branch": "master", "commit": "e0853ead50e6327c037a4ab3e3c54fdb140536c2" },
   "schemastore.nvim": { "branch": "main", "commit": "54a4ea14b70cd3fc9db8217bb4ac9e1f78bfa390" },
