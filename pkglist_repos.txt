@@ -230,7 +230,6 @@ ttf-bitstream-vera
 ttf-cascadia-code-nerd
 ttf-dejavu
 ttf-firacode-nerd
-ttf-iosevka-nerd
 ttf-jetbrains-mono-nerd
 ttf-liberation
 ttf-opensans
@@ -268,5 +267,5 @@ xsettingsd
 xterm
 yay
 yt-dlp
-zeal
+zellij
 zsh
