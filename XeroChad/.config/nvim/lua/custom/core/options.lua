@@ -11,6 +11,7 @@ g.lua_snippets_path = vim.fn.stdpath("config") .. "/lua/custom/snippets/luasnipp
 g.random_header = true -- Show random header
 g.format_on_save = true
 g.mkdp_auto_close = false
+g.skip_ts_context_commentstring_module = true
 -------------------------------------- options ------------------------------------------
 -- Override filetypes
 vim.filetype.add({

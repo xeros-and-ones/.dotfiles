@@ -54,10 +54,6 @@ return {
 			node_decremental = "_",
 		},
 	},
-	context_commentstring = {
-		enable = true,
-		enable_autocmd = false,
-	},
 	textobjects = {
 		swap = {
 			enable = false,
