@@ -153,8 +153,12 @@ local plugins = {
 				config = function(_, opts)
 					require("plugins.configs.others").luasnip(opts)
 					require("luasnip.loaders.from_vscode").lazy_load({
-						require("luasnip").filetype_extend("python", { "django", "pydoc" }),
-						require("luasnip").filetype_extend("htmldjango", { "html", "djangohtml" }),
+						require("luasnip").filetype_extend("python", { "django" }),
+						require("luasnip").filetype_extend("python", { "pydoc" }),
+						require("luasnip").filetype_extend("javascript", { "html" }),
+						require("luasnip").filetype_extend("javascript", { "javascriptreact" }),
+						require("luasnip").filetype_extend("htmldjango", { "djangohtml" }),
+						require("luasnip").filetype_extend("htmldjango", { "html" }),
 					})
 				end,
 			},
