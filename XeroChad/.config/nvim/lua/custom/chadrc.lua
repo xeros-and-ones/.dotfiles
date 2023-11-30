@@ -195,7 +195,7 @@ M.ui = {
 			{ "🗐  " .. " Find File", "Spc f f", "Telescope find_files" },
 			{ "  " .. " Recent Files", "Spc f r", "Telescope oldfiles" },
 			{ "  " .. " Live Grep", "Spc f w", "Telescope live_grep" },
-			{ "  " .. " Restore Session", "Spc o s", "lua require('persistence').load({ last = true })" },
+			{ "  " .. " Restore Session", "Spc o s", "lua require('persistence').load()" },
 			{ "  " .. " Find Projects", "Spc f p", "Telescope projects" },
 			{ "  " .. " Themes", "Spc f t", "Telescope themes" },
 			{ "  " .. " Mappings", "Spc n c", "NvCheatsheet" },
