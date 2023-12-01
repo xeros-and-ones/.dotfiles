@@ -451,7 +451,7 @@ M.Tabufline = {
 		},
 		["<leader>b,"] = {
 			function()
-				require("nvchad.tabufline").move_buf(1)
+				require("nvchad.tabufline").move_buf(-1)
 			end,
 			"Move Buffer left",
 		},
