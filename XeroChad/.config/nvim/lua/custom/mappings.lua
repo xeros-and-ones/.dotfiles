@@ -471,12 +471,37 @@ M.Tabufline = {
 	},
 }
 
+local function lazygit_zellij_or_not()
+	if vim.env.ZELLIJ == "0" and vim.fn.executable("lazygit") == 1 then
+		local Job = require("plenary.job")
+
+		local function open_lazygit_in_zellij_floating_page()
+			local args = {
+				"run",
+				"-fc",
+				"--name",
+				"Lazygit",
+				"--",
+				"lazygit",
+			}
+
+			Job:new({
+				command = "zellij",
+				args = args,
+			}):start()
+		end
+
+		open_lazygit_in_zellij_floating_page()
+	elseif vim.env.ZELLIJ == nil and vim.fn.executable("lazygit") == 1 then
+		ToggleLazygit()
+	end
+end
 M.Git = {
 	plugin = true,
 	n = {
 		["<leader>gg"] = {
 			function()
-				ToggleLazygit()
+				lazygit_zellij_or_not()
 			end,
 			"Lazygit",
 			opts = { silent = true },
