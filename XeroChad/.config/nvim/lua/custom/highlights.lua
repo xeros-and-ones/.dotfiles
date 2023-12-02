@@ -30,7 +30,7 @@ M.override = {
 	LspReferenceRead = { fg = "yellow", bg = "one_bg", bold = true },
 	LspReferenceText = { fg = "yellow", bg = "one_bg", bold = true },
 	LspReferenceWrite = { fg = "orange", bg = "one_bg", bold = true },
-	TbLineBufOn = { fg = "yellow" },
+	TbLineBufOn = { fg = "red" },
 	NvimTreeOpenedFolderName = { fg = "green", bold = false },
 	CmpBorder = { fg = "blue" },
 	CmpDocBorder = { link = "CmpBorder" },
