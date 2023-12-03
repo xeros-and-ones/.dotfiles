@@ -27,6 +27,16 @@ autocmd("FileType", {
 	group = general,
 })
 
+autocmd("TermOpen", {
+	callback = function()
+		vim.opt_local.relativenumber = false
+		vim.opt_local.number = false
+		vim.cmd("startinsert!")
+	end,
+	group = general,
+	desc = "Terminal Options",
+})
+
 autocmd({ "BufWinEnter" }, {
 	callback = function()
 		local line_count = vim.api.nvim_buf_line_count(0)
