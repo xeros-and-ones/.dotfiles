@@ -65,10 +65,5 @@ require("null-ls").setup({
 		diagnostics.shellcheck,
 		diagnostics.jsonlint,
 		diagnostics.zsh,
-		--------------------------------------------------------------------------------------
-		-- code_actions
-		code_actions.refactoring,
-		code_actions.gitsigns,
-		code_actions.shellcheck,
 	},
 })

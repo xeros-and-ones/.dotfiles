@@ -27,16 +27,6 @@ autocmd("FileType", {
 	group = general,
 })
 
-autocmd("TermOpen", {
-	callback = function()
-		vim.opt_local.relativenumber = false
-		vim.opt_local.number = false
-		vim.cmd("startinsert!")
-	end,
-	group = general,
-	desc = "Terminal Options",
-})
-
 autocmd("FileType", {
 	pattern = { "gitcommit", "markdown", "text", "log" },
 	callback = function()
@@ -78,15 +68,6 @@ autocmd("BufWinEnter", {
 		end
 	end,
 	desc = "Open help pages in a vertical split",
-})
-
-autocmd({ "BufWinEnter" }, {
-	callback = function()
-		local line_count = vim.api.nvim_buf_line_count(0)
-		if line_count >= 5000 then
-			vim.cmd("IlluminatePauseBuf")
-		end
-	end,
 })
 
 -- highlight yanked text
@@ -136,26 +117,6 @@ autocmd("BufReadPost", {
 	end,
 	group = general,
 	desc = "Go To The Last Cursor Position",
-})
-
--- show cursor line only in active window
-autocmd({ "InsertLeave", "WinEnter" }, {
-	callback = function()
-		local ok, cl = pcall(vim.api.nvim_win_get_var, 0, "auto-cursorline")
-		if ok and cl then
-			vim.wo.cursorline = true
-			vim.api.nvim_win_del_var(0, "auto-cursorline")
-		end
-	end,
-})
-autocmd({ "InsertEnter", "WinLeave" }, {
-	callback = function()
-		local cl = vim.wo.cursorline
-		if cl then
-			vim.api.nvim_win_set_var(0, "auto-cursorline", cl)
-			vim.wo.cursorline = false
-		end
-	end,
 })
 
 autocmd("BufWritePre", {

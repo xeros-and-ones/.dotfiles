@@ -58,7 +58,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		vim.api.nvim_buf_set_lines(tmp_buf, 0, -1, false, lines_from(file_name))
 		local length = get_black_length(tmp_buf)
 		vim.opt_local.colorcolumn = tostring(length or "100")
-		vim.opt_local.cursorcolumn = true
 		vim.api.nvim_buf_delete(tmp_buf, {})
 	end,
 })

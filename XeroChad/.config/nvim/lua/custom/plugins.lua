@@ -219,20 +219,6 @@ local plugins = {
 	-------------------------------------------------------------------------------
 	{ "tenxsoydev/karen-yank.nvim", lazy = false, config = true },
 	------------------------------------------------------------------------------------------
-	{
-		"utilyre/barbecue.nvim",
-		name = "barbecue",
-		version = "*",
-		dependencies = {
-			"SmiteshP/nvim-navic",
-			"nvim-tree/nvim-web-devicons", -- optional dependency
-		},
-		opts = {
-			-- configurations go here
-		},
-		lazy = false,
-	},
-	------------------------------------------------------------------------------------------
 	-- Native LSP
 	{
 		"neovim/nvim-lspconfig",
@@ -242,19 +228,6 @@ local plugins = {
 		dependencies = {
 			-- Formatting
 			{ "microsoft/python-type-stubs" },
-			{
-				"stevearc/conform.nvim",
-				enabled = false,
-				opts = require("custom.configs.conform"),
-			},
-			-- Linting
-			{
-				"mfussenegger/nvim-lint",
-				enabled = false,
-				config = function()
-					require("custom.configs.nvim-lint")
-				end,
-			},
 			{
 				"nvimtools/none-ls.nvim",
 				event = "BufReadPre",
@@ -310,14 +283,6 @@ local plugins = {
 				opts = require("custom.configs.neodev"),
 			},
 		},
-	},
-	------------------------------------------------------------------------------------------
-	{
-		"ThePrimeagen/refactoring.nvim",
-		enabled = true,
-		config = function()
-			require("refactoring").setup()
-		end,
 	},
 	------------------------------------------------------------------------------------------
 	-- Commenter
