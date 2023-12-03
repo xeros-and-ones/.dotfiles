@@ -40,6 +40,9 @@ M.override = {
 
 ---@type HLTable
 M.add = {
+	IlluminatedWordRead = { link = "LspReferenceText" },
+	IlluminatedWordText = { link = "LspReferenceText" },
+	IlluminatedWordWrite = { link = "LspReferenceText" },
 	DiffviewDiffAdd = { fg = "black", bg = "green" },
 	DiffviewDiffChange = { fg = "black", bg = { "green", -25 } },
 	DiffviewDiffModified = { fg = "black", bg = "orange" },

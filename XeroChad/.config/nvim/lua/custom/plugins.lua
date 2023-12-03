@@ -165,37 +165,6 @@ local plugins = {
 		},
 	},
 	------------------------------------------------------------------------------------------
-	-- Preview colors
-	{
-		"NvChad/nvim-colorizer.lua",
-		enabled = false,
-	},
-	-----------
-	{
-		"uga-rosa/ccc.nvim",
-		event = "BufReadPre",
-		cmd = "CccPick",
-
-		config = function()
-			local mapping = require("ccc").mapping
-			require("ccc").setup({
-				default_color = "#40bfbf",
-				highlighter = { auto_enable = true },
-				save_on_quit = true,
-				inputs = { require("ccc").input.hsl, require("ccc").input.rgb },
-				recognize = { input = false, output = true },
-				win_opts = {
-					relative = "cursor",
-					style = "minimal",
-					border = "solid",
-				},
-				mappings = {
-					["p"] = mapping.toggle_prev_colors,
-				},
-			})
-		end,
-	},
-	------------------------------------------------------------------------------------------
 	{
 		"danymat/neogen",
 		enabled = true,
@@ -244,17 +213,6 @@ local plugins = {
 				end,
 				ft = { "rust" },
 			},
-			-- Start/Stop LSP when focus is lost/gained
-			-- {
-			--   "hinell/lsp-timeout.nvim",
-			--   config = function()
-			--     vim.g["lsp-timeout-config"] = {
-			--       stopTimeout = 0,
-			--       startTimeout = 1,
-			--       silent = true, -- true to suppress notifications
-			--     }
-			--   end,
-			-- },
 			-- Installer
 			{
 				"williamboman/mason.nvim",
@@ -283,23 +241,6 @@ local plugins = {
 				opts = require("custom.configs.neodev"),
 			},
 		},
-	},
-	------------------------------------------------------------------------------------------
-	-- Commenter
-	{
-		"numToStr/Comment.nvim",
-		init = function() end,
-		keys = {
-			{ "gc", mode = { "n", "o", "x" }, desc = "Comment toggle linewise" },
-			{ "gb", mode = { "n", "o", "x" }, desc = "Comment toggle blockwise" },
-		},
-		config = function()
-			require("Comment").setup({
-				ignore = "^$",
-				pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
-			})
-		end,
-		dependencies = "JoosepAlviste/nvim-ts-context-commentstring",
 	},
 	------------------------------------------------------------------------------------------
 	-- File Explorer
@@ -417,8 +358,7 @@ local plugins = {
 	------------------------------------------------------------------------------
 	{
 		"anuvyklack/hydra.nvim",
-		enabled = true,
-		event = "VimEnter",
+		event = "VeryLazy",
 		config = function()
 			require("custom.configs.hydra")
 		end,
@@ -445,7 +385,7 @@ local plugins = {
 	-----------------------------------------------------------------
 	{
 		"RRethy/vim-illuminate",
-		enabled = false,
+		enabled = true,
 		event = { "CursorHold", "CursorHoldI" },
 		config = function()
 			require("illuminate").configure({
@@ -476,23 +416,6 @@ local plugins = {
 		end,
 	},
 	------------------------------------------------------------------------------------------
-	-- Tmux navigation
-	{
-		"alexghergh/nvim-tmux-navigation",
-		enabled = false,
-		event = "VeryLazy",
-		opts = {
-			keybindings = {
-				left = "<C-h>",
-				down = "<C-j>",
-				up = "<C-k>",
-				right = "<C-l>",
-				last_active = "<C-\\>",
-				next = "<C-Space>",
-			},
-		},
-	},
-	------------------------------------------------------------------------------------------
 	-- Improve Folds
 	{
 		"kevinhwang91/nvim-ufo",
@@ -507,25 +430,6 @@ local plugins = {
 					local builtin = require("statuscol.builtin")
 					require("statuscol").setup({
 						relculright = true,
-						bt_ignore = {
-							"nofile",
-							"prompt",
-							"terminal",
-							"packer",
-						},
-						ft_ignore = {
-							"dapui_watches",
-							"dap-repl",
-							"dapui_console",
-							"dapui_stacks",
-							"dapui_breakpoints",
-							"dapui_scopes",
-							"help",
-							"vim",
-							"neo-tree",
-							"noice",
-							"toggleterm",
-						},
 						segments = {
 							-- {
 							-- 	sign = { name = { "Dap*" }, namespace = { "bulb*" } },
@@ -586,27 +490,6 @@ local plugins = {
 		},
 	},
 	-------------------------------------------------------------------------------
-	{
-		"nvim-pack/nvim-spectre",
-		cmd = "Spectre",
-
-		opts = { open_cmd = "noswapfile vnew" },
-		keys = {
-			{
-				"<leader>st",
-				function()
-					require("spectre").toggle()
-				end,
-				desc = "Replace in files (Spectre)",
-			},
-			{
-				"<leader>sc",
-				'<cmd>lua require("spectre").open_file_search({select_word=true})<CR>',
-				desc = "Search on current file",
-			},
-		},
-	},
-	-------------------------------------------------------------------------------
 	-- Schemas
 	{ "b0o/schemastore.nvim" },
 	-------------------------------------------------------------------------------
@@ -629,22 +512,6 @@ local plugins = {
 		"NvChad/nvterm",
 		enabled = false,
 	},
-	-- Terminal Integration
-	{
-		"akinsho/toggleterm.nvim",
-		init = function()
-			require("core.utils").load_mappings("Toggleterm")
-		end,
-		cmd = {
-			"ToggleTerm",
-			"ToggleTermSendCurrentLine",
-			"ToggleTermSendVisualLines",
-			"ToggleTermSendVisualSelection",
-		},
-		config = function()
-			require("custom.configs.toggleterm")
-		end,
-	},
 	-------------------------------------------------------------------------------
 	{
 		"nvim-neotest/neotest",
@@ -662,43 +529,26 @@ local plugins = {
 		end,
 	},
 	-------------------------------------------------------------------------------
-	-- Notification
-	{
-		"rcarriga/nvim-notify",
-		event = "VeryLazy",
-		config = function()
-			dofile(vim.g.base46_cache .. "notify")
-			require("notify").setup({
-				level = 2,
-				minimum_width = 50,
-				render = "default",
-				stages = "fade_in_slide_out",
-				timeout = 3000,
-				top_down = false,
-			})
-		end,
-	},
-	-------------------------------------------------------------------------------
 	-----------------  Compiler
-	{ -- This plugin
-		"Zeioth/compiler.nvim",
-		cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
-		dependencies = { "stevearc/overseer.nvim" },
-		opts = {},
-	},
-	{ -- The task runner we use
-		"stevearc/overseer.nvim",
-		commit = "400e762648b70397d0d315e5acaf0ff3597f2d8b",
-		cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
-		opts = {
-			task_list = {
-				direction = "bottom",
-				min_height = 25,
-				max_height = 25,
-				default_detail = 1,
-			},
-		},
-	},
+	-- { -- This plugin
+	-- 	"Zeioth/compiler.nvim",
+	-- 	cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
+	-- 	dependencies = { "stevearc/overseer.nvim" },
+	-- 	opts = {},
+	-- },
+	-- { -- The task runner we use
+	-- 	"stevearc/overseer.nvim",
+	-- 	commit = "400e762648b70397d0d315e5acaf0ff3597f2d8b",
+	-- 	cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
+	-- 	opts = {
+	-- 		task_list = {
+	-- 			direction = "bottom",
+	-- 			min_height = 25,
+	-- 			max_height = 25,
+	-- 			default_detail = 1,
+	-- 		},
+	-- 	},
+	-- },
 	-------------------------------------------------------------------------------
 	-- Improve UI
 	{
@@ -867,58 +717,9 @@ local plugins = {
 				end
 			end, { silent = true, expr = true })
 		end,
-		dependencies = { { "MunifTanjim/nui.nvim" }, { "rcarriga/nvim-notify" } },
+		dependencies = "MunifTanjim/nui.nvim",
 	},
 	-----------------------------------------------------------------
-	{
-		"tpope/vim-dadbod",
-		enabled = true,
-		dependencies = {
-			"kristijanhusak/vim-dadbod-ui",
-			"kristijanhusak/vim-dadbod-completion",
-		},
-		cmd = { "DBUIToggle", "DBUI", "DBUIAddConnection", "DBUIFindBuffer", "DBUIRenameBuffer", "DBUILastQueryInfo" },
-
-		init = function()
-			require("core.utils").lazy_load("vim-dadbod")
-			require("core.utils").load_mappings("Dadbod")
-		end,
-		config = function()
-			local function db_completion()
-				require("cmp").setup.buffer({ sources = { { name = "vim-dadbod-completion" } } })
-			end
-			vim.g.db_ui_save_location = vim.fn.stdpath("config") .. require("plenary.path").path.sep .. "db_ui"
-
-			vim.api.nvim_create_autocmd("FileType", {
-				pattern = {
-					"sql",
-				},
-				command = [[setlocal omnifunc=vim_dadbod_completion#omni]],
-			})
-
-			vim.api.nvim_create_autocmd("FileType", {
-				pattern = {
-					"sql",
-					"mysql",
-					"plsql",
-				},
-				callback = function()
-					vim.schedule(db_completion)
-				end,
-			})
-		end,
-	},
-	-- Preview Markdown
-	{
-		"iamcco/markdown-preview.nvim",
-		init = function()
-			require("core.utils").load_mappings("MarkdownPreview")
-		end,
-		build = function()
-			vim.fn["mkdp#util#install"]()
-		end,
-		ft = "markdown",
-	},
 	{
 		"max397574/better-escape.nvim",
 		event = "BufReadPre",

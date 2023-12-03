@@ -125,59 +125,15 @@ local function lsp_mappings(buffer)
 end
 
 ---------------------------------------------------------
-vim.api.nvim_create_autocmd("LspAttach", {
-	callback = function(args)
-		local buffer = args.buf
-		local client = vim.lsp.get_client_by_id(args.data.client_id)
-		local caps = client.server_capabilities
-
-		vim.bo[buffer].formatexpr = "" --  yikes
-
-		if caps.documentHighlightProvider then
-			local group = vim.api.nvim_create_augroup("DocumentHighlight", {})
-			vim.api.nvim_create_autocmd("CursorHold", {
-				group = group,
-				buffer = 0,
-				callback = vim.lsp.buf.document_highlight,
-			})
-			vim.api.nvim_create_autocmd("CursorMoved", {
-				group = group,
-				buffer = 0,
-				callback = vim.lsp.buf.clear_references,
-			})
-		end
-
-		if caps.documentFormattingProvider then
-			local group = vim.api.nvim_create_augroup("Formatting", {})
-			vim.api.nvim_create_autocmd("BufWritePre", {
-				group = group,
-				buffer = 0,
-				callback = function()
-					if vim.g.format_on_save then
-						require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()] = nil
-						vim.lsp.buf.format({
-							timeout_ms = 3000,
-							filter = function(c)
-								return c.name == "null-ls" or c.name == "matlab_ls"
-							end,
-						})
-					end
-				end,
-			})
-		end
-	end,
-})
-
 local on_attach = function(client, buffer)
-	-- local caps = client.server_capabilities
-
 	lsp_mappings(buffer)
+
+	vim.bo[buffer].formatexpr = "" --  yikes
+	local caps = client.server_capabilities
 
 	if not utils.load_config().ui.lsp_semantic_tokens and client.supports_method("textDocument/semanticTokens") then
 		client.server_capabilities.semanticTokensProvider = nil
 	end
-
-	-- vim.bo[buffer].formatexpr = "" --  yikes
 
 	-- if caps.documentHighlightProvider then
 	-- 	local group = vim.api.nvim_create_augroup("DocumentHighlight", {})
@@ -193,24 +149,24 @@ local on_attach = function(client, buffer)
 	-- 	})
 	-- end
 
-	-- if caps.documentFormattingProvider then
-	-- 	local group = vim.api.nvim_create_augroup("Formatting", {})
-	-- 	vim.api.nvim_create_autocmd("BufWritePre", {
-	-- 		group = group,
-	-- 		buffer = 0,
-	-- 		callback = function()
-	-- 			if vim.g.format_on_save then
-	-- 				require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()] = nil
-	-- 				vim.lsp.buf.format({
-	-- 					timeout_ms = 3000,
-	-- 					filter = function(c)
-	-- 						return c.name == "null-ls"
-	-- 					end,
-	-- 				})
-	-- 			end
-	-- 		end,
-	-- 	})
-	-- end
+	if caps.documentFormattingProvider then
+		local group = vim.api.nvim_create_augroup("Formatting", {})
+		vim.api.nvim_create_autocmd("BufWritePre", {
+			group = group,
+			buffer = 0,
+			callback = function()
+				if vim.g.format_on_save then
+					require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()] = nil
+					vim.lsp.buf.format({
+						timeout_ms = 3000,
+						filter = function(c)
+							return c.name == "null-ls"
+						end,
+					})
+				end
+			end,
+		})
+	end
 end
 -- --------------------------------------------------------
 local capabilities = vim.lsp.protocol.make_client_capabilities()

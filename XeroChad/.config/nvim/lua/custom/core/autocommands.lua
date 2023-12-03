@@ -27,6 +27,15 @@ autocmd("FileType", {
 	group = general,
 })
 
+autocmd({ "BufWinEnter" }, {
+	callback = function()
+		local line_count = vim.api.nvim_buf_line_count(0)
+		if line_count >= 5000 then
+			vim.cmd("IlluminatePauseBuf")
+		end
+	end,
+})
+
 autocmd("FileType", {
 	pattern = { "gitcommit", "markdown", "text", "log" },
 	callback = function()

@@ -3,12 +3,6 @@ local M = {}
 local cwd = vim.fn.stdpath("config") .. "/"
 local config_dir = { cwd }
 
-M.Neotree = {
-	plugin = true,
-	n = {
-		["<leader>e"] = { "<cmd>Neotree toggle<cr>", "File Explorer", opts = { silent = true } },
-	},
-}
 local nvimTreeFocusOrToggle = function()
 	local nvimTree = require("nvim-tree.api")
 	local currentBuf = vim.api.nvim_get_current_buf()
@@ -27,22 +21,6 @@ M.Nvimtree = {
 	},
 }
 
-M.MarkdownPreview = {
-	plugin = true,
-	n = {
-		["<leader>m"] = {
-			function()
-				if vim.bo.filetype == "markdown" then
-					vim.cmd("MarkdownPreviewToggle")
-				else
-					vim.notify("Only available in markdown", vim.log.levels.WARN, { title = "Markdown-Preview" })
-				end
-			end,
-			"Markdown Preview",
-			opts = { silent = true },
-		},
-	},
-}
 M.Neotest = {
 	plugin = true,
 	n = {
@@ -265,20 +243,6 @@ M.Telescope = {
 	},
 }
 
-M.Toggleterm = {
-	plugin = true,
-	n = {
-		["<c-\\>"] = { "<cmd>ToggleTerm direction=float<cr>", "float term", opts = { silent = true } },
-		["<c-[>"] = { "<cmd>ToggleTerm size=20 direction=horizontal<cr>", "horizontal term", opts = { silent = true } },
-		["<c-]>"] = { "<cmd>ToggleTerm size=70 direction=vertical<cr>", "vertical term", opts = { silent = true } },
-	},
-	t = {
-		["<c-\\>"] = { "<cmd>ToggleTerm direction=float<cr>", "float term", opts = { silent = true } },
-		["<c-[>"] = { "<cmd>ToggleTerm size=20 direction=horizontal<cr>", "horizontal term", opts = { silent = true } },
-		["<c-]>"] = { "<cmd>ToggleTerm size=70 direction=vertical<cr>", "vertical term", opts = { silent = true } },
-	},
-}
-
 M.UFO = {
 	n = {
 		["zR"] = {
@@ -316,16 +280,6 @@ M.UFO = {
 			"Fold preview",
 			opts = { silent = true },
 		},
-	},
-}
-
-M.Dadbod = {
-	plugin = true,
-	n = {
-		["<leader>Dt"] = { "<Cmd>DBUIToggle<Cr>", "Toggle UI", opts = { silent = true } },
-		["<leader>Df"] = { "<Cmd>DBUIFindBuffer<Cr>", "Find buffer", opts = { silent = true } },
-		["<leader>Dr"] = { "<Cmd>DBUIRenameBuffer<Cr>", "Rename buffer", opts = { silent = true } },
-		["<leader>Dq"] = { "<Cmd>DBUILastQueryInfo<Cr>", "Last query info", opts = { silent = true } },
 	},
 }
 
