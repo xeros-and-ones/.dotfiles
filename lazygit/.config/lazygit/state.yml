@@ -1,14 +1,17 @@
 lastupdatecheck: 0
 recentrepos:
 - /home/xero/.dotfiles
-- /home/xero/Documents/Python/spotify_django_react
+- /home/xero/Documents/Python/web_scraper_quotes
+- /home/xero/Documents/Python/web_scraper_books
+- /home/xero/Documents/Python/todo-website-flask
+- /home/xero/Documents/Python/todo-API_fastapi
+- /home/xero/Documents/Python/flask_project
+- /home/xero/Documents/Python/binary_tree
+- /home/xero/Documents/Python/party-music-control-django
 - /home/xero/Documents/Python/django_test
 - /home/xero/.config/nvim
 - /home/xero/Builds/Neovim
 - /home/xero/Documents/Rust/test_project
-- /home/xero/Documents/Python/web_scraper_books
-- /home/xero/Documents/Python/web_scraper_quotes
-- /home/xero/Documents/Python/todo-website-flask
 startuppopupversion: 5
 customcommandshistory: []
 hidecommandlog: false

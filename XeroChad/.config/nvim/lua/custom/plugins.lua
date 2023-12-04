@@ -404,7 +404,7 @@ local plugins = {
 		config = function()
 			require("illuminate").configure({
 				under_cursor = true,
-				delay = 100,
+				delay = 700,
 				providers = {
 					"lsp",
 					"treesitter",

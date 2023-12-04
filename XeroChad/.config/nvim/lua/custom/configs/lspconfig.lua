@@ -128,27 +128,12 @@ end
 local on_attach = function(client, buffer)
 	lsp_mappings(buffer)
 
-	vim.bo[buffer].formatexpr = "" --  yikes
-	local caps = client.server_capabilities
-
 	if not utils.load_config().ui.lsp_semantic_tokens and client.supports_method("textDocument/semanticTokens") then
 		client.server_capabilities.semanticTokensProvider = nil
 	end
 
-	-- if caps.documentHighlightProvider then
-	-- 	local group = vim.api.nvim_create_augroup("DocumentHighlight", {})
-	-- 	vim.api.nvim_create_autocmd("CursorHold", {
-	-- 		group = group,
-	-- 		buffer = 0,
-	-- 		callback = vim.lsp.buf.document_highlight,
-	-- 	})
-	-- 	vim.api.nvim_create_autocmd("CursorMoved", {
-	-- 		group = group,
-	-- 		buffer = 0,
-	-- 		callback = vim.lsp.buf.clear_references,
-	-- 	})
-	-- end
-
+	local caps = client.server_capabilities
+	vim.bo[buffer].formatexpr = "" --  yikes
 	if caps.documentFormattingProvider then
 		local group = vim.api.nvim_create_augroup("Formatting", {})
 		vim.api.nvim_create_autocmd("BufWritePre", {
@@ -214,6 +199,7 @@ require("lspconfig").pylance.setup({
 				py_path = venv_path .. "/bin/python3"
 			else
 				py_path = vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
+				print(py_path)
 			end
 			return py_path
 		end)(client.config.root_dir)

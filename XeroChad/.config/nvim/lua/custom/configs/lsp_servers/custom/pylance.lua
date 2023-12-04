@@ -94,7 +94,7 @@ if not configs["pylance"] then
 						-- logLevel = "Trace",
 						-- logTypeEvaluationTime = true,
 						-- minimumLoggingThreshold = 500,
-						indexing = false,
+						indexing = true,
 						inlayHints = {
 							variableTypes = true,
 							functionReturnTypes = true,
