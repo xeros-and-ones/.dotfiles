@@ -85,9 +85,11 @@ local function lsp_mappings(buffer)
 		"<cmd>TroubleToggle quickfix<cr>",
 		{ desc = "Quickfix [Trouble]", buffer = buffer }
 	)
-	vim.keymap.set("n", "<leader>lh", function()
-		vim.lsp.inlay_hint(0, nil)
-	end, { desc = "Inlay Hint" })
+	if vim.fn.has("nvim-0.10") == 1 then
+		vim.keymap.set("n", "<leader>lh", function()
+			vim.lsp.inlay_hint(0, nil)
+		end, { desc = "Inlay Hint" })
+	end
 	vim.keymap.set("n", "<leader>lp", "<cmd>Lspsaga peek_definition<cr>", { desc = "Peek_Definition", buffer = buffer })
 	vim.keymap.set(
 		"n",

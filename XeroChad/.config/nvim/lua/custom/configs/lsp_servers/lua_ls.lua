@@ -1,5 +1,4 @@
 return {
-	-- before_init = require("neodev.lsp").before_init,
 	settings = {
 		Lua = {
 			semantic = {
@@ -9,7 +8,6 @@ return {
 				enable = true,
 			},
 			diagnostics = {
-				libraryFiles = "Disable",
 				globals = { "vim" },
 			},
 			telemetry = { enable = false },

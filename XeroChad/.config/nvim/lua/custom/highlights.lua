@@ -40,6 +40,7 @@ M.override = {
 
 ---@type HLTable
 M.add = {
+  SagaBeacon = { link = "Search" },
 	IlluminatedWordRead = { link = "LspReferenceText" },
 	IlluminatedWordText = { link = "LspReferenceText" },
 	IlluminatedWordWrite = { link = "LspReferenceText" },
