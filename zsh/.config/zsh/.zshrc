@@ -67,6 +67,7 @@ source $ZDOTDIR/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 source $ZDOTDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 source $ZDOTDIR/themes/powerlevel10k/powerlevel10k.zsh-theme
 source $ZDOTDIR/plugins/conda-zsh-completion/conda-zsh-completion.plugin.zsh
+source $ZDOTDIR/plugins/git/git.plugin.zsh
 #
 #
 #

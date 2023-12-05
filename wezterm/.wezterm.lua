@@ -9,7 +9,6 @@ config.disable_default_key_bindings = true
 -- CORE
 -- config.enable_wayland = false
 config.show_new_tab_button_in_tab_bar = false
-config.hyperlink_rules = wezterm.default_hyperlink_rules()
 config.warn_about_missing_glyphs = false
 -- config.enable_kitty_keyboard = true
 config.mouse_wheel_scrolls_tabs = false

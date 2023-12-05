@@ -28,7 +28,7 @@ require("null-ls").setup({
 				}
 			end,
 		}),
-		-- formatting.isort,
+		formatting.isort,
 		formatting.clang_format.with({
 			filetypes = {
 				"c",

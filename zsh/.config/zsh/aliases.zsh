@@ -83,17 +83,6 @@ function mkvenv() {
     vr "${name}"
 }
 
-# Create a new virtual environment, with default name 'venv'.
-function mkvenv() {
-    local name="${1:-.venv}"
-    local venvpath="${name:P}"
-
-    python3 -m venv "${name}" || return
-    echo >&2 "Created venv in '${venvpath}'"
-    vr "${name}"
-}
-
-
 ########## Misc aliases ##########------------------
 alias zshconf="nvim $ZDOTDIR/.zshrc"
 alias matrix='neo-matrix -D -s -m" WE RULE THE WORLD! FROM THE SHADOWS "'
@@ -113,6 +102,7 @@ alias vd='deactivate'
 alias stows='stow -vSt ~'
 alias stowd='stow -vDt ~'
 alias z='zellij'
+alias soz='source ~/.config/zsh/.zshrc'
 
 alias -g ...='../..'
 alias -g ....='../../..'
