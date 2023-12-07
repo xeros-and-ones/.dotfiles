@@ -196,7 +196,7 @@ M.Telescope = {
 			opts = { silent = true },
 		},
 		["<leader>fm"] = { "<cmd>Telescope marks<cr>", "Marks", opts = { silent = true } },
-		["<leader>fw"] = {
+		["<leader>fg"] = {
 			function()
 				require("telescope.builtin").live_grep({
 					additional_args = function(args)
@@ -204,7 +204,7 @@ M.Telescope = {
 					end,
 				})
 			end,
-			"Word",
+			"Live Grep",
 			opts = { silent = true },
 		},
 		["<leader>ft"] = { "<cmd>Telescope themes<cr>", "Themes", opts = { silent = true } },

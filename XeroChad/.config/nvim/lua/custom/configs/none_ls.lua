@@ -48,7 +48,6 @@ require("null-ls").setup({
 				"javascriptreact",
 				"javascript",
 				"less",
-				"markdown",
 				"scss",
 				"typescript",
 				"typescriptreact",
@@ -60,7 +59,7 @@ require("null-ls").setup({
 		}),
 		--------------------------------------------------------------------------------------
 		--diagnostics
-		diagnostics.markdownlint,
+		-- diagnostics.markdownlint,
 		diagnostics.djlint,
 		diagnostics.shellcheck,
 		diagnostics.jsonlint,
