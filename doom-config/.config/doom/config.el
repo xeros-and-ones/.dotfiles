@@ -1,15 +1,10 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
+(load! "+keys")
+
 (setq user-full-name "Mohamed Tarek"
       user-mail-address "mohamed96tarek@hotmail.com")
-;;------------------------ fonts -----------------------------
-;; - `doom-font' -- the primary font to use
-;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
-;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-;; - `doom-symbol-font' -- for symbols
-;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
-;;
+
 (setq doom-font (font-spec :family "FiraCode Nerd Font" :size 14 :weight 'semibold)
       doom-variable-pitch-font (font-spec :family "Rubik" :size 15 :weight 'medium)
       doom-symbol-font (font-spec :family "JetbrainsMono Nerd Font" :size 14))
@@ -31,13 +26,6 @@
 
 
 ;; ------------------ Config ----------------------------
-(defun toggle-transparency ()
-  "Toggle transparency."
-  (interactive)
-  (let ((alpha-transparency 80))
-    (pcase (frame-parameter nil 'alpha-background)
-      (alpha-transparency (set-frame-parameter nil 'alpha-background 100))
-      (t (set-frame-parameter nil 'alpha-background alpha-transparency)))))
 (setq lsp-pylsp-plugins-black-enabled nil)
 (setq lsp-pylsp-plugins-flake8-enabled nil)
 (setq lsp-pylsp-plugins-isort-enabled nil)
@@ -61,7 +49,3 @@
   (setq web-mode-enable-auto-closing t)
   (setq web-mode-enable-auto-indentation t))
 
-;; ------------------ Mappings --------------------------
-(map! :leader
-      :desc "Open Treemacs" "e" #'treemacs
-      :desc "Toggle Transparency" "t t" 'toggle-transparency)
