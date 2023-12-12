@@ -40,6 +40,7 @@ return {
 		"sqlls",
 		"clangd",
 		"asm-lsp",
+		"zls",
 
 		-- debuggers ---------------------------------
 		"codelldb",
