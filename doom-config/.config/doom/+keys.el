@@ -21,8 +21,6 @@
        "C-S-h" #'+tabs:previous-or-goto
        "C-S-l" #'+tabs:next-or-goto
        "C-S-n" #'dap-next
-       ;; "M-;"   #'+my/insert-semicolon-at-the-end-of-this-line
-       ;; "C-M-;" #'+my/delete-semicolon-at-the-end-of-this-line
        "C-h"   #'evil-window-left
        "C-l"   #'evil-window-right
        "C-j"   #'evil-window-down
@@ -108,7 +106,6 @@
  :gi "M-k" #'kill-line
  ;; For terminal specific keys
 
- :v "C-r"   #'+my/evil-quick-replace
  :v "DEL" (kbd "\"_d")
  :v "<del>" (kbd "\"_d")
  :v "<backspace>" (kbd "\"_d")
@@ -136,7 +133,7 @@
                "h" #'+doom-dashboard/open
                "r" #'revert-buffer-no-confirm
                "R" #'reload-buffer-no-confirm
-               "U" #'+my/untabify-buffer)
+               )
       (:prefix "c"                      ; code
        :desc "Format-all buffer"      "f" #'format-all-buffer
        :desc "Check grammar"          "g" #'langtool-check-buffer
@@ -209,14 +206,11 @@
        "n" #'+default/yank-project-name
        :desc "Switch projects" "p" (λ! (update-projectile-known-projects) (projectile-switch-project))
        :desc "Update projectile list" "u" #'update-projectile-known-projects)
-      (:prefix "e"                      ;error
-               "d" #'posframe-delete-all)
       (:prefix "t"                      ; toggle
        :desc "Pomodoro timer" "t" #'pomm
        "c" #'rainbow-mode
        "C" #'centered-window-mode
        "d" #'toggle-debug-on-error
-       "D" #'+my/realtime-elisp-doc
        "l" #'toggle-display-line-numbers-type
        "k" #'keycast-log-mode
        "T" #'toggle-truncate-lines
@@ -304,15 +298,12 @@
           :desc "Insert item below" :ni "<C-return>"  #'+org/insert-item-below
           :desc "Insert item above" :ni "<S-C-return>" #'+org/insert-item-above
           (:localleader
-           :desc "highlight" "ih" #'+my/markdown-highlight
            (:when IS-MAC
              :desc "Reveal in Typora" "o" #'+macos/reveal-in-typora)
            (:when IS-LINUX
              :desc "Reveal in Typora" "o" #'+shell/reveal-in-typora)
-           :desc "Fix Copy"           "F" #'+my/markdown-copy-fix
            :desc "Insert header line" "-" #'org-table-insert-hline
            :desc "Crete Table from region" "|" #'org-table-create-or-convert-from-region
-           :desc "Edit" "x" (+my/simulate-key "C-c C-s")
            (:prefix ("i" . "Insert")
                     "r" #'markdown-table-insert-row
                     "c" #'markdown-table-insert-column))))

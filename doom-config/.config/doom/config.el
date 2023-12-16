@@ -1,7 +1,6 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 (load! "+keys")
-(load! "+misc")
 
 (setq user-full-name "Mohamed Tarek"
       user-mail-address "mohamed96tarek@hotmail.com")

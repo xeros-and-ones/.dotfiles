@@ -30,6 +30,10 @@ setopt INTERACTIVE_COMMENTS
 export ZDOTDIR="$HOME/.config/zsh"
 export EDITOR=nvim
 export VISUAL=nvim
+# export EDITOR="emacsclient -t"
+# export CODEEDITOR="emacsclient -c -a 'emacs'"
+# export VISUAL="emacsclient -c -a 'emacs'"
+# export SUDO_EDITOR="emacsclient -t"
 # export TERM=wezterm
 # export PAGER=/usr/bin/moar
 export HISTFILE="$HOME/.zsh_history"    # History filepath
