@@ -1,11 +1,13 @@
-;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+;;; private/my/+bindings.el -*- lexical-binding: t; -*-
 
+(when IS-MAC (setq mac-command-modifier 'meta
+                   mac-option-modifier  'alt))
 
-;; ------------------ Mappings --------------------------
 ;; Distinguish C-i from TAB
 (when (display-graphic-p)
   (define-key input-decode-map "\C-i" [C-i])
   (map! "<C-i>" #'evil-jump-forward))
+
 
 (map!
  ;; overrides other minor mode keymaps (just for non-evil)
@@ -103,9 +105,14 @@
  ;; Unix text-editing keys & motions
  :gi "C-n" #'next-line
  :gi "C-p" #'previous-line
- :gi "M-k" #'kill-line
+ :gi "C-b" #'backward-char
+ :gi "C-f" #'forward-char
+ :gi "C-k" #'kill-line
+ :gi "C-d" #'delete-forward-char
  ;; For terminal specific keys
+ :gnmvi "<deletechar>" (kbd "C-d")
 
+ :v "C-r"   #'+my/evil-quick-replace
  :v "DEL" (kbd "\"_d")
  :v "<del>" (kbd "\"_d")
  :v "<backspace>" (kbd "\"_d")
@@ -123,6 +130,7 @@
 ;; leader/localleader is not compatible with :gnvmi
 (map! :leader
       :desc "M-x" :nmv "SPC" #'execute-extended-command
+      :desc "lispyville" :n "L" (+my/prefix-M-x "lispyville ")
       (:prefix-map ("a" . "app")
        "s" #'prodigy
        "b" #'blog-admin-start
@@ -133,7 +141,7 @@
                "h" #'+doom-dashboard/open
                "r" #'revert-buffer-no-confirm
                "R" #'reload-buffer-no-confirm
-               )
+               "U" #'+my/untabify-buffer)
       (:prefix "c"                      ; code
        :desc "Format-all buffer"      "f" #'format-all-buffer
        :desc "Check grammar"          "g" #'langtool-check-buffer
@@ -167,7 +175,7 @@
                :desc "Browse file or region" "oo" #'git-link
                :desc "Magit browse commit"   "oc" #'+vc/git-browse-commit
                :desc "Magit wip worktree"    "w"  #'magit-wip-log-worktree
-               )
+               :desc "M-x magit-*" "*" (+my/prefix-M-x "magit-"))
       (:prefix "h"                      ; help
                "C" #'helpful-command)
       (:prefix "w"
@@ -205,12 +213,16 @@
       (:prefix "p"                      ; project
        "n" #'+default/yank-project-name
        :desc "Switch projects" "p" (λ! (update-projectile-known-projects) (projectile-switch-project))
+       "*" (+my/prefix-M-x "projectile-")
        :desc "Update projectile list" "u" #'update-projectile-known-projects)
+      (:prefix "e"                      ;error
+               "d" #'posframe-delete-all)
       (:prefix "t"                      ; toggle
        :desc "Pomodoro timer" "t" #'pomm
        "c" #'rainbow-mode
        "C" #'centered-window-mode
        "d" #'toggle-debug-on-error
+       "D" #'+my/realtime-elisp-doc
        "l" #'toggle-display-line-numbers-type
        "k" #'keycast-log-mode
        "T" #'toggle-truncate-lines
@@ -224,9 +236,9 @@
                    "t" #'yas-describe-tables)
       (:prefix "s"                      ; search
        :desc "Comments" "c" #'imenu-comments
+       :desc "M-x amazon-search-*" "a" (+my/prefix-M-x "amazon-search-wiki")
        :desc "Search Workspace" "w" #'+default/search-workspace
        :desc "Search Project (hidden)" "h" #'+default/search-project-with-hidden-files))
-
 
 (map!
  (:map prog-mode-map
@@ -247,6 +259,23 @@
                "u" #'dired-unmark
                "(" #'dired-hide-details-mode
                "+" #'dired-create-directory))
+ (:after lispy
+         (:map lispy-mode-map
+          :i "_" #'special-lispy-different
+          :i [remap kill-line] #'lispy-kill
+          :i [remap delete-backward-char] #'lispy-delete-backward
+          :n "M-r" nil :n "M-s" nil :n "M-v" nil
+          :n "M-<left>" #'lispy-forward-barf-sexp
+          :n "M-<right>" #'lispy-forward-slurp-sexp
+          :n "C-M-<left>" #'lispy-backward-slurp-sexp
+          :n "C-M-<right>" #'lispy-backward-barf-sexp))
+ (:after lispyville
+         (:map lispyville-mode-map
+          :n "M-r" nil :n "M-s" nil :n "M-v" nil
+          :n "C-M-r" #'lispy-raise-sexp
+          :n "C-M-s" #'lispy-splice
+          :n "M-V"   #'lispy-convolute-sexp
+          :n "TAB" #'lispyville-prettify))
  (:after outline
   :map outline-mode-map
   :n "C-k" nil
@@ -287,6 +316,8 @@
  (:after iedit
          (:map iedit-mode-occurrence-keymap
                "M-D" nil))
+ (:after edebug
+         (:map edebug-mode-map "c" #'edebug-go-mode))
  (:after evil-org
          (:map evil-org-mode-map
           :i "C-d" nil :i "C-t" nil :i "C-h" nil :i "C-k" nil))
@@ -298,12 +329,15 @@
           :desc "Insert item below" :ni "<C-return>"  #'+org/insert-item-below
           :desc "Insert item above" :ni "<S-C-return>" #'+org/insert-item-above
           (:localleader
+           :desc "highlight" "ih" #'+my/markdown-highlight
            (:when IS-MAC
              :desc "Reveal in Typora" "o" #'+macos/reveal-in-typora)
            (:when IS-LINUX
              :desc "Reveal in Typora" "o" #'+shell/reveal-in-typora)
+           :desc "Fix Copy"           "F" #'+my/markdown-copy-fix
            :desc "Insert header line" "-" #'org-table-insert-hline
            :desc "Crete Table from region" "|" #'org-table-create-or-convert-from-region
+           :desc "Edit" "x" (+my/simulate-key "C-c C-s")
            (:prefix ("i" . "Insert")
                     "r" #'markdown-table-insert-row
                     "c" #'markdown-table-insert-column))))

@@ -1,31 +1,68 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
+(load! "+os")
+(load! "+git")
+(load! "+misc")
+(load! "+text")
+(load! "+prog")
+(load! "+ui")
 (load! "+keys")
+(cond
+  ((modulep! :tools lsp +eglot) (load! "+eglot"))
+  ((modulep! :tools lsp) (load! "+lsp")))
 
 (setq user-full-name "Mohamed Tarek"
       user-mail-address "mohamed96tarek@hotmail.com")
 
-(setq doom-font (font-spec :family "FiraCode Nerd Font" :size 14 :weight 'semibold)
-      doom-variable-pitch-font (font-spec :family "Rubik" :size 15 :weight 'medium)
-      doom-symbol-font (font-spec :family "JetbrainsMono Nerd Font" :size 14))
-
-;; --------------------- Theme -----------------------------
-(setq doom-theme 'doom-gruvbox)
-
-
-;; --------------------- Options --------------------------
-(setq display-line-numbers-type 'relative)
 (setq org-directory "~/org/")
+
 (setq native-comp-jit-compilation t)
-(set-frame-parameter nil 'alpha-background 80)
-(add-to-list 'default-frame-alist '(alpha-background . 80)) ; For all new frames henceforth
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
-(add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
-(setq confirm-kill-emacs nil) ; Disable exit confirmation.
+(setq doom-scratch-buffer-major-mode 'emacs-lisp-mode
+      confirm-kill-emacs nil)
 
+;; Delete the selection when pasting
+(delete-selection-mode 1)
 
-;; ------------------ Config ----------------------------
+;; disable risky local variables warning
+(advice-add 'risky-local-variable-p :override #'ignore)
+
+(add-hook! 'find-file-hook #'+my/find-file-check-make-large-file-read-only-hook)
+
+(setq clipetty-tmux-ssh-tty "tmux show-environment -g SSH_TTY")
+
+;; check minified-file
+(add-to-list 'magic-mode-alist (cons #'+my/check-minified-file 'fundamental-mode))
+
+(set-popup-rules! '(("^\\*helpful" :size 0.35)
+                    ("^\\*Ibuffer\\*$" :size 0.35)
+                    ("^\\*info.*" :size 80 :side right)
+                    ("^\\*Man.*" :size 80 :side right)
+                    ("^\\*keycast.*" :size 50 :side right)
+                    ("^\\*Customize" :actions display-buffer)
+                    ("^\\*edit-indirect" :size 0.6)
+                    ("^\\*YASnippet Tables\\*$" :size 0.35)
+                    ("^\\*grep\\*$" :size 0.35)
+                    ("^\\*pytest\\*" :size 0.35)
+                    ("^\\*Anaconda\\*$" :size 0.35)
+                    ("\\*.*server log\\*$" :side top :size 0.20 :select nil)
+                    ((lambda (buf _) (with-current-buffer buf (eq major-mode 'forge-topic-mode))) :size 0.35)
+                    ))
+
+;; Manually edit .local/custom.el will break doom updates
+(when (file-directory-p custom-file)
+  (message (concat "Please delete " custom-file ". And customization in config.el and +ui.el.")))
+
+(custom-set-variables
+ '(warning-suppress-log-types '((lsp-mode) (iedit)))
+ '(warning-suppress-types '((iedit))))
+
+;; Load system profile for different machines and work config
+(dolist (config '("~/.config/doom/local.el"))
+  (let ((config-file (file-truename config)))
+    (when (file-exists-p config-file)
+      (load-file config-file))))
+
 (setq lsp-pylsp-plugins-black-enabled nil)
 (setq lsp-pylsp-plugins-flake8-enabled nil)
 (setq lsp-pylsp-plugins-isort-enabled nil)
@@ -40,7 +77,6 @@
 (setq lsp-pylsp-plugins-mccabe-enabled nil)
 (setq lsp-pylsp-plugins-mypy-enabled t)
 
-
 (after! web-mode
   (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.jinja2\\'" . web-mode))
@@ -49,3 +85,7 @@
   (setq web-mode-enable-auto-closing t)
   (setq web-mode-enable-auto-indentation t))
 
+(after! evil-snipe
+  (setq evil-snipe-scope 'buffer
+        evil-snipe-repeat-scope 'buffer)
+  (push 'prodigy-mode evil-snipe-disabled-modes))

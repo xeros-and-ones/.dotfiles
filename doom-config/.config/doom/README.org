@@ -1,0 +1,154 @@
+#+TITLE: My private doom emacs config
+
+This is my private doom emacs configuration. Specifically configured for
+Javascript, Python, C++, Rust, and Go.
+
+* Table of Contents :TOC:
+- [[#installation][Installation]]
+  - [[#step1-install-emacs][Step1: Install Emacs]]
+  - [[#step2-install-doom-emacs][Step2: Install Doom Emacs]]
+  - [[#step3-dependencies-and-configuration][Step3: Dependencies and Configuration]]
+- [[#features][Features]]
+- [[#configuration][Configuration]]
+
+* Installation
+** Step1: Install Emacs
+*** MacOS
+- *Method 1*: Use brew cask(Recommended). Pick emacs-mac or emacs-plus.
+  #+BEGIN_SRC shell
+brew tap railwaycat/emacsmacport
+brew install --cask emacs-mac
+
+brew tap d12frosted/emacs-plus
+brew install emacs-plus@28 --with-native-comp
+
+# create alias in /Applications if needed
+ln -Fs `sudo find /usr/local/Cellar/emacs-* -name "Emacs.app"` /Applications/Emacs.app
+  #+END_SRC
+
+*** Linux
+#+BEGIN_SRC shell
+# Ubuntu emacs
+sudo add-apt-repository ppa:kelleyk/emacs
+sudo apt-get update
+sudo apt install emacs27
+# Arch
+sudo pacman -S emacs
+#+END_SRC
+
+** Step2: Install Doom Emacs
+#+BEGIN_SRC shell
+# Clone Doom Emacs
+rm -r ~/.emacs.d
+git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.config/emacs
+
+# Clone my config
+git clone https://github.com/ztlevi/doom-config ~/.config/doom
+
+~/.config/emacs/bin/doom install
+#+END_SRC
+** Step3: Dependencies and Configuration
+This Emacs configuration is written for Emacs 25.1+ on Mac OS X 10.11+ and Linux Arch. Windows users may need to tweak the config for themselves.
+
+*** Dependencies needed
+Install dependencies including search tools, utils, and linters.
+
+**** OS
+***** MacOS
+#+BEGIN_SRC sh :tangle (if (doom-system-os 'macos) "yes")
+# search tool
+brew install ripgrep grep exa zstd fd
+brew install --HEAD universal-ctags/universal-ctags/universal-ctags
+# utils
+brew install sqlite hub gpg2 coreutils gnu-tar mplayer direnv libtool git-delta
+# language
+brew install shellcheck aspell languagetool clang-format google-java-format
+#+END_SRC
+
+***** Arch Linux
+#+BEGIN_SRC sh :dir /sudo:: :tangle (if (doom-system-os 'arch) "yes")
+sudo pacman --needed --noconfirm -S sqlite ripgrep fd wmctrl exa languagetool zstd ctags git-delta
+#+END_SRC
+
+Note: for windows users, [[http://aspell.net/win32/][aspell]] is used instead. ripgrep can be installed via [[https://chocolatey.org/][choco]]
+
+***** Ubuntu
+#+BEGIN_SRC shell
+# Install linuxbrew
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+# Then follow the macos installaion guide except the Cask part
+#+END_SRC
+
+- For vterm
+#+BEGIN_SRC shell
+brew install cmake
+sudo apt install libvterm-dev libtool-bin
+#+END_SRC
+***** Install CJK fonts for your linux machines if you use them. https://github.com/googlefonts/noto-cjk
+
+**** npm
+#+BEGIN_SRC shell
+npm install -g cspell prettier
+#+END_SRC
+
+**** pip
+#+BEGIN_SRC shell
+pip3 install --upgrade pylint gnureadline black cpplint
+#+END_SRC
+
+**** go: This module requires a valid ~GOPATH~, and the following Go packages:
+#+BEGIN_SRC shell
+# macos
+brew install go
+
+# arch
+sudo pacman --needed --noconfirm -S go
+#+END_SRC
+
+*** Language Server Protocol: Install the [[https://langserver.org/][lsp]] for your languages. A few examples are listed below.
+You can always do ~M-x lsp-install-server~ to install the specific language server. But I prefer to script them and install them at once.
+#+BEGIN_SRC shell
+# python
+npm i -g pyright
+pip3 install --user debugpy
+
+# Java
+# Java 11 is needed for latest eclipse.jdt.ls to function
+# M-x lsp-install-server -> jdtls
+
+# Bash
+npm i -g bash-language-server
+
+# C++ use clangd
+brew install llvm
+# Run ~M-x dap-codelldb-setup~ to download the ~codelldb~ vscode extension.
+# You can refer the debug template here https://github.com/ztlevi/gtest-cpp-demo/blob/main/.vscode/launch.json
+
+# Rust
+rustup update
+rustup component add rls rust-analysis rust-src
+
+# Javascript
+npm i -g typescript typescript-language-server
+
+# Vue
+npm install vue-language-server -g
+
+# gopls
+go install golang.org/x/tools/gopls@latest
+# Run ~M-x dap-go-setup~ to download the vscode debug extension.
+#+END_SRC
+
+*** For MacOS, according to the discussion [[https://emacs-china.org/t/topic/6453/6][here]], the following codes will speed up Emacs GUI startup time.
+#+BEGIN_SRC bash
+defaults write org.gnu.Emacs Emacs.ToolBar -string no
+defaults write org.gnu.Emacs Emacs.ScrollBar -string no
+defaults write org.gnu.Emacs Emacs.MenuBar -string no
+#+END_SRC
+
+* Features
+An in-depth list of features, how to use them, and their dependencies.
+
+* Configuration
+How to configure this module, including common problems and how to address them.
+
