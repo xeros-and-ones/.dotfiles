@@ -19,7 +19,7 @@ autocmd("BufEnter", {
 })
 -- Hide folds and Disable statuscolumn in these filetypes
 autocmd("FileType", {
-	pattern = { "nvcheatsheet", "nvdash", "sagaoutline" },
+	pattern = { "nvcheatsheet", "nvdash", "sagaoutline", "NvimTree" },
 	callback = function()
 		vim.opt_local.foldcolumn = "0"
 		vim.opt_local.stc = "" -- not really important

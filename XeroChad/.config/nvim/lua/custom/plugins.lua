@@ -507,6 +507,27 @@ local plugins = {
 		},
 	},
 	-------------------------------------------------------------------------------
+	{
+		"nvim-pack/nvim-spectre",
+		cmd = "Spectre",
+
+		opts = { open_cmd = "noswapfile vnew" },
+		keys = {
+			{
+				"<leader>st",
+				function()
+					require("spectre").toggle()
+				end,
+				desc = "Replace in files (Spectre)",
+			},
+			{
+				"<leader>sc",
+				'<cmd>lua require("spectre").open_file_search({select_word=true})<CR>',
+				desc = "Search on current file",
+			},
+		},
+	},
+	-------------------------------------------------------------------------------
 	-- Schemas
 	{ "b0o/schemastore.nvim" },
 	-------------------------------------------------------------------------------
@@ -603,6 +624,23 @@ local plugins = {
 			"debugloop/telescope-undo.nvim",
 			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		},
+	},
+	-------------------------------------------------------------------------------
+	-- Terminal Integration
+	{
+		"akinsho/toggleterm.nvim",
+		init = function()
+			require("core.utils").load_mappings("Toggleterm")
+		end,
+		cmd = {
+			"ToggleTerm",
+			"ToggleTermSendCurrentLine",
+			"ToggleTermSendVisualLines",
+			"ToggleTermSendVisualSelection",
+		},
+		config = function()
+			require("custom.configs.toggleterm")
+		end,
 	},
 	-------------------------------------------------------------------------------
 	-- Pretty Diagnostics and Lists

@@ -75,7 +75,7 @@
 (setq lsp-pylsp-plugins-pycodestyle-enabled nil)
 (setq lsp-pylsp-plugins-pydocstyle-enabled nil)
 (setq lsp-pylsp-plugins-mccabe-enabled nil)
-(setq lsp-pylsp-plugins-mypy-enabled t)
+(setq lsp-pylsp-plugins-mypy-enabled nil)
 
 (after! web-mode
   (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))

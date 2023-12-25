@@ -38,7 +38,7 @@
         pippel-python-command "python3"
         importmagic-python-interpreter "python3"
         flycheck-python-pylint-executable "pylint"
-        flycheck-python-flake8-executable "flake8")
+        flycheck-python-ruff-executable "ruff")
   (when (file-exists-p! "~/.conda")
     (setq conda-env-home-directory (expand-file-name "~/.conda")))
 
@@ -56,9 +56,6 @@
   ;; ignore some linting info
   (setq lsp-pyls-plugins-pycodestyle-ignore  [ "E501" ]
         lsp-pyls-plugins-pylint-args [ "--errors-only" ]))
-
-(after! lsp-pyright
-  (setq lsp-pyright-python-executable-cmd "python3"))
 
 (use-package! py-isort
   :defer t

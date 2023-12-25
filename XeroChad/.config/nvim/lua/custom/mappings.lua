@@ -90,6 +90,20 @@ M.Neotest = {
 	},
 }
 
+M.Toggleterm = {
+	plugin = true,
+	n = {
+		["<c-\\>"] = { "<cmd>ToggleTerm direction=float<cr>", "float term", opts = { silent = true } },
+		["<c-[>"] = { "<cmd>ToggleTerm size=20 direction=horizontal<cr>", "horizontal term", opts = { silent = true } },
+		["<c-]>"] = { "<cmd>ToggleTerm size=70 direction=vertical<cr>", "vertical term", opts = { silent = true } },
+	},
+	t = {
+		["<c-\\>"] = { "<cmd>ToggleTerm direction=float<cr>", "float term", opts = { silent = true } },
+		["<c-[>"] = { "<cmd>ToggleTerm size=20 direction=horizontal<cr>", "horizontal term", opts = { silent = true } },
+		["<c-]>"] = { "<cmd>ToggleTerm size=70 direction=vertical<cr>", "vertical term", opts = { silent = true } },
+	},
+}
+
 M.Neovim = {
 	n = {
 		["<leader>nf"] = {
