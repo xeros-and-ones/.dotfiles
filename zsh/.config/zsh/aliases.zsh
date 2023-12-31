@@ -95,6 +95,9 @@ alias t="erd -fI.H -yinverted -Cauto --dir-order=first --sort=name --no-git"
 alias c="clear"
 alias q="exit"
 alias v="nvim"
+alias e='emacs -nw'
+alias ec='emacsclient -t'
+alias ecv="emacsclient -c -a 'emacs'"
 alias sv="sudoedit"
 alias vconf="cd ~/.config/nvim/ && nvim"
 alias chadconf="cd ~/.dotfiles/XeroChad/ && nvim"
