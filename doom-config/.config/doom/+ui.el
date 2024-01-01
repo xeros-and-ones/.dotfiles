@@ -9,14 +9,23 @@
 (setq-default fill-column 120
               delete-trailing-lines t)
 
-(set-frame-parameter nil 'alpha-background 80)
-(add-to-list 'default-frame-alist '(alpha-background . 80)) ; For all new frames henceforth
+;; (set-frame-parameter nil 'alpha-background 80)
+;; (add-to-list 'default-frame-alist '(alpha-background . 80)) ; For all new frames henceforth
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
 (setq doom-theme 'doom-gruvbox)
 
 (setq evil-emacs-state-cursor `(box ,(doom-color 'violet)))
+
+(setq doom-modeline-modal-icon nil
+      evil-normal-state-tag   (propertize "NORMAL")
+      evil-emacs-state-tag    (propertize "EMACS" )
+      evil-insert-state-tag   (propertize "INSERT")
+      evil-motion-state-tag   (propertize "MOTION")
+      evil-visual-state-tag   (propertize "VISUAL")
+      evil-operator-state-tag (propertize "OPERATOR"))
+
 
 ;; Update window divider in terminal
 ;; https://www.reddit.com/r/emacs/comments/3u0d0u/how_do_i_make_the_vertical_window_divider_more/
