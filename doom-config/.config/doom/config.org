@@ -66,7 +66,6 @@
     - [[#spell-dict-file][Spell dict file]]
     - [[#screenshot][Screenshot]]
     - [[#centaur-tabs][Centaur-tabs]]
-    - [[#input-method][INPUT METHOD]]
     - [[#log][LOG]]
     - [[#ssh][SSH]]
     - [[#navigation][NAVIGATION]]
@@ -404,7 +403,6 @@ and Here we add the packages want installed
 (package! tldr)
 (package! edit-indirect)
 (package! blog-admin :recipe (:host github :repo "codefalling/blog-admin"))
-;; (package! youdao-dictionary)
 (package! link-hint)
 (package! symbol-overlay)
 (package! pomm)
@@ -422,7 +420,6 @@ and Here we add the packages want installed
 (package! citre)
 (package! imenu-list)
 ;; (package! tmux-pane)
-(package! rime :recipe (:host github :repo "DogLooksGood/emacs-rime" :files ("*.el" "Makefile" "lib.c")))
 (package! go-translate)
 ;; (package! org-roam-ui)
 ;; (package! md-roam :recipe (:host github :repo "nobiot/md-roam"))
@@ -2121,11 +2118,6 @@ To terminate the loop early, throw 'break."
  '(warning-suppress-log-types '((lsp-mode) (iedit)))
  '(warning-suppress-types '((iedit))))
 
-;; Load system profile for different machines and work config
-(dolist (config '("~/.config/doom/local.el"))
-  (let ((config-file (file-truename config)))
-    (when (file-exists-p config-file)
-      (load-file config-file))))
 #+end_src
 
 ** +ui.el
@@ -2786,50 +2778,6 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 
 (after! centaur-tabs
   (centaur-tabs-group-by-projectile-project))
-#+end_src
-
-*** INPUT METHOD
-#+begin_src emacs-lisp :tangle +misc.el
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; INPUT METHOD
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(use-package! rime
-  :defer t
-  :custom
-  (rime-user-data-dir (expand-file-name "~/.config/fcitx/emacs-rime"))
-  (default-input-method "rime")
-  (rime-show-candidate 'posframe)
-  (rime-disable-predicates
-   '(rime-predicate-evil-mode-p
-     rime-predicate-after-alphabet-char-p
-     rime-predicate-prog-in-code-p))
-  (rime-inline-ascii-trigger 'shift-l)
-  :bind
-  ;; C-\ to toggle-input-method
-  ;; C-` to toggle
-  ;; , and . to page up and down
-  (:map rime-mode-map
-        ;; open rime menu
-        ("C-`" . 'rime-send-keybinding))
-  (:map rime-active-mode-map
-        ("C-j" . 'rime-inline-ascii))
-  :config
-  (custom-set-faces!
-    `(rime-default-face :background ,(doom-blend 'blue 'base0 0.15)))
-
-  (when IS-MAC
-    (setq rime-librime-root "~/.config/fcitx/librime/dist"))
-
-  ;; Set Nixos env
-  (when (and IS-LINUX (executable-find "nix"))
-    (setq rime-emacs-module-header-root
-          (concat (shell-command-to-string "nix eval --raw 'nixpkgs#emacs.outPath'") "/include")
-          rime-librime-root
-          (shell-command-to-string "nix eval --raw 'nixpkgs#librime.outPath'")
-          rime-share-data-dir
-          (concat (shell-command-to-string "nix eval --raw 'nixpkgs#brise.outPath'") "/share/rime-data"))))
 #+end_src
 
 *** LOG

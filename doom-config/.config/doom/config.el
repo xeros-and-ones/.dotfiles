@@ -57,12 +57,6 @@
  '(warning-suppress-log-types '((lsp-mode) (iedit)))
  '(warning-suppress-types '((iedit))))
 
-;; Load system profile for different machines and work config
-(dolist (config '("~/.config/doom/local.el"))
-  (let ((config-file (file-truename config)))
-    (when (file-exists-p config-file)
-      (load-file config-file))))
-
 (setq lsp-pylsp-plugins-black-enabled nil)
 (setq lsp-pylsp-plugins-flake8-enabled nil)
 (setq lsp-pylsp-plugins-isort-enabled nil)

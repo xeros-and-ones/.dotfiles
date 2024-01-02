@@ -20,46 +20,6 @@
 (after! centaur-tabs
   (centaur-tabs-group-by-projectile-project))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; INPUT METHOD
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(use-package! rime
-  :defer t
-  :custom
-  (rime-user-data-dir (expand-file-name "~/.config/fcitx/emacs-rime"))
-  (default-input-method "rime")
-  (rime-show-candidate 'posframe)
-  (rime-disable-predicates
-   '(rime-predicate-evil-mode-p
-     rime-predicate-after-alphabet-char-p
-     rime-predicate-prog-in-code-p))
-  (rime-inline-ascii-trigger 'shift-l)
-  :bind
-  ;; C-\ to toggle-input-method
-  ;; C-` to toggle
-  ;; , and . to page up and down
-  (:map rime-mode-map
-        ;; open rime menu
-        ("C-`" . 'rime-send-keybinding))
-  (:map rime-active-mode-map
-        ("C-j" . 'rime-inline-ascii))
-  :config
-  (custom-set-faces!
-    `(rime-default-face :background ,(doom-blend 'blue 'base0 0.15)))
-
-  (when IS-MAC
-    (setq rime-librime-root "~/.config/fcitx/librime/dist"))
-
-  ;; Set Nixos env
-  (when (and IS-LINUX (executable-find "nix"))
-    (setq rime-emacs-module-header-root
-          (concat (shell-command-to-string "nix eval --raw 'nixpkgs#emacs.outPath'") "/include")
-          rime-librime-root
-          (shell-command-to-string "nix eval --raw 'nixpkgs#librime.outPath'")
-          rime-share-data-dir
-          (concat (shell-command-to-string "nix eval --raw 'nixpkgs#brise.outPath'") "/share/rime-data"))))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; LOG
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
