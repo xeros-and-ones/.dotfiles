@@ -1,4 +1,4 @@
-#+title: Doom Config
+#+TITLE: My private doom emacs config
 #+AUTHOR: Mohamed Tarek
 #+EMAIL: m96tarek@gmail.com
 #+STARTUP: overview
@@ -6,10 +6,6 @@
 
 * Table Of Content :TOC_5_gh:
 - [[#introduction][Introduction]]
-- [[#instalation][instalation]]
-  - [[#emacs][emacs:]]
-  - [[#private-doom-config][Private Doom config]]
-  - [[#doom][Doom:]]
 - [[#doom-modules-initel][Doom modules (init.el)]]
 - [[#extra-packages][Extra Packages]]
   - [[#disable-some-packages][disable some packages]]
@@ -98,53 +94,6 @@
 * Introduction
 This is my Private Literate config for doom-emacs.
 My config was growing with time So i Moved it to a literate type of config in hopes of keeping it organized.
-* instalation
-** emacs:
-We first gotta make sure emacs is installed and properly:
-First:
-#+begin_src sh :tangle no
-mkcd ~/Build/Emacs
-git clone https://git.savannah.gnu.org/git/emacs.git master
-#+end_src
-
-We then should use the amazing git worktree, to insure not to contaminate the
-master branch:
-#+begin_src sh :tangle no
-git worktree add ../my-custom-build (choose name you prefer)
-cd ../my-custom-build
-#+end_src
-
-Afterwards We could Start the build process:
-#+begin_src sh :tangle no
-./autogen.sh
-#+end_src
-And Then Run the Config script with the desired flags:
-#+begin_src sh
-./configure --with-cairo --with-x-toolkit=lucid --with-tree-sitter --without-compress-install --with-harfbuzz --with-json --without-gsettings --without-gconf--with-mailutils --with-native-compilation=aot --with-imagemagick --program-transform-name='s/^ctags$/ctags.emacs/' --with-modules CFLAGS="-O3 -march=native -flto"
-#+end_src
-
-Then start the build Process itself:
-#+begin_src sh :tangle no
-make -jN (N = number of cores you have in your cpu)
-#+end_src
-
-Now we're free to install locally:
-#+begin_src sh :tangle no
-sudo make install
-#+end_src
-
-** TODO Private Doom config
-#+begin_src sh :tangle no
-cd ~
-git clone https://github.com/xeros-and-ones/.dotfiles.git
-#+end_src
-
-** Doom:
-To install, we have to first clone doom emacs base config:
-#+begin_src sh :tangle no
-git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
-~/.config/emacs/bin/doom install
-#+end_src
 
 * Doom modules (init.el)
 here we Enable/disable doom's modules through the ~init.el~ file
@@ -1165,17 +1114,19 @@ non-nil value to enable trashing for file operations."
     (setq display-line-numbers-type t))
   (revert-buffer-no-confirm))
 
- (defun toggle-transparency ()
-   (interactive)
-   (let ((alpha (frame-parameter nil 'alpha)))
-     (set-frame-parameter
-      nil 'alpha
-      (if (eql (cond ((numberp alpha) alpha)
-                     ((numberp (cdr alpha)) (cdr alpha))
-                     ;; Also handle undocumented (<active> <inactive>) form.
-                     ((numberp (cadr alpha)) (cadr alpha)))
-               100)
-          '(85 . 50) '(100 . 100)))))
+
+;;;###autoload
+(defun toggle-transparency ()
+  (interactive)
+  (let ((alpha (frame-parameter nil 'alpha)))
+    (set-frame-parameter
+     nil 'alpha
+     (if (eql (cond ((numberp alpha) alpha)
+                    ((numberp (cdr alpha)) (cdr alpha))
+                    ;; Also handle undocumented (<active> <inactive>) form.
+                    ((numberp (cadr alpha)) (cadr alpha)))
+              100)
+         '85 '100))))
 #+end_src
 
 ** Private modules
@@ -3139,14 +3090,14 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
   ;; (+my/forge-toggle-all-issues-and-pullreqs)
   )
 
-(use-package! magit-delta
-  :after magit
-  :init
-  (when (executable-find "delta")
-    (add-hook! magit-mode #'magit-delta-mode))
-  :config
-  (setq magit-delta-default-light-theme "GitHub")
-  )
+;; (use-package! magit-delta
+;;   :after magit
+;;   :init
+;;   (when (executable-find "delta")
+;;     (add-hook! magit-mode #'magit-delta-mode))
+;;   :config
+;;   (setq magit-delta-default-light-theme "GitHub")
+;;   )
 
 (after! magit-todos
   (setq magit-todos-exclude-globs '("third-party/*" "third_party/*")))
@@ -3172,6 +3123,7 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 #+end_src
 
 * Bindings
+
 #+begin_src emacs-lisp :tangle "~/.config/doom/+keys.el" :mkdirp yes
 ;;; private/my/+bindings.el -*- lexical-binding: t; -*-
 (when IS-MAC (setq mac-command-modifier 'meta
