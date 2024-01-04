@@ -3,12 +3,21 @@
 This is my private doom emacs configuration. Specifically configured for
 Javascript, Python, C++, Rust, and Go.
 
-* Table of Contents :TOC:
+* Table of Contents :TOC_5_gh:
 - [[#installation][Installation]]
   - [[#step1-install-emacs][Step1: Install Emacs]]
   - [[#step2-install-doom-emacs][Step2: Install Doom Emacs]]
   - [[#step3-private-doom-config][Step3: Private Doom config]]
 - [[#dependencies][Dependencies]]
+    - [[#dependencies-needed][Dependencies needed]]
+      - [[#os][OS]]
+        - [[#macos][MacOS]]
+        - [[#arch-linux][Arch Linux]]
+        - [[#ubuntu][Ubuntu]]
+      - [[#npm][npm]]
+      - [[#pip][pip]]
+      - [[#go-this-module-requires-a-valid-gopath][go: This module requires a valid ~GOPATH~]]
+    - [[#language-server-protocol][Language Server Protocol:]]
 - [[#features][Features]]
 - [[#configuration][Configuration]]
 
@@ -66,7 +75,6 @@ cd ~/.dotfiles && stow -vSt ~ doom-config
 
 * TODO Dependencies
 This Emacs configuration is written for Emacs 25.1+ on Mac OS X 10.11+ and Linux Arch. Windows users may need to tweak the config for themselves.
-
 *** Dependencies needed
 Install dependencies including search tools, utils, and linters.
 
@@ -101,7 +109,6 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/i
 brew install cmake
 sudo apt install libvterm-dev libtool-bin
 #+END_SRC
-***** Install CJK fonts for your linux machines if you use them. https://github.com/googlefonts/noto-cjk
 
 **** npm
 #+BEGIN_SRC shell
@@ -113,7 +120,7 @@ npm install -g cspell prettier
 pip3 install --upgrade pylint gnureadline black cpplint
 #+END_SRC
 
-**** go: This module requires a valid ~GOPATH~, and the following Go packages:
+**** go: This module requires a valid ~GOPATH~
 #+BEGIN_SRC shell
 # macos
 brew install go
@@ -122,7 +129,7 @@ brew install go
 sudo pacman --needed --noconfirm -S go
 #+END_SRC
 
-*** Language Server Protocol: Install the [[https://langserver.org/][lsp]] for your languages. A few examples are listed below.
+*** Language Server Protocol:
 You can always do ~M-x lsp-install-server~ to install the specific language server. But I prefer to script them and install them at once.
 #+BEGIN_SRC shell
 # python
@@ -156,12 +163,6 @@ go install golang.org/x/tools/gopls@latest
 # Run ~M-x dap-go-setup~ to download the vscode debug extension.
 #+END_SRC
 
-*** For MacOS, according to the discussion [[https://emacs-china.org/t/topic/6453/6][here]], the following codes will speed up Emacs GUI startup time.
-#+BEGIN_SRC bash
-defaults write org.gnu.Emacs Emacs.ToolBar -string no
-defaults write org.gnu.Emacs Emacs.ScrollBar -string no
-defaults write org.gnu.Emacs Emacs.MenuBar -string no
-#+END_SRC
 
 * TODO Features
 An in-depth list of features, how to use them, and their dependencies.

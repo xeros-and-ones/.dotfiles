@@ -17,7 +17,6 @@
   - [[#os-functions][OS Functions]]
   - [[#prog-functions][Prog Functions]]
   - [[#text-functions][Text Functions]]
-  - [[#ui-functions][UI Functions]]
   - [[#private-modules][Private modules]]
     - [[#lazycat][lazycat]]
       - [[#autoload][autoload]]
@@ -1102,33 +1101,6 @@ non-nil value to enable trashing for file operations."
       )))
 #+end_src
 
-** UI Functions
-#+begin_src emacs-lisp :tangle "~/.config/doom/autoload/ui.el" :mkdirp yes
-;;; autoload/ui.el -*- lexical-binding: t; -*-
-
-;;;###autoload
-(defun toggle-display-line-numbers-type ()
-  (interactive)
-  (if display-line-numbers-type
-      (setq display-line-numbers-type nil)
-    (setq display-line-numbers-type t))
-  (revert-buffer-no-confirm))
-
-
-;;;###autoload
-(defun toggle-transparency ()
-  (interactive)
-  (let ((alpha (frame-parameter nil 'alpha)))
-    (set-frame-parameter
-     nil 'alpha
-     (if (eql (cond ((numberp alpha) alpha)
-                    ((numberp (cdr alpha)) (cdr alpha))
-                    ;; Also handle undocumented (<active> <inactive>) form.
-                    ((numberp (cadr alpha)) (cadr alpha)))
-              100)
-         '85 '100))))
-#+end_src
-
 ** Private modules
 *** lazycat
 **** autoload
@@ -1873,7 +1845,8 @@ To terminate the loop early, throw 'break."
 ;;; private/my/+ui.el -*- lexical-binding: t; -*-
 
 (setq doom-font (font-spec :family "FiraCode Nerd Font" :size 13 :weight 'semibold)
-      doom-variable-pitch-font (font-spec :family "Rubik" :size 15 :weight 'medium))
+      doom-variable-pitch-font (font-spec :family "Rubik" :size 15 :weight 'medium)
+      doom-symbol-font (font-spec :family "FiraCode Nerd Font" :size 13 :weight 'semibold))
 
 (setq display-line-numbers-type 'relative)
 
@@ -1887,6 +1860,19 @@ To terminate the loop early, throw 'break."
 (add-to-list 'default-frame-alist '(alpha-background . 85)) ; For all new frames henceforth
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
+
+(defun toggle-transparency ()
+  (interactive)
+  (let ((alpha (frame-parameter nil 'alpha)))
+    (set-frame-parameter
+     nil 'alpha
+     (if (eql (cond ((numberp alpha) alpha)
+                    ((numberp (cdr alpha)) (cdr alpha))
+                    ;; Also handle undocumented (<active> <inactive>) form.
+                    ((numberp (cadr alpha)) (cadr alpha)))
+              100)
+         '85 '100))))
+
 #+end_src
 
 *** Theme
@@ -3073,32 +3059,6 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 #+begin_src emacs-lisp :tangle "~/.config/doom/+git.el" :mkdirp yes
 ;;; +git.el -*- lexical-binding: t; -*-
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; GIT
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-
-(after! forge
-  ;; (push '("git.dummy.com" "git.dummy.com/api/v3" "git.dummy.com" forge-github-repository)
-  ;;       forge-alist)
-
-  ;; TEMP
-  ;; (setq ghub-use-workaround-for-emacs-bug 'force)
-
-  ;; Only show issues and pullreqs assigned to me. Toggle it off here.
-  ;; (+my/forge-toggle-all-issues-and-pullreqs)
-  )
-
-;; (use-package! magit-delta
-;;   :after magit
-;;   :init
-;;   (when (executable-find "delta")
-;;     (add-hook! magit-mode #'magit-delta-mode))
-;;   :config
-;;   (setq magit-delta-default-light-theme "GitHub")
-;;   )
-
 (after! magit-todos
   (setq magit-todos-exclude-globs '("third-party/*" "third_party/*")))
 
@@ -3255,7 +3215,6 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 
 ;; leader/localleader is not compatible with :gnvmi
 (map! :leader
-      :desc "M-x" :nmv "SPC" #'execute-extended-command
       :desc "lispyville" :n "L" (+my/prefix-M-x "lispyville ")
       (:prefix-map ("a" . "app")
        "s" #'prodigy
@@ -3523,8 +3482,9 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
  (:after company
          (:map company-active-map
                "TAB" nil [tab] nil [backtab] nil
-               "C-j" #'company-show-location
-               "C-i" #'company-complete-selection))
+               "C-j" #'company-select-next
+               "C-k" #'company-select-previous
+               "C-SPC" #'company-complete-selection))
  (:after adoc-mode
          (:map adoc-mode-map
           :localleader
