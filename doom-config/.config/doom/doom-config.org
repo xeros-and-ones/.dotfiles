@@ -1,26 +1,28 @@
-#+TITLE: My Doom Emacs Literate Config
+#+title: Doom Config
+#+AUTHOR: Mohamed Tarek
+#+EMAIL: m96tarek@gmail.com
 #+STARTUP: overview
-#+OPTIONS: toc:nil
 
 
 * Table Of Content :TOC_5_gh:
 - [[#introduction][Introduction]]
-  - [[#instalation][instalation]]
-    - [[#emacs][emacs:]]
-    - [[#todo-private-doom-config][TODO: Private Doom config]]
-    - [[#doom][Doom:]]
-- [[#initialization][Initialization]]
-- [[#packages][Packages]]
-- [[#configuration][configuration]]
-  - [[#autoload-modules][autoload modules]]
-    - [[#bufferel][buffer.el]]
-    - [[#gitel][git.el]]
-    - [[#miscel][misc.el]]
-    - [[#osel][os.el]]
-    - [[#progel][prog.el]]
-    - [[#textel][text.el]]
-    - [[#uiel][ui.el]]
-  - [[#modules][modules]]
+- [[#instalation][instalation]]
+  - [[#emacs][emacs:]]
+  - [[#private-doom-config][Private Doom config]]
+  - [[#doom][Doom:]]
+- [[#doom-modules-initel][Doom modules (init.el)]]
+- [[#extra-packages][Extra Packages]]
+  - [[#disable-some-packages][disable some packages]]
+  - [[#add-our-own-packages][add our own packages]]
+- [[#autoload-functions][Autoload Functions]]
+  - [[#buffer-functions][Buffer Functions]]
+  - [[#git-functions][Git Functions]]
+  - [[#misc-functions][Misc Functions]]
+  - [[#os-functions][OS Functions]]
+  - [[#prog-functions][Prog Functions]]
+  - [[#text-functions][Text Functions]]
+  - [[#ui-functions][UI Functions]]
+  - [[#private-modules][Private modules]]
     - [[#lazycat][lazycat]]
       - [[#autoload][autoload]]
       - [[#configel][config.el]]
@@ -29,39 +31,36 @@
       - [[#autoload-1][autoload]]
       - [[#configel-1][config.el]]
       - [[#packagesel-1][packages.el]]
-    - [[#nano-emacs][nano-emacs]]
-      - [[#configel-2][config.el]]
-      - [[#packagesel-2][packages.el]]
     - [[#my-python][my-python]]
       - [[#autoload-2][autoload]]
-      - [[#configel-3][config.el]]
-      - [[#packagesel-3][packages.el]]
-  - [[#configel-4][config.el]]
-    - [[#imprting-custom-config-files][imprting custom config files]]
-    - [[#name-and-email][Name and email]]
-    - [[#misc-config][misc config]]
-  - [[#uiel-1][+ui.el]]
+      - [[#configel-2][config.el]]
+      - [[#packagesel-2][packages.el]]
+- [[#configuration][Configuration]]
+  - [[#importing-custom-config-files][Importing custom config files]]
+  - [[#adding-name-and-email][Adding name and email]]
+  - [[#misc-config][Misc config]]
+  - [[#ui-config][UI Config]]
     - [[#setting-fonts][Setting fonts]]
     - [[#emacs-window-setup][Emacs Window Setup]]
     - [[#theme][Theme]]
-    - [[#ui-config][UI config]]
-  - [[#textel-1][+text.el]]
+    - [[#ui-config-1][UI config]]
+  - [[#text-config][Text Config]]
     - [[#text][text]]
     - [[#org][ORG]]
     - [[#markdown][MARKDOWN]]
     - [[#others][OTHERS]]
-  - [[#progel-1][+prog.el]]
+  - [[#prog-config][Prog Config]]
     - [[#misc][MISC]]
     - [[#cc][CC]]
     - [[#js-web][JS, WEB]]
     - [[#java][JAVA]]
     - [[#debug--run][DEBUG & RUN]]
     - [[#language-customization][LANGUAGE CUSTOMIZATION]]
-  - [[#osel-1][+os.el]]
+  - [[#os-config][OS Config]]
     - [[#macos][MACOS]]
     - [[#linux][LINUX]]
     - [[#trash][TRASH]]
-  - [[#miscel-1][+misc.el]]
+  - [[#misc-config-1][Misc Config]]
     - [[#use-chrome-to-browse][use chrome to browse]]
     - [[#spell-dict-file][Spell dict file]]
     - [[#screenshot][Screenshot]]
@@ -77,23 +76,20 @@
     - [[#ranger][ranger]]
     - [[#dash-docs][dash-docs]]
     - [[#citre][CITRE]]
-    - [[#translate][TRANSLATE]]
     - [[#quickrun][QUICKRUN]]
     - [[#projectile][PROJECTILE]]
     - [[#completion][COMPLETION]]
-    - [[#atomic-chrome][ATOMIC CHROME]]
     - [[#prodigy][PRODIGY]]
     - [[#term][TERM]]
-  - [[#lspel][+lsp.el]]
+  - [[#lsp-config][Lsp Config]]
     - [[#clangd][clangd]]
     - [[#typescript][TypeScript]]
     - [[#java-1][Java]]
     - [[#lsp-mode--lsp-ui][lsp-mode & lsp-ui]]
     - [[#lsp-docker][lsp-docker]]
-  - [[#eglotel][+eglot.el]]
-- [[#modes-config][Modes Config]]
-  - [[#python-setup][Python Setup]]
-  - [[#web-mode-setup][Web-mode Setup]]
+  - [[#eglot-config][Eglot Config]]
+  - [[#modes-configs][Modes Configs]]
+    - [[#web-mode-setup][Web-mode Setup]]
 - [[#plugins-custom-configs][Plugins Custom Configs]]
   - [[#evil-snipe][evil-snipe]]
 - [[#git][GIT]]
@@ -102,13 +98,12 @@
 * Introduction
 This is my Private Literate config for doom-emacs.
 My config was growing with time So i Moved it to a literate type of config in hopes of keeping it organized.
-** instalation
-*** emacs:
+* instalation
+** emacs:
 We first gotta make sure emacs is installed and properly:
 First:
 #+begin_src sh :tangle no
 mkcd ~/Build/Emacs
-
 git clone https://git.savannah.gnu.org/git/emacs.git master
 #+end_src
 
@@ -116,17 +111,15 @@ We then should use the amazing git worktree, to insure not to contaminate the
 master branch:
 #+begin_src sh :tangle no
 git worktree add ../my-custom-build (choose name you prefer)
-
 cd ../my-custom-build
 #+end_src
 
 Afterwards We could Start the build process:
 #+begin_src sh :tangle no
 ./autogen.sh
-
 #+end_src
 And Then Run the Config script with the desired flags:
-#+begin_src
+#+begin_src sh
 ./configure --with-cairo --with-x-toolkit=lucid --with-tree-sitter --without-compress-install --with-harfbuzz --with-json --without-gsettings --without-gconf--with-mailutils --with-native-compilation=aot --with-imagemagick --program-transform-name='s/^ctags$/ctags.emacs/' --with-modules CFLAGS="-O3 -march=native -flto"
 #+end_src
 
@@ -140,21 +133,22 @@ Now we're free to install locally:
 sudo make install
 #+end_src
 
-*** TODO: Private Doom config
+** TODO Private Doom config
 #+begin_src sh :tangle no
-
+cd ~
+git clone https://github.com/xeros-and-ones/.dotfiles.git
 #+end_src
 
-*** Doom:
+** Doom:
 To install, we have to first clone doom emacs base config:
 #+begin_src sh :tangle no
 git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 ~/.config/emacs/bin/doom install
 #+end_src
 
-* Initialization
-this the first thing to be processed by doom emacs.
-#+begin_src emacs-lisp :tangle init.el
+* Doom modules (init.el)
+here we Enable/disable doom's modules through the ~init.el~ file
+#+begin_src emacs-lisp :tangle "~/.config/doom/init.el" :mkdirp yes
 
 ;;; init.el -*- lexical-binding: t; -*-
 
@@ -190,14 +184,14 @@ this the first thing to be processed by doom emacs.
        ;;minimap                       ; show a map of the code on the side
        modeline                        ; snazzy, Atom-inspired modeline, plus API
        nav-flash                       ; blink cursor line after big motions
-       ;                               ; neotree           ; a project drawer, like NERDTree for vim
+       ;; neotree           ; a project drawer, like NERDTree for vim
        ophints                         ; highlight the region an operation acts on
        (popup +all +defaults)          ; tame sudden yet inevitable temporary windows
        tabs                            ; a tab bar for Emacs
        ( treemacs +lsp)                ; a project drawer, like neotree but cooler
        unicode                         ; extended unicode support for various languages
        (vc-gutter +pretty)             ; vcs diff in the fringe
-       ;; vi-tilde-fringe                 ; fringe tildes to mark beyond EOB
+       ;;vi-tilde-fringe                 ; fringe tildes to mark beyond EOB
        ;;window-select                 ; visually switch windows
        workspaces                      ; tab emulation, persistence & separate workspaces
        zen                             ; distraction-free coding or writing
@@ -312,7 +306,7 @@ this the first thing to be processed by doom emacs.
        ;;nix                           ; I hereby declare "nix geht mehr!"
        ;;ocaml                         ; an objective camel
        (org                            ; organize your plain life in plain text
-        ;                              ; +pretty
+        ;; +pretty
         +dragndrop                     ; drag & drop files/images into org buffers
         +pandoc                        ; export-with-pandoc support
         +present)                      ; using org-mode for presentations
@@ -371,18 +365,17 @@ this the first thing to be processed by doom emacs.
 
 (setq custom-file (expand-file-name "custom.el" doom-local-dir))
 (load custom-file 'no-error 'no-message)
-
 #+end_src
 
-* Packages
+* Extra Packages
+** disable some packages
 in this part, we disable packages that are added by doom
-#+begin_src emacs-lisp :tangle packages.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/packages.el" :mkdirp yes
 ;; -*- no-byte-compile: t; -*-
 ;;; private/my/packages.el
 
 ;; disabled packages
-(disable-packages! solaire-mode
-                   osx-trash
+(disable-packages! osx-trash
                    realgud
                    realgud-trepan-ni
                    ccls
@@ -396,13 +389,13 @@ in this part, we disable packages that are added by doom
                    pyimport)
 #+end_src
 
+** add our own packages
 and Here we add the packages want installed
-#+begin_src emacs-lisp :tangle packages.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/packages.el" :mkdirp yes
 ;; text
 (package! adoc-mode)
 (package! tldr)
 (package! edit-indirect)
-(package! blog-admin :recipe (:host github :repo "codefalling/blog-admin"))
 (package! link-hint)
 (package! symbol-overlay)
 (package! pomm)
@@ -414,34 +407,27 @@ and Here we add the packages want installed
 (package! evil-string-inflection)
 (package! all-the-icons-ibuffer)
 (package! dired-narrow)
-(package! atomic-chrome)
 (package! git-link)
 (package! magit-delta)
 (package! citre)
 (package! imenu-list)
-;; (package! tmux-pane)
-(package! go-translate)
-;; (package! org-roam-ui)
-;; (package! md-roam :recipe (:host github :repo "nobiot/md-roam"))
 
 ;; programming
 (package! bazel-mode :recipe (:host github :repo "bazelbuild/emacs-bazel-mode"))
 (package! graphql-mode)
 (package! protobuf-mode)
-(package! gn-mode)
 (when (modulep! :tools lsp +eglot)
   (package! breadcrumb :recipe (:host github :repo "joaotavora/breadcrumb"))
   (package! eglot-java)
   )
 (when (not (modulep! :tools lsp +eglot))
   (package! lsp-docker))
-
 #+end_src
 
-* configuration
-** autoload modules
-*** buffer.el
-#+begin_src emacs-lisp :tangle autoload/buffer.el :mkdirp yes
+* Autoload Functions
+in this part, we define some functions that get autoloaded
+** Buffer Functions
+#+begin_src emacs-lisp :tangle "~/.config/doom/autoload/buffer.el" :mkdirp yes
 ;;; ~/.doom.d/autoload/buffer.el -*- lexical-binding: t; -*-
 
 ;;;###autoload
@@ -453,7 +439,7 @@ and Here we add the packages want installed
 
 ;;;###autoload
 (defun reload-buffer-no-confirm ()
-  "Revert buffer without confirmation."
+  "Reload buffer without confirmation."
   (interactive)
   (save-buffer)
   (let ((f buffer-file-name))
@@ -547,51 +533,9 @@ and Here we add the packages want installed
     (call-interactively 'lsp-workspace-restart)))
 #+end_src
 
-*** git.el
-#+begin_src emacs-lisp :tangle autoload/git.el :mkdirp yes
+** Git Functions
+#+begin_src emacs-lisp :tangle "~/.config/doom/autoload/git.el" :mkdirp yes
 ;;; autoload/git.el -*- lexical-binding: t; -*-
-
-;;; Add support for Amazon code repos
-;;;###autoload
-(defun git-link-amazon-code (_hostname dirname filename branch commit start end)
-  (require 's)
-  (format "https://code.amazon.com/packages/%s/blobs/%s/--/%s"
-          ;; The dirname here is user/repo-name. Just pick the repo-name.
-          (nth 1 (s-split "/" dirname))
-          (or commit branch)
-          (concat filename
-                  (when start
-                    (concat "#"
-                            (if end
-                                (format "L%s-L%s" start end)
-                              (format "L%s" start)))))))
-
-;;;###autoload
-(defun git-link-commit-amazon-code (_hostname dirname commit)
-  (require 's)
-  (format "https://code.amazon.com/packages/%s/commits/%s#"
-          (nth 1 (s-split "/" dirname))
-          commit))
-
-;;;###autoload
-(defun git-link-aws-codecommit (hostname dirname filename branch commit start end)
-  (require 's)
-  (format "https://console.aws.amazon.com/codesuite/codecommit/repositories/%s/browse/refs/heads/%s/--/%s?region=%s&lines=%s-%s"
-          (nth 2 (s-split "\\/" dirname))
-          (or branch commit)
-          filename
-          (nth 1 (s-split "\\." hostname))
-          (or start "")
-          (or end start "")))
-
-;;;###autoload
-(defun git-link-commit-aws-codecommit (hostname dirname commit)
-  (require 's)
-  (require 'magit-git)
-  (format "https://console.aws.amazon.com/codesuite/codecommit/repositories/%s/commit/%s?region=%s"
-          (nth 2 (s-split "\\/" dirname))
-          (magit-rev-parse commit)
-          (nth 1 (s-split "\\." hostname))))
 
 ;;;###autoload
 (defun +vc/git-browse-commit (arg)
@@ -662,10 +606,11 @@ repository root."
 
   ;; refresh magit-status buffer
   (magit-refresh))
+
 #+end_src
 
-*** misc.el
-#+begin_src emacs-lisp :tangle autoload/misc.el :mkdirp yes
+** Misc Functions
+#+begin_src emacs-lisp :tangle "~/.config/doom/autoload/misc.el" :mkdirp yes
 ;;; private/my/autoload/misc.el -*- lexical-binding: t; -*-
 
 ;;;###autoload
@@ -752,62 +697,16 @@ If prefix ARG is set, prompt for a directory to search from."
            ((modulep! :completion helm) #'+helm/project-search-from-cwd)
            (#'rgrep)))))
 
-;; TODO: Search with specific file types
-;;;###autoload
-;; (defun +ivy--counsel-file-jump-use-fd-rg-specific-files (args)
-;;   "Change `counsel-file-jump' to use fd or ripgrep, if they are available."
-;;   (cl-destructuring-bind (find-program . args)
-;;       (cond ((executable-find doom-projectile-fd-binary)
-;;              (cons doom-projectile-fd-binary (list "-t" "f" "-E" ".git" "-e" "py" "-e" "java"
-;;                                                    "-e" "yaml" "-e" "md" "-e" "adoc")))
-;;             ((executable-find "rg")
-;;              (split-string (format counsel-rg-base-command "--files --no-messages") " " t))
-;;             ((cons find-program args)))
-;;     (unless (listp args)
-;;       (user-error "`counsel-file-jump-args' is a list now, please customize accordingly."))
-;;     (counsel--call
-;;      (cons find-program args)
-;;      (lambda ()
-;;        (goto-char (point-min))
-;;        (let ((offset (if (member find-program (list "rg" doom-projectile-fd-binary)) 0 2))
-;;              files)
-;;          (while (< (point) (point-max))
-;;            (push (buffer-substring
-;;                   (+ offset (line-beginning-position)) (line-end-position)) files)
-;;            (forward-line 1))
-;;          (nreverse files))))))
 
 ;;;###autoload
-;; (defun +ivy/project-search-specific-files (&optional initial-input initial-directory)
-;;   "Similar to counsel-file-jump"
-;;   (interactive
-;;    (list nil
-;;          (when current-prefix-arg
-;;            (counsel-read-directory-name "From directory: "))))
-;;   (counsel-require-program find-program)
-;;   (let ((default-directory (doom-project-root)))
-;;     (ivy-read "Find file: "
-;;               (+ivy--counsel-file-jump-use-fd-rg-specific-files counsel-file-jump-args)
-;;               :matcher #'counsel--find-file-matcher
-;;               :initial-input initial-input
-;;               :action #'find-file
-;;               :preselect (counsel--preselect-file)
-;;               :require-match 'confirm-after-completion
-;;               :history 'file-name-history
-;;               :caller 'counsel-file-jump)))
-
-;;;###autoload
-(defvar +my/repo-root-list '("~" "~/Builds" "~/go/src" "~/Documents" "~/.config")
+(defvar +my/repo-root-list '("~/" "~/Code" "~/Builds" "~/Documents" "~/.config")
   "personal repo root to scan git projects")
-
-;;;###autoload
-(defvar +my/user-custom-repos '("/CCN_Tools/work/bstnnx_release/regression_test/"))
 
 ;;;###autoload
 (defun update-projectile-known-projects ()
   (interactive)
   (require 'magit)
-  (setq magit-repository-directories '(("~/Work" . 3)))
+  (setq magit-repository-directories '(("~/Code" . 3)))
   ;; Workplace folder has some permission error on macos
   (let ((workspace-dir "~/Documents/"))
     (when (file-directory-p workspace-dir)
@@ -828,10 +727,7 @@ If prefix ARG is set, prompt for a directory to search from."
     ;; convert abs path to relative path (HOME)
     (dolist (repo magit-abs-repos)
       (push (concat "~/" (file-relative-name repo "~")) magit-repos))
-    (setq projectile-known-projects magit-repos)
-    (dolist (repo +my/user-custom-repos)
-      (if (file-directory-p repo)
-          (push repo projectile-known-projects)))))
+    (setq projectile-known-projects magit-repos)))
 
 ;;;###autoload
 (defun +my/evil-quick-replace (beg end )
@@ -861,69 +757,6 @@ If prefix ARG is set, prompt for a directory to search from."
       (while (re-search-forward (car pair) nil t)
         (replace-match (cdr pair))))))
 
-
-;;;###autoload
-(defun iterm-open-new-tab (dir &optional args)
-  (do-applescript
-   (format
-    "
-    tell application \"/Applications/iTerm.app\"
-        activate
-        tell current window
-            create tab with default profile
-            tell the current session
-                write text \"cd %s\"
-            end tell
-        end tell
-    end tell
-"
-    dir)))
-
-;; "http://xuchunyang.me/Opening-iTerm-From-an-Emacs-Buffer/"
-;;;###autoload
-(defun +my/iterm-shell-command (command &optional prefix)
-  "cd to `default-directory' then run COMMAND in iTerm.
-With PREFIX, cd to project root."
-  (interactive (list (read-shell-command
-                      "iTerm Shell Command: ")
-                     current-prefix-arg))
-  (let* ((dir (if prefix (doom-project-root)
-                default-directory))
-         ;; if COMMAND is empty, just change directory
-         (cmd (format "cd %s ;%s" dir command)))
-    (do-applescript
-     (format
-      "
-  tell application \"iTerm2\"
-       activate
-       set _session to current session of current window
-       tell _session
-            set command to get the clipboard
-            write text \"%s\"
-       end tell
-  end tell
-  " cmd))))
-
-;; https://github.com/syohex/emacs-browser-refresh/blob/master/browser-refresh.el
-;;;###autoload
-(defun +my/browser-refresh--chrome-applescript ()
-  (interactive)
-  (do-applescript
-   (format
-    "
-  tell application \"Google Chrome\"
-    set winref to a reference to (first window whose title does not start with \"Developer Tools - \")
-    set winref's index to 1
-    reload active tab of winref
-  end tell
-" )))
-
-;;;###autoload
-(defun +my/window-focus-default-browser ()
-  (cond
-   ((executable-find "launch-browser") (shell-command "launch-browser"))
-   (IS-MAC (shell-command "open -a \"/Applications/Google Chrome.app\""))
-   (IS-LINUX (shell-command "wmctrl -a \"Google Chrome\""))))
 
 ;;;###autoload
 (defun imenu-comments ()
@@ -1024,10 +857,11 @@ you're done. This can be called from an external shell script."
       (setcdr last (cddr last))
       list)))
 
+
 #+end_src
 
-*** os.el
-#+begin_src emacs-lisp :tangle autoload/os.el :mkdirp yes
+** OS Functions
+#+begin_src emacs-lisp :tangle "~/.config/doom/autoload/os.el" :mkdirp yes
 ;;; ~/.doom.d/autoload/os.el -*- lexical-binding: t; -*-
 
 ;; Copied from https://github.com/emacsorphanage/osx-trash/blob/master/osx-trash.el
@@ -1139,11 +973,10 @@ non-nil value to enable trashing for file operations."
       (+shell-open-with alacritty-bin (concat "--working-directory='" (or (doom-project-root) default-directory)"'")))
      ((executable-find iterm-bin)
       (iterm-open-new-tab (or (doom-project-root) default-directory))))))
-
 #+end_src
 
-*** prog.el
-#+begin_src emacs-lisp :tangle autoload/prog.el :mkdirp yes
+** Prog Functions
+#+begin_src emacs-lisp :tangle "~/.config/doom/autoload/prog.el" :mkdirp yes
 ;;; ~/.doom.d/autoload/prog.el -*- lexical-binding: t; -*-
 
 (defun my/realgud-eval-nth-name-forward (n)
@@ -1267,11 +1100,10 @@ non-nil value to enable trashing for file operations."
 (defun display-which-function ()
   (interactive)
   (message (which-function)))
-
 #+end_src
 
-*** text.el
-#+begin_src emacs-lisp :tangle autoload/text.el :mkdirp yes
+** Text Functions
+#+begin_src emacs-lisp :tangle "~/.config/doom/autoload/text.el" :mkdirp yes
 ;;; autoload/text.el -*- lexical-binding: t; -*-
 
 (defun +my/markdown-highlight ()
@@ -1319,11 +1151,10 @@ non-nil value to enable trashing for file operations."
           )                             ;combine-after-change-calls
         )                               ;save-excursion
       )))
-
 #+end_src
 
-*** ui.el
-#+begin_src emacs-lisp :tangle autoload/ui.el :mkdirp yes
+** UI Functions
+#+begin_src emacs-lisp :tangle "~/.config/doom/autoload/ui.el" :mkdirp yes
 ;;; autoload/ui.el -*- lexical-binding: t; -*-
 
 ;;;###autoload
@@ -1334,12 +1165,23 @@ non-nil value to enable trashing for file operations."
     (setq display-line-numbers-type t))
   (revert-buffer-no-confirm))
 
+ (defun toggle-transparency ()
+   (interactive)
+   (let ((alpha (frame-parameter nil 'alpha)))
+     (set-frame-parameter
+      nil 'alpha
+      (if (eql (cond ((numberp alpha) alpha)
+                     ((numberp (cdr alpha)) (cdr alpha))
+                     ;; Also handle undocumented (<active> <inactive>) form.
+                     ((numberp (cadr alpha)) (cadr alpha)))
+               100)
+          '(85 . 50) '(100 . 100)))))
 #+end_src
 
-** modules
+** Private modules
 *** lazycat
 **** autoload
-#+begin_src emacs-lisp :tangle modules/private/lazycat/autoload/lazycat.el :mkdirp yes
+#+begin_src emacs-lisp :tangle "~/.config/doom/modules/private/lazycat/autoload/lazycat.el" :mkdirp yes
 ;;; private/lazycat/autoload/lazycat.el -*- lexical-binding: t; -*-
 
 ;;;###autoload
@@ -1352,7 +1194,7 @@ non-nil value to enable trashing for file operations."
 #+end_src
 
 **** config.el
-#+begin_src emacs-lisp :tangle modules/private/lazycat/config.el :mkdirp yes
+#+begin_src emacs-lisp :tangle "~/.config/doom/modules/private/lazycat/config.el" :mkdirp yes
 ;;; private/lazycat/config.el -*- lexical-binding: t; -*-
 
 (map! :leader
@@ -1421,7 +1263,7 @@ non-nil value to enable trashing for file operations."
 #+end_src
 
 **** packages.el
-#+begin_src emacs-lisp :tangle modules/private/lazycat/packages.el :mkdirp yes
+#+begin_src emacs-lisp :tangle "~/.config/doom/modules/private/lazycat/packages.el" :mkdirp yes
 ;; -*- no-byte-compile: t; -*-
 ;;; private/lazycat/packages.el
 
@@ -1433,7 +1275,7 @@ non-nil value to enable trashing for file operations."
 
 *** my-checker
 **** autoload
-#+begin_src emacs-lisp :tangle modules/private/my-checker/autoload/checker.el :mkdirp yes
+#+begin_src emacs-lisp :tangle "~/.config/doom/modules/private/my-checker/autoload/checker.el" :mkdirp yes
 ;;; private/my-checker/autoload/checker.el -*- lexical-binding: t; -*-
 
 ;;;###autoload
@@ -1456,7 +1298,7 @@ non-nil value to enable trashing for file operations."
 #+end_src
 
 **** config.el
-#+begin_src emacs-lisp :tangle modules/private/my-checker/config.el :mkdirp yes
+#+begin_src emacs-lisp :tangle "~/.config/doom/modules/private/my-checker/config.el" :mkdirp yes
 ;;; private/my-checker/config.el -*- lexical-binding: t; -*-
 
 (if (modulep! :checkers syntax)
@@ -1477,34 +1319,11 @@ non-nil value to enable trashing for file operations."
          :desc "Lsp list errors" "L" #'consult-flymake
          :desc "List project error" "P" #'flymake-show-project-diagnostics
          :desc "Verify setup"    "v" #'flymake-running-backends)))
-(map! :leader
-      (:prefix "c"
-       :desc "Cspell check all changed files" "c" #'cspell-check-diff-from-HEAD
-       :desc "Cspell check buffer"    "C" #'cspell-check-buffer))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; FLYCHECK
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defvar cspell-base-program "cspell")
-(defvar cspell-config-file-path (concat "'" (expand-file-name  "~/.config/cspell/cspell.json") "'"))
-(defvar cspell-args (string-join `("--config" ,cspell-config-file-path) " "))
-(defun cspell-check-buffer ()
-  (interactive)
-  (if cspell-base-program
-      (let* ((file-name (concat "'" (file-name-nondirectory (buffer-file-name)) "'"))
-             (command (string-join `(,cspell-base-program ,cspell-args ,file-name) " ")))
-        (compilation-start command 'grep-mode))
-    (message "Cannot find cspell, please install with `npm install -g cspell`")
-    ))
-
-(defun cspell-check-diff-from-HEAD ()
-  (interactive)
-  (if cspell-base-program
-      (let* ((default-directory (doom-project-root))
-             (command (string-join `("git diff --name-only HEAD | xargs -I{}" ,cspell-base-program ,cspell-args "'{}'") " ")))
-        (compilation-start command 'grep-mode))
-    (message "Cannot find cspell, please install with `npm install -g cspell`")))
 
 ;; (use-package! wucuo
 ;;   :defer t
@@ -1545,11 +1364,10 @@ non-nil value to enable trashing for file operations."
 ;; (defun disable-flycheck-mode ()
 ;;   (flycheck-mode -1))
 ;; (add-hook! (emacs-lisp-mode) 'disable-flycheck-mode)
-
 #+end_src
 
 **** packages.el
-#+begin_src emacs-lisp :tangle modules/private/my-checker/packages.el :mkdirp yes
+#+begin_src emacs-lisp :tangle "~/.config/doom/modules/private/my-checker/packages.el" :mkdirp yes
 ;; -*- no-byte-compile: t; -*-
 ;;; private/my-checker/packages.el
 
@@ -1559,75 +1377,13 @@ non-nil value to enable trashing for file operations."
 
 #+end_src
 
-*** nano-emacs
-**** config.el
-#+begin_src emacs-lisp :tangle modules/private/nano-theme/config.el :mkdirp yes
-;;; private/nano-theme/config.el -*- lexical-binding: t; -*-
-
-;; https://github.com/skyler544/doom-nano-testing/blob/main/load-nano.el
-
-; necessary for proper appearance of nano
-(setq doom-theme 'nil)
-
-(require 'nano-base-colors)
-(require 'nano-faces)
-(require 'nano-theme-light)
-(require 'nano-theme)
-(require 'nano-help)
-(require 'nano-splash)
-(require 'nano-modeline)
-(require 'nano-layout)
-(require 'nano-defaults)
-(require 'nano-session)
-(require 'nano-bindings)
-;; (require 'nano-counsel)
-;; (require 'nano-minibuffer)
-;; (require 'nano-command)
-(require 'nano-colors)
-
-(nano-faces)
-(nano-theme)
-
-(setq display-line-numbers-type nil
-      evil-default-cursor t
-      custom-blue "#718591"
-      custom-yellow "#BDA441")
-
-; still haven't figured out what is up with point
-; related to nano. this is a stopgap measure to
-; get a decent looking cursor
-(if (daemonp)
-    (add-hook 'after-make-frame-functions
-              (lambda (frame)
-                (with-selected-frame frame
-                  (set-cursor-color custom-blue))))
-  (set-cursor-color custom-blue))
-
-(defun set-yellow ()
-  (interactive)
-  (set-cursor-color custom-yellow))
-(defun set-blue ()
-  (interactive)
-  (set-cursor-color custom-blue))
-
-#+end_src
-
-**** packages.el
-#+begin_src emacs-lisp :tangle modules/private/nano-theme/packages.el :mkdirp yes
-;; -*- no-byte-compile: t; -*-
-;;; private/nano-theme/packages.el
-
-(package! nano-emacs :recipe (:host github :repo "rougier/nano-emacs"))
-
-#+end_src
-
 *** my-python
 **** autoload
-#+begin_src emacs-lisp :tangle modules/private/my-python/autoload/python.el :mkdirp yes
+#+begin_src emacs-lisp :tangle "~/.config/doom/modules/private/my-python/autoload/python.el" :mkdirp yes
 ;;; ~/.doom.d/autoload/python.el -*- lexical-binding: t; -*-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                        ;               Debugger              ;
+                     ;               Debugger              ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;###autoload
@@ -1708,9 +1464,9 @@ debugpy.wait_for_client()
    (concat "b " (file-relative-name (buffer-file-name) (doom-project-root))
            ":" (number-to-string (line-number-at-pos)))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                        ;               Imports               ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      ;               Imports               ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 ;;;###autoload
@@ -1905,10 +1661,48 @@ To terminate the loop early, throw 'break."
                     (which-function)
                     ))))
 
+
+;;;###autoload
+(defun fk/setup-django ()
+  "Setup django."
+
+  ;; Highlighting of django template blocks
+  (defvar django-block-regexp (rx "{%" (zero-or-more space)
+                                  (zero-or-one "end") "block "
+                                  (group (zero-or-more (not (any ?\n ?{)))) "%}"))
+
+  (defface django-block-keyword-face
+    '((t (:foreground "tomato" :bold t)))
+    "Face for django template blocks.")
+
+  (defface django-block-name-face
+    '((t (:foreground "wheat" :bold t)))
+    "Face for django template blocks.")
+
+  (font-lock-add-keywords
+   'web-mode
+   `((,django-block-regexp 0 'django-block-keyword-face t)
+     (,django-block-regexp 1 'django-block-name-face t))
+   t)
+
+  ;; Highlighting of django template comments
+  (defvar django-comment-regexp
+    (rx "{%" (zero-or-more space) "comment" (zero-or-more space) "%}"
+        (zero-or-more (not (any "{%")))
+        "{%" (zero-or-more space) "endcomment" (zero-or-more space) "%}"))
+
+  (defface django-comment-face
+    '((t (:inherit 'font-lock-comment-face)))
+    "Face for django template comments.")
+
+  (font-lock-add-keywords
+   'web-mode
+   `((,django-comment-regexp 0 'django-comment-face t))
+   t))
 #+end_src
 
 **** config.el
-#+begin_src emacs-lisp :tangle modules/private/my-python/config.el :mkdirp yes
+#+begin_src emacs-lisp :tangle "~/.config/doom/modules/private/my-python/config.el" :mkdirp yes
 ;;; private/my-python/config.el -*- lexical-binding: t; -*-
 
 (map!
@@ -1929,15 +1723,15 @@ To terminate the loop early, throw 'break."
    :desc "Insert copied import" "p" #'+python/insert-temp-import
    :desc "Copy module import " "i" #'+python/yank-module-import)
   (:prefix ("v" . "ENV")
-   "c" #'conda-env-activate
-   "C" #'conda-env-deactivate
-   "v" #'poetry-venv-toggle
-   "P" #'pyvenv-workon
-   "p" #'pyvenv-activate))
+           "c" #'conda-env-activate
+           "C" #'conda-env-deactivate
+           "v" #'poetry-venv-toggle
+           "P" #'pyvenv-workon
+           "p" #'pyvenv-activate))
  (:after pyenv-mode
-  (:map pyenv-mode-map
-   "C-c C-s" nil
-   "C-c C-u" nil)))
+         (:map pyenv-mode-map
+               "C-c C-s" nil
+               "C-c C-u" nil)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; PYTHON
@@ -1947,8 +1741,6 @@ To terminate the loop early, throw 'break."
   (setq python-indent-offset 4
         python-shell-interpreter "python3"
         pippel-python-command "python3"
-        importmagic-python-interpreter "python3"
-        flycheck-python-pylint-executable "pylint"
         flycheck-python-ruff-executable "ruff")
   (when (file-exists-p! "~/.conda")
     (setq conda-env-home-directory (expand-file-name "~/.conda")))
@@ -1959,14 +1751,27 @@ To terminate the loop early, throw 'break."
   )
 (add-hook! 'python-mode-hook #'+python/annotate-pdb)
 
-(after! lsp-pyls
+(after! lsp-pylsp
   ;; disable live-mode for mypy
-  (lsp-register-custom-settings `(("pyls.plugins.pyls_mypy.enabled" t)))
-  (lsp-register-custom-settings `(("pyls.plugins.pyls_mypy.live_mode" t)))
+  (lsp-register-custom-settings `(("pylsp.plugins.pylsp_mypy.enabled" t)))
+  (lsp-register-custom-settings `(("pylsp.plugins.pylsp_mypy.live_mode" t)))
 
   ;; ignore some linting info
-  (setq lsp-pyls-plugins-pycodestyle-ignore  [ "E501" ]
-        lsp-pyls-plugins-pylint-args [ "--errors-only" ]))
+  (setq lsp-pylsp-plugins-pycodestyle-ignore  [ "E501" ]
+        lsp-pylsp-plugins-pylint-args [ "--errors-only" ]
+        lsp-pylsp-plugins-black-enabled nil
+        lsp-pylsp-plugins-flake8-enabled nil
+        lsp-pylsp-plugins-isort-enabled nil
+        lsp-pylsp-plugins-autopep8-enabled nil
+        lsp-pylsp-plugins-yapf-enabled nil
+        lsp-pylsp-plugins-ruff-enabled t
+        lsp-pylsp-plugins-ruff-lineLength 100
+        lsp-pylsp-plugins-ruff-format ["I"]
+        lsp-pylsp-plugins-pyflakes-enabled nil
+        lsp-pylsp-plugins-pycodestyle-enabled nil
+        lsp-pylsp-plugins-pydocstyle-enabled nil
+        lsp-pylsp-plugins-mccabe-enabled nil
+        lsp-pylsp-plugins-mypy-enabled nil))
 
 (use-package! py-isort
   :defer t
@@ -1987,15 +1792,6 @@ To terminate the loop early, throw 'break."
 
   ;; (add-hook! 'python-mode-hook #'python-isort-autosave-mode)
   )
-
-
-;; (use-package! importmagic
-;;   :defer t
-;;   :hook (python-mode . importmagic-mode)
-;;   :commands (importmagic-fix-imports importmagic-fix-symbol-at-point)
-;;   :config
-;;   (dolist (func '(importmagic-fix-imports importmagic-fix-symbol-at-point))
-;;     (advice-add func :before #'revert-buffer-no-confirm)))
 
 
 (after! pipenv
@@ -2040,7 +1836,7 @@ To terminate the loop early, throw 'break."
 #+end_src
 
 **** packages.el
-#+begin_src emacs-lisp :tangle modules/private/my-python/packages.el :mkdirp yes
+#+begin_src emacs-lisp :tangle "~/.config/doom/modules/private/my-python/packages.el" :mkdirp yes
 ;; -*- no-byte-compile: t; -*-
 ;;; private/my-python/packages.el
 
@@ -2049,9 +1845,9 @@ To terminate the loop early, throw 'break."
 
 #+end_src
 
-** config.el
-*** imprting custom config files
-#+begin_src emacs-lisp :tangle config.el
+* Configuration
+** Importing custom config files
+#+begin_src emacs-lisp :tangle "~/.config/doom/config.el" :mkdirp yes
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 (load! "+os")
@@ -2064,17 +1860,17 @@ To terminate the loop early, throw 'break."
 (cond
   ((modulep! :tools lsp +eglot) (load! "+eglot"))
   ((modulep! :tools lsp) (load! "+lsp")))
+
 #+end_src
 
-*** Name and email
-#+begin_src emacs-lisp :tangle config.el
+** Adding name and email
+#+begin_src emacs-lisp :tangle "~/.config/doom/config.el" :mkdirp yes
 (setq user-full-name "Mohamed Tarek"
       user-mail-address "mohamed96tarek@hotmail.com")
 #+end_src
 
-*** misc config
-#+begin_src emacs-lisp :tangle config.el
-
+** Misc config
+#+begin_src emacs-lisp :tangle "~/.config/doom/config.el" :mkdirp yes
 (setq org-directory "~/org/")
 
 (setq native-comp-jit-compilation t)
@@ -2120,14 +1916,13 @@ To terminate the loop early, throw 'break."
 
 #+end_src
 
-** +ui.el
+** UI Config
 *** Setting fonts
-#+begin_src emacs-lisp :tangle +ui.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+ui.el" :mkdirp yes
 ;;; private/my/+ui.el -*- lexical-binding: t; -*-
 
 (setq doom-font (font-spec :family "FiraCode Nerd Font" :size 13 :weight 'semibold)
-      doom-variable-pitch-font (font-spec :family "Rubik" :size 15 :weight 'medium)
-      doom-symbol-font (font-spec :family "FiraCode Nerd Font" :size 13))
+      doom-variable-pitch-font (font-spec :family "Rubik" :size 15 :weight 'medium))
 
 (setq display-line-numbers-type 'relative)
 
@@ -2136,22 +1931,21 @@ To terminate the loop early, throw 'break."
 #+end_src
 
 *** Emacs Window Setup
-#+begin_src emacs-lisp :tangle +ui.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+ui.el" :mkdirp yes
 
-;; (set-frame-parameter nil 'alpha-background 80)
-;; (add-to-list 'default-frame-alist '(alpha-background . 80)) ; For all new frames henceforth
+(add-to-list 'default-frame-alist '(alpha-background . 85)) ; For all new frames henceforth
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 #+end_src
 
 *** Theme
-#+begin_src emacs-lisp :tangle +ui.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+ui.el" :mkdirp yes
 
 (setq doom-theme 'doom-gruvbox)
 #+end_src
 
 *** UI config
-#+begin_src emacs-lisp :tangle +ui.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+ui.el" :mkdirp yes
 
 (setq evil-emacs-state-cursor `(box ,(doom-color 'violet)))
 
@@ -2278,9 +2072,9 @@ To terminate the loop early, throw 'break."
   (setq cwm-centered-window-width 160))
 #+end_src
 
-** +text.el
+** Text Config
 *** text
-#+begin_src emacs-lisp :tangle +text.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+text.el" :mkdirp yes
 ;;;  -*- lexical-binding: t; -*-
 
 (after! text-mode
@@ -2288,7 +2082,7 @@ To terminate the loop early, throw 'break."
 #+end_src
 
 *** ORG
-#+begin_src emacs-lisp :tangle +text.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+text.el" :mkdirp yes
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ORG
@@ -2411,7 +2205,7 @@ To terminate the loop early, throw 'break."
 #+end_src
 
 *** MARKDOWN
-#+begin_src emacs-lisp :tangle +text.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+text.el" :mkdirp yes
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MARKDOWN
@@ -2450,7 +2244,7 @@ To terminate the loop early, throw 'break."
 #+end_src
 
 *** OTHERS
-#+begin_src emacs-lisp :tangle +text.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+text.el" :mkdirp yes
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; OTHERS
@@ -2491,9 +2285,9 @@ To terminate the loop early, throw 'break."
 
 #+end_src
 
-** +prog.el
+** Prog Config
 *** MISC
-#+begin_src emacs-lisp :tangle +prog.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+prog.el" :mkdirp yes
 ;;; ~/.doom.d/+prog.el -*- lexical-binding: t; -*-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -2532,7 +2326,7 @@ To terminate the loop early, throw 'break."
 #+end_src
 
 *** CC
-#+begin_src emacs-lisp :tangle +prog.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+prog.el" :mkdirp yes
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; CC
@@ -2553,7 +2347,7 @@ To terminate the loop early, throw 'break."
 #+end_src
 
 *** JS, WEB
-#+begin_src emacs-lisp :tangle +prog.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+prog.el" :mkdirp yes
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; JS, WEB
@@ -2569,7 +2363,7 @@ To terminate the loop early, throw 'break."
 #+end_src
 
 *** JAVA
-#+begin_src emacs-lisp :tangle +prog.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+prog.el" :mkdirp yes
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; JAVA
@@ -2580,7 +2374,7 @@ To terminate the loop early, throw 'break."
 #+end_src
 
 *** DEBUG & RUN
-#+begin_src emacs-lisp :tangle +prog.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+prog.el" :mkdirp yes
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; DEBUG & RUN
@@ -2647,7 +2441,7 @@ To terminate the loop early, throw 'break."
 #+end_src
 
 *** LANGUAGE CUSTOMIZATION
-#+begin_src emacs-lisp :tangle +prog.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+prog.el" :mkdirp yes
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; LANGUAGE CUSTOMIZATION
@@ -2660,9 +2454,9 @@ To terminate the loop early, throw 'break."
   "Simple mode for sxhkdrc files.")
 #+end_src
 
-** +os.el
+** OS Config
 *** MACOS
-#+begin_src emacs-lisp :tangle +os.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+os.el" :mkdirp yes
 ;;; ~/.doom.d/+os.el -*- lexical-binding: t; -*-
 
 
@@ -2694,7 +2488,7 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 #+end_src
 
 *** LINUX
-#+begin_src emacs-lisp :tangle +os.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+os.el" :mkdirp yes
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; LINUX
@@ -2729,7 +2523,7 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 #+end_src
 
 *** TRASH
-#+begin_src emacs-lisp :tangle +os.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+os.el" :mkdirp yes
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; TRASH
@@ -2743,9 +2537,9 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
   (os--trash-setup))
 #+end_src
 
-** +misc.el
+** Misc Config
 *** use chrome to browse
-#+begin_src emacs-lisp :tangle +misc.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+misc.el" :mkdirp yes
 ;;; ~/.doom.d/+misc.el -*- lexical-binding: t; -*-
 
 ;; Use chrome to browse
@@ -2760,7 +2554,7 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 #+end_src
 
 *** Spell dict file
-#+begin_src emacs-lisp :tangle +misc.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+misc.el" :mkdirp yes
 
 ;; Set personal ispell dictionary file
 (when (file-exists-p (expand-file-name "~/.aspell.en.pws"))
@@ -2768,21 +2562,21 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 #+end_src
 
 *** Screenshot
-#+begin_src emacs-lisp :tangle +misc.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+misc.el" :mkdirp yes
 
 (use-package! screenshot
   :defer t)
 #+end_src
 
 *** Centaur-tabs
-#+begin_src emacs-lisp :tangle +misc.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+misc.el" :mkdirp yes
 
 (after! centaur-tabs
   (centaur-tabs-group-by-projectile-project))
 #+end_src
 
 *** LOG
-#+begin_src emacs-lisp :tangle +misc.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+misc.el" :mkdirp yes
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; LOG
@@ -2793,7 +2587,7 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 #+end_src
 
 *** SSH
-#+begin_src emacs-lisp :tangle +misc.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+misc.el" :mkdirp yes
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; SSH
@@ -2804,7 +2598,7 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 #+end_src
 
 *** NAVIGATION
-#+begin_src emacs-lisp :tangle +misc.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+misc.el" :mkdirp yes
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; NAVIGATION
@@ -2836,7 +2630,7 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 #+end_src
 
 *** TMUX
-#+begin_src emacs-lisp :tangle +misc.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+misc.el" :mkdirp yes
 
 ;; (use-package! tmux-pane
 ;;   :unless (display-graphic-p)
@@ -2872,7 +2666,7 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 #+end_src
 
 *** imenu-list
-#+begin_src emacs-lisp :tangle +misc.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+misc.el" :mkdirp yes
 
 (use-package! imenu-list
   :defer t
@@ -2881,13 +2675,13 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 #+end_src
 
 *** better-jumper-post-jump-hook
-#+begin_src emacs-lisp :tangle +misc.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+misc.el" :mkdirp yes
 
 (add-hook! 'better-jumper-post-jump-hook #'recenter)
 #+end_src
 
 *** nav-flash
-#+begin_src emacs-lisp :tangle +misc.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+misc.el" :mkdirp yes
 
 (after! nav-flash
   (defun +advice/nav-flash-show (orig-fn &rest args)
@@ -2896,7 +2690,7 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 #+end_src
 
 *** dired
-#+begin_src emacs-lisp :tangle +misc.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+misc.el" :mkdirp yes
 
 ;; Use ) key to toggle it
 (after! dired
@@ -2908,7 +2702,7 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 #+end_src
 
 *** ranger
-#+begin_src emacs-lisp :tangle +misc.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+misc.el" :mkdirp yes
 
 (after! ranger
   (setq ranger-hide-cursor t
@@ -2934,7 +2728,7 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 #+end_src
 
 *** dash-docs
-#+begin_src emacs-lisp :tangle +misc.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+misc.el" :mkdirp yes
 
 (after! dash-docs
   (setq dash-docs-use-workaround-for-emacs-bug nil)
@@ -2945,7 +2739,7 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 #+end_src
 
 *** CITRE
-#+begin_src emacs-lisp :tangle +misc.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+misc.el" :mkdirp yes
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; CITRE
@@ -2995,30 +2789,8 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
    ))
 #+end_src
 
-*** TRANSLATE
-#+begin_src emacs-lisp :tangle +misc.el
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; TRANSLATE
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-(use-package! go-translate
-  :defer t
-  :config
-  (setq gts-translate-list '(("en" "ar-EG")))
-  (setq gts-default-translator
-        (gts-translator
-         :picker (gts-prompt-picker)
-         :engines (list (gts-google-engine) (gts-google-rpc-engine))
-         :render (gts-buffer-render)))
-  ;; For China user
-  ;; (setq go-translate-base-url "https://translate.google.cn")
-  )
-#+end_src
-
 *** QUICKRUN
-#+begin_src emacs-lisp :tangle +misc.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+misc.el" :mkdirp yes
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; QUICKRUN
@@ -3031,7 +2803,7 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 #+end_src
 
 *** PROJECTILE
-#+begin_src emacs-lisp :tangle +misc.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+misc.el" :mkdirp yes
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; PROJECTILE
@@ -3052,7 +2824,7 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 #+end_src
 
 *** COMPLETION
-#+begin_src emacs-lisp :tangle +misc.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+misc.el" :mkdirp yes
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; COMPLETION
@@ -3095,55 +2867,8 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
           counsel-describe-variable-function 'helpful-variable)))
 #+end_src
 
-*** ATOMIC CHROME
-#+begin_src emacs-lisp :tangle +misc.el
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ATOMIC CHROME
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(use-package! atomic-chrome
-  :defer 3
-  :when (display-graphic-p)
-  :preface
-  (defun +my/atomic-chrome-server-running-p ()
-    (cond ((executable-find "lsof")
-           (zerop (call-process "lsof" nil nil nil "-i" ":64292")))
-          ((executable-find "netstat")  ; Windows
-           (zerop (call-process-shell-command "netstat -aon | grep 64292")))))
-  :hook
-  (atomic-chrome-edit-mode . +my/atomic-chrome-mode-setup)
-  (atomic-chrome-edit-done . +my/window-focus-default-browser)
-  :config
-  (progn
-    (setq atomic-chrome-buffer-open-style 'full) ;; or frame, split
-    (setq atomic-chrome-url-major-mode-alist
-          '(("github\\.com"        . gfm-mode)
-            ("swagger"             . yaml-mode)
-            ("emacs-china\\.org"   . gfm-mode)
-            ("stackexchange\\.com" . gfm-mode)
-            ("stackoverflow\\.com" . gfm-mode)
-            ("discordapp\\.com"    . gfm-mode)
-            ("coderpad\\.io"       . c++-mode)
-            ;; jupyter notebook
-            ("localhost\\:8888"    . python-mode)
-            ("lintcode\\.com"      . python-mode)
-            ("leetcode-cn\\.com"   . python-mode)
-            ("leetcode\\.com"      . python-mode)))
-
-    (defun +my/atomic-chrome-mode-setup ()
-      (setq header-line-format
-            (substitute-command-keys
-             "Edit Chrome text area.  Finish \
-`\\[atomic-chrome-close-current-buffer]'.")))
-
-    (if (+my/atomic-chrome-server-running-p)
-        (message "Can't start atomic-chrome server, because port 64292 is already used")
-      (atomic-chrome-start-server))))
-#+end_src
-
 *** PRODIGY
-#+begin_src emacs-lisp :tangle +misc.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+misc.el" :mkdirp yes
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; PRODIGY
@@ -3186,7 +2911,7 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 #+end_src
 
 *** TERM
-#+begin_src emacs-lisp :tangle +misc.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+misc.el" :mkdirp yes
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; TERM
@@ -3218,9 +2943,9 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
   (add-hook! 'term-mode-hook (setq-local imenu-generic-expression '(("Prompt" "➜\\(.*\\)" 1)))))
 #+end_src
 
-** +lsp.el
+** Lsp Config
 *** clangd
-#+begin_src emacs-lisp :tangle +lsp.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+lsp.el" :mkdirp yes
 ;;; +lsp.el -*- lexical-binding: t; -*-
 
 (after! lsp-clangd
@@ -3236,7 +2961,7 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 #+end_src
 
 *** TypeScript
-#+begin_src emacs-lisp :tangle +lsp.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+lsp.el" :mkdirp yes
 
 ;; Typescript
 (setq lsp-clients-typescript-init-opts
@@ -3244,7 +2969,7 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 #+end_src
 
 *** Java
-#+begin_src emacs-lisp :tangle +lsp.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+lsp.el" :mkdirp yes
 
 ;; Java
 (after! lsp-java
@@ -3260,7 +2985,7 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 #+end_src
 
 *** lsp-mode & lsp-ui
-#+begin_src emacs-lisp :tangle +lsp.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+lsp.el" :mkdirp yes
 
 ;; Use format-all by default
 (setq +format-with-lsp nil)
@@ -3306,7 +3031,7 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 #+end_src
 
 *** lsp-docker
-#+begin_src emacs-lisp :tangle +lsp.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+lsp.el" :mkdirp yes
 
 (use-package lsp-docker
   :when (not (modulep! :tools lsp +eglot))
@@ -3336,8 +3061,8 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
   )
 #+end_src
 
-** +eglot.el
-#+begin_src emacs-lisp :tangle +eglot.el
+** Eglot Config
+#+begin_src emacs-lisp :tangle "~/.config/doom/+eglot.el" :mkdirp yes
 ;;; +eglot.el -*- lexical-binding: t; -*-
 
 (use-package! breadcrumb
@@ -3370,27 +3095,9 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
   )
 #+end_src
 
-* Modes Config
-** Python Setup
-#+begin_src emacs-lisp :tangle config.el
-
-(setq lsp-pylsp-plugins-black-enabled nil)
-(setq lsp-pylsp-plugins-flake8-enabled nil)
-(setq lsp-pylsp-plugins-isort-enabled nil)
-(setq lsp-pylsp-plugins-autopep8-enabled nil)
-(setq lsp-pylsp-plugins-yapf-enabled nil)
-(setq lsp-pylsp-plugins-ruff-enabled t)
-(setq lsp-pylsp-plugins-ruff-lineLength 100)
-(setq lsp-pylsp-plugins-ruff-format "I")
-(setq lsp-pylsp-plugins-pyflakes-enabled nil)
-(setq lsp-pylsp-plugins-pycodestyle-enabled nil)
-(setq lsp-pylsp-plugins-pydocstyle-enabled nil)
-(setq lsp-pylsp-plugins-mccabe-enabled nil)
-(setq lsp-pylsp-plugins-mypy-enabled nil)
-#+end_src
-
-** Web-mode Setup
-#+begin_src emacs-lisp :tangle config.el
+** Modes Configs
+*** Web-mode Setup
+#+begin_src emacs-lisp :tangle "~/.config/doom/config.el" :mkdirp yes
 
 (after! web-mode
   (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
@@ -3403,7 +3110,7 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 
 * Plugins Custom Configs
 ** evil-snipe
-#+begin_src emacs-lisp :tangle config.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/config.el" :mkdirp yes
 
 (after! evil-snipe
   (setq evil-snipe-scope 'buffer
@@ -3412,7 +3119,7 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 #+end_src
 
 * GIT
-#+begin_src emacs-lisp :tangle +git.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+git.el" :mkdirp yes
 ;;; +git.el -*- lexical-binding: t; -*-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -3465,9 +3172,8 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 #+end_src
 
 * Bindings
-#+begin_src emacs-lisp :tangle +keys.el
+#+begin_src emacs-lisp :tangle "~/.config/doom/+keys.el" :mkdirp yes
 ;;; private/my/+bindings.el -*- lexical-binding: t; -*-
-
 (when IS-MAC (setq mac-command-modifier 'meta
                    mac-option-modifier  'alt))
 
