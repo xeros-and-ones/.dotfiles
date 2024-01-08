@@ -24,6 +24,7 @@
 (package! edit-indirect)
 (package! link-hint)
 (package! symbol-overlay)
+(package! ligature)
 
 (package! keycast)
 (package! evil-string-inflection)
