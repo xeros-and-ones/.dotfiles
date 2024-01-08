@@ -1,0 +1,19 @@
+
+;; ----- smex-history -----
+(
+ eval-buffer
+ global-display-line-numbers-mode
+ next-buffer
+ counsel-minibuffer-history
+ cd
+ 5x5
+ arp
+)
+
+;; ----- smex-data -----
+(
+ (counsel-minibuffer-history . 1)
+ (eval-buffer . 7)
+ (next-buffer . 1)
+ (global-display-line-numbers-mode . 1)
+)
