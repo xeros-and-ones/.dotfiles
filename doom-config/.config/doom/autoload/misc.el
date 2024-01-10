@@ -33,7 +33,7 @@ selected, then the current line."
      (call-interactively #'execute-extended-command))))
 
 ;;;###autoload
-(define-inline +xero/simulate-key (key)
+(define-inline +my/simulate-key (key)
   (inline-quote
    (lambda () (interactive)
      (setq prefix-arg current-prefix-arg)

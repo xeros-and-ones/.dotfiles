@@ -100,7 +100,7 @@
  :gi "C-k" #'kill-line
  :gi "C-d" #'delete-forward-char
 
- :v "C-r"   #'+xero/evil-quick-replace
+ :v "C-r"   #'+my/evil-quick-replace
  :v "DEL" (kbd "\"_d")
  :v "<del>" (kbd "\"_d")
  :v "<backspace>" (kbd "\"_d")
@@ -264,11 +264,11 @@
           :desc "Insert item below" :ni "<C-return>"  #'+org/insert-item-below
           :desc "Insert item above" :ni "<S-C-return>" #'+org/insert-item-above
           (:localleader
-           :desc "highlight" "ih" #'+xero/markdown-highlight
-           :desc "Fix Copy"           "F" #'+xero/markdown-copy-fix
+           :desc "highlight" "ih" #'+my/markdown-highlight
+           :desc "Fix Copy"           "F" #'+my/markdown-copy-fix
            :desc "Insert header line" "-" #'org-table-insert-hline
            :desc "Crete Table from region" "|" #'org-table-create-or-convert-from-region
-           :desc "Edit" "x" (+xero/simulate-key "C-c C-s")
+           :desc "Edit" "x" (+my/simulate-key "C-c C-s")
            (:prefix ("i" . "Insert")
                     "r" #'markdown-table-insert-row
                     "c" #'markdown-table-insert-column))))

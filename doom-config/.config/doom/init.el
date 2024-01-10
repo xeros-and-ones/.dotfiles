@@ -203,10 +203,10 @@
        (default +bindings +smartparens +snippets)
 
 
-       ;; :private
+       :private
        ;; ;; lazycat          ; snails, color-rg, fuz
-       ;; xero-python
-       ;; xero-checker
+       my-python
+       my-checker
        )
 
 (setq custom-file (expand-file-name "custom.el" doom-local-dir))

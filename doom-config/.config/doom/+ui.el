@@ -10,6 +10,7 @@
      (if (eql active 100)
          85 100))))
 
+
 ;; setting the 'theme' and enabling 'bold' and 'italic'
 (setq doom-theme 'doom-gruvbox
       doom-themes-enable-bold t
@@ -31,7 +32,7 @@
 (remove-hook 'doom-init-ui-hook #'blink-cursor-mode)
 
 ;; enabling 'relative' line numbers
-(setq display-line-numbers-type 'relative)
+(setq display-line-numbers-type t)
 
 
 ;; 'fill-column' for line wraping
@@ -55,8 +56,8 @@
       evil-operator-state-tag (propertize "OPERATOR"))
 
 (custom-theme-set-faces! doom-theme
-  `(doom-modeline-debug-visual :background ,(doom-blend 'red 'base0 0.3))
-  `(mode-line :background ,(doom-blend 'dark-blue 'base0  0.6))
+  `(doom-modeline-debug-visual :background ,(doom-blend 'red 'bg 0.3))
+  `(mode-line :background ,(doom-blend 'dark-blue 'bg  0.6))
   `(mode-line-inactive :background ,(doom-color 'bg-alt)))
 ;;
 ;;
@@ -105,11 +106,11 @@
   '(font-lock-builtin-face :italic t)
   '(font-lock-type-face :italic t)
   '(font-lock-function-name-face :weight bold :slant italic)
-  `(web-mode-jsx-depth-1-face :background ,(doom-blend 'teal 'base0 0.1))
-  `(web-mode-jsx-depth-2-face :background ,(doom-blend 'teal 'base0 0.2))
-  `(web-mode-jsx-depth-3-face :background ,(doom-blend 'teal 'base0 0.3))
-  `(web-mode-jsx-depth-4-face :background ,(doom-blend 'teal 'base0 0.4))
-  `(web-mode-jsx-depth-5-face :background ,(doom-blend 'teal 'base0 0.5))
+  `(web-mode-jsx-depth-1-face :background ,(doom-blend 'teal 'bg 0.1))
+  `(web-mode-jsx-depth-2-face :background ,(doom-blend 'teal 'bg 0.2))
+  `(web-mode-jsx-depth-3-face :background ,(doom-blend 'teal 'bg 0.3))
+  `(web-mode-jsx-depth-4-face :background ,(doom-blend 'teal 'bg 0.4))
+  `(web-mode-jsx-depth-5-face :background ,(doom-blend 'teal 'bg 0.5))
   `(flyspell-incorrect :underline ,(doom-color 'red))
   `(flyspell-duplicate :underline ,(doom-color 'orange))
   `(flymake-warning :underline (:style wave :color ,(doom-color 'yellow)))
@@ -121,15 +122,15 @@
   '(markdown-header-face-3 :inherit 'org-level-3)
   `(breakpoint-enabled :background ,(doom-color 'red) :foreground ,(doom-lighten (doom-color 'red) 0.5))
   `(dap-ui-pending-breakpoint-face :background ,(doom-color 'red) :foreground "white")
-  `(dap-ui-verified-breakpoint-face :background ,(doom-blend 'red 'base0 0.2))
+  `(dap-ui-verified-breakpoint-face :background ,(doom-blend 'red 'bg 0.2))
   `(lsp-ui-peek-highlight :foreground ,(doom-color 'blue))
   `(hl-line :background ,(doom-color 'bg-alt)) ; sometimes ranger doesn't show hl-line color
   `(vertical-border :foreground ,(doom-color 'bg-alt))
-  `(show-paren-match :background ,(doom-blend 'teal 'base0 0.6) :foreground ,(doom-color 'base1))
+  `(show-paren-match :background ,(doom-blend 'teal 'bg 0.6) :foreground ,(doom-color 'base1))
   '(tide-hl-identifier-face :inherit 'lsp-face-highlight-read)
   `(ivy-posframe-border :background ,(doom-color 'blue))
-  `(ein:cell-input-area :background ,(doom-blend 'red 'base0 0.15))
-  `(ein:cell-input-prompt :background ,(doom-color 'red) :foreground ,(doom-color 'base0) :bold t))
+  `(ein:cell-input-area :background ,(doom-blend 'red 'bg 0.15))
+  `(ein:cell-input-prompt :background ,(doom-color 'red) :foreground ,(doom-color 'bg) :bold t))
 
 
 (defface breakpoint-enabled '((t)) "Breakpoint face.")
