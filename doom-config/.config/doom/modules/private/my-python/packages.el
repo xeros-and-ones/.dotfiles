@@ -1,6 +1,5 @@
 ;; -*- no-byte-compile: t; -*-
-;;; private/xero-python/packages.el
-
+;;; private/my-python/packages.el
 
 ;; (package! importmagic)
 (package! py-isort)

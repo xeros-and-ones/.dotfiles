@@ -1,5 +1,3 @@
-;;; autoload/misc.el -*- lexical-binding: t; -*-
-
 ;;; private/my/autoload/misc.el -*- lexical-binding: t; -*-
 
 ;;;###autoload
@@ -28,7 +26,7 @@ selected, then the current line."
     (comment-or-uncomment-region beg end)))
 
 ;;;###autoload
-(define-inline +xero/prefix-M-x (prefix)
+(define-inline +my/prefix-M-x (prefix)
   (inline-quote
    (lambda () (interactive)
      (setq unread-command-events (string-to-list ,prefix))
@@ -40,6 +38,19 @@ selected, then the current line."
    (lambda () (interactive)
      (setq prefix-arg current-prefix-arg)
      (setq unread-command-events (listify-key-sequence (read-kbd-macro ,key))))))
+
+;;;###autoload
+(defmacro make--shell (name ip &rest arglist)
+  `(defun ,(intern (format "my-shell-%s" name)) ,arglist
+     (interactive)
+     (find-file ,(format "/sshx:%s:" ip))
+     (vterm-toggle-cd)))
+
+;;;###autoload
+(defmacro make--ssh (name ip &rest arglist)
+  `(defun ,(intern (format "my-ssh-%s" name)) ,arglist
+     (interactive)
+     (find-file ,(format "/sshx:%s:" ip))))
 
 
 ;;;###autoload
@@ -73,40 +84,89 @@ If prefix ARG is set, prompt for a directory to search from."
            ((modulep! :completion helm) #'+helm/project-search-from-cwd)
            (#'rgrep)))))
 
-
-;; ;;;###autoload
-;; (defvar +xero/repo-root-list '("~" "~/Code" "~/Builds" "~/.config")
-;;   "personal repo root to scan git projects")
-
-;; ;;;###autoload
-;; (defun update-projectile-known-projects ()
-;;   (interactive)
-;;   (require 'magit)
-;;   (setq magit-repository-directories '(("~/Code" . 3)))
-;;   ;; Workplace folder has some permission error on macos
-;;   (let ((workspace-dir "~/Code/"))
-;;     (when (file-directory-p workspace-dir)
-;;       (dolist (dir (directory-files workspace-dir t))
-;;         (when (and
-;;                (file-readable-p dir)
-;;                (not (string-equal ".." (substring dir -2)))
-;;                (not (string-equal "." (substring dir -1))))
-;;           (appendq! magit-repository-directories `((,dir . 2)))))))
-;;   (let (magit-repos
-;;         magit-abs-repos
-;;         (home (expand-file-name "~")))
-;;     ;; append magit repos at root with depth 1
-;;     (dolist (root +xero/repo-root-list)
-;;       (setq magit-abs-repos (append magit-abs-repos (magit-list-repos-1 root 1))))
-;;     (setq magit-abs-repos (append magit-abs-repos (magit-list-repos)))
-
-;;     ;; convert abs path to relative path (HOME)
-;;     (dolist (repo magit-abs-repos)
-;;       (push (concat "~/" (file-relative-name repo "~")) magit-repos))
-;;     (setq projectile-known-projects magit-repos)))
+;; TODO: Search with specific file types
+;;;###autoload
+;; (defun +ivy--counsel-file-jump-use-fd-rg-specific-files (args)
+;;   "Change `counsel-file-jump' to use fd or ripgrep, if they are available."
+;;   (cl-destructuring-bind (find-program . args)
+;;       (cond ((executable-find doom-projectile-fd-binary)
+;;              (cons doom-projectile-fd-binary (list "-t" "f" "-E" ".git" "-e" "py" "-e" "java"
+;;                                                    "-e" "yaml" "-e" "md" "-e" "adoc")))
+;;             ((executable-find "rg")
+;;              (split-string (format counsel-rg-base-command "--files --no-messages") " " t))
+;;             ((cons find-program args)))
+;;     (unless (listp args)
+;;       (user-error "`counsel-file-jump-args' is a list now, please customize accordingly."))
+;;     (counsel--call
+;;      (cons find-program args)
+;;      (lambda ()
+;;        (goto-char (point-min))
+;;        (let ((offset (if (member find-program (list "rg" doom-projectile-fd-binary)) 0 2))
+;;              files)
+;;          (while (< (point) (point-max))
+;;            (push (buffer-substring
+;;                   (+ offset (line-beginning-position)) (line-end-position)) files)
+;;            (forward-line 1))
+;;          (nreverse files))))))
 
 ;;;###autoload
-(defun +xero/evil-quick-replace (beg end )
+;; (defun +ivy/project-search-specific-files (&optional initial-input initial-directory)
+;;   "Similar to counsel-file-jump"
+;;   (interactive
+;;    (list nil
+;;          (when current-prefix-arg
+;;            (counsel-read-directory-name "From directory: "))))
+;;   (counsel-require-program find-program)
+;;   (let ((default-directory (doom-project-root)))
+;;     (ivy-read "Find file: "
+;;               (+ivy--counsel-file-jump-use-fd-rg-specific-files counsel-file-jump-args)
+;;               :matcher #'counsel--find-file-matcher
+;;               :initial-input initial-input
+;;               :action #'find-file
+;;               :preselect (counsel--preselect-file)
+;;               :require-match 'confirm-after-completion
+;;               :history 'file-name-history
+;;               :caller 'counsel-file-jump)))
+
+;;;###autoload
+(defvar +my/repo-root-list '("~" "~/Dropbox" "~/go/src" "~/.cache" "~/.config")
+  "personal repo root to scan git projects")
+
+;;;###autoload
+(defvar +my/user-custom-repos '("/CCN_Tools/work/bstnnx_release/regression_test/"))
+
+;;;###autoload
+(defun update-projectile-known-projects ()
+  (interactive)
+  (require 'magit)
+  (setq magit-repository-directories '(("~/dev-local" . 3)))
+  ;; Workplace folder has some permission error on macos
+  (let ((workspace-dir "~/dev/"))
+    (when (file-directory-p workspace-dir)
+      (dolist (dir (directory-files workspace-dir t))
+        (when (and
+               (file-readable-p dir)
+               (not (string-equal ".." (substring dir -2)))
+               (not (string-equal "." (substring dir -1))))
+          (appendq! magit-repository-directories `((,dir . 2)))))))
+  (let (magit-repos
+        magit-abs-repos
+        (home (expand-file-name "~")))
+    ;; append magit repos at root with depth 1
+    (dolist (root +my/repo-root-list)
+      (setq magit-abs-repos (append magit-abs-repos (magit-list-repos-1 root 1))))
+    (setq magit-abs-repos (append magit-abs-repos (magit-list-repos)))
+
+    ;; convert abs path to relative path (HOME)
+    (dolist (repo magit-abs-repos)
+      (push (concat "~/" (file-relative-name repo "~")) magit-repos))
+    (setq projectile-known-projects magit-repos)
+    (dolist (repo +my/user-custom-repos)
+      (if (file-directory-p repo)
+          (push repo projectile-known-projects)))))
+
+;;;###autoload
+(defun +my/evil-quick-replace (beg end )
   (interactive "r")
   (when (evil-visual-state-p)
     (evil-exit-visual-state)
@@ -117,7 +177,7 @@ If prefix ARG is set, prompt for a directory to search from."
         (evil-ex command-string)))))
 
 ;;;###autoload
-(defun +xero/markdown-copy-fix ()
+(defun +my/markdown-copy-fix ()
   (interactive)
   (let ((case-fold-search nil))
     (dolist (pair '(("<pre.*>" . "```python")
@@ -133,6 +193,69 @@ If prefix ARG is set, prompt for a directory to search from."
       (while (re-search-forward (car pair) nil t)
         (replace-match (cdr pair))))))
 
+
+;;;###autoload
+(defun iterm-open-new-tab (dir &optional args)
+  (do-applescript
+   (format
+    "
+    tell application \"/Applications/iTerm.app\"
+        activate
+        tell current window
+            create tab with default profile
+            tell the current session
+                write text \"cd %s\"
+            end tell
+        end tell
+    end tell
+"
+    dir)))
+
+;; "http://xuchunyang.me/Opening-iTerm-From-an-Emacs-Buffer/"
+;;;###autoload
+(defun +my/iterm-shell-command (command &optional prefix)
+  "cd to `default-directory' then run COMMAND in iTerm.
+With PREFIX, cd to project root."
+  (interactive (list (read-shell-command
+                      "iTerm Shell Command: ")
+                     current-prefix-arg))
+  (let* ((dir (if prefix (doom-project-root)
+                default-directory))
+         ;; if COMMAND is empty, just change directory
+         (cmd (format "cd %s ;%s" dir command)))
+    (do-applescript
+     (format
+      "
+  tell application \"iTerm2\"
+       activate
+       set _session to current session of current window
+       tell _session
+            set command to get the clipboard
+            write text \"%s\"
+       end tell
+  end tell
+  " cmd))))
+
+;; https://github.com/syohex/emacs-browser-refresh/blob/master/browser-refresh.el
+;;;###autoload
+(defun +my/browser-refresh--chrome-applescript ()
+  (interactive)
+  (do-applescript
+   (format
+    "
+  tell application \"Google Chrome\"
+    set winref to a reference to (first window whose title does not start with \"Developer Tools - \")
+    set winref's index to 1
+    reload active tab of winref
+  end tell
+" )))
+
+;;;###autoload
+(defun +my/window-focus-default-browser ()
+  (cond
+   ((executable-find "launch-browser") (shell-command "launch-browser"))
+   (IS-MAC (shell-command "open -a \"/Applications/Google Chrome.app\""))
+   (IS-LINUX (shell-command "wmctrl -a \"Google Chrome\""))))
 
 ;;;###autoload
 (defun imenu-comments ()
@@ -155,7 +278,7 @@ If prefix ARG is set, prompt for a directory to search from."
            (line-beginning-position)))))
 
 ;;;###autoload
-(defun +xero/check-minified-file ()
+(defun +my/check-minified-file ()
   (and
    (not (when (buffer-file-name)
           (member (file-name-extension (buffer-file-name))
@@ -174,10 +297,10 @@ If prefix ARG is set, prompt for a directory to search from."
      (message "%.06f" (float-time (time-since time)))))
 
 ;;; Scratch frame
-(defvar +xero--scratch-frame nil)
+(defvar +my--scratch-frame nil)
 
 (defun cleanup-scratch-frame (frame)
-  (when (eq frame +xero--scratch-frame)
+  (when (eq frame +my--scratch-frame)
     (with-selected-frame frame
       (setq doom-fallback-buffer-name (frame-parameter frame 'old-fallback-buffer))
       (remove-hook 'delete-frame-functions #'cleanup-scratch-frame))))
@@ -201,8 +324,8 @@ you're done. This can be called from an external shell script."
                                 (right-fringe . 0)
                                 (undecorated . t)
                                 ,(if IS-LINUX '(display . ":0")))))))
-    (setq +xero--scratch-frame (or frame posframe))
-    (select-frame-set-input-focus +xero--scratch-frame)
+    (setq +my--scratch-frame (or frame posframe))
+    (select-frame-set-input-focus +my--scratch-frame)
     (when frame
       (with-selected-frame frame
         (if fn

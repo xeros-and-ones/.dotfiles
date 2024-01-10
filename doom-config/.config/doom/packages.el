@@ -1,8 +1,9 @@
 ;; -*- no-byte-compile: t; -*-
-;;; $DOOMDIR/packages.el
+;;; packages.el
 
 ;; disabled packages
-(disable-packages! osx-trash
+(disable-packages! solaire-mode
+                   osx-trash
                    realgud
                    realgud-trepan-ni
                    ccls
@@ -14,36 +15,35 @@
                    company-anaconda
                    lsp-python-ms
                    pyimport)
-;;
-;;
-;;
-;; adding our desired 'packages' here
-(package! git-link)
-(package! all-the-icons-ibuffer)
+
+;; text
 (package! tldr)
 (package! edit-indirect)
 (package! link-hint)
 (package! symbol-overlay)
-(package! ligature)
+(package! pomm)
+(package! org-appear)
 
+;; misc
 (package! keycast)
 (package! evil-string-inflection)
 (package! all-the-icons-ibuffer)
 (package! dired-narrow)
-
-(package! imenu-list)
-(package! format-all)
-
-(package! pomm)
-(package! org-appear)
-
+(package! git-link)
+(package! magit-delta)
 (package! citre)
-(package! bazel-mode
-  :recipe
-  (:host github :repo "bazelbuild/emacs-bazel-mode"))
+(package! imenu-list)
+;; (package! tmux-pane)
+(package! go-translate)
 
+;; programming
+(package! bazel-mode :recipe (:host github :repo "bazelbuild/emacs-bazel-mode"))
 (package! graphql-mode)
-
-(package! breadcrumb
-  :recipe
-  (:host github :repo "joaotavora/breadcrumb"))
+(package! protobuf-mode)
+(package! gn-mode)
+(when (modulep! :tools lsp +eglot)
+  (package! breadcrumb :recipe (:host github :repo "joaotavora/breadcrumb"))
+  (package! eglot-java)
+  )
+(when (not (modulep! :tools lsp +eglot))
+  (package! lsp-docker))

@@ -1,84 +1,76 @@
-;;; +prog.el -*- lexical-binding: t; -*-
+;;; ~/.doom.d/+prog.el -*- lexical-binding: t; -*-
 
-;;
-;;
-;;
-;; 'graphql' config
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; MISC
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(use-package! which-func
+  :defer t
+  :commands which-function)
+
+
+(after! company
+  ;; (setq company-idle-delay 0.2)
+  (setq company-format-margin-function #'company-detect-icons-margin))
+
+
 (use-package! graphql-mode
   :defer t
   :init
   (add-to-list 'auto-mode-alist '("\\.graphqls\\'" . graphql-mode)))
-;;
-;;
-;;
-;;
-(use-package! format-all
-  :hook (emacs-lisp-mode . format-all-mode)
+
+
+(use-package! protobuf-mode
   :defer t)
-;;
-;;
-;;
-(add-hook! '(web-mode-hook html-mode-hook) (setq-local format-all-formatters '(("HTML" prettier))))
-(add-hook! 'typescript-mode-hook (setq-local format-all-formatters '(("TypeScript" prettier))))
-(add-hook! 'rjsx-mode-hook (setq-local format-all-formatters '(("JavaScript" prettier))))
+
+
+(use-package! gn-mode
+  :defer t
+  :init
+  (add-to-list 'auto-mode-alist '("\\.gni?\\'" . gn-mode)))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; CC
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(use-package! bazel-mode
+  :defer t)
+
+(add-to-list 'auto-mode-alist '("\\.inl\\'" . +cc-c-c++-objc-mode))
+(add-to-list 'auto-mode-alist '("\\.inc\\'" . +cc-c-c++-objc-mode))
+
+(defun +cc/copy-lldb-breakpoint-of-current-line ()
+  "Copy a pdb like breakpoint on the current line."
+  (interactive)
+  (kill-new
+   (concat "b " (file-name-nondirectory (buffer-file-name))
+           " : " (number-to-string (line-number-at-pos)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; JS, WEB
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (after! web-mode
   (web-mode-toggle-current-element-highlight)
-  (web-mode-dom-errors-show))
-;;
-;;
-;;
-;;
-;; 'bazel' config
-(use-package! bazel-mode
-  :defer t)
-;;
-;;
-;;
-;; add .inc & .inl to c++ objc-mode
-(add-to-list 'auto-mode-alist '("\\.inl\\'" . +cc-c-c++-objc-mode))
-(add-to-list 'auto-mode-alist '("\\.inc\\'" . +cc-c-c++-objc-mode))
-;;
-;;
-;;
-;; 'company' completion config
-(after! company
-  ;; (setq company-idle-delay 0.2)
-  (setq company-format-margin-function #'company-detect-icons-margin))
-;;
-;;
-;;
-;; 'which-func' config
-(use-package! which-func
-  :defer t
-  :commands which-function)
-;;
-;;
-;;
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; PROJECTILE
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (web-mode-dom-errors-show)
+  (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.jinja2\\'" . web-mode))
+  (add-to-list 'web-mode-engines-alist '("\\.jinja2\\'" . "django"))
+  (setq web-mode-enable-auto-pairing t)
+  (setq web-mode-enable-auto-closing t)
+  (setq web-mode-enable-auto-indentation t))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; JAVA
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(after! projectile
-  (setq compilation-read-command nil)   ; no prompt in projectile-compile-project
-  ;; . -> Build
-  (projectile-register-project-type 'cmake '("CMakeLists.txt")
-                                    :configure "cmake %s"
-                                    :compile "cmake --build build --config Debug --target all -j 14 --"
-                                    :test "ctest -j14 -C Debug -T test --output-on-failure")
 
-  ;; set projectile-known-projects after magit
-  ;; (after! magit
-  ;;   (update-projectile-known-projects))
-  )
-;;
-;;
-;;
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (set-formatter! 'google-java-format "google-java-format -" :modes '(java-mode))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; DEBUG & RUN
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (after! quickrun
   (quickrun-add-command "c++/c1z"
@@ -86,19 +78,19 @@
       (:exec    . ("%c -std=c++1z %o -o %e %s"
                    "%e %a"))
       (:remove  . ("%e")))
-    :default "c++")
-  (when IS-LINUX
-    (quickrun-set-default "c++" "c++/g++")))
+    :default "c++"))
 
+
+(after! realgud (advice-remove #'realgud:terminate #'+debugger--cleanup-after-realgud-a))
 
 
 (when (modulep! :tools debugger)
-  (defun +xero/dap-start ()
+  (defun +my/dap-start ()
     (interactive)
     (dap-mode 1)
     (call-interactively #'dap-debug))
 
-  (defun +xero/dap-delete-output-and-stderr-buffers ()
+  (defun +my/dap-delete-output-and-stderr-buffers ()
     (doom/kill-matching-buffers " stderr*" (buffer-list))
     (doom/kill-matching-buffers " out*" (buffer-list)))
 
@@ -138,3 +130,13 @@
          "k" #'dap-delete-session
          "K" #'dap-delete-all-sessions
          "S" #'realgud-short-key-mode)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; LANGUAGE CUSTOMIZATION
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define-generic-mode sxhkd-mode
+  '(?#)
+  '("alt" "Escape" "super" "bspc" "ctrl" "space" "shift") nil
+  '("sxhkdrc") nil
+  "Simple mode for sxhkdrc files.")

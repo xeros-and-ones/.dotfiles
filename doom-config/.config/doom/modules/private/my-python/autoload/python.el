@@ -1,5 +1,4 @@
-;;; private/xero-python/autoload/python.el -*- lexical-binding: t; -*-
-
+;;; ~/.doom.d/autoload/python.el -*- lexical-binding: t; -*-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;               Debugger              ;
@@ -83,9 +82,9 @@ debugpy.wait_for_client()
    (concat "b " (file-relative-name (buffer-file-name) (doom-project-root))
            ":" (number-to-string (line-number-at-pos)))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;               Imports               ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 ;;;###autoload
@@ -173,11 +172,11 @@ To terminate the loop early, throw 'break."
     (if same-pkg-lines
         ;; Find the first matching line, and append there
         (pyimport--for-each-line
-         (when (pyimport--same-module (pyimport--current-line) line)
-           (-let [(_ _module _ name) (s-split " " line)]
-             (pyimport--insert-from-symbol name))
-           ;; Break from this loop.
-           (throw 'break nil)))
+          (when (pyimport--same-module (pyimport--current-line) line)
+            (-let [(_ _module _ name) (s-split " " line)]
+              (pyimport--insert-from-symbol name))
+            ;; Break from this loop.
+            (throw 'break nil)))
 
       ;; We don't have any imports for this module yet, so just insert
       ;; LINE as-is.

@@ -1,6 +1,4 @@
-;;; autoload/buffer.el -*- lexical-binding: t; -*-
-
-
+;;; ~/.doom.d/autoload/buffer.el -*- lexical-binding: t; -*-
 
 ;;;###autoload
 (defun revert-buffer-no-confirm ()
@@ -11,7 +9,7 @@
 
 ;;;###autoload
 (defun reload-buffer-no-confirm ()
-  "Reload buffer without confirmation."
+  "Revert buffer without confirmation."
   (interactive)
   (save-buffer)
   (let ((f buffer-file-name))
@@ -38,36 +36,51 @@
         (message "Indented buffer.")))))
 
 ;;;###autoload
-(defun +xero/untabify-buffer ()
+(defun +my/untabify-buffer ()
   (interactive)
   (save-excursion
     (untabify (point-min) (point-max)) nil))
 
 ;;;###autoload
-(defun +xero/hidden-dos-eol ()
+(defun +my/hidden-dos-eol ()
   "Do not show ^M in files containing mixed UNIX and DOS line endings."
   (interactive)
   (setq buffer-display-table (make-display-table))
   (aset buffer-display-table ?\^M []))
 
 ;;;###autoload
-(defun +xero/remove-dos-eol ()
+(defun +my/remove-dos-eol ()
   "Replace DOS eolns CR LF with Unix eolns CR"
   (interactive)
   (goto-char (point-min))
   (while (search-forward "\r" nil t) (replace-match "")))
 
+;;;###autoload
+(defun +my/insert-semicolon-at-the-end-of-this-line ()
+  (interactive)
+  (save-excursion
+    (end-of-line)
+    (insert ";")))
 
 ;;;###autoload
-(defun +xero/check-large-buffer ()
+(defun +my/delete-semicolon-at-the-end-of-this-line ()
+  (interactive)
+  (save-excursion
+    (end-of-line)
+    (when (looking-back ";")
+      (backward-char)
+      (delete-char 1))))
+
+;;;###autoload
+(defun +my/check-large-buffer ()
   "Check if the buffer is large."
   (when (> (buffer-size) 1048576)       ; 1MB
     t))
 
 ;;;###autoload
-(defun +xero/find-file-check-make-large-file-read-only-hook ()
+(defun +my/find-file-check-make-large-file-read-only-hook ()
   "If a file is over a given size, make the buffer read only."
-  (when (+xero/check-large-buffer)
+  (when (+my/check-large-buffer)
     (setq-local buffer-read-only t)
     (buffer-disable-undo)
     (fundamental-mode)))
@@ -76,7 +89,7 @@
 (defun lsp! ()
   "Dispatch to call the currently used lsp client entrypoint"
   (interactive)
-  (unless (+xero/check-large-buffer)
+  (unless (+my/check-large-buffer)
     (if (modulep! :tools lsp +eglot)
         (eglot-ensure)
       (unless (bound-and-true-p lsp-mode)

@@ -1,4 +1,5 @@
-;;; +keys.el -*- lexical-binding: t; -*-
+;;; private/my/+bindings.el -*- lexical-binding: t; -*-
+
 
 (when IS-MAC (setq mac-command-modifier 'meta
                    mac-option-modifier  'alt))
@@ -13,31 +14,25 @@
  ;; overrides other minor mode keymaps (just for non-evil)
  (:map override ;; general-override-mode-map
        "M-q"   (if (daemonp) #'delete-frame #'save-buffers-kill-terminal)
+       "S-q"   #'kill-current-buffer
        "M-p"   (λ! (projectile-invalidate-cache nil) (projectile-find-file))
        "M-y"   #'+default/yank-pop
        "C-]"   #'yas-expand
        "C-'"   #'toggle-input-method
        "<xterm-paste>" #'xterm-paste-with-delete-region
+       "C-S-n" #'dap-next
+       ;; window management
        "C-S-j" #'evil-scroll-line-down
        "C-S-k" #'evil-scroll-line-up
        "C-S-h" #'+tabs:previous-or-goto
        "C-S-l" #'+tabs:next-or-goto
-       "C-S-n" #'dap-next
-       "C-h"   #'evil-window-left
-       "C-l"   #'evil-window-right
-       "C-j"   #'evil-window-down
-       "C-k"   #'evil-window-up
+       "M-h"   #'evil-window-left
+       "M-l"   #'evil-window-right
+       "M-j"   #'evil-window-down
+       "M-k"   #'evil-window-up
        "C-<left>" #'evil-window-increase-width
        "C-<right>" #'evil-window-decrease-width
-       "C-<up>" #'evil-window-inease-width
-       )
-
- :nv "gD" #'xref-find-definitions-other-window
- :nv "gr" #'+lookup/references
- ;; Conflict with vertico
- :g "C-SPC" nil :g "C-@" nil
- "M-`"   #'other-frame
- "C-M-o" #'other-frame
+       "C-<up>" #'evil-window-inease-width)
  ;; fix OS window/frame navigation/manipulation keys
  "M-w" #'delete-window
  "M-W" #'delete-frame
@@ -46,6 +41,11 @@
  "C-M-f" #'toggle-frame-fullscreen
  "M-t" #'transpose-words
  "M-i" #'display-which-function
+
+ :nv "gD" #'xref-find-definitions-other-window
+ :nv "gr" #'+lookup/references
+ ;; Conflict with vertico
+ :g "C-SPC" nil :g "C-@" nil
  :gn "C-t" nil
  ;; Restore OS undo, save, copy, & paste keys (without cua-mode, because
  ;; it imposes some other functionality and overhead we don't need)
@@ -63,8 +63,6 @@
  :gni [M-RET]       #'+default/newline-below
  :gni [M-S-RET]     #'+default/newline-above
  :gi  [M-backspace] #'backward-kill-word
- :gi  [M-left]      #'backward-word
- :gi  [M-right]     #'forward-word
  ;; Searching
  (:when (modulep! :completion vertico)
    "M-f" #'consult-line
@@ -73,14 +71,6 @@
    "M-f" #'swiper
    "C-s" #'swiper)
  "M-e"    #'persp-switch-to-buffer
- ;; "C-M-p"  #'+ivy/project-search-specific-files
- ;; Debug
- "M-u" #'dap-hydra
- ;; Help
- "M-h m" #'describe-mode
- "M-h C-k" #'find-function-on-key
- "M-h C-f" #'find-function-at-point
- "M-h C-v" #'find-variable-at-point
  ;; Comment
  "M-/" (cmd! (save-excursion (comment-line 1)))
  :n "M-/" #'evilnc-comment-or-uncomment-lines
@@ -109,8 +99,6 @@
  :gi "C-f" #'forward-char
  :gi "C-k" #'kill-line
  :gi "C-d" #'delete-forward-char
- ;; For terminal specific keys
- :gnmvi "<deletechar>" (kbd "C-d")
 
  :v "C-r"   #'+xero/evil-quick-replace
  :v "DEL" (kbd "\"_d")
@@ -120,7 +108,6 @@
  :nmv "=" #'better-jumper-jump-forward
  :gnmvi "C-e" #'doom/forward-to-last-non-comment-or-eol
  :gnmvi "C-a" #'doom/backward-to-bol-or-indent
- :gnmvi "M-." #'+lookup/definition
 
  (:prefix "C-x"
   :n "e"  #'pp-eval-last-sexp)
@@ -129,20 +116,16 @@
 
 ;; leader/localleader is not compatible with :gnvmi
 (map! :leader
-      :desc "lispyville" :n "L" (+xero/prefix-M-x "lispyville ")
       (:prefix-map ("a" . "app")
        "s" #'prodigy
-       "b" #'blog-admin-start
        :desc "List process" "p" #'list-processes
        "x" #'align-regexp)
       (:prefix "b"                      ; buffer
                "m" #'list-bookmarks
                "h" #'+doom-dashboard/open
                "r" #'revert-buffer-no-confirm
-               "R" #'reload-buffer-no-confirm
-               "U" #'+xero/untabify-buffer)
+               "R" #'reload-buffer-no-confirm)
       (:prefix "c"                      ; code
-       :desc "Format-all buffer"      "f" #'format-all-buffer
        :desc "Check grammar"          "g" #'langtool-check-buffer
        :desc "Done Check grammar"     "G" #'langtool-check-done
        (:when (modulep! :tools lsp +eglot)
@@ -166,23 +149,18 @@
       (:prefix "n"                      ; notes
        :desc "Take screenshot" "p" #'screenshot)
       (:prefix "g"                      ; git
-               "s" nil
                (:after smerge-mode
                 :desc "Smerge" "s" smerge-basic-map)
                :desc "Browse file or region" "oo" #'git-link
                :desc "Magit browse commit"   "oc" #'+vc/git-browse-commit
-               :desc "Magit wip worktree"    "w"  #'magit-wip-log-worktree
-               :desc "M-x magit-*" "*" (+xero/prefix-M-x "magit-"))
+               :desc "Magit wip worktree"    "w"  #'magit-wip-log-worktree)
       (:prefix "h"                      ; help
                "C" #'helpful-command)
-      (:prefix "w"
-       :desc "Pin tab" "p" (λ! (dotimes (n 50) (centaur-tabs-move-current-tab-to-left) nil)))
       (:prefix "o"                      ; open
        :desc "Kill ring"             "k" #'+default/yank-pop
        :desc "Imenu list"            "i" #'imenu-list
        :desc "Open link"             "x" #'link-hint-open-link
        :desc "Open link at point"    "X" #'link-hint-open-link-at-point
-       :desc "Google Translate"      "g" #'go-translate
        :desc "Docker open apps"      ";" #'+docker/reveal-in-apps
        (:when IS-MAC
          :desc "Reveal in default program"  "f" #'+macos/open-in-default-program
@@ -206,9 +184,6 @@
                "q" #'symbol-overlay-remove-all)
       (:prefix "p"                      ; project
                "n" #'+default/yank-project-name
-               ;; :desc "Switch projects" "p" (λ! (update-projectile-known-projects) (projectile-switch-project))
-               "*" (+xero/prefix-M-x "projectile-")
-               ;; :desc "Update projectile list" "u" #'update-projectile-known-projects
                )
       (:prefix "e"                      ;error
                "d" #'posframe-delete-all)
@@ -230,8 +205,6 @@
                    "t" #'yas-describe-tables)
       (:prefix "s"                      ; search
        :desc "Comments" "c" #'imenu-comments
-       :desc "M-x amazon-search-*" "a" (+xero/prefix-M-x "amazon-search-wiki")
-       :desc "Search Workspace" "w" #'+default/search-workspace
        :desc "Search Project (hidden)" "h" #'+default/search-project-with-hidden-files))
 
 (map!
@@ -253,23 +226,6 @@
                "u" #'dired-unmark
                "(" #'dired-hide-details-mode
                "+" #'dired-create-directory))
- (:after lispy
-         (:map lispy-mode-map
-          :i "_" #'special-lispy-different
-          :i [remap kill-line] #'lispy-kill
-          :i [remap delete-backward-char] #'lispy-delete-backward
-          :n "M-r" nil :n "M-s" nil :n "M-v" nil
-          :n "M-<left>" #'lispy-forward-barf-sexp
-          :n "M-<right>" #'lispy-forward-slurp-sexp
-          :n "C-M-<left>" #'lispy-backward-slurp-sexp
-          :n "C-M-<right>" #'lispy-backward-barf-sexp))
- (:after lispyville
-         (:map lispyville-mode-map
-          :n "M-r" nil :n "M-s" nil :n "M-v" nil
-          :n "C-M-r" #'lispy-raise-sexp
-          :n "C-M-s" #'lispy-splice
-          :n "M-V"   #'lispy-convolute-sexp
-          :n "TAB" #'lispyville-prettify))
  (:after outline
   :map outline-mode-map
   :n "C-k" nil
@@ -287,26 +243,11 @@
   "k" #'lsp-ui-peek--select-prev
   "l" #'lsp-ui-peek--select-next-file)
  :nv "gb" #'lsp-ui-peek-jump-backward
- (:after cc-mode
-         (:map java-mode-map
-          :localleader
-          :desc "Add import" "i" #'lsp-java-add-import)
-         (:map c++-mode-map
-          :localleader :prefix ("t" "toggle")
-          :desc "Copy lldb breakpoint" "b" #'+cc/copy-lldb-breakpoint-of-current-line))
  (:after org
          (:map org-mode-map
           :localleader
           "z" #'org-add-note
           "L" #'org-toggle-link-display))
- (:after evil-vars
-         (:map evil-window-map
-          :leader
-          (:prefix "w"
-           :desc "evil-window-decrease-height" "-" (cmd! (evil-window-decrease-height 10))
-           :desc "evil-window-increase-height" "+" (cmd! (evil-window-increase-height 10))
-           :desc "evil-window-decrease-width" "<"  (cmd! (evil-window-decrease-width 20))
-           :desc "evil-window-increase-width" ">"  (cmd! (evil-window-increase-width 20)))))
  (:after iedit
          (:map iedit-mode-occurrence-keymap
                "M-D" nil))
@@ -324,10 +265,6 @@
           :desc "Insert item above" :ni "<S-C-return>" #'+org/insert-item-above
           (:localleader
            :desc "highlight" "ih" #'+xero/markdown-highlight
-           (:when IS-MAC
-             :desc "Reveal in Typora" "o" #'+macos/reveal-in-typora)
-           (:when IS-LINUX
-             :desc "Reveal in Typora" "o" #'+shell/reveal-in-typora)
            :desc "Fix Copy"           "F" #'+xero/markdown-copy-fix
            :desc "Insert header line" "-" #'org-table-insert-hline
            :desc "Crete Table from region" "|" #'org-table-create-or-convert-from-region
@@ -340,14 +277,14 @@
     :map vertico-map
     "C-j"   #'vertico-next
     "C-k"   #'vertico-previous
-    "C-j"   #'+vertico/embark-preview
+    "C-M-RET" #'+vertico/embark-preview
     "C-n"   #'vertico-next
-    "C-M-n" #'+vertico/next-candidate-preview
+    "C-M-j" #'+vertico/next-candidate-preview
     "C-S-n" #'vertico-next-group
     "C-p"   #'vertico-previous
     "A-v"   #'vertico-scroll-down
     "C-v"   #'vertico-scroll-up
-    "C-M-p" #'+vertico/previous-candidate-preview
+    "C-M-k" #'+vertico/previous-candidate-preview
     "C-S-p" #'vertico-previous-group))
  (:when (modulep! :completion ivy)
    (:after wgrep
@@ -398,10 +335,6 @@
                "C-j" #'company-select-next
                "C-k" #'company-select-previous
                "C-SPC" #'company-complete-selection))
- (:after adoc-mode
-         (:map adoc-mode-map
-          :localleader
-          :desc "adoc preview" "p" (cmd! (browse-url buffer-file-name))))
  (:after vterm
          (:map vterm-mode-map
                "M-e" nil

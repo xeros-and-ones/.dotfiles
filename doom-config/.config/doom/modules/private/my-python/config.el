@@ -1,4 +1,4 @@
-;;; private/xero-python/config.el -*- lexical-binding: t; -*-
+;;; private/my-python/config.el -*- lexical-binding: t; -*-
 
 (map!
  (:after python
@@ -18,15 +18,15 @@
    :desc "Insert copied import" "p" #'+python/insert-temp-import
    :desc "Copy module import " "i" #'+python/yank-module-import)
   (:prefix ("v" . "ENV")
-           "c" #'conda-env-activate
-           "C" #'conda-env-deactivate
-           "v" #'poetry-venv-toggle
-           "P" #'pyvenv-workon
-           "p" #'pyvenv-activate))
+   "c" #'conda-env-activate
+   "C" #'conda-env-deactivate
+   "v" #'poetry-venv-toggle
+   "P" #'pyvenv-workon
+   "p" #'pyvenv-activate))
  (:after pyenv-mode
-         (:map pyenv-mode-map
-               "C-c C-s" nil
-               "C-c C-u" nil)))
+  (:map pyenv-mode-map
+   "C-c C-s" nil
+   "C-c C-u" nil)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; PYTHON
@@ -48,27 +48,17 @@
   )
 (add-hook! 'python-mode-hook #'+python/annotate-pdb)
 
-(after! lsp-pylsp
+(after! lsp-pyls
   ;; disable live-mode for mypy
-  (lsp-register-custom-settings `(("pylsp.plugins.pylsp_mypy.enabled" t)))
-  (lsp-register-custom-settings `(("pylsp.plugins.pylsp_mypy.live_mode" t)))
+  (lsp-register-custom-settings `(("pyls.plugins.pyls_mypy.enabled" t)))
+  (lsp-register-custom-settings `(("pyls.plugins.pyls_mypy.live_mode" t)))
 
   ;; ignore some linting info
-  (setq lsp-pylsp-plugins-pycodestyle-ignore  [ "E501" ]
-        lsp-pylsp-plugins-pylint-args [ "--errors-only" ]
-        lsp-pylsp-plugins-black-enabled nil
-        lsp-pylsp-plugins-flake8-enabled nil
-        lsp-pylsp-plugins-isort-enabled nil
-        lsp-pylsp-plugins-autopep8-enabled nil
-        lsp-pylsp-plugins-yapf-enabled nil
-        lsp-pylsp-plugins-ruff-enabled t
-        lsp-pylsp-plugins-ruff-lineLength 100
-        lsp-pylsp-plugins-ruff-format ["I"]
-        lsp-pylsp-plugins-pyflakes-enabled nil
-        lsp-pylsp-plugins-pycodestyle-enabled nil
-        lsp-pylsp-plugins-pydocstyle-enabled nil
-        lsp-pylsp-plugins-mccabe-enabled nil
-        lsp-pylsp-plugins-mypy-enabled nil))
+  (setq lsp-pyls-plugins-pycodestyle-ignore  [ "E501" ]
+        lsp-pyls-plugins-pylint-args [ "--errors-only" ]))
+
+(after! lsp-pyright
+  (setq lsp-pyright-python-executable-cmd "python3"))
 
 (use-package! py-isort
   :defer t
@@ -89,6 +79,15 @@
 
   ;; (add-hook! 'python-mode-hook #'python-isort-autosave-mode)
   )
+
+
+;; (use-package! importmagic
+;;   :defer t
+;;   :hook (python-mode . importmagic-mode)
+;;   :commands (importmagic-fix-imports importmagic-fix-symbol-at-point)
+;;   :config
+;;   (dolist (func '(importmagic-fix-imports importmagic-fix-symbol-at-point))
+;;     (advice-add func :before #'revert-buffer-no-confirm)))
 
 
 (after! pipenv

@@ -1,11 +1,36 @@
 ;;; +git.el -*- lexical-binding: t; -*-
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; GIT
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(after! git-link
+  (setq git-link-open-in-browser nil
+        git-link-use-commit t)
+
+  (add-to-list 'git-link-remote-alist
+               '("git\\.amazon\\.com" git-link-amazon-code))
+  (add-to-list 'git-link-commit-remote-alist
+               '("git\\.amazon\\.com" git-link-commit-amazon-code))
+  (add-to-list 'git-link-remote-alist
+               '("amazonaws\\.com" git-link-aws-codecommit))
+  (add-to-list 'git-link-commit-remote-alist
+               '("amazonaws\\.com" git-link-commit-aws-codecommit))
+
+  ;; For some company still uses http git server
+  ;; (add-to-list 'git-link-remote-alist
+  ;;              '("git\\.dummy\\.com" git-link-github-http))
+  ;; (add-to-list 'git-link-commit-remote-alist
+  ;;              '("git\\.dummy\\.com" git-link-commit-github-http))
+
+  ;; OVERRIDE
+  (advice-add #'git-link--select-remote :override #'git-link--read-remote))
+
+
 (after! magit
   (setq magit-save-repository-buffers nil
         git-commit-style-convention-checks nil
-        magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1
-        magit-diff-refine-hunk 'all
-        magit-revision-show-gravatars '("^Author:     " . "^Commit:     "))
+        magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
 
   ;; Add git-credential-manager-core support
   (add-hook 'magit-process-prompt-functions
@@ -19,30 +44,24 @@
 
 
 (after! forge
-  (push '("git.dummy.com" "git.dummy.com/api/v3" "git.dummy.com" forge-github-repository)
-        forge-alist)
+  ;; (push '("git.dummy.com" "git.dummy.com/api/v3" "git.dummy.com" forge-github-repository)
+  ;;       forge-alist)
 
   ;; TEMP
-  (setq ghub-use-workaround-for-emacs-bug 'force)
+  ;; (setq ghub-use-workaround-for-emacs-bug 'force)
 
   ;; Only show issues and pullreqs assigned to me. Toggle it off here.
-  ;; (+xero/forge-toggle-all-issues-and-pullreqs)
+  ;; (+my/forge-toggle-all-issues-and-pullreqs)
   )
 
-
-(after! git-link
-  (setq git-link-open-in-browser nil
-        git-link-use-commit t)
-
-  ;; For some company still uses http git server
-  (add-to-list 'git-link-remote-alist
-               '("git\\.dummy\\.com" git-link-github-http))
-  (add-to-list 'git-link-commit-remote-alist
-               '("git\\.dummy\\.com" git-link-commit-github-http))
-
-  ;; OVERRIDE
-  (advice-add #'git-link--select-remote :override #'git-link--read-remote))
-
+(use-package! magit-delta
+  :after magit
+  :init
+  (when (executable-find "delta")
+    (add-hook! magit-mode #'magit-delta-mode))
+  :config
+  (setq magit-delta-default-light-theme "GitHub")
+  )
 
 (after! magit-todos
   (setq magit-todos-exclude-globs '("third-party/*" "third_party/*")))
@@ -50,16 +69,7 @@
 
 ;; magit-todos uses hl-todo-keywords
 (custom-theme-set-faces! doom-theme
-  `(hl-todo :foreground ,(doom-color 'bg))
-  `(magit-diff-file-heading :background ,(doom-blend 'blue 'base0 0.2))
-  `(magit-diff-file-heading-highlight :background ,(doom-blend 'blue 'base0 0.5))
-  ;; ediff
-  `(ediff-current-diff-A :foreground ,(doom-color 'red)   :background ,(doom-blend 'red 'base0 0.2))
-  `(ediff-current-diff-B :foreground ,(doom-color 'green) :background ,(doom-blend 'green 'base0 0.2))
-  `(ediff-current-diff-C :foreground ,(doom-color 'blue)  :background ,(doom-blend 'blue 'base0 0.2))
-  `(ediff-current-diff-Ancestor :foreground ,(doom-color 'teal)  :background ,(doom-blend 'teal 'base0 0.2)))
-
-
+  `(hl-todo :foreground ,(doom-color 'bg)))
 (after! hl-todo
   (setq hl-todo-color-background t
         hl-todo-keyword-faces

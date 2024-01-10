@@ -3,8 +3,27 @@
 #+EMAIL: m96tarek@gmail.com
 #+STARTUP: overview
 
-* Table Of Content :TOC_5_gh:
-
+* Table Of Content :toc:
+- [[#about][About]]
+  - [[#installation][Installation]]
+  - [[#literate-configuration][Literate Configuration]]
+  - [[#early-initel][early-init.el]]
+  - [[#synchronizing-changes][Synchronizing Changes]]
+- [[#package-management][Package Management]]
+  - [[#notes][Notes]]
+- [[#performance-optimizations][Performance Optimizations]]
+  - [[#my-tricky-method-of-delaying-package-loads][My tricky method of delaying package loads]]
+  - [[#garbage-collection][Garbage Collection]]
+  - [[#file-handler][File Handler]]
+  - [[#custom-functions][Custom Functions]]
+- [[#evil-mode][Evil Mode]]
+- [[#emacs][Emacs]]
+  - [[#better-defaults][Better Defaults]]
+  - [[#appearance][Appearance]]
+  - [[#helpful][Helpful]]
+  - [[#menu-style-keybindings][Menu Style Keybindings]]
+  - [[#file-locations-no-littering][File Locations (no-littering)]]
+- [[#---local-variables---][---Local-Variables---]]
 
 * About
 ** TODO Installation
@@ -27,29 +46,18 @@ to load the tangled/exported elisp file or generate it if it doesn't exist yet.
 
 init.el:
 #+BEGIN_SRC emacs-lisp :tangle init.el
+;;; init.el --- Personal configuration file -*- lexical-binding: t; no-byte-compile: t; -*-
+;; NOTE: init.el is now generated from readme.org.  Please edit that file instead
+
 (defconst config-org (locate-user-emacs-file "README.org"))
 (defconst config-el (locate-user-emacs-file "config.el"))
 
 (unless (file-exists-p config-el)
-  (require 'org)
-  (org-babel-tangle-file config-org config-el))
+(require 'org)
+(org-babel-tangle-file config-org config-el))
 
 (load-file config-el)
-#+END_SRC
-
-Initialization flow:
-#+BEGIN_SRC artist :tangle no
-   +-------+
-   | Emacs |
-   +-------+                               open  +----------+
-       |     if config.el doesn't exist  /-----> |README.org|
-       v                     /-----------        +----------+
-   +-------+     /-----------                          |  tangle/export elisp blocks
-   |init.el| ----                                      |
-   +-------+     \-----------                          v  load
-                             \-----------  load  +----------+
-                 if config.el exists     \-----> |config.el |
-                                                 +----------+
+;;; init.el ends here
 #+END_SRC
 
 ** early-init.el
@@ -69,64 +77,92 @@ It can be called manually with =M-x xero/tangle-config RET= but I prefer to call
 automatically after each time I save this =README.org= file. To achieve this, I
 added an =after-save-hook= in the [[#---local-variables---][-- Local Variables --]] section.
 #+BEGIN_SRC emacs-lisp
-(defun xero/tangle-config ()
-  "Export code blocks from the literate config file asynchronously."
-  (interactive)
-  (make-process
-   :command `("emacs" ,config-org "--batch" "--eval"
-              ,(format "(org-babel-tangle nil \"%s\")" config-el))
-   :name "tangle-process"
-   :filter (lambda (process output) (message (string-trim output)))))
+  ;;; config.el -*- lexical-binding: t; -*-
+  (defun xero/tangle-config ()
+    "Export code blocks from the literate config file asynchronously."
+    (interactive)
+    ;; prevent emacs from killing until tangle-process finished
+    (add-to-list 'kill-emacs-query-functions
+		 (lambda ()
+		   (or (not (process-live-p (get-process "tangle-process")))
+		       (y-or-n-p "\"xero/tangle-config\" is running; kill it? "))))
+    ;; tangle config asynchronously
+    (xero/async-process
+     (format "emacs %s --batch --eval '(org-babel-tangle nil \"%s\")'" config-org config-el)
+     "tangle-process"))
+#+END_SRC
 
-;; prevent emacs from killing itself until the tangle-process finished
-(add-to-list 'kill-emacs-query-functions
-             (lambda ()
-               (or (not (process-live-p (get-process "tangle-process")))
-                   (y-or-n-p "\"xero/tangle-config\" is running; kill it? "))))
+If the current org file is the literate config file, add a local hook to tangle
+code blocks on every save to update configuration.
+#+BEGIN_SRC emacs-lisp
+(add-hook 'org-mode-hook
+          (lambda ()
+            (if (equal buffer-file-truename config-org)
+                (xero/add-local-hook 'after-save-hook xero/tangle-config))))
 #+END_SRC
 
 * Package Management
-here we initialize the package manager that we use to install and manage packages
-** package.el
 
+Taken from: https://github.com/raxod502/straight.el#getting-started
 #+BEGIN_SRC emacs-lisp
-;; TODO: check package-quickstart and other optimization related stuff
-(use-package package
-  :ensure nil
-  :config
-    (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                            ("melpa-stable" . "https://stable.melpa.org/packages/")
-                            ("org" . "https://orgmode.org/elpa/")
-                            ("elpa" . "https://elpa.gnu.org/packages/"))))
+  (setq straight-use-package-by-default t)
+  (setq straight-vc-git-default-clone-depth 1)
+  (setq straight-recipes-gnu-elpa-use-mirror t)
+  (setq straight-check-for-modifications '(check-on-save find-when-checking))
+  ;; (setq straight-check-for-modifications nil)
+  (setq use-package-always-defer t)
+  (defvar bootstrap-version)
+  (let* ((straight-repo-dir
+	  (expand-file-name "straight/repos" user-emacs-directory))
+	 (bootstrap-file
+	  (concat straight-repo-dir "/straight.el/bootstrap.el"))
+	 (bootstrap-version 5))
+    (unless (file-exists-p bootstrap-file)
+      (shell-command
+       (concat
+	"mkdir -p " straight-repo-dir " && "
+	"git -C " straight-repo-dir " clone "
+	"https://github.com/raxod502/straight.el.git && "
+	"git -C " straight-repo-dir " checkout 2d407bc")))
+    (load bootstrap-file nil 'nomessage))
+  (straight-use-package 'use-package)
+  ;; This is a variable that has been renamed but straight still refers when
+  ;; doing :sraight (:no-native-compile t)
+  (setq comp-deferred-compilation-black-list nil)
+  (setq use-package-compute-statistics t)
 #+END_SRC
 
-** use-package
-
-I mainly use =use-package= for everything in my configuration. I'm glad to have it
-built-in in Emacs 29. Unfortunately, the =vc-use-package= support will be shipped
-with Emacs 30, though. So I install that extension manually.
+Ignore local variables when visiting an installed package which is generally not intended to be edited.
+  
 #+BEGIN_SRC emacs-lisp
-(use-package use-package
-  :ensure nil
-  :config
-  ;; add :vc keyword to `use-package'
-  ;; example:
-  ;; (use-package modus-themes
-  ;;   :vc (modus-themes :url "https://github.com/protesilaos/modus-themes"
-  ;;                     :branch "main"
-  ;;                     :rev "284433625ed7cd3b19d2e34589c3041e16dd0deb"))  ; TODO: doesn't work
-  ;; this will be built-in in Emacs 30
-  (unless (package-installed-p 'vc-use-package)
-    (package-vc-install "https://github.com/slotThe/vc-use-package")))
+(defun xero/straight-ignore-local-variables (orig-func &rest args)
+  (unless (string-prefix-p (straight--dir) default-directory)
+    (apply orig-func args)))
 
-(use-package use-package-ensure
-  :ensure nil
-  :custom
-  ;; NOTE: I use `:ensure nil' for all built-in packages to make sure
-  ;; `use-package' do not try to install them from package repositories. It is
-  ;; usually smart enough to recognize built-in packages but sometimes it tries
-  ;; to install some packages from remote repositories and fail.
-  (use-package-always-ensure t))  ; install packages if not installed yet
+(advice-add 'hack-local-variables-confirm :around 'xero/straight-ignore-local-variables)
+#+END_SRC
+
+** Notes
+- =M-x straight-pull-all=: update all packages.
+- =M-x straight-normalize-all=: restore all packages (remove local edits)
+- =M-x straight-freeze-versions= and =M-x straight-thaw-versions= are like =pip
+  freeze requirements.txt= and =pip install -r requirements.txt=
+- To tell straight.el that you want to use the version of Org shipped with
+  Emacs, rather than cloning the upstream repository:
+(Note: ":tangle no")
+#+BEGIN_SRC emacs-lisp :tangle no
+(use-package org
+  :straight (:type built-in))
+#+END_SRC
+
+- Hooks in the =:hook= section, run in reverse order. Example:
+(Note: ":tangle no")
+#+BEGIN_SRC emacs-lisp :tangle no
+(use-package package-name
+  :hook
+  (x-mode . last)
+  (x-mode . second)
+  (x-mode . first))
 #+END_SRC
 
 * Performance Optimizations
@@ -161,10 +197,50 @@ prevent any garbage collection from happening during load time.
 
 Note: tangle to early-init.el to make startup even faster
 #+BEGIN_SRC emacs-lisp :tangle early-init.el
-(defun xero/defer-garbage-collection ()
-  (setopt gc-cons-threshold most-positive-fixnum))
+  ;;; early-init.el --- Early Init File -*- lexical-binding: t; no-byte-compile: t -*-
+  ;; NOTE: early-init.el is now generated from readme.org.  Please edit that file instead
 
-(xero/defer-garbage-collection)
+  ;; Defer garbage collection further back in the startup process
+  (setq gc-cons-threshold most-positive-fixnum
+	gc-cons-percentage 0.6)
+
+  ;; In Emacs 27+, package initialization occurs before `user-init-file' is
+  ;; loaded, but after `early-init-file'. Doom handles package initialization, so
+  ;; we must prevent Emacs from doing it early!
+  (setq package-enable-at-startup nil)
+  ;; Do not allow loading from the package cache (same reason).
+  (setq package-quickstart nil)
+
+  ;; Prevent the glimpse of un-styled Emacs by disabling these UI elements early.
+  (push '(menu-bar-lines . 0) default-frame-alist)
+  (push '(tool-bar-lines . 0) default-frame-alist)
+  (push '(vertical-scroll-bars) default-frame-alist)
+
+  ;; Resizing the Emacs frame can be a terribly expensive part of changing the
+  ;; font. By inhibiting this, we easily halve startup times with fonts that are
+  ;; larger than the system default.
+  (setopt
+   frame-inhibit-implied-resize t  ; inhibit frame resize at startup
+   inhibit-compacting-font-caches t)
+
+  (setq-default
+   ring-bell-function 'ignore                    ; prevent beep sound.
+   inhibit-startup-screen t                      ; TODO: maybe better on early-init or performance?
+   initial-major-mode 'fundamental-mode          ; TODO: maybe better on early-init or performance?
+   initial-scratch-message nil                   ; TODO: maybe better on early-init?
+   )
+  ;; Disable GUI elements
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (setq inhibit-splash-screen t)
+  (setq use-file-dialog nil)
+
+  ;; Prevent unwanted runtime builds in gccemacs (native-comp); packages are
+  ;; compiled ahead-of-time when they are installed and site files are compiled
+  ;; when gccemacs is installed.
+  (setq comp-deferred-compilation nil)
+
 #+END_SRC
 
 Restore it to reasonable value after init. Also stop garbage collection during
@@ -174,18 +250,18 @@ minibuffer interaction (e.g. helm, vertico).
 (defconst 20mb 20971520)
 (defconst 30mb 31457280)
 (defconst 50mb 52428800)
-(defconst 100mb 104857600)
+
+(defun xero/defer-garbage-collection ()
+  (setq gc-cons-threshold most-positive-fixnum))
 
 (defun xero/restore-garbage-collection ()
-  (run-at-time 1 nil (lambda () (setopt gc-cons-threshold 30mb))))
+  (run-at-time 1 nil (lambda () (setq gc-cons-threshold 30mb))))
 
 (add-hook 'emacs-startup-hook 'xero/restore-garbage-collection 100)
-(add-hook 'minibuffer-setup-hook 'xero/defer-garbage-collection -100)
-(add-hook 'minibuffer-exit-hook 'xero/restore-garbage-collection 100)
+(add-hook 'minibuffer-setup-hook 'xero/defer-garbage-collection)
+(add-hook 'minibuffer-exit-hook 'xero/restore-garbage-collection)
 
-(setopt read-process-output-max 1mb)  ; useful with external processes e.g. LSP
-
-;; TODO: check doom-emacs' optimizations
+(setq read-process-output-max 1mb)  ;; lsp-mode's performance suggest
 #+END_SRC
 
 ** File Handler
@@ -194,166 +270,335 @@ Similar to garbage collection optimization.
 
 (Note: ":tangle early-init.el")
 #+BEGIN_SRC emacs-lisp :tangle early-init.el
-(defvar default-file-name-handler-alist file-name-handler-alist)
-(setopt file-name-handler-alist nil)
+  (unless (daemonp)
+    (defvar default-file-name-handler-alist file-name-handler-alist)
+    (setopt file-name-handler-alist nil)
 
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            (setopt file-name-handler-alist default-file-name-handler-alist)) 100)
+    (add-hook 'emacs-startup-hook
+		(lambda ()
+		(setopt file-name-handler-alist default-file-name-handler-alist)) 100))
 #+END_SRC
 
-** Others
+** Custom Functions
+*** measure-time
 
 (Note: ":tangle early-init.el")
 #+BEGIN_SRC emacs-lisp :tangle early-init.el
-(setopt
- frame-inhibit-implied-resize t  ; inhibit frame resize at startup
- inhibit-compacting-font-caches t
- inhibit-startup-screen t
- initial-major-mode 'fundamental-mode)  ; major mode for the `*scratch*' buffer
-#+END_SRC
 
-** Utils
-*** measure-time
+  (defmacro xero/measure-time (&rest body)
+    "Measure the time it takes to evaluate BODY."
+    `(let ((time (current-time)))
+       ,@body
+       (message "%s" (float-time (time-since time)))))
 
-#+BEGIN_SRC emacs-lisp
-(defmacro xero/measure-time (&rest body)
-  "Measure the time it takes to evaluate BODY."
-  `(let ((time (current-time)))
-     ,@body
-     (message "%s" (float-time (time-since time)))))
 #+END_SRC
 
 *** time-since-startup
-
 (Note: ":tangle early-init.el")
 #+BEGIN_SRC emacs-lisp :tangle early-init.el
-(defun xero/time-since-startup (&optional prefix)
-  "Display the time that past since emacs startup. Add PREFIX if given at the
-start of message for debug purposes."
-  (interactive)
-  (let* ((prefix (or prefix ""))
-         (time (float-time (time-since before-init-time)))
-         (str (format "%s%s seconds" prefix time)))
-    (if (or (not (string-empty-p prefix))
-            (called-interactively-p 'interactive))
-        (message str)
-      str)))
+
+  (defun xero/time-since-startup (&optional prefix)
+    "Display the time that past since emacs startup. Add PREFIX if given at the
+  start of message for debug purposes."
+    (interactive)
+    (let* ((prefix (or prefix ""))
+	   (time (float-time (time-since before-init-time)))
+	   (str (format "%s%s seconds" prefix time)))
+      (if (or (not (string-empty-p prefix))
+	      (called-interactively-p 'interactive))
+	  (message str)
+	str)))
+
 #+END_SRC
 
 *** time-since-last-check
-
 (Note: ":tangle early-init.el")
 #+BEGIN_SRC emacs-lisp :tangle early-init.el
-(defvar xero/time-last-check nil)
-(defvar xero/time-threshold 0)
 
-(defun xero/time-since-last-check (&optional prefix)
+(defvar fk/time-last-check nil)
+(defvar fk/time-threshold 0)
+(setq fk/time-threshold 0.02)
+
+(defun fk/time-since-last-check (&optional prefix)
   "Display the time that past since last check. Add PREFIX if given at the
 start of message for debug purposes."
   (interactive)
   (let* ((prefix (or prefix ""))
-         (time (float-time (time-since (or xero/time-last-check before-init-time))))
+         (time (float-time (time-since (or fk/time-last-check before-init-time))))
          (str (format "%s%s seconds" prefix time)))
-    (setopt xero/time-last-check (current-time))
+    (setq fk/time-last-check (current-time))
     (if (or (not (string-empty-p prefix))
             (called-interactively-p 'interactive))
-        (when (> time xero/time-threshold) (message "%s" str))
+        (when (> time fk/time-threshold) (message "%s" str))
       str)))
+
+;;; early-init.el ends here
 #+END_SRC
 
 * Evil Mode
 
 Evil Config for the Stubborn vim hacker
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
-(use-package evil
-  :init
-  (setq evil-want-integration t)
-  (setq evil-want-keybinding nil)
-  (setq evil-want-C-u-scroll t)
-  (setq evil-want-C-i-jump nil)
-  (setq evil-respect-visual-line-mode t)
-  :config
-  (evil-mode 1)
-  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-  (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+  (use-package evil
+    :init
+    (setq evil-want-integration t
+	  evil-want-keybinding nil
+	  evil-want-C-u-scroll t
+	  evil-want-C-i-jump nil
+	  evil-want-find-undo t
+	  evil-undo-system 'undo-tree
+	  evil-cross-line t
+	  evil-split-window-below t
+	  evil-split-window-right t
+	  evil-kill-on-visual-paste nil
+	  evil-echo-state nil
+	  evil-respect-visual-line-mode t)
+    :config
+    (evil-mode 1)
+    (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+    (define-key evil-insert-state-map (kbd "C-h") 'backward-char)
+    (define-key evil-insert-state-map (kbd "C-l") 'forward-char)
+    (define-key evil-insert-state-map (kbd "C-j") 'forward-line)
+    (define-key evil-insert-state-map (kbd "C-k") 'backward-line)
 
-  ;; Use visual line motions even outside of visual-line-mode buffers
-  (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-  (evil-global-set-key 'motion "k" 'evil-previous-visual-line))
+    ;; Use visual line motions even outside of visual-line-mode buffers
+    (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+    (evil-global-set-key 'motion "k" 'evil-previous-visual-line))
 
-;; Add more Vim keybindings
-(use-package evil-collection
-  :after evil
-  :custom
-  (evil-collection-outline-bind-tab-p nil)
-  :config
-  (evil-collection-init))
+  ;; Add more Vim keybindings
+  (use-package evil-collection
+    :after evil
+    :custom
+    (evil-collection-outline-bind-tab-p nil)
+    :config
+    (evil-collection-init))
 
-;; Comment/uncomment lines with Alt-/
-(use-package evil-nerd-commenter
-  :bind ("M-/" . evilnc-comment-or-uncomment-lines))
+  ;; Comment/uncomment lines with Alt-/
+  (use-package evil-nerd-commenter
+    :bind ("M-/" . evilnc-comment-or-uncomment-lines))
 #+END_SRC
 
-* Better Defaults
-** File Locations (no-littering)
+* Emacs
+** Better Defaults
 
 #+BEGIN_SRC emacs-lisp
-(use-package no-littering
-  :custom
-  (custom-file (no-littering-expand-etc-file-name "custom.el"))
-  :config
-  (no-littering-theme-backups)  ; this setups auto-save, backup and undo-tree files
-  (load custom-file t))  ; mostly to load `safe-local-variable-values'
+    (setq-default
+     create-lockfiles nil                          ; .#locked-file-name
+     confirm-kill-processes nil                    ; exit emacs without asking to kill processes
+     backup-by-copying t                           ; prevent linked files
+     require-final-newline t                       ; always end files with newline
+     delete-old-versions t                         ; don't ask to delete old backup files
+     revert-without-query '(".*")                  ; `revert-buffer' without confirmation
+     uniquify-buffer-name-style 'forward           ; non-unique buffer name display: unique-part/non-unique-filename
+     fast-but-imprecise-scrolling t                ; supposed to make scrolling faster on hold
+     window-resize-pixelwise t                     ; correctly resize windows by pixels (e.g. in split-window functions)
+     frame-resize-pixel-wise t
+     native-comp-async-report-warnings-errors nil  ; disable annoying native-comp warnings
+     ad-redefinition-action 'accept                ; disable annoying "ad-handle-definition: ‘some-function’ got redefined" warnings
+     vc-follow-symlinks t
+     use-short-answers t                           ; e.g. `y-or-n-p' instead of `yes-or-no-p'
+     sentence-end-double-space nil
+     help-enable-symbol-autoload t)                ; perform autoload if docs are missing from autoload objects.
+
+    (setq user-full-name "Mohamed Tarek"
+	  user-mail-address "m96tarek@gmail.com")
+
+    (global-auto-revert-mode)
+
+    (save-place-mode)
+
+    (global-so-long-mode)
+
+    (bind-key* "M-r" 'repeat)
+  ;; default to utf-8 for all the things
+    (set-charset-priority 'unicode)
+    (setq locale-coding-system 'utf-8
+	    coding-system-for-read 'utf-8
+	    coding-system-for-write 'utf-8)
+    (set-terminal-coding-system 'utf-8)
+    (set-keyboard-coding-system 'utf-8)
+    (set-selection-coding-system 'utf-8)
+    (prefer-coding-system 'utf-8)
+    (setq default-process-coding-system '(utf-8-unix . utf-8-unix))
+
+    (setq cusom-safe-themes t
+	  enable-local-variables :all)
+
+    ;; enable winner mode globally for undo/redo window layout changes
+    (winner-mode t)
+    (show-paren-mode t)
+
+    ;; less noise when compiling elisp
+    (setq byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local))
+    (setq load-prefer-newer t)
+
+    ;; write over selected text on input... like all modern editors do
+    (delete-selection-mode t)
+
+    (recentf-mode t)
+    (setq recentf-exclude `(,(expand-file-name "straight/build/" user-emacs-directory)
+			    ,(expand-file-name "eln-cache/" user-emacs-directory)
+			    ,(expand-file-name "etc/" user-emacs-directory)
+			    ,(expand-file-name "var/" user-emacs-directory)))
+
+    (defun xero/add-local-hook (hook function)
+      "Add buffer-local hook."
+      (add-hook hook function :local t))
+
+    (defun xero/async-process (command &optional name filter)
+      "Start an async process by running the COMMAND string with bash. Return the
+    process object for it.
+
+    NAME is name for the process. Default is \"async-process\".
+
+    FILTER is function that runs after the process is finished, its args should be
+    \"(process output)\". Default is just messages the output."
+      (make-process
+       :command `("bash" "-c" ,command)
+       :name (if name name
+	       "async-process")
+       :filter (if filter filter
+		 (lambda (process output) (message (s-trim output))))))
+
+    ;; Examples:
+    ;;
+    ;; (xero/async-process "ls")
+    ;;
+    ;; (xero/async-process "ls" "my ls process"
+    ;;                   (lambda (process output) (message "Output:\n\n%s" output)))
+    ;;
+    ;; (xero/async-process "unknown command")
+
+    ;; Make sure to focus when a new emacsclient frame created.
+    (add-hook 'server-after-make-frame-hook (lambda () (select-frame-set-input-focus (selected-frame))))
+
+    (defalias 'narrow-quit 'widen)  ; I forget `widen' everytime
+
+    ;; TODO: lset would be useful too
+    (defmacro l (func &rest args)
+      "Shorter lambda."
+      `(lambda nil (apply ,func '(,@args))))
+
+    (defmacro li (func &rest args)
+      "Shorter lambda, interactive."
+      `(lambda nil (interactive) (apply ,func '(,@args))))
+
+    ;; Examples:
+    ;; (global-set-key (kbd "C-V") (lambda () (interactive) (next-line 10))) -- Classical
+    ;; would be --v
+    ;; (global-set-key (kbd "C-V") (li 'next-line 10)) -- With li macro
 #+END_SRC
+
+** Appearance
+*** Better Defaults
+#+BEGIN_SRC emacs-lisp
+(global-hl-line-mode)
+(blink-cursor-mode -1)
+
+(setq-default
+ truncate-lines t
+ frame-title-format '("Emacs | %b"))  ; Emacs | buffer-name
+#+END_SRC
+
+*** Font
+**** Font
+#+BEGIN_SRC emacs-lisp :tangle early-init.el
+(defconst xero/default-font-family "CaskaydiaCove Nerd Font")
+(defconst xero/default-font-size 100)
+(defconst xero/default-icon-size 15)
+
+(defconst xero/variable-pitch-font-family "Rubik")
+
+(custom-set-faces
+ `(default ((t (:family ,xero/default-font-family :height ,xero/default-font-size :weight 'semibold))))
+ `(variable-pitch ((t (:family ,xero/variable-pitch-font-family :height 1.0))))
+ ;; Characters with fixed pitch face do not shown when height is 90.
+ `(fixed-pitch-serif ((t (:height 1.2)))))
+#+END_SRC
+
+**** Custom Functions
+***** adjust-font-size
+#+BEGIN_SRC emacs-lisp
+(defun xero/adjust-font-size (height)
+  "Adjust font size by given height. If height is '0', reset font
+size. This function also handles icons and modeline font sizes."
+  (interactive "nHeight ('0' to reset): ")
+  (let ((new-height (if (zerop height)
+                        xero/default-font-size
+                      (+ height (face-attribute 'default :height)))))
+    (set-face-attribute 'default nil :height new-height)
+    (set-face-attribute 'mode-line nil :height new-height)
+    (set-face-attribute 'mode-line-inactive nil :height new-height)
+    (message "Font size: %s" new-height))
+  (let ((new-size (if (zerop height)
+                      xero/default-icon-size
+                    (+ (/ height 5) treemacs--icon-size))))
+    (when (fboundp 'treemacs-resize-icons)
+      (treemacs-resize-icons new-size))
+    (when (fboundp 'company-box-icons-resize)
+      (company-box-icons-resize new-size)))
+  (when diff-hl-mode
+    (diff-hl-maybe-redefine-bitmaps)))
+#+END_SRC
+
+***** increase-font-size
+#+BEGIN_SRC emacs-lisp
+(defun xero/increase-font-size ()
+  "Increase font size by 0.5 (5 in height)."
+  (interactive)
+  (xero/adjust-font-size 5))
+#+END_SRC
+
+***** decrease-font-size
+#+BEGIN_SRC emacs-lisp
+(defun xero/decrease-font-size ()
+  "Decrease font size by 0.5 (5 in height)."
+  (interactive)
+  (xero/adjust-font-size -5))
+#+END_SRC
+
+***** reset-font-size
+#+BEGIN_SRC emacs-lisp
+(defun xero/reset-font-size ()
+  "Reset font size according to the `xero/default-font-size'."
+  (interactive)
+  (xero/adjust-font-size 0))
+#+END_SRC
+
+**** Keybindings
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-=") 'xero/increase-font-size)
+(global-set-key (kbd "C--") 'xero/decrease-font-size)
+(global-set-key (kbd "C-0") 'xero/reset-font-size)
+#+END_SRC
+
 
 ** Helpful
 
 A better, more detailed *help* buffer.
 #+BEGIN_SRC emacs-lisp
-(use-package helpful
-  :bind
-  ( :map emacs-lisp-mode-map
-    ("C-c C-d" . helpful-at-point))
-  :hook
-  (dashboard-after-initialize . xero/setup-helpful)
-  :config
-  (defun xero/setup-helpful ()
-    "Override `describe-*' commands with appropriate `helpful-*' commands."
-    (advice-add 'describe-function :override 'helpful-callable)
-    (advice-add 'describe-variable :override 'helpful-variable)
-    (advice-add 'describe-command  :override 'helpful-command)
-    (advice-add 'describe-symbol   :override 'helpful-symbol)
-    (advice-add 'describe-key      :override 'helpful-key)
-
-    (defun xero/elisp--company-doc-buffer (str)  ; fix `corfu-popupinfo-mode'
-      (let ((symbol (intern-soft str)))
-        (save-window-excursion
-          (let ((display-buffer-overriding-action
-                 '(nil . ((inhibit-switch-frame . t)))))
-            (ignore-errors
-              (cond
-               ((fboundp symbol) (describe-function symbol))
-               ((boundp symbol) (describe-variable symbol))
-               ((featurep symbol) (describe-package symbol))
-               ((facep symbol) (describe-face symbol))
-               (t (signal 'user-error nil)))
-              (helpful--buffer symbol (fboundp symbol)))))))  ; only overriden line
-
-    (advice-add 'elisp--company-doc-buffer :override xero/elisp--company-doc-buffer)))
+  (use-package helpful
+    :after evil
+    :init
+    (setq evil-lookup-func #'helpful-at-point)
+    :bind
+    ([remap describe-function] . helpful-callable)
+    ([remap describe-variable] . helpful-variable)
+    ([remap describe-command] . helpful-command)
+    ([remap descrive-symbol] . helpful-symbol)
+    ([remap describe-key] . helpful-key))
 #+END_SRC
 
-** Menu Style Keybindings
-
-Menu style keybindings like in *Spacemacs*.
+** TODO Menu Style Keybindings
+Menu style keybindings like Spacemacs.
 #+BEGIN_SRC emacs-lisp
+;; NOTE: I use F1 as C-h (paging & help).
 (bind-keys*
- ("M-h" . help-command)
- ("M-h M-h" . help-for-help)
- ("M-r" . repeat)
- :map global-map  :prefix-map xero/menu-map     :prefix "M-m"
+ :prefix-map xero/menu-map
+ :prefix "M-m"
+ ("M-m" . which-key-show-major-mode)
  ("M-h" . help-command)
  ("M-u" . universal-argument)
  :map xero/menu-map :prefix-map buffers         :prefix "b"
@@ -362,662 +607,41 @@ Menu style keybindings like in *Spacemacs*.
  :map xero/menu-map :prefix-map errors          :prefix "e"
  :map xero/menu-map :prefix-map files           :prefix "f"
  :map xero/menu-map :prefix-map org             :prefix "o"
- ;; :map xero/menu-map :prefix-map project         :prefix "p"  ; TODO: decide project or perspective
  :map xero/menu-map :prefix-map text            :prefix "t"
  :map xero/menu-map :prefix-map version-control :prefix "v"
  :map xero/menu-map :prefix-map windows         :prefix "w")
 #+END_SRC
 
-** Others
+** File Locations (no-littering)
 
 #+BEGIN_SRC emacs-lisp
-(setopt
- ;; no need for a message in scratch buffer
- initial-scratch-message nil
- ;; .#locked-file-name
- create-lockfiles nil
- ;; exit emacs without asking to kill processes
- confirm-kill-processes nil
- ;; don't break linked files
- backup-by-copying t
- ;; always end files with a newline
- require-final-newline t
- ;; don't ask to delete old backup files
- delete-old-versions t
- ;; `revert-buffer' without confirmation
- revert-without-query '(".*")
- ;; non-unique buffer name display: unique-part/non-unique-filename
- uniquify-buffer-name-style 'forward
- ;; supposed to make scrolling faster on hold
- fast-but-imprecise-scrolling t
- ;; correctly resize windows by pixels (e.g. in `split-window' functions)
- window-resize-pixelwise t
- ;; disable annoying native-comp popus
- native-comp-async-report-warnings-errors 'silent
- ;; disable annoying "ad-handle-definition: 'something' got redefined" warnings
- ad-redefinition-action 'accept
- ;; use `y-or-n-p' instead of `yes-or-no-p'
- use-short-answers t
- ;; perform autoload if docs are missing from autoload objects.
- help-enable-symbol-autoload t
- ;; don't ask on `xref' jump: "Symbolic link ... follow link? (y or n)"
- vc-follow-symlinks t)
-
-;; TODO: configure these modes separately in use-package forms for each
-;; `revert-buffer' when the associated file changes on disk
-(global-auto-revert-mode)
-;; save cursor place for files and start from there when revisited
-(save-place-mode)
-;; prevents emacs from hanging when visiting files with long lines e.g. minified js
-(global-so-long-mode)
-
-;; make sure to focus when a new emacsclient frame created
-(add-hook 'server-after-make-frame-hook (lambda () (select-frame-set-input-focus (selected-frame))))
-#+END_SRC
-
-* Tools
-** Org
-*** Org
-
-#+BEGIN_SRC emacs-lisp
-(use-package org  ; TODO: refactor org-mode config
-  :init
-  (setopt org-directory "~/org")  ; This is default already but lets declare it explicitly
-  (setopt org-gtd-files  `(,(concat org-directory "/inbox.org")
-                           ,(concat org-directory "/todos.org")
-                           ,(concat org-directory "/someday.org")))
-  :custom
-  (org-confirm-babel-evaluate nil)
-  (org-ellipsis "▼") ;; ↴, ▼, ▶, ⤵
-  (org-src-window-setup 'current-window)
-  (org-startup-indented t)
-  (org-startup-folded 'content)  ; show only headlines (and sub headlines, recursively) at startup
-  (org-startup-with-inline-images t)
-  (org-image-actual-width '(400))
-  (org-hierarchical-todo-statistics nil)
-  (org-checkbox-hierarchical-statistics nil)
-  (org-src-preserve-indentation t)
-  (org-adapt-indentation nil)
-  (org-tags-column -120)
-  (org-imenu-depth 20)
-  (org-hide-emphasis-markers t)
-  (org-catch-invisible-edits 'show-and-error)
-  (org-cycle-separator-lines 0)  ; Never leave empty lines between headings in collapsed view
-  ;;;; Getting Things Done ;;;;
-  (org-agenda-files `(,@org-gtd-files ,(concat org-directory "/agenda.org")))
-  (org-complete-tags-always-offer-all-agenda-tags t)
-  (org-agenda-start-on-weekday nil)
-  (org-agenda-current-time-string "────────── now ──────────")
-  (org-agenda-format-date (lambda (date) (concat "\n" (org-agenda-format-date-aligned date))))
-  (org-agenda-prefix-format '((agenda  . "     %i %?-12t% s")
-                              (todo  . " %i %-12:c")
-                              (tags  . " %i %-12:c")
-                              (search . " %i %-12:c")))
-  (org-agenda-time-grid '((daily today require-timed remove-match)
-                          (1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000)
-                          "" "················"))
-  (org-deadline-warning-days 5)
-  ;; (org-display-custom-times t)
-  ;; (org-time-stamp-custom-formats '("<%d/%m/%Y %A>" . "<%d/%m/%Y %A %H:%M>"))
-  (org-bookmark-names-plist '())  ; Do not create bookmarks
-  (org-capture-templates '(("i" "Capture to inbox" entry
-                            (file "inbox.org")
-                            "* %?\nCREATED: %U"
-                            :empty-lines 1)))
-  (org-refile-targets '(("todos.org" :level . 1)
-                        ("someday.org" :level . 1)
-                        ("archive.org" :level . 1)
-                        ("agenda.org" :level . 1)))
-  (org-priority-default ?A)  ; Highest
-  ;; (org-log-done 'time)
-  (org-fontify-done-headline t)
-  (org-log-into-drawer t)  ; Log TODO state changes into :LOGBOOK: drawer insted of directly adding lines to the subtree
-  (org-todo-keywords '((sequence "TODO(t)" "WAIT(w)" "HOLD(h)" "STRT(s)"
-                                 "WIP.(i)" "STAG(a)" "PROD(p)" "REPT(r)"
-                                 "|" "DONE(d)" "CNCL(c)")))
-  (org-todo-keyword-faces
-   '(("TODO" :foreground "orangered2" :weight bold)
-     ("WAIT" :foreground "goldenrod" :weight bold)
-     ("HOLD" :foreground "#DC752F" :weight bold)
-     ("STRT" :foreground "PaleGreen" :weight bold)
-     ("WIP." :foreground "#86DC2F" :weight bold)
-     ("REPT" :foreground "#939DA4" :weight bold)
-     ("STAG" :foreground "DarkTurquoise" :weight bold)
-     ("PROD" :foreground "DodgerBlue" :weight bold)))
-  (org-use-fast-todo-selection 'expert)
-  (org-clock-clocktable-default-properties '(:maxlevel 10))
-  (org-extend-today-until 4)
-  (org-clock-mode-line-total 'today)
-  (org-clock-total-time-cell-format "%s")  ; remove styling to copy paste correctly
-  (org-duration-format '((special . h:mm)))  ; to display 30 hours as 30:00 instead of 1d 6:00
-  ;;;; Getting Things Done ;;;;
-  :custom-face
-  (org-ellipsis ((t (:foreground unspecified :inherit org-tag :weight light :height 0.9))))
-  (org-checkbox ((t (:foreground "white"))))
-  (org-level-1 ((t (:height 1.3  :weight normal))))
-  (org-level-2 ((t (:height 1.2  :weight normal))))
-  (org-level-3 ((t (:height 1.15 :weight normal))))
-  (org-level-4 ((t (:height 1.1  :weight normal))))
-  (org-level-5 ((t (:height 1.0  :weight normal))))
-  (org-level-6 ((t (:height 1.0  :weight normal))))
-  (org-level-7 ((t (:height 1.0  :weight normal))))
-  (org-level-8 ((t (:height 1.0  :weight normal))))
-  (org-drawer ((t (:foreground ,xero/light-color1))))
-  (org-table ((t (:inherit org-block :foreground ,(face-foreground 'default)))))
-  (org-document-title ((t (:family "AV Qest" :height 3.0))))
-  (org-block-begin-line ((t (:foreground ,xero/light-color1 :background ,xero/background-color :extend t))))
-  (org-document-info-keyword ((t (:foreground ,xero/background-color))))  ; Make #+TITLE: invisible
-  (org-meta-line ((t (:foreground ,xero/light-color1))))  ; Less distractive
-  (org-agenda-date ((t (:foreground "#ECBE7B"))))
-  (org-agenda-date-today ((t (:foreground "LightGoldenrod"))))
-  (org-agenda-current-time ((t (:foreground "LightGoldenrod"))))
-  (org-agenda-calendar-event ((t (:weight bold))))
-  :bind
-  ( :map org
-    ("a" . xero/org-agenda-posframe)
-    ("f" . xero/org-directory-find-file)
-    ("c" . (lambda () (interactive) (org-capture :keys "i")))
-    ;; ("t" . xero/org-babel-tangle-block)
-    ("d" . (lambda () (interactive) (org-todo "DONE")))
-    :map org-mode-map
-    ("C-c C-e" . org-edit-special)
-    ("M-n" . org-next-visible-heading)
-    ("M-p" . org-previous-visible-heading)
-    ("C-x C-1" . outline-hide-other)
-    ("C-c C-r" . org-refile-hydra/body)
-    ("C-c C-a" . xero/org-refile-done)  ; "a" for archive
-    ("C-c C-t" . xero/org-refile-trash)
-    ("C-c t" . org-todo)
-    ("C-c C-p" . org-priority-down)
-    ("C-M-j" . org-open-at-point)
-    ("C-c r" . org-shiftright)
-    ("C-c l" . org-shiftleft)
-    ("C-c u" . org-shiftup)
-    ("C-c d" . org-shiftdown)
-    ("C-c R" . org-metaright)
-    ("C-c L" . org-metaleft)
-    ("C-c U" . org-metaup)
-    ("C-c D" . org-metadown)
-    ("C-c C-x C-e" . org-set-effort)  ; ‘3:12’, ‘1:23:45’, or ‘1d3h5min’
-    :map org-src-mode-map
-    ("C-c C-c" . org-edit-src-exit)
-    ;; Better, intuitive movement when selecting a date for schedule or deadline
-    :map org-read-date-minibuffer-local-map  ; TODO: these may not be necessary anymore
-    ("C-n". (lambda () (interactive) (org-eval-in-calendar '(calendar-forward-week 1))))
-    ("C-p". (lambda () (interactive) (org-eval-in-calendar '(calendar-backward-week 1))))
-    ("C-f". (lambda () (interactive) (org-eval-in-calendar '(calendar-forward-day 1))))
-    ("C-b". (lambda () (interactive) (org-eval-in-calendar '(calendar-backward-day 1))))
-    ("C-v". (lambda () (interactive) (org-eval-in-calendar '(calendar-forward-month 1))))
-    ("M-v". (lambda () (interactive) (org-eval-in-calendar '(calendar-backward-month 1)))))
-  :hook
-  (org-babel-after-execute . org-redisplay-inline-images)
-  (org-mode . (lambda () (add-hook 'before-save-hook 'org-redisplay-inline-images nil t)))
-  (org-after-refile-insert . (lambda () (xero/org-sort-by-priority) (save-buffer)))
-  (org-capture-mode . delete-other-windows)  ; make capture buffer fullscreen
-  ;; (org-agenda-mode . (lambda () (require 'org-habit)))
+(use-package no-littering
   :config
-  (add-to-list 'org-emphasis-alist '("#" (:box '(:line-width -1))))  ; FIXME: does not work.
-  (setf (cdr (assoc "*" org-emphasis-alist)) '((:weight extra-bold :foreground "#DDDDDD")))
+  (with-eval-after-load 'recentf
+    (add-to-list 'recentf-exclude no-littering-var-directory)
+    (add-to-list 'recentf-exclude no-littering-etc-directory))
 
-  (defun xero/org-directory-find-file ()
-    "Call `find-file' in `org-directory'."
-    (interactive)
-    (let ((default-directory (concat org-directory "/")))
-      (call-interactively 'find-file)))
+  (setq auto-save-file-name-transforms  ; autosaved-file-name~
+        `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))
+        custom-file (no-littering-expand-etc-file-name "custom.el"))
 
-  (defun xero/org-babel-load-languages ()
-    "Load languages I use."
-    (interactive)
-    (org-babel-do-load-languages 'org-babel-load-languages '((python . t)
-                                                             (emacs-lisp . t)
-                                                             (shell . t))))
+  (when (file-exists-p custom-file)
+    ;; Load `custom-set-variables', not load whole `custom.el' with unwanted
+    ;; `custom-set-faces'
+    (with-current-buffer (find-file-noselect custom-file)
+      (goto-char 0)
+      (forward-sexp)
+      (call-interactively 'eval-last-sexp)
+      (kill-buffer)))
 
-  (defun xero/org-babel-tangle-block()
-    (interactive)
-    (let ((current-prefix-arg '(4)))
-      (call-interactively 'org-babel-tangle)))
+  (defconst xero/static-directory (locate-user-emacs-file "static/"))
 
-  (with-eval-after-load 'org-agenda
-    (bind-key "m" 'org-agenda-month-view org-agenda-mode-map))
-
-  ;; Beautify org mode
-  (font-lock-add-keywords 'org-mode
-                          '(("^ *\\([-]\\) "
-                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-  (font-lock-add-keywords 'org-mode
-                          '(("^ *\\([+]\\) "
-                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "◦"))))))
-  (defface org-checkbox-done-text
-    '((t (:inherit 'font-lock-comment-face :slant normal)))
-    "Face for the text part of a checked org-mode checkbox.")
-
-  (font-lock-add-keywords
-   'org-mode
-   `(("^[ \t]*\\(?:[-+*]\\|[0-9]+[).]\\)[ \t]+\\(\\(?:\\[@\\(?:start:\\)?[0-9]+\\][ \t]*\\)?\\[\\(?:X\\|\\([0-9]+\\)/\\2\\)\\][^\n]*\n\\)"
-      1 'org-checkbox-done-text prepend))
-   'append)
-
-  (defun xero/org-insert-created-time ()
-    (interactive)
-    (insert "CREATED: " (format-time-string (org-time-stamp-format t t) (current-time))))
-
-  (defun xero/org-refile-fixed-location (file headline)
-    "Refile headline without selecting from refile-targets."
-    (let ((pos (save-window-excursion
-                 (find-file file)
-                 (org-find-exact-headline-in-buffer headline))))
-      (org-refile nil nil (list headline file nil pos))))
-
-  (defun xero/org-refile-fixed-location-with-closed-timestamp (file headline)
-    "Refile headline without selecting from refile-targets. Add
-    \"CLOSED\" timestamp info."
-    (add-hook 'org-after-refile-insert-hook (lambda () (org-add-planning-info 'closed (org-current-effective-time))) -100)
-    (xero/org-refile-fixed-location file headline)
-    (remove-hook 'org-after-refile-insert-hook (lambda () (org-add-planning-info 'closed (org-current-effective-time)))))
-
-  (defun xero/org-refile-done ()
-    (interactive)
-    (xero/org-refile-fixed-location-with-closed-timestamp "archive.org" "Done"))
-
-  (defun xero/org-refile-trash ()
-    (interactive)
-    (xero/org-refile-fixed-location-with-closed-timestamp "archive.org" "Trash"))
-
-  (set-face-attribute 'org-mode-line-clock nil :inherit 'default)
-
-  ;; (defun xero/org-clock-update-mode-line (&optional _)
-  ;;   "Display org-clock info in echo area. See `xero/minibuffer-modeline-update'."
-  ;;   (if org-clock-effort
-  ;;       (org-clock-notify-once-if-expired)
-  ;;     (setq org-clock-task-overrun nil))
-  ;;   (setq xero/org-clock-string
-  ;;         (let ((clock-string (org-clock-get-clock-string)))
-  ;;           (if (and (> org-clock-string-limit 0)
-  ;;                    (> (length clock-string) org-clock-string-limit))
-  ;;               (substring clock-string 0 org-clock-string-limit)
-  ;;             clock-string)))
-  ;;   (if (and org-clock-task-overrun org-clock-task-overrun-text)
-  ;;       (setq xero/org-clock-string
-  ;;             (concat (propertize
-  ;;                      org-clock-task-overrun-text
-  ;;                      'face 'org-mode-line-clock-overrun)
-  ;;                     xero/org-clock-string))))
-
-  ;; (advice-add 'org-clock-update-mode-line :override xero/org-clock-update-mode-line)
-
-  (add-hook 'org-clock-in-hook (lambda ()
-                                 (interactive)
-                                 (setq xero/org-clocking-buffer (org-clocking-buffer))
-                                 (save-buffer)))
-  (add-hook 'org-clock-out-hook (lambda ()
-                                  (interactive)
-                                  (with-current-buffer xero/org-clocking-buffer
-                                    (save-buffer))
-                                  (setq xero/org-clocking-buffer nil)
-                                  (setq xero/org-clock-string "")))
-  (add-hook 'org-clock-cancel-hook (lambda ()
-                                     (interactive)
-                                     (with-current-buffer xero/org-clocking-buffer
-                                       (save-buffer))
-                                     (setq xero/org-clocking-buffer nil)
-                                     (setq xero/org-clock-string "")))
-
-  (defun xero/org-clock-out-and-update-report (orig-func &rest args)
-    "Update org clock report table after clock out."
-    (interactive)
-    (let ((buffer (org-clocking-buffer)))
-      (apply orig-func args)  ; clock out
-      ;; `org-clock-report' updates the first table in the buffer
-      ;; when called with a prefix argument
-      (save-excursion
-        (with-current-buffer buffer
-          (let ((current-prefix-arg 4))
-            (call-interactively 'org-clock-report)
-            (save-buffer))))))
-
-  (advice-add 'org-clock-out :around xero/org-clock-out-and-update-report)
-
-  ;; Similar to `xero/org-clock-out-and-update-report',
-  ;; I added this file local variable to my time tracking file to update report on save:
-  ;; # Local Variables:
-  ;; # eval: (add-hook 'before-save-hook (lambda () (save-excursion (let ((current-prefix-arg 4)) (call-interactively 'org-clock-report)))) :local t)
-  ;; # End:
-
-  (defun xero/time-to-minutes (time)
-    "Convert a time string in 'hour:minute' format to minutes."
-    (let* ((time-list (split-string time ":"))
-           (hours (string-to-number (car time-list)))
-           (minutes (string-to-number (cadr time-list))))
-      (+ (* hours 60) minutes)))
-
-  (defun xero/number-of-weekdays-in-a-month (year month &optional until-today)
-    "Returns the number of weekdays in the given YEAR and MONTH."
-    (require 'calendar)
-    (let ((weekdays '(1 2 3 4 5))  ; 0 sun 1 mon 2 tue 3 wed 4 thu 5 fri 6 sat
-          (count 0))
-      (dotimes (day (if until-today (nth 3 (decode-time (current-time)))
-                      (calendar-last-day-of-month month year)))
-        (message "%s" day)
-        (when (memq (calendar-day-of-week `(,month ,(1+ day) ,year)) weekdays)
-          (setq count (1+ count))))
-      count))
-
-  (defun xero/org-clocktable-total-time-in-minutes ()
-    "Returns total time in an org clocktable after point in minutes."
-    (let ((time-string (save-excursion
-                         (search-forward "Total time")
-                         (org-table-next-field)
-                         (org-table-get nil nil))))
-      (xero/time-to-minutes time-string)))
-
-  (defun xero/calculate-average-working-hour (year month until-today)
-    "Calculates average working hour by dividing total time to weekday count."
-    (interactive "nEnter year: \nnEnter month: \nSUntil now (type nil for false): ")
-    (let* ((total-time (xero/org-clocktable-total-time-in-minutes))
-           (weekday-count (xero/number-of-weekdays-in-a-month year month until-today))
-           (average-working-minutes (/ total-time weekday-count)))
-      (message "Average working hour: %s hours %s minutes"
-               (/ average-working-minutes 60) (mod average-working-minutes 60)))))
+  (defun xero/expand-static-file-name (file)
+    "Expand filename FILE relative to `xero/static-directory'."
+    (expand-file-name file xero/static-directory)))
 #+END_SRC
 
-*** Org Super Agenda
 
-#+BEGIN_SRC emacs-lisp
-(use-package org-super-agenda
-  :custom
-  (org-super-agenda-groups '((:name "Calendar"  :time-grid t)
-                             (:name "Deadlines" :deadline  t)
-                             (:name "Scheduled" :scheduled t)))
-  :hook
-  (dashboard-after-initialize . org-super-agenda-mode))
-#+END_SRC
 
-*** Org QL
 
-#+BEGIN_SRC emacs-lisp
-(use-package org-ql
-  :commands org-ql-search org-ql-view
-  :bind
-  ( :map org
-    ("q" . org-ql-view))
-  :config
-  (with-eval-after-load 'org-ql-view
-    (keymap-set org-ql-view-map "q" 'quit-window)
-
-    (defmacro xero/org-ql-view (title query)
-      `'(,title
-         :title ,title
-         :buffers-files ,org-gtd-files
-         :query ,query
-         :super-groups ((:auto-parent))
-         :sort (priority)))
-
-    (setopt org-ql-views
-            `(,(xero/org-ql-view "Effort <=15min"         (effort "<=" "15min"))
-              ,(xero/org-ql-view "Effort >15min <=30min"  (and (effort ">" "15min") (effort "<=" "30min")))
-              ,(xero/org-ql-view "Effort >30min <=1h"     (and (effort ">" "30min") (effort "<=" "1h")))
-              ,(xero/org-ql-view "Effort >1h <=2h"        (and (effort ">" "1h") (effort "<=" "2h")))
-              ,(xero/org-ql-view "Effort >2h <=4h"        (and (effort ">" "2h") (effort "<=" "4h")))
-              ,(xero/org-ql-view "Effort >4h"             (effort ">" "4h"))))))
-#+END_SRC
-
-*** Custom Functions
-**** org-screenshot
-
-#+BEGIN_SRC emacs-lisp
-(defun xero/org-screenshot ()
-  ;; fork from: https://delta.re/org-screenshot/
-  ;; https://github.com/kadircancetin/.emacs.d
-  "Take a screenshot into a time stamped unique-named file in the
-  same directory as the org-buffer and insert a link to this file."
-  (interactive)
-  (when (eq major-mode 'org-mode)
-    (suspend-frame)
-    (run-at-time
-     "500 millisec" nil  ; I have animation when minimize window
-     (lambda ()
-       (org-display-inline-images)
-       (setq filename
-             (concat
-              (make-temp-name
-               (concat (file-name-nondirectory (buffer-file-name))
-                       "_imgs/"
-                       (format-time-string "%Y%m%d_%H%M%S_")) ) ".png"))
-       (unless (file-exists-p (file-name-directory filename))
-         (make-directory (file-name-directory filename)))
-       ;; take screenshot
-       (if (eq system-type 'darwin)
-           (call-process "screencapture" nil nil nil "-i" filename))
-       (if (eq system-type 'gnu/linux)
-           (call-process "import" nil nil nil filename))
-       ;; insert into file if correctly taken
-       (if (file-exists-p filename)
-           (insert (concat "[[file:" filename "]]")))
-       (org-remove-inline-images)
-       (org-display-inline-images)
-       (other-frame 0)))))
-#+END_SRC
-
-**** org-indent-src-block
-
-#+BEGIN_SRC emacs-lisp
-(defun xero/org-indent-src-block ()
-  (interactive)
-  (org-edit-special)
-  (xero/indent-buffer)
-  (org-edit-src-exit))
-#+END_SRC
-
-**** org-sort-by-priority
-
-#+BEGIN_SRC emacs-lisp
-(defun xero/org-sort-by-priority ()
-  "Sort entries in level=2 by priority."
-  (interactive)
-  (org-map-entries (lambda () (condition-case nil
-                                  (org-sort-entries nil ?p)
-                                (error nil)))
-                   "LEVEL=1")
-  (org-set-startup-visibility))
-#+END_SRC
-
-**** org-agenda-posframe
-
-#+BEGIN_SRC emacs-lisp
-(defun xero/org-agenda-posframe ()
-  "`org-agenda-list' in a posframe. Quit with 'q' as usual."
-  (interactive)
-  (save-window-excursion
-    (org-agenda-list)
-    (xero/darken-background))
-  (let ((frame (posframe-show org-agenda-buffer
-                              :poshandler 'posframe-poshandler-frame-center
-                              :border-width 30
-                              :border-color xero/dark-color)))
-    (x-focus-frame frame)
-    (with-current-buffer org-agenda-buffer
-      (setq-local cursor-type 'box))))
-#+END_SRC
-
-*** Org Bullets
-
-#+BEGIN_SRC emacs-lisp
-(use-package org-bullets
-  :custom
-  (org-bullets-bullet-list '("⁖"))
-  ;;;; Alternatives
-  ;; (org-bullets-bullet-list '("①" "②" "③" "④" "⑤" "⑥" "⑦" "⑧" "⑨"))
-  ;; (org-bullets-bullet-list '("➀" "➁" "➂" "➃" "➄" "➅" "➆" "➇" "➈"))
-  ;; (org-bullets-bullet-list '("❶" "❷" "❸" "❹" "❺" "❻" "❼" "❽" "❾"))
-  ;; (org-bullets-bullet-list '("➊" "➋" "➌" "➍" "➎" "➏" "➐" "➑" "➒"))
-  ;; (org-bullets-bullet-list '("⒈" "⒉" "⒊" "⒋" "⒌" "⒍" "⒎" "⒏" "⒐"))
-  :hook
-  (org-mode . org-bullets-mode))
-#+END_SRC
-
-*** Toc Org
-
-#+BEGIN_SRC emacs-lisp
-(use-package toc-org
-  :vc (toc-org :url "https://github.com/KaratasFurkan/toc-org"
-               :branch "insert-silently")
-  :custom
-  (toc-org-max-depth 10)
-  (toc-org-insert-silently t)
-  :hook
-  (org-mode . toc-org-mode))
-#+END_SRC
-
-*** Org Babel Async
-
-#+BEGIN_SRC emacs-lisp
-(use-package ob-async
-  :after org)
-#+END_SRC
-
-*** Org Pomodoro
-
-#+BEGIN_SRC emacs-lisp
-(use-package org-pomodoro
-  :commands org-pomodoro
-  :custom
-  (org-pomodoro-audio-player "ffplay")
-  (org-pomodoro-manual-break t)
-  (org-pomodoro-format "🍅 %s")
-  (org-pomodoro-short-break-format "🍅 Short Break %s")
-  (org-pomodoro-long-break-format "🍅 Long Break %s")
-  (org-pomodoro-keep-killed-pomodoro-time t)
-  :config
-  ;; Apply args for all sounds
-  (advice-add 'org-pomodoro-sound-args :override (lambda (_) "-volume 15 -nodisp -nostats -hide_banner")))
-#+END_SRC
-
-*** Org Roam
-
-#+BEGIN_SRC emacs-lisp
-(use-package org-roam
-  :preface
-  ;; use preface to set this even if the package is not loaded since the
-  ;; directory is mentioned in a few more places in the config
-  (setopt org-roam-directory "~/org/roam/")
-  :bind
-  ( :map org
-    ("o" . org-roam-node-find))
-  :hook
-  (dashboard-after-initialize . org-roam-db-autosync-mode))
-#+END_SRC
-
-*** Org Fancy Priorities
-
-#+BEGIN_SRC emacs-lisp
-(use-package org-fancy-priorities
-  :custom
-  (org-fancy-priorities-list '("[!!!]" "[!!] " "[!]  "))  ; same length
-  (org-priority-faces '((?A . (:foreground "orangered2" :weight extrabold :height 1.3))  ; org-mode variable
-                        (?B . (:foreground "orange"     :weight extrabold :height 1.3))
-                        (?C . (:foreground "Burlywood"  :weight extrabold :height 1.3))))
-  :hook
-  (org-mode . org-fancy-priorities-mode))
-#+END_SRC
-
-*** Org Tree Slide
-#+BEGIN_SRC emacs-lisp
-(use-package org-tree-slide
-  :commands org-tree-slide-mode
-  :custom
-  (org-tree-slide-activate-message "")
-  (org-tree-slide-deactivate-message "")
-  (org-tree-slide-breadcrumbs "    >    ")
-  (org-tree-slide-heading-emphasis t)
-  (org-tree-slide-slide-in-waiting 0.025)
-  (org-tree-slide-content-margin-top 4)
-  :custom-face
-  (org-tree-slide-heading-level-1 ((t (:height 1.8 :weight bold))))
-  (org-tree-slide-heading-level-2 ((t (:height 1.5 :weight bold))))
-  (org-tree-slide-heading-level-3 ((t (:height 1.5 :weight bold))))
-  (org-tree-slide-heading-level-4 ((t (:height 1.5 :weight bold))))
-  :bind
-  ( :map org
-    ("s" . org-tree-slide-mode)
-    :map org-tree-slide-mode-map
-    ("<f8>" . org-tree-slide-content)
-    ("<f9>" . org-tree-slide-move-previous-tree)
-    ("<f10>" . org-tree-slide-move-next-tree)
-    ("<left>" . org-tree-slide-move-previous-tree)
-    ("<right>" . org-tree-slide-move-next-tree)
-    ("C-n" . (lambda () (interactive) (if cursor-type
-                                          (next-line)
-                                        (setq-local cursor-type t)
-                                        (next-line)))))
-  :hook
-  (org-tree-slide-before-narrow . (lambda () (setq-local cursor-type nil)))
-  (org-tree-slide-stop . (lambda () (setq-local cursor-type t)))
-  (org-tree-slide-play . variable-pitch-mode)
-  (org-tree-slide-stop . (lambda () (variable-pitch-mode -1)))
-  (org-tree-slide-play . xero/hide-org-metalines-toggle)
-  (org-tree-slide-stop . xero/hide-org-metalines-toggle)
-  (org-tree-slide-before-narrow . org-remove-inline-images)
-  (org-tree-slide-after-narrow . org-display-inline-images)
-  (org-tree-slide-play . xero/org-tree-slide-update-modeline)
-  (org-tree-slide-stop . xero/org-tree-slide-update-modeline)
-  (org-tree-slide-mode . (lambda () (xero/adjust-font-size 40)))
-  ;; (org-tree-slide-stop . (lambda () (xero/adjust-font-size -40)))
-  ;; (org-tree-slide-play . (lambda () (setq-local olivetti-body-width 95) (olivetti-mode 1)))
-  ;; (org-tree-slide-stop . (lambda () (setq-local olivetti-body-width 120) (olivetti-mode 1)))
-  (org-tree-slide-mode . (lambda () (org-appear-mode -1)))
-  (org-tree-slide-mode . (lambda () (setq olivetti-enable-borders nil) (olivetti-mode 1)))
-  :config
-  (defun xero/buffer-contains-substring (string)
-    (save-excursion
-      (save-match-data
-        (goto-char (point-min))
-        (and-let* ((pos (search-forward string nil t))
-                   (visible (not (outline-invisible-p pos))))))))
-
-  (setq xero/org-meta-line-hide-p nil)
-  (setq xero/org-meta-line-face-remap nil)
-
-  (defun xero/hide-org-metalines-toggle ()
-    "Hide or unhide meta lines starting with \"#+\" in org-mode."
-    (interactive)
-    (if xero/org-meta-line-hide-p
-        (face-remap-remove-relative xero/org-meta-line-face-remap)
-      (setq xero/org-meta-line-face-remap (face-remap-add-relative 'org-meta-line
-                                                                 :foreground xero/background-color)))
-    (setq xero/org-meta-line-hide-p (not xero/org-meta-line-hide-p)))
-
-  (defun xero/org-tree-slide-update-modeline ()
-    "Show current page in modeline."
-    (let ((slide-position '(:eval (format " %s " (org-tree-slide--count-slide (point))))))
-      (if (org-tree-slide--active-p)
-          (setq-local global-mode-string (append global-mode-string (list slide-position)))
-        (setq-local global-mode-string (delete slide-position global-mode-string))))))
-
-;; Alternative
-(use-package epresent
-  :commands epresent-run)
-#+END_SRC
-
-*** Org Export Twitter Bootstrap
-#+BEGIN_SRC emacs-lisp
-(use-package ox-twbs
-  :after org)
-#+END_SRC
-
-*** Org Appear
-
-#+BEGIN_SRC emacs-lisp
-(use-package org-appear
-  :hook
-  (org-mode . org-appear-mode))
-#+END_SRC
-
-*** Org Rainbow Tags
-
-#+BEGIN_SRC emacs-lisp
-(use-package org-rainbow-tags
-  :custom
-  (org-rainbow-tags-hash-start-index 9)
-  :hook
-  (org-mode . (lambda () (unless (daemonp) (org-rainbow-tags-mode)))))
-#+END_SRC
+* ---Local-Variables---

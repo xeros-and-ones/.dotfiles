@@ -3,7 +3,7 @@
 (map! :leader
       :desc "Snails" :nmv "RET" #'snails
       (:prefix "s"
-       :desc "Search project" "p" #'+xero/search-project
+       :desc "Search project" "p" #'+my/search-project
        :desc "Search project customly" "P" #'color-rg-customized-search))
 
 (set-popup-rules! '(("^\\*color-rg\\*$" :size 0.35)))
@@ -24,7 +24,7 @@
          "C-j" #'color-rg-jump-next-keyword
          :nv "gr" #'color-rg-rerun)
         (:map color-rg-mode-edit-map
-              "C-c C-k" #'color-rg-quit))
+         "C-c C-k" #'color-rg-quit))
 
   (custom-set-faces!
     `(color-rg-font-lock-match :foreground ,(doom-color 'red))
@@ -38,7 +38,7 @@
   (use-package! snails
     :defer t
     :custom (snails-use-exec-path-from-shell nil)
-    :load-path  "~/.config/emacs/.local/straight/repos/snails"
+    :load-path  "~/.emacs.d/.local/straight/repos/snails"
     :commands snails
     :config
     (setq snails-input-buffer-text-scale 1)
