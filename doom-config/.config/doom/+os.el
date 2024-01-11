@@ -1,11 +1,12 @@
-;;; ~/.doom.d/+os.el -*- lexical-binding: t; -*-
+;;; +os.el -*- lexical-binding: t; -*-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ENV
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (when IS-WINDOWS
-  (add-to-list 'exec-path "C:/Users/ztlevi/emax/bin"))
+  ;; TODO
+  (add-to-list 'exec-path ""))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MACOS
@@ -39,16 +40,12 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (when IS-LINUX
-  (defvar linux-terminal (cond ((executable-find "alacritty") "alacritty")
-                               ((executable-find "xst") "xst")
-                               ((executable-find "tilix") "tilix")
+  (defvar linux-terminal (cond ((executable-find "kitty") "kitty")
                                ((executable-find "konsole") "konsole")
                                ((executable-find "gnome-terminal") "gnome-terminal")))
 
   (defun linux-terminal-args (dir)
-    (cond ((executable-find "alacritty") (concat "--working-directory='" dir "'"))
-          ((executable-find "xst") (concat "zsh -c 'cd " dir ";zsh'"))
-          ((executable-find "tilix") (concat "--display=:1 " "--working-directory='" dir "'"))
+    (cond ((executable-find "kitty") (concat "--working-directory='" dir "'"))
           ((executable-find "konsole") (concat "--workdir='" dir "'"))
           ((executable-find "gnome-terminal") (concat "--working-directory='" dir "'"))))
 
@@ -69,9 +66,8 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 
   (+shell--open-with reveal-in-terminal linux-terminal (linux-terminal-args default-directory))
   (+shell--open-with reveal-project-in-terminal linux-terminal
-                     (linux-terminal-args (or (doom-project-root) default-directory)))
+                     (linux-terminal-args (or (doom-project-root) default-directory))))
 
-  (+shell--open-with reveal-in-typora "typora" (concat buffer-file-name " &")))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -79,6 +75,7 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun get-docker-project-filename ()
+  ;; TODO: fix paths
   (string-join `("/code/" ,(replace-regexp-in-string "detection/python/private" "python_root/detection"
                                                      (file-relative-name (buffer-file-name) "~/av")))))
 

@@ -28,30 +28,6 @@
   :when (executable-find "cspell")
   :hook (prog-mode . flymake-cspell-setup))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Cspell
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defvar cspell-base-program "cspell")
-(defvar cspell-config-file-path (concat "'" (expand-file-name  "~/.config/cspell/cspell.json") "'"))
-(defvar cspell-args (string-join `("--config" ,cspell-config-file-path) " "))
-(defun cspell-check-buffer ()
-  (interactive)
-  (if cspell-base-program
-      (let* ((file-name (concat "'" (file-name-nondirectory (buffer-file-name)) "'"))
-             (command (string-join `(,cspell-base-program ,cspell-args ,file-name) " ")))
-        (compilation-start command 'grep-mode))
-    (message "Cannot find cspell, please install with `npm install -g cspell`")
-    ))
-
-(defun cspell-check-diff-from-HEAD ()
-  (interactive)
-  (if cspell-base-program
-      (let* ((default-directory (doom-project-root))
-             (command (string-join `("git diff --name-only HEAD | xargs -I{}" ,cspell-base-program ,cspell-args "'{}'") " ")))
-        (compilation-start command 'grep-mode))
-    (message "Cannot find cspell, please install with `npm install -g cspell`")))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; FLYCHECK
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

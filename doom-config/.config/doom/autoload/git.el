@@ -1,46 +1,5 @@
 ;;; autoload/git.el -*- lexical-binding: t; -*-
 
-;;; Add support for Amazon code repos
-;;;###autoload
-(defun git-link-amazon-code (_hostname dirname filename branch commit start end)
-  (require 's)
-  (format "https://code.amazon.com/packages/%s/blobs/%s/--/%s"
-          ;; The dirname here is user/repo-name. Just pick the repo-name.
-          (nth 1 (s-split "/" dirname))
-          (or commit branch)
-          (concat filename
-                  (when start
-                    (concat "#"
-                            (if end
-                                (format "L%s-L%s" start end)
-                              (format "L%s" start)))))))
-
-;;;###autoload
-(defun git-link-commit-amazon-code (_hostname dirname commit)
-  (require 's)
-  (format "https://code.amazon.com/packages/%s/commits/%s#"
-          (nth 1 (s-split "/" dirname))
-          commit))
-
-;;;###autoload
-(defun git-link-aws-codecommit (hostname dirname filename branch commit start end)
-  (require 's)
-  (format "https://console.aws.amazon.com/codesuite/codecommit/repositories/%s/browse/refs/heads/%s/--/%s?region=%s&lines=%s-%s"
-          (nth 2 (s-split "\\/" dirname))
-          (or branch commit)
-          filename
-          (nth 1 (s-split "\\." hostname))
-          (or start "")
-          (or end start "")))
-
-;;;###autoload
-(defun git-link-commit-aws-codecommit (hostname dirname commit)
-  (require 's)
-  (require 'magit-git)
-  (format "https://console.aws.amazon.com/codesuite/codecommit/repositories/%s/commit/%s?region=%s"
-          (nth 2 (s-split "\\/" dirname))
-          (magit-rev-parse commit)
-          (nth 1 (s-split "\\." hostname))))
 
 ;;;###autoload
 (defun +vc/git-browse-commit (arg)

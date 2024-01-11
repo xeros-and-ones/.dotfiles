@@ -1,4 +1,4 @@
-;;; ~/.doom.d/autoload/buffer.el -*- lexical-binding: t; -*-
+;;; autoload/buffer.el -*- lexical-binding: t; -*-
 
 ;;;###autoload
 (defun revert-buffer-no-confirm ()

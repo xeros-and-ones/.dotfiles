@@ -16,22 +16,6 @@
       '(:importModuleSpecifierPreference "relative"))
 
 
-;; Java
-;; jdtls mirror in China
-;; (setq lsp-java-jdt-download-url "http://mirrors.ustc.edu.cn/eclipse/jdtls/milestones/1.1.2/jdt-language-server-1.1.2-202105191944.tar.gz")
-
-(after! lsp-java
-  ;; eclipse.jdt.ls needs java 11
-  (dolist (java_path '("/usr/lib/jvm/java-11-amazon-corretto.x86_64"
-                       "/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home"))
-    (if (file-directory-p java_path)
-        (setq lsp-java-configuration-runtimes `[(:name "JavaSE-11"
-                                                 :path ,java_path
-                                                 :default t)]
-              lsp-java-java-path (concat java_path "/bin/java")
-              dap-java-java-command (concat java_path "/bin/java")))))
-
-
 ;; Use format-all by default
 (setq +format-with-lsp nil)
 
@@ -41,8 +25,8 @@
   (setq lsp-log-io nil
         lsp-file-watch-threshold 4000
         lsp-headerline-breadcrumb-enable t
-        lsp-headerline-breadcrumb-icons-enable nil
-        lsp-headerline-breadcrumb-segments '(file symbols)
+        lsp-headerline-breadcrumb-icons-enable t
+        lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols)
         lsp-imenu-index-symbol-kinds '(File Module Namespace Package Class Method Enum Interface
                                        Function Variable Constant Struct Event Operator TypeParameter)
         )
@@ -67,9 +51,9 @@
   )
 
 (after! lsp-ui
-  (setq lsp-ui-doc-enable nil
+  (setq lsp-ui-doc-enable t
         lsp-lens-enable nil
-        lsp-ui-sideline-enable nil
+        lsp-ui-sideline-enable t
         lsp-ui-doc-include-signature t
         lsp-ui-doc-max-height 15
         lsp-ui-doc-max-width 100))
@@ -91,7 +75,7 @@
      (list :server-id 'dockerfile-ls :docker-server-id 'dockerfilels-docker :server-command "docker-langserver --stdio")
      (list :server-id 'gopls :docker-server-id 'gopls-docker :server-command "gopls")
      (list :server-id 'html-ls :docker-server-id 'htmls-docker :server-command "html-languageserver --stdio")
-     (list :server-id 'pyls :docker-server-id 'pyls-docker :server-command "pyls")
+     (list :server-id 'pylsp :docker-server-id 'pylsp-docker :server-command "pylsp")
      (list :server-id 'ts-ls :docker-server-id 'tsls-docker :server-command "typescript-language-server --stdio")))
 
   ;; (lsp-docker-init-clients

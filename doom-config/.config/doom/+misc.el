@@ -1,4 +1,4 @@
-;;; ~/.doom.d/+misc.el -*- lexical-binding: t; -*-
+;;; +misc.el -*- lexical-binding: t; -*-
 
 ;; Use chrome to browse
 (setq browse-url-browser-function 'browse-url-generic
@@ -10,61 +10,11 @@
        ((executable-find "/usr/bin/google-chrome-stable") "/usr/bin/google-chrome-stable")
        ((executable-find "google-chrome") "google-chrome")))
 
-;; Set personal ispell dictionary file
-(when (file-exists-p (expand-file-name "~/.aspell.en.pws"))
-  (setq ispell-personal-dictionary (expand-file-name "~/.aspell.en.pws")))
-
 (use-package! screenshot
   :defer t)
 
-(defun az-vpn ()
-  (interactive)
-  (async-shell-command "/opt/cisco/anyconnect/bin/vpn connect 'Automatic Selection (Route53)'")
-  )
-
 (after! centaur-tabs
   (centaur-tabs-group-by-projectile-project))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; INPUT METHOD
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(use-package! rime
-  :defer t
-  :custom
-  (rime-user-data-dir (expand-file-name "~/.config/fcitx/emacs-rime"))
-  (default-input-method "rime")
-  (rime-show-candidate 'posframe)
-  (rime-disable-predicates
-   '(rime-predicate-evil-mode-p
-     rime-predicate-after-alphabet-char-p
-     rime-predicate-prog-in-code-p))
-  (rime-inline-ascii-trigger 'shift-l)
-  :bind
-  ;; C-\ to toggle-input-method
-  ;; C-` to toggle
-  ;; , and . to page up and down
-  (:map rime-mode-map
-        ;; open rime menu
-        ("C-`" . 'rime-send-keybinding))
-  (:map rime-active-mode-map
-        ("C-j" . 'rime-inline-ascii))
-  :config
-  (custom-set-faces!
-    `(rime-default-face :background ,(doom-blend 'blue 'base0 0.15)))
-
-  (when IS-MAC
-    (setq rime-librime-root "~/.config/fcitx/librime/dist"))
-
-  ;; Set Nixos env
-  (when (and IS-LINUX (executable-find "nix"))
-    (setq rime-emacs-module-header-root
-          (concat (shell-command-to-string "nix eval --raw 'nixpkgs#emacs.outPath'") "/include")
-          rime-librime-root
-          (shell-command-to-string "nix eval --raw 'nixpkgs#librime.outPath'")
-          rime-share-data-dir
-          (concat (shell-command-to-string "nix eval --raw 'nixpkgs#brise.outPath'") "/share/rime-data"))))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; LOG
@@ -249,14 +199,12 @@
 (use-package! go-translate
   :defer t
   :config
-  (setq gts-translate-list '(("en" "zh-CN")))
+  (setq gts-translate-list '(("en" "ar")))
   (setq gts-default-translator
         (gts-translator
          :picker (gts-prompt-picker)
          :engines (list (gts-google-engine) (gts-google-rpc-engine))
          :render (gts-buffer-render)))
-  ;; For China user
-  ;; (setq go-translate-base-url "https://translate.google.cn")
   )
 
 
@@ -327,51 +275,6 @@
     (setq counsel-find-file-ignore-regexp "\\(?:^[#.]\\)\\|\\(?:[#~]$\\)\\|\\(?:^Icon?\\)"
           counsel-describe-function-function 'helpful-callable
           counsel-describe-variable-function 'helpful-variable)))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ATOMIC CHROME
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(use-package! atomic-chrome
-  :defer 3
-  :when (display-graphic-p)
-  :preface
-  (defun +my/atomic-chrome-server-running-p ()
-    (cond ((executable-find "lsof")
-           (zerop (call-process "lsof" nil nil nil "-i" ":64292")))
-          ((executable-find "netstat")  ; Windows
-           (zerop (call-process-shell-command "netstat -aon | grep 64292")))))
-  :hook
-  (atomic-chrome-edit-mode . +my/atomic-chrome-mode-setup)
-  (atomic-chrome-edit-done . +my/window-focus-default-browser)
-  :config
-  (progn
-    (setq atomic-chrome-buffer-open-style 'full) ;; or frame, split
-    (setq atomic-chrome-url-major-mode-alist
-          '(("github\\.com"        . gfm-mode)
-            ("swagger"             . yaml-mode)
-            ("emacs-china\\.org"   . gfm-mode)
-            ("stackexchange\\.com" . gfm-mode)
-            ("stackoverflow\\.com" . gfm-mode)
-            ("discordapp\\.com"    . gfm-mode)
-            ("coderpad\\.io"       . c++-mode)
-            ;; jupyter notebook
-            ("localhost\\:8888"    . python-mode)
-            ("lintcode\\.com"      . python-mode)
-            ("leetcode-cn\\.com"   . python-mode)
-            ("leetcode\\.com"      . python-mode)))
-
-    (defun +my/atomic-chrome-mode-setup ()
-      (setq header-line-format
-            (substitute-command-keys
-             "Edit Chrome text area.  Finish \
-`\\[atomic-chrome-close-current-buffer]'.")))
-
-    (if (+my/atomic-chrome-server-running-p)
-        (message "Can't start atomic-chrome server, because port 64292 is already used")
-      (atomic-chrome-start-server))))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; PRODIGY

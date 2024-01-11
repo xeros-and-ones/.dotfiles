@@ -7,3 +7,14 @@
       (setq display-line-numbers-type nil)
     (setq display-line-numbers-type t))
   (revert-buffer-no-confirm))
+
+;; a function to toggle 'transparency'
+;;;###autoload
+(defun toggle-transparency ()
+  (interactive)
+  (let* ((alpha (frame-parameter nil 'alpha-background))
+         (active (if (numberp alpha) alpha (car alpha))))
+    (set-frame-parameter
+     nil 'alpha-background
+     (if (eql active 100)
+         85 100))))

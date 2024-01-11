@@ -1,4 +1,4 @@
-;;; private/my/+bindings.el -*- lexical-binding: t; -*-
+;;; +keys.el -*- lexical-binding: t; -*-
 
 
 (when IS-MAC (setq mac-command-modifier 'meta
@@ -13,14 +13,18 @@
 (map!
  ;; overrides other minor mode keymaps (just for non-evil)
  (:map override ;; general-override-mode-map
-       "M-q"   (if (daemonp) #'delete-frame #'save-buffers-kill-terminal)
        "S-q"   #'kill-current-buffer
+       "M-q"   (if (daemonp) #'delete-frame #'save-buffers-kill-terminal)
        "M-p"   (λ! (projectile-invalidate-cache nil) (projectile-find-file))
        "M-y"   #'+default/yank-pop
        "C-]"   #'yas-expand
        "C-'"   #'toggle-input-method
        "<xterm-paste>" #'xterm-paste-with-delete-region
        "C-S-n" #'dap-next
+       "C-M-h" #'drag-stuff-left
+       "C-M-l" #'drag-stuff-right
+       "C-M-j" #'drag-stuff-down
+       "C-M-k" #'drag-stuff-up
        ;; window management
        "C-S-j" #'evil-scroll-line-down
        "C-S-k" #'evil-scroll-line-up
@@ -41,7 +45,6 @@
  "C-M-f" #'toggle-frame-fullscreen
  "M-t" #'transpose-words
  "M-i" #'display-which-function
-
  :nv "gD" #'xref-find-definitions-other-window
  :nv "gr" #'+lookup/references
  ;; Conflict with vertico
@@ -93,12 +96,10 @@
 
 (map!
  ;; Unix text-editing keys & motions
- :gi "C-n" #'next-line
- :gi "C-p" #'previous-line
- :gi "C-b" #'backward-char
- :gi "C-f" #'forward-char
- :gi "C-k" #'kill-line
- :gi "C-d" #'delete-forward-char
+ :gi "C-j" #'next-line
+ :gi "C-k" #'previous-line
+ :gi "C-h" #'backward-char
+ :gi "C-l" #'forward-char
 
  :v "C-r"   #'+my/evil-quick-replace
  :v "DEL" (kbd "\"_d")
@@ -108,7 +109,8 @@
  :nmv "=" #'better-jumper-jump-forward
  :gnmvi "C-e" #'doom/forward-to-last-non-comment-or-eol
  :gnmvi "C-a" #'doom/backward-to-bol-or-indent
-
+ (:prefix "z"
+  :n "o" #'ts-fold-open-recursively)
  (:prefix "C-x"
   :n "e"  #'pp-eval-last-sexp)
  (:prefix "C-c"

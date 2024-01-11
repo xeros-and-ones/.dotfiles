@@ -1,16 +1,5 @@
 ;;; +ui.el -*- lexical-binding: t; -*-
 
-;; a function to toggle 'transparency'
-(defun toggle-transparency ()
-  (interactive)
-  (let* ((alpha (frame-parameter nil 'alpha-background))
-         (active (if (numberp alpha) alpha (car alpha))))
-    (set-frame-parameter
-     nil 'alpha-background
-     (if (eql active 100)
-         85 100))))
-
-
 ;; setting the 'theme' and enabling 'bold' and 'italic'
 (setq doom-theme 'doom-gruvbox
       doom-themes-enable-bold t
@@ -23,8 +12,6 @@
       doom-variable-pitch-font (font-spec :family "CaskaydiaCove Nerd Font") ; inherits `doom-font''s :size
       doom-symbol-font (font-spec :family "CaskaydiaCove Nerd Font" :size 13 :weight 'bold)
       doom-big-font (font-spec :family "CaskaydiaCove Nerd Font" :size 19))
-
-
 
 
 (setq +workspaces-on-switch-project-behavior t)

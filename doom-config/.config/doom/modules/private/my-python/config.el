@@ -18,15 +18,15 @@
    :desc "Insert copied import" "p" #'+python/insert-temp-import
    :desc "Copy module import " "i" #'+python/yank-module-import)
   (:prefix ("v" . "ENV")
-   "c" #'conda-env-activate
-   "C" #'conda-env-deactivate
-   "v" #'poetry-venv-toggle
-   "P" #'pyvenv-workon
-   "p" #'pyvenv-activate))
+           "c" #'conda-env-activate
+           "C" #'conda-env-deactivate
+           "v" #'poetry-venv-toggle
+           "P" #'pyvenv-workon
+           "p" #'pyvenv-activate))
  (:after pyenv-mode
-  (:map pyenv-mode-map
-   "C-c C-s" nil
-   "C-c C-u" nil)))
+         (:map pyenv-mode-map
+               "C-c C-s" nil
+               "C-c C-u" nil)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; PYTHON
@@ -48,14 +48,14 @@
   )
 (add-hook! 'python-mode-hook #'+python/annotate-pdb)
 
-(after! lsp-pyls
+(after! lsp-pylsp
   ;; disable live-mode for mypy
-  (lsp-register-custom-settings `(("pyls.plugins.pyls_mypy.enabled" t)))
-  (lsp-register-custom-settings `(("pyls.plugins.pyls_mypy.live_mode" t)))
+  (lsp-register-custom-settings `(("pylsp.plugins.pylsp_mypy.enabled" t)))
+  (lsp-register-custom-settings `(("pylsp.plugins.pylsp_mypy.live_mode" t)))
 
   ;; ignore some linting info
-  (setq lsp-pyls-plugins-pycodestyle-ignore  [ "E501" ]
-        lsp-pyls-plugins-pylint-args [ "--errors-only" ]))
+  (setq lsp-pylsp-plugins-pycodestyle-ignore  [ "E501" ]
+        lsp-pylsp-plugins-pylint-args [ "--errors-only" ]))
 
 (after! lsp-pyright
   (setq lsp-pyright-python-executable-cmd "python3"))

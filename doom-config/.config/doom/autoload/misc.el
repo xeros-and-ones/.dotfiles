@@ -1,4 +1,4 @@
-;;; private/my/autoload/misc.el -*- lexical-binding: t; -*-
+;;; autoload/misc.el -*- lexical-binding: t; -*-
 
 ;;;###autoload
 (defun yank-with-delete-region ()
@@ -129,19 +129,16 @@ If prefix ARG is set, prompt for a directory to search from."
 ;;               :caller 'counsel-file-jump)))
 
 ;;;###autoload
-(defvar +my/repo-root-list '("~" "~/Dropbox" "~/go/src" "~/.cache" "~/.config")
+(defvar +my/repo-root-list '("~" "~/Code" "~/go/src" "~/Documents" "~/.config")
   "personal repo root to scan git projects")
-
-;;;###autoload
-(defvar +my/user-custom-repos '("/CCN_Tools/work/bstnnx_release/regression_test/"))
 
 ;;;###autoload
 (defun update-projectile-known-projects ()
   (interactive)
   (require 'magit)
-  (setq magit-repository-directories '(("~/dev-local" . 3)))
+  (setq magit-repository-directories '(("~/Code" . 3)))
   ;; Workplace folder has some permission error on macos
-  (let ((workspace-dir "~/dev/"))
+  (let ((workspace-dir "~/Code/"))
     (when (file-directory-p workspace-dir)
       (dolist (dir (directory-files workspace-dir t))
         (when (and
@@ -160,10 +157,7 @@ If prefix ARG is set, prompt for a directory to search from."
     ;; convert abs path to relative path (HOME)
     (dolist (repo magit-abs-repos)
       (push (concat "~/" (file-relative-name repo "~")) magit-repos))
-    (setq projectile-known-projects magit-repos)
-    (dolist (repo +my/user-custom-repos)
-      (if (file-directory-p repo)
-          (push repo projectile-known-projects)))))
+    (setq projectile-known-projects magit-repos)))
 
 ;;;###autoload
 (defun +my/evil-quick-replace (beg end )
