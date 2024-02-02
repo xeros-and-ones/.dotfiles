@@ -1,17 +1,3 @@
-export ZELLIJ_AUTO_ATTACH=true
-export ZELLIJ_AUTO_EXIT=false
-# Auto Start zellij
-if [[ -z "$ZELLIJ" ]]; then
-    if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
-        zellij attach default -c
-    else
-        zellij
-    fi
-
-    if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then
-        exit
-    fi
-fi
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -65,6 +51,7 @@ path=(
     $HOME/.detaspace/bin(N-/)
     $HOME/.local/bin(N-/)
     $HOME/.config/zsh/shell-colorscripts/bin(N-/)
+    $HOME/.dotnet/tools(N-/)
     $path
 )
 export PATH
@@ -86,6 +73,7 @@ source $ZDOTDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.z
 source $ZDOTDIR/themes/powerlevel10k/powerlevel10k.zsh-theme
 source $ZDOTDIR/plugins/conda-zsh-completion/conda-zsh-completion.plugin.zsh
 source $ZDOTDIR/plugins/git/git.plugin.zsh
+source $ZDOTDIR/plugins/dotnet/dotnet.plugin.zsh
 #
 #
 #
@@ -115,4 +103,3 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-

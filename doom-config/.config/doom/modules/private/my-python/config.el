@@ -4,19 +4,11 @@
  (:after python
   :localleader
   :map python-mode-map
-  :desc "Insert breakpoint" "b" #'+python/toggle-breakpoint
-  :desc "Insert default breakpoint" "B" #'+python/toggle-default-breakpoint
-  :desc "Toggle debugpy lines" "d" #'+python/toggle-debugpy-lines
   (:prefix "t"
    :desc "Copy python breakpoint" "b" #'+python/copy-pdb-breakpoint-of-current-line
    :desc "Copy python cmd" "p" #'+python/copy-python-cmd
    :desc "Copy pytest cmd" "y" #'+python/copy-pytest-cmd
    :desc "Copy unittest cmd" "u" #'+python/copy-unittest-cmd)
-  (:prefix ("i" . "Import")
-   :desc "Remove unused impoorts" "r" #'+python/autoflake-remove-imports
-   :desc "Isort buffer"    "s" #'python-isort-autosave-mode
-   :desc "Insert copied import" "p" #'+python/insert-temp-import
-   :desc "Copy module import " "i" #'+python/yank-module-import)
   (:prefix ("v" . "ENV")
            "c" #'conda-env-activate
            "C" #'conda-env-deactivate
@@ -32,62 +24,45 @@
 ;; PYTHON
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
 (after! python
   (setq python-indent-offset 4
         python-shell-interpreter "python3"
-        pippel-python-command "python3"
-        importmagic-python-interpreter "python3"
-        flycheck-python-pylint-executable "pylint"
-        flycheck-python-flake8-executable "flake8")
+        pippel-python-command "python3")
   (when (file-exists-p! "~/.conda")
-    (setq conda-env-home-directory (expand-file-name "~/.conda")))
+    (setq conda-env-home-directory (expand-file-name "~/.conda"))))
 
-  ;; if you use pyton2, then you could comment the following 2 lines
-  ;; (setq python-shell-interpreter "python2"
-  ;;       python-shell-interpreter-args "-i")
-  )
-(add-hook! 'python-mode-hook #'+python/annotate-pdb)
+;; (after! lsp-pylsp
+;;   ;; disable live-mode for mypy
+;;   (lsp-register-custom-settings `(("pylsp.plugins.pylsp_mypy.enabled" t)))
+;;   (lsp-register-custom-settings `(("pylsp.plugins.pylsp_mypy.live_mode" t)))
+;;   (lsp-register-custom-settings `(("pylsp.plugins.pylsp_mypy.report_progress" nil)))
+;;   (lsp-register-custom-settings `(("pylsp.plugins.pylsp_mypy.pythonExecutable" (get-python-path) t)))
+;;   (lsp-register-custom-settings `(("pylsp.plugins.ruff.enabled" t)))
+;;   (lsp-register-custom-settings `(("pylsp.plugins.ruff.lineLength" 100)))
 
-(after! lsp-pylsp
-  ;; disable live-mode for mypy
-  (lsp-register-custom-settings `(("pylsp.plugins.pylsp_mypy.enabled" t)))
-  (lsp-register-custom-settings `(("pylsp.plugins.pylsp_mypy.live_mode" t)))
+;;   ;; ignore some linting info
+;;   (setq lsp-pylsp-plugins-black-enabled nil
+;;         lsp-pylsp-configuration-sources ["ruff"]
+;;         lsp-pylsp-plugins-autopep8-enabled nil
+;;         lsp-pylsp-plugins-yapf-enabled nil
+;;         lsp-pylsp-plugins-pylint-enabled nil
+;;         lsp-pylsp-plugins-pyflakes-enabled nil
+;;         lsp-pylsp-plugins-pycodestyle-enabled nil
+;;         lsp-pylsp-plugins-pydocstyle-enabled nil
+;;         lsp-pylsp-plugins-mccabe-enabled nil
+;;         lsp-pylsp-plugins-jedi-completion-enabled t
+;;         lsp-pylsp-plugins-jedi-completion-fuzzy t
+;;         lsp-pylsp-plugins-isort-enabled nil
+;;         lsp-pylsp-plugins-rope-completion-enabled t
+;;         lsp-pylsp-plugins-rope-autoimport-enabled nil))
 
-  ;; ignore some linting info
-  (setq lsp-pylsp-plugins-pycodestyle-ignore  [ "E501" ]
-        lsp-pylsp-plugins-pylint-args [ "--errors-only" ]))
 
 (after! lsp-pyright
-  (setq lsp-pyright-python-executable-cmd "python3"))
+  (setq lsp-pyright-auto-import-completions t
+        lsp-pyright-diagnostic-mode "workspace"
+        lsp-pyright-python-executable-cmd "python3"))
 
-(use-package! py-isort
-  :defer t
-  :init
-  (defvar my-enable-isort-before-save t)
-  (defun my-python-isrot-before-save ()
-    (when my-enable-isort-before-save
-      (py-isort-before-save)))
-  (define-minor-mode python-isort-autosave-mode
-    "Isort autosave mode."
-    :lighter " Isort"
-    :global nil
-    (when (not (derived-mode-p 'python-mode))
-      (error "Isort only works with Python buffers"))
-    (if python-isort-autosave-mode
-        (add-hook! 'before-save-hook :local #'my-python-isrot-before-save)
-      (remove-hook! 'before-save-hook :local #'my-python-isrot-before-save)))
-
-  ;; (add-hook! 'python-mode-hook #'python-isort-autosave-mode)
-  )
-
-
-;; (use-package! importmagic
-;;   :defer t
-;;   :hook (python-mode . importmagic-mode)
-;;   :commands (importmagic-fix-imports importmagic-fix-symbol-at-point)
-;;   :config
-;;   (dolist (func '(importmagic-fix-imports importmagic-fix-symbol-at-point))
-;;     (advice-add func :before #'revert-buffer-no-confirm)))
 
 
 (after! pipenv

@@ -120,7 +120,11 @@
        ;;common-lisp                   ; if you've seen one lisp, you've seen them all
        ;;coq                           ; proofs-as-programs
        ;;crystal                       ; ruby at the speed of c
-       ;;csharp                        ; unity, .NET, and mono shenanigans
+       (csharp
+        +dotnet
+        +lsp
+        +tree-sitter
+        +unity)                        ; unity, .NET, and mono shenanigans
        data                            ; config/data formats
        ;;(dart +flutter)               ; paint ui and not much else
        ;;dhall
@@ -207,6 +211,7 @@
        ;; ;; lazycat          ; snails, color-rg, fuz
        my-python
        my-checker
+       ;; xero-python            ; my python module for python and django with pylsp
        )
 
 (setq custom-file (expand-file-name "custom.el" doom-local-dir))

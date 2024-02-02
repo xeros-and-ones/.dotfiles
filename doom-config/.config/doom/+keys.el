@@ -36,7 +36,8 @@
        "M-k"   #'evil-window-up
        "C-<left>" #'evil-window-increase-width
        "C-<right>" #'evil-window-decrease-width
-       "C-<up>" #'evil-window-inease-width)
+       "C-<up>" #'evil-window-increase-height
+       "C-<down>" #'evil-window-decrease-height)
  ;; fix OS window/frame navigation/manipulation keys
  "M-w" #'delete-window
  "M-W" #'delete-frame

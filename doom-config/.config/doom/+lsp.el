@@ -84,3 +84,10 @@
   ;;  :client-packages '(lsp-pyls)
   ;;  :client-configs lsp-docker-client-configs)
   )
+
+(after! lsp-lua
+  (setq lsp-lua-hint-enable t
+        lsp-lua-diagnostics-globals ["vim"]
+        lsp-lua-telemetry-enable nil
+        lsp-lua-workspace-max-preload 10000
+        lsp-lua-workspace-preload-file-size 1000))
