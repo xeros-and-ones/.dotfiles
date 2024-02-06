@@ -106,7 +106,7 @@
        terraform                       ; infrastructure as code
        ;;tmux                          ; an API for interacting with tmux
        tree-sitter                     ; syntax and parsing, sitting in a tree...
-       ;;upload                        ; map local to remote projects via ssh/ftp
+       upload                        ; map local to remote projects via ssh/ftp
 
        :os
        (:if IS-MAC macos)  ; improve compatibility with macOS
@@ -138,17 +138,17 @@
        ;;fortran                       ; in FORTRAN, GOD is REAL (unless declared INTEGER)
        ;;fsharp                        ; ML stands for Microsoft's Language
        ;;fstar                         ; (dependent) types and (monadic) effects and Z3
-       ;;gdscript                      ; the language you waited for
+       (gdscript +lsp)                      ; the language you waited for
        (go +lsp +tree-sitter)          ; the hipster dialect
        ;;(graphql +lsp)                ; Give queries a REST
        ;;(haskell +lsp)                ; a language that's lazier than I am
        ;;hy                            ; readability of scheme w/ speed of python
        ;;idris                         ; a language you can depend on
        (json +lsp +tree-sitter)        ; At least it ain't XML
-       ;;(java +lsp)                   ; the poster child for carpal tunnel syndrome
+       (java +lsp +tree-sitter)                   ; the poster child for carpal tunnel syndrome
        (javascript +lsp +tree-sitter)  ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia                         ; a better, faster MATLAB
-       ;;kotlin                        ; a better, slicker Java(Script)
+       ;; (kotlin +lsp +tree-sitter)                        ; a better, slicker Java(Script)
        ;;latex                         ; writing papers in Emacs has never been so fun
        ;;lean                          ; for folks with too much to prove
        ;;ledger                        ; be audit you can be
@@ -178,7 +178,7 @@
        ;;rst                           ; ReST in peace
        ;;(ruby +rails)                 ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        (rust +lsp +tree-sitter)        ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
-       ;;scala                         ; java, but good
+       ;; (scala +lsp +tree-sitter)                         ; java, but good
        ;;(scheme +guile)               ; a fully conniving family of lisps
        (sh +lsp +tree-sitter)          ; she sells {ba,z,fi}sh shells on the C xor
        ;;sml

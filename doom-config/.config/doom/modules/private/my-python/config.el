@@ -61,7 +61,10 @@
 (after! lsp-pyright
   (setq lsp-pyright-auto-import-completions t
         lsp-pyright-diagnostic-mode "workspace"
-        lsp-pyright-python-executable-cmd "python3"))
+        lsp-pyright-python-executable-cmd "python3"
+        lsp-pyright-typechecking-mode "basic"
+        lsp-pyright-auto-search-paths t
+        lsp-pyright-use-library-code-for-types t))
 
 
 
