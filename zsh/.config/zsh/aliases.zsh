@@ -84,7 +84,7 @@ function mkvenv() {
 }
 
 ########## Misc aliases ##########------------------
-alias zshconf="ec $ZDOTDIR/.zshrc"
+alias zshconf="$EDITOR $ZDOTDIR/.zshrc"
 alias matrix='neo-matrix -D -s -m" WE RULE THE WORLD! FROM THE SHADOWS "'
 alias printcolors='for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$"\n"};done'
 alias nvidia="sudo optirun -b none nvidia-settings -c :8"
@@ -95,12 +95,9 @@ alias t="erd -fI.H -yinverted -Cauto --dir-order=first --sort=name --no-git"
 alias c="clear"
 alias q="exit"
 alias v="nvim"
-alias e='emacs -nw'
-alias ec="emacsclient -t -a ''"
-alias ecv="emacsclient -c -a ''"
 alias sv="sudoedit"
-alias vconf="cd ~/.config/nvim/ && nvim"
-alias chadconf="cd ~/.dotfiles/XeroChad/ && nvim"
+alias vconf="cd ~/.config/nvim/ && $EDITOR"
+alias chadconf="cd ~/.dotfiles/XeroChad/ && $EDITOR"
 alias vd='deactivate'
 alias stows='stow -vSt ~'
 alias stowd='stow -vDt ~'

@@ -29,11 +29,11 @@ require("null-ls").setup({
 			end,
 		}),
 		formatting.isort,
+		formatting.csharpier,
 		formatting.clang_format.with({
 			filetypes = {
 				"c",
 				"cpp",
-				"cs",
 			},
 		}),
 		formatting.gofumpt,

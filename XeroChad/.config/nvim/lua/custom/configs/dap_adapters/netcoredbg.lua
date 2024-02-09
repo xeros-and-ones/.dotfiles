@@ -5,7 +5,11 @@ dap.adapters.coreclr = {
 	command = "netcoredbg",
 	args = { "--interpreter=vscode" },
 }
-
+dap.adapters.netcoredbg = {
+	type = "executable",
+	command = "/usr/bin/netcoredbg",
+	args = { "--interpreter=vscode" },
+}
 dap.configurations.cs = {
 	{
 		type = "coreclr",
