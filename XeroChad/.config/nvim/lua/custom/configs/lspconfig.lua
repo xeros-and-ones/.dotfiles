@@ -76,9 +76,11 @@ local function lsp_mappings(bufnr)
 		{ desc = "Quickfix [Trouble]", buffer = bufnr }
 	)
 	if vim.fn.has("nvim-0.10") == 1 then
-		vim.keymap.set("n", "<leader>lh", function()
-			vim.lsp.inlay_hint(0, nil)
-		end, { desc = "Inlay Hint" })
+		if vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint then
+			vim.keymap.set("n", "<leader>lh", function()
+				InlayHints()
+			end, { desc = "Inlay Hint" })
+		end
 	end
 	vim.keymap.set("n", "<leader>lp", "<cmd>Lspsaga peek_definition<cr>", { desc = "Peek_Definition", buffer = bufnr })
 	vim.keymap.set(
@@ -214,6 +216,20 @@ local disabled_servers = {
 vim.g.rustaceanvim = {
 	server = {
 		on_attach = on_attach,
+		settings = {
+			["rust-analyzer"] = {
+				cargo = { allFeatures = true },
+				checkOnSave = true,
+				check = {
+					enable = true,
+					command = "clippy",
+					features = "all",
+				},
+				procMacro = {
+					enable = true,
+				},
+			},
+		},
 	},
 }
 mason_lspconfig.setup_handlers({
