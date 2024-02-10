@@ -220,11 +220,7 @@ local plugins = {
 			},
 			{
 				"mrcjkb/rustaceanvim",
-				version = "^3", -- Recommended
-				init = function()
-					-- Configure rustaceanvim here
-					vim.g.rustaceanvim = {}
-				end,
+				version = "^4", -- Recommended
 				ft = { "rust" },
 			},
 			-- Installer

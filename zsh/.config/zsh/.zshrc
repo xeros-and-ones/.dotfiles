@@ -61,6 +61,7 @@ path=(
     $HOME/.rustup/toolchains/*/bin(N-/)
     $HOME/.config/emacs/bin(N-/)
     $HOME/.detaspace/bin(N-/)
+    $HOME/.cargo/bin/(N-/)
     $HOME/.local/bin(N-/)
     $HOME/.config/zsh/shell-colorscripts/bin(N-/)
     $HOME/.dotnet/tools(N-/)

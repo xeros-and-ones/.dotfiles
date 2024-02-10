@@ -16,6 +16,7 @@ require("null-ls").setup({
 		formatting.asmfmt,
 		formatting.markdownlint,
 		formatting.beautysh,
+		formatting.rustfmt,
 		formatting.stylua,
 		formatting.cmake_format.with({
 			cmd = "cmake-format",

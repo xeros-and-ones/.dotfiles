@@ -44,86 +44,76 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 -- 	end
 -- end
 ---------------------------------------------------------
-local function lsp_mappings(buffer)
-	vim.keymap.set("n", "gk", "<cmd>Lspsaga show_line_diagnostics<cr>", { desc = "Line Diagnostic", buffer = buffer })
-	vim.keymap.set(
-		"n",
-		"gm",
-		"<cmd>Telescope lsp_implementations<cr>",
-		{ desc = "LSP implementation", buffer = buffer }
-	)
-	vim.keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<cr>", { desc = "Next Diagnostic", buffer = buffer })
-	vim.keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<cr>", { desc = "Prev Diagnostic", buffer = buffer })
-	vim.keymap.set(
-		{ "n", "v" },
-		"<leader>la",
-		"<cmd>Lspsaga code_action<cr>",
-		{ desc = "Code Action", buffer = buffer }
-	)
-	vim.keymap.set("n", "<leader>ld", "<cmd>Lspsaga goto_definition<cr>", { desc = "Goto_Definition", buffer = buffer })
-	vim.keymap.set("n", "<leader>lO", "<cmd>Lspsaga outline<cr>", { desc = "Code Outline", buffer = buffer })
-	vim.keymap.set("n", "<leader>li", "<cmd>Lspsaga incoming_calls<cr>", { desc = "Incoming Calls", buffer = buffer })
+local function lsp_mappings(bufnr)
+	vim.keymap.set("n", "gk", "<cmd>Lspsaga show_line_diagnostics<cr>", { desc = "Line Diagnostic", buffer = bufnr })
+	vim.keymap.set("n", "gm", "<cmd>Telescope lsp_implementations<cr>", { desc = "LSP implementation", buffer = bufnr })
+	vim.keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<cr>", { desc = "Next Diagnostic", buffer = bufnr })
+	vim.keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<cr>", { desc = "Prev Diagnostic", buffer = bufnr })
+	vim.keymap.set({ "n", "v" }, "<leader>la", "<cmd>Lspsaga code_action<cr>", { desc = "Code Action", buffer = bufnr })
+	vim.keymap.set("n", "<leader>ld", "<cmd>Lspsaga goto_definition<cr>", { desc = "Goto_Definition", buffer = bufnr })
+	vim.keymap.set("n", "<leader>lO", "<cmd>Lspsaga outline<cr>", { desc = "Code Outline", buffer = bufnr })
+	vim.keymap.set("n", "<leader>li", "<cmd>Lspsaga incoming_calls<cr>", { desc = "Incoming Calls", buffer = bufnr })
 	vim.keymap.set("n", "<leader>lo", "<cmd>Lspsaga outgoing_calls<cr>", { desc = "Outgoing Calls" })
-	vim.keymap.set("n", "<leader>lr", "<cmd>Lspsaga rename<cr>", { desc = "Rename", buffer = buffer })
+	vim.keymap.set("n", "<leader>lr", "<cmd>Lspsaga rename<cr>", { desc = "Rename", buffer = bufnr })
 	vim.keymap.set(
 		"n",
 		"<leader>lR",
 		"<cmd>Lspsaga rename ++project<cr>",
-		{ desc = "Rename [Project Wide]", buffer = buffer }
+		{ desc = "Rename [Project Wide]", buffer = bufnr }
 	)
-	vim.keymap.set("n", "<leader>lz", "<cmd>LspRestart<cr>", { desc = "Restart LSP", buffer = buffer })
+	vim.keymap.set("n", "<leader>lz", "<cmd>LspRestart<cr>", { desc = "Restart LSP", buffer = bufnr })
 
 	vim.keymap.set(
 		"n",
 		"<leader>lF",
 		"<cmd>Lspsaga finder tyd+ref+imp+def ++normal<cr>",
-		{ desc = "LspSaga Finder", buffer = buffer }
+		{ desc = "LspSaga Finder", buffer = bufnr }
 	)
 	vim.keymap.set(
 		"n",
 		"<leader>lq",
 		"<cmd>TroubleToggle quickfix<cr>",
-		{ desc = "Quickfix [Trouble]", buffer = buffer }
+		{ desc = "Quickfix [Trouble]", buffer = bufnr }
 	)
 	if vim.fn.has("nvim-0.10") == 1 then
 		vim.keymap.set("n", "<leader>lh", function()
 			vim.lsp.inlay_hint(0, nil)
 		end, { desc = "Inlay Hint" })
 	end
-	vim.keymap.set("n", "<leader>lp", "<cmd>Lspsaga peek_definition<cr>", { desc = "Peek_Definition", buffer = buffer })
+	vim.keymap.set("n", "<leader>lp", "<cmd>Lspsaga peek_definition<cr>", { desc = "Peek_Definition", buffer = bufnr })
 	vim.keymap.set(
 		"n",
 		"<leader>lD",
 		"<cmd>TroubleToggle lsp_definitions<cr>",
-		{ desc = "Definition [Trouble]", buffer = buffer }
+		{ desc = "Definition [Trouble]", buffer = bufnr }
 	)
 	vim.keymap.set(
 		"n",
 		"<leader>lf",
 		"<cmd>TroubleToggle lsp_references<cr>",
-		{ desc = "Find references [Trouble]", buffer = buffer }
+		{ desc = "Find references [Trouble]", buffer = bufnr }
 	)
 	vim.keymap.set(
 		"n",
 		"<leader>lt",
 		"<cmd>TroubleToggle lsp_type_definitions<cr>",
-		{ desc = "Type Definition [Trouble]", buffer = buffer }
+		{ desc = "Type Definition [Trouble]", buffer = bufnr }
 	)
 	vim.keymap.set(
 		"n",
 		"<leader>lx",
 		"<cmd>TroubleToggle document_diagnostics<cr>",
-		{ desc = "Buffer Diagnostics", buffer = buffer }
+		{ desc = "Buffer Diagnostics", buffer = bufnr }
 	)
 	vim.keymap.set(
 		"n",
 		"<leader>lw",
 		"<cmd>TroubleToggle workspace_diagnostics<cr>",
-		{ desc = "Workspace Diagnostics", buffer = buffer }
+		{ desc = "Workspace Diagnostics", buffer = bufnr }
 	)
 	vim.keymap.set("n", "<leader>ls", function()
 		vim.lsp.buf.signature_help()
-	end, { desc = "LSP signature help", buffer = buffer })
+	end, { desc = "LSP signature help", buffer = bufnr })
 end
 
 ---------------------------------------------------------
@@ -221,7 +211,11 @@ mason_lspconfig.setup()
 local disabled_servers = {
 	"pylsp",
 }
-
+vim.g.rustaceanvim = {
+	server = {
+		on_attach = on_attach,
+	},
+}
 mason_lspconfig.setup_handlers({
 	function(server_name)
 		for _, name in pairs(disabled_servers) do
