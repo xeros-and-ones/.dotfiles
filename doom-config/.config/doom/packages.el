@@ -30,7 +30,6 @@
 (package! all-the-icons-ibuffer)
 (package! dired-narrow)
 (package! git-link)
-(package! magit-delta)
 (package! citre)
 (package! imenu-list)
 ;; (package! tmux-pane)

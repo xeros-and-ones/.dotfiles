@@ -25,6 +25,7 @@
   (setq lsp-log-io nil
         lsp-file-watch-threshold 4000
         lsp-headerline-breadcrumb-enable t
+        lsp-inlay-hint-enable t
         lsp-headerline-breadcrumb-icons-enable t
         lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols)
         lsp-imenu-index-symbol-kinds '(File Module Namespace Package Class Method Enum Interface

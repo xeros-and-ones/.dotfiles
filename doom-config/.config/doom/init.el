@@ -160,7 +160,8 @@
        (org                            ; organize your plain life in plain text
         ;; +pretty
         +dragndrop                     ; drag & drop files/images into org buffers
-        +present)                      ; using org-mode for presentations
+        +present
+        )                      ; using org-mode for presentations
        ;;php                           ; perl's insecure younger brother
        ;;plantuml                      ; diagrams for confusing people more
        ;;purescript                    ; javascript, but functional

@@ -1,8 +1,8 @@
 ;;; +keys.el -*- lexical-binding: t; -*-
 
 
-(when IS-MAC (setq mac-command-modifier 'meta
-                   mac-option-modifier  'alt))
+(when (featurep :system 'macos) (setq mac-command-modifier 'meta
+                                      mac-option-modifier  'alt))
 
 ;; Distinguish C-i from TAB
 (when (display-graphic-p)
@@ -13,8 +13,7 @@
 (map!
  ;; overrides other minor mode keymaps (just for non-evil)
  (:map override ;; general-override-mode-map
-       "S-q"   #'kill-current-buffer
-       "M-q"   (if (daemonp) #'delete-frame #'save-buffers-kill-terminal)
+       "M-q"   #'kill-current-buffer
        "M-p"   (λ! (projectile-invalidate-cache nil) (projectile-find-file))
        "M-y"   #'+default/yank-pop
        "C-]"   #'yas-expand
@@ -38,6 +37,7 @@
        "C-<right>" #'evil-window-decrease-width
        "C-<up>" #'evil-window-increase-height
        "C-<down>" #'evil-window-decrease-height)
+
  ;; fix OS window/frame navigation/manipulation keys
  "M-w" #'delete-window
  "M-W" #'delete-frame
@@ -165,7 +165,7 @@
        :desc "Open link"             "x" #'link-hint-open-link
        :desc "Open link at point"    "X" #'link-hint-open-link-at-point
        :desc "Docker open apps"      ";" #'+docker/reveal-in-apps
-       (:when IS-MAC
+       (:when (featurep :system 'macos)
          :desc "Reveal in default program"  "f" #'+macos/open-in-default-program
          :desc "Reveal in Finder"           "o" #'+macos/reveal-in-finder
          :desc "Reveal project in Finder"   "O" #'+macos/reveal-project-in-finder
@@ -173,7 +173,7 @@
          :desc "Reveal project in Terminal" "T" #'+macos/reveal-project-in-terminal
          :desc "Reveal file in Apps"        "," #'+shell/reveal-in-apps
          :desc "Reveal project in Apps"     "." #'+shell/reveal-project-in-apps)
-       (:when IS-LINUX
+       (:when (featurep :system 'linux)
          :desc "Reveal in default program"  "f" #'+shell/open-in-default-program
          :desc "Reveal in Finder"           "o" #'+shell/reveal-in-finder
          :desc "Reveal project in Finder"   "O" #'+shell/reveal-project-in-finder

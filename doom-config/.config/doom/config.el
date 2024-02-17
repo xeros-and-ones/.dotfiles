@@ -26,6 +26,8 @@
 (setq-default fill-column 120
               delete-trailing-lines t)
 
+(add-to-list 'doom-detect-indentation-excluded-modes 'org-mode)
+
 ;; Delete the selection when pasting
 (delete-selection-mode 1)
 (setq! treemacs-follow-mode t)
