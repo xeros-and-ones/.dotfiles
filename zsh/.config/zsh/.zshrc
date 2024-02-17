@@ -46,8 +46,13 @@ export EDITOR=nvim
 export VISUAL=nvim
 export CODEEDITOR=nvim
 export SUDO_EDITOR=nvim
+# export EDITOR="emacsclient -t"
+# export CODEEDITOR="emacsclient -c -a 'emacs'"
+# export VISUAL="emacsclient -c -a 'emacs'"
+# export SUDO_EDITOR="emacsclient -t"
 # export TERM=wezterm
 # export PAGER=/usr/bin/moar
+export GOPATH=$HOME/go
 export HISTFILE="$HOME/.zsh_history"    # History filepath
 # Max number of entries to keep in history file.
 SAVEHIST=$(( 100 * 1000 ))      # Use multiplication for readability.
@@ -58,6 +63,7 @@ HISTSIZE=$(( 1.2 * SAVEHIST ))  # Zsh recommended value
 
 path=(
     /usr/local/go/bin(N-/)
+    $GOPATH/bin(N-/)
     $HOME/.rustup/toolchains/*/bin(N-/)
     $HOME/.config/emacs/bin(N-/)
     $HOME/.detaspace/bin(N-/)
