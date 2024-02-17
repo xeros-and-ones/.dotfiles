@@ -8,9 +8,9 @@
 (setq evil-emacs-state-cursor `(box ,(doom-color 'violet)))
 
 ;; setting 'fonts' for doom ui
-(setq doom-font (font-spec :family "CaskaydiaCove Nerd Font" :size 13 :weight 'semi-bold)
+(setq doom-font (font-spec :family "CaskaydiaCove Nerd Font" :size 14 :weight 'semi-bold)
       doom-variable-pitch-font (font-spec :family "CaskaydiaCove Nerd Font") ; inherits `doom-font''s :size
-      doom-symbol-font (font-spec :family "CaskaydiaCove Nerd Font" :size 13 :weight 'bold)
+      doom-symbol-font (font-spec :family "CaskaydiaCove Nerd Font" :size 14 :weight 'bold)
       doom-big-font (font-spec :family "CaskaydiaCove Nerd Font" :size 19))
 
 
