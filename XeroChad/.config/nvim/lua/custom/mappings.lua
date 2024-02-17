@@ -334,17 +334,17 @@ M.LSP = {
 			opts = { silent = true },
 		},
 		["gh"] = { show_hover, "Hover Action", opts = { silent = true } },
-		-- ["<leader>cc"] = { "<cmd>CompilerOpen<cr>", "Compile", opts = { noremap = true, silent = true } },
-		-- ["<leader>cs"] = {
-		-- 	"<cmd>CompilerStop | CompilerRedo<cr>",
-		-- 	"Stop & Redo Compilation",
-		-- 	opts = { noremap = true, silent = true },
-		-- },
-		-- ["<leader>co"] = {
-		-- 	"<cmd>CompilerToggleResults<cr>",
-		-- 	"Compilation Results",
-		-- 	opts = { noremap = true, silent = true },
-		-- },
+		["<leader>cc"] = { "<cmd>CompilerOpen<cr>", "Compile", opts = { noremap = true, silent = true } },
+		["<leader>cs"] = {
+			"<cmd>CompilerStop | CompilerRedo<cr>",
+			"Stop & Redo Compilation",
+			opts = { noremap = true, silent = true },
+		},
+		["<leader>co"] = {
+			"<cmd>CompilerToggleResults<cr>",
+			"Compilation Results",
+			opts = { noremap = true, silent = true },
+		},
 	},
 
 	i = {
