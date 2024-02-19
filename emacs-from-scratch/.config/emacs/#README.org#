@@ -380,7 +380,7 @@ Evil Config for the Stubborn vim hacker
     :bind ("M-/" . evilnc-comment-or-uncomment-lines))
 #+END_SRC
 
-* Emacs
+* Ema qcs
 ** Better Defaults
 
 #+BEGIN_SRC emacs-lisp
