@@ -13,8 +13,8 @@
 (use-package! screenshot
   :defer t)
 
-(after! centaur-tabs
-  (centaur-tabs-group-by-projectile-project))
+;; (after! centaur-tabs
+;;   (centaur-tabs-group-by-projectile-project))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; LOG
