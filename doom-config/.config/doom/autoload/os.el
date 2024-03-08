@@ -67,7 +67,7 @@ non-nil value to enable trashing for file operations."
       (setq command (format "%s %s" app-name args)))
     (async-shell-command-no-window command)
     (message command)
-    (when IS-LINUX
+    (when (featurep :system 'linux)
       (shell-command (concat "wmctrl -a \"" app-window-name "\" ")))))
 
 ;;;###autoload
@@ -89,7 +89,7 @@ non-nil value to enable trashing for file operations."
      (notify-current-line-number)))
 
 ;;;###autoload
-(when IS-MAC
+(when (featurep :system 'macos)
   (defvar alacritty-bin "/Applications/Alacritty.app/Contents/MacOS/alacritty"
     "Alacritty terminal binary localtion.")
   (defvar iterm-bin "/Applications/iTerm.app/Contents/MacOS/iTerm2"

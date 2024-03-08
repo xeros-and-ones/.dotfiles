@@ -9,7 +9,7 @@
                    ccls
                    tide
                    swiper
-                   forge
+                   ;; forge
                    code-review
                    anaconda-mode
                    company-anaconda
@@ -21,7 +21,6 @@
 (package! edit-indirect)
 (package! link-hint)
 (package! symbol-overlay)
-(package! pomm)
 (package! org-appear)
 
 ;; misc

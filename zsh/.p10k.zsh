@@ -1048,8 +1048,8 @@
 
         #######################[ go_version: go version (https://golang.org) ]########################
         # Go version color.
-        typeset -g POWERLEVEL9K_GO_VERSION_FOREGROUND=15
-        typeset -g POWERLEVEL9K_GO_VERSION_BACKGROUND=21
+        typeset -g POWERLEVEL9K_GO_VERSION_FOREGROUND=00
+        typeset -g POWERLEVEL9K_GO_VERSION_BACKGROUND=45
         # Show go version only when in a go project subdirectory.
         typeset -g POWERLEVEL9K_GO_VERSION_PROJECT_ONLY=true
         # Custom icon.

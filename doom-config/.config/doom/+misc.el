@@ -214,7 +214,7 @@
 
 (after! quickrun
   ;; quickrun--language-alist
-  (when IS-LINUX
+  (when (featurep :system 'linux)
     (quickrun-set-default "c++" "c++/g++")))
 
 

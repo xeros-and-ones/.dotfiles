@@ -248,8 +248,8 @@ With PREFIX, cd to project root."
 (defun +my/window-focus-default-browser ()
   (cond
    ((executable-find "launch-browser") (shell-command "launch-browser"))
-   (IS-MAC (shell-command "open -a \"/Applications/Google Chrome.app\""))
-   (IS-LINUX (shell-command "wmctrl -a \"Google Chrome\""))))
+   ((featurep :system 'macos) (shell-command "open -a \"/Applications/Google Chrome.app\""))
+   ((featurep :system 'linux) (shell-command "wmctrl -a \"Google Chrome\""))))
 
 ;;;###autoload
 (defun imenu-comments ()
@@ -317,7 +317,7 @@ you're done. This can be called from an external shell script."
                                 (left-fringe . 0)
                                 (right-fringe . 0)
                                 (undecorated . t)
-                                ,(if IS-LINUX '(display . ":0")))))))
+                                ,(if (featurep :system 'linux) '(display . ":0")))))))
     (setq +my--scratch-frame (or frame posframe))
     (select-frame-set-input-focus +my--scratch-frame)
     (when frame

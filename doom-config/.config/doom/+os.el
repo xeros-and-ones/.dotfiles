@@ -4,7 +4,7 @@
 ;; ENV
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(when IS-WINDOWS
+(when (featurep :system 'windows)
   ;; TODO
   (add-to-list 'exec-path ""))
 
@@ -22,7 +22,7 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
   (concat (concat (buffer-file-name) ":")
           (number-to-string (line-number-at-pos))))
 
-(when IS-MAC
+(when (featurep :system 'macos)
   (+macos--open-with reveal-in-finder nil default-directory)
   (+macos--open-with reveal-project-in-finder nil
                      (or (doom-project-root) default-directory))
@@ -39,7 +39,7 @@ To add executable: Idea -> Tools -> Create Command Line Launcher"
 ;; LINUX
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(when IS-LINUX
+(when (featurep :system 'linux)
   (defvar linux-terminal (cond ((executable-find "kitty") "kitty")
                                ((executable-find "konsole") "konsole")
                                ((executable-find "gnome-terminal") "gnome-terminal")))

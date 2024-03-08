@@ -31,6 +31,7 @@ if [[ -n "${terminfo[knp]}" ]]; then
   bindkey -M vicmd "${terminfo[knp]}" down-line-or-history
 fi
 
+
 # # Start typing + [Up-Arrow] - fuzzy find history forward
 # if [[ -n "${terminfo[kcuu1]}" ]]; then
 #   autoload -U up-line-or-beginning-search
@@ -62,6 +63,7 @@ if [[ -n "${terminfo[kend]}" ]]; then
   bindkey -M viins "${terminfo[kend]}"  end-of-line
   bindkey -M vicmd "${terminfo[kend]}"  end-of-line
 fi
+
 
 # [Shift-Tab] - move through the completion menu backwards
 if [[ -n "${terminfo[kcbt]}" ]]; then

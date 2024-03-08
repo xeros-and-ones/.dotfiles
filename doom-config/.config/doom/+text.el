@@ -1,14 +1,11 @@
 ;;; +text.el -*- lexical-binding: t; -*-
 
-(after! text-mode
-  (setq-hook! 'text-mode-hook truncate-lines nil tab-width 2))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ORG
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq org-directory (expand-file-name "~/Org/")
-      org-agenda-files (list org-directory)
+      ;; org-agenda-files (list org-directory)
       org-ellipsis " ▼ "
       org-hide-emphasis-markers t
       org-babel-python-command "python3"
@@ -71,25 +68,6 @@
   (advice-add #'org-schedule :around #'advise-org-default-time))
 
 
-(use-package! pomm
-  :defer t
-  :commands (pomm pomm-third-time)
-  :config
-  (setq pomm-work-period 55
-        pomm-long-break-period 25
-        pomm-short-break-period 5
-        dotty-asset-dir (expand-file-name "~/.config/dotty/assets/"))
-  (when (file-exists-p! dotty-asset-dir)
-    ;; Use custom audio files and remove tick audio
-    (setq pomm-audio-files
-          `((work . ,(concat dotty-asset-dir "sounds/Glass.wav"))
-            (short-break . ,(concat dotty-asset-dir "sounds/Glass.wav"))
-            (long-break . ,(concat dotty-asset-dir "sounds/Glass.wav"))
-            (stop . ,(concat dotty-asset-dir "sounds/Blow.wav")))))
-
-  (setq alert-default-style (if IS-MAC 'osx-notifier 'libnotify)
-        pomm-audio-enabled t)
-  (pomm-mode-line-mode))
 
 (use-package! org-appear
   :defer t

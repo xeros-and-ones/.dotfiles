@@ -191,16 +191,15 @@
       (:prefix "e"                      ;error
                "d" #'posframe-delete-all)
       (:prefix "t"                      ; toggle
-       :desc "Pomodoro timer" "t" #'pomm
-       "c" #'rainbow-mode
-       "C" #'centered-window-mode
-       "d" #'toggle-debug-on-error
-       "l" #'toggle-display-line-numbers-type
-       "k" #'keycast-log-mode
-       "T" #'toggle-transparency
-       "S" #'size-indication-mode
-       "i" #'highlight-indent-guides-mode
-       "v" #'visual-line-mode)
+               "c" #'rainbow-mode
+               "C" #'centered-window-mode
+               "d" #'toggle-debug-on-error
+               "l" #'toggle-display-line-numbers-type
+               "k" #'keycast-log-mode
+               "T" #'toggle-transparency
+               "S" #'size-indication-mode
+               "i" #'lsp-inlay-hints-mode
+               "v" #'visual-line-mode)
       (:prefix-map ("j" . "jump")
                    "j" #'avy-goto-char-timer
                    "l" #'avy-goto-line

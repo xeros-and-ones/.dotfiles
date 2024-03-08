@@ -19,7 +19,7 @@
 (remove-hook 'doom-init-ui-hook #'blink-cursor-mode)
 
 ;; enabling 'relative' line numbers
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type 'relative)
 
 
 ;; 'fill-column' for line wraping
@@ -89,7 +89,7 @@
 
 (custom-theme-set-faces! doom-theme
   `(font-lock-doc-face :italic t :foreground ,(doom-color 'blue))
-  `(font-lock-comment-face :italic t :foreground ,(doom-color 'blue))
+  `(font-lock-comment-face :italic t :foreground ,(doom-color 'grey))
   '(font-lock-builtin-face :italic t)
   '(font-lock-type-face :italic t)
   '(font-lock-function-name-face :weight bold :slant italic)
