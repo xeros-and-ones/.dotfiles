@@ -52,6 +52,8 @@ export SUDO_EDITOR=nvim
 # export SUDO_EDITOR="emacsclient -t"
 # export TERM=wezterm
 # export PAGER=/usr/bin/moar
+export LIBVA_DRIVER_NAME=i965
+export VDPAU_DRIVER=va_gl
 export GOPATH=$HOME/go
 export HISTFILE="$HOME/.zsh_history"    # History filepath
 # Max number of entries to keep in history file.
