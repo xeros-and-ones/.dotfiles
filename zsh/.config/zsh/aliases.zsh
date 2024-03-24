@@ -105,6 +105,7 @@ alias vd='deactivate'
 alias stows='stow -vSt ~'
 alias stowd='stow -vDt ~'
 alias z='zellij'
+alias zd='zellij attach default -c'
 alias soz='source ~/.config/zsh/.zshrc'
 
 alias -g ...='../..'
