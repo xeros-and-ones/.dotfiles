@@ -25,7 +25,7 @@ setopt AUTO_CD
 setopt auto_pushd
 setopt pushd_ignore_dups
 setopt pushdminus
-setopt EXTENDED_GLOB
+# setopt EXTENDED_GLOB
 # Use modern file-locking mechanisms, for better safety & performance.
 setopt HIST_FCNTL_LOCK
 # Keep only the most recent copy of each duplicate entry in history.
