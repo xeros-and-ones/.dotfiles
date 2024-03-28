@@ -88,6 +88,22 @@
   ;;  :client-configs lsp-docker-client-configs)
   )
 
+;; alejandra nix formatter
+;; This uses apheleia underneath, which preserves point position.
+(set-formatter! 'alejandra '("alejandra" "--quiet") :modes '(nix-mode))
+
+;; https://github.com/oxalica/nil?tab=readme-ov-file#emacs-with-lsp-mode
+;; SPC c f
+(use-package! lsp-nix
+  :custom (lsp-nix-nil-formatter ["alejandra" "--quiet"]))
+
+;; https://github.com/doomemacs/doomemacs/pull/7497
+;; Use wrapper that adds the --quiet flag
+;; SPC m p
+(use-package! nix-mode
+  :custom (nix-nixfmt-bin "alejandra-the-quiet" ))
+
+
 (after! lsp-lua
   (setq lsp-lua-hint-enable t
         lsp-lua-diagnostics-globals ["vim"]
