@@ -43,9 +43,8 @@ setopt INTERACTIVE_COMMENTS
 # export VISUAL=nvim
 # export CODEEDITOR=nvim
 # export SUDO_EDITOR=nvim
-export EDITOR="emacsclient -t"
-export CODEEDITOR="emacsclient -c -a 'emacs'"
-export VISUAL="emacsclient -c -a 'emacs'"
+export EDITOR="emacsclient -nw"
+export VISUAL="emacsclient -c -a ''"
 export SUDO_EDITOR="emacsclient -t"
 # export TERM=wezterm
 export HISTFILE="$HOME/.zsh_history"    # History filepath

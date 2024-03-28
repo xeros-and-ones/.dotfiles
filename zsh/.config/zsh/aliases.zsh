@@ -95,7 +95,7 @@ alias t="erd -flI.H -yinverted -Cauto --dir-order=first --sort=name --no-git"
 alias c="clear"
 alias q="exit"
 alias v="nvim"
-alias e='emacs -nw'
+alias e='emacs'
 alias ec="emacsclient -t -a ''"
 alias ecv="emacsclient -c -a ''"
 alias sv="sudoedit"
