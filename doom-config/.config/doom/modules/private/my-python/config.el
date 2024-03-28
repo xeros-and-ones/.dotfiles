@@ -27,8 +27,8 @@
 
 (after! python
   (setq python-indent-offset 4
-        python-shell-interpreter "python3"
-        pippel-python-command "python3")
+        python-shell-interpreter "python"
+        pippel-python-command "python")
   (when (file-exists-p! "~/.conda")
     (setq conda-env-home-directory (expand-file-name "~/.conda"))))
 

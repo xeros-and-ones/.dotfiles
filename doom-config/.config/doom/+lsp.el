@@ -53,8 +53,10 @@
 
 (after! lsp-ui
   (setq lsp-ui-doc-enable t
+        lsp-ui-doc-show-with-mouse t
         lsp-lens-enable t
         lsp-ui-sideline-enable t
+        lsp-ui-sideline-show-code-actions t
         lsp-ui-doc-include-signature t
         lsp-ui-doc-max-height 15
         lsp-ui-doc-max-width 100))

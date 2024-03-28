@@ -39,19 +39,15 @@ setopt NO_CLOBBER
 # Treat comments pasted into the command line as comments, not code.
 setopt INTERACTIVE_COMMENTS
 ####### exports ##########--------------------------------------------------------------
-export EDITOR=nvim
-export VISUAL=nvim
-export CODEEDITOR=nvim
-export SUDO_EDITOR=nvim
-# export EDITOR="emacsclient -t"
-# export CODEEDITOR="emacsclient -c -a 'emacs'"
-# export VISUAL="emacsclient -c -a 'emacs'"
-# export SUDO_EDITOR="emacsclient -t"
+# export EDITOR=nvim
+# export VISUAL=nvim
+# export CODEEDITOR=nvim
+# export SUDO_EDITOR=nvim
+export EDITOR="emacsclient -t"
+export CODEEDITOR="emacsclient -c -a 'emacs'"
+export VISUAL="emacsclient -c -a 'emacs'"
+export SUDO_EDITOR="emacsclient -t"
 # export TERM=wezterm
-# export PAGER=/usr/bin/moar
-export LIBVA_DRIVER_NAME=i965
-export VDPAU_DRIVER=va_gl
-export GOPATH=$HOME/go
 export HISTFILE="$HOME/.zsh_history"    # History filepath
 # Max number of entries to keep in history file.
 SAVEHIST=$(( 100 * 1000 ))      # Use multiplication for readability.
@@ -75,7 +71,7 @@ path=(
 export PATH
 
 fpath=(
-    $HOME/.config/zsh/zfunc(N-/)
+    $ZDOTDIR/zfunc(N-/)
     $fpath
 )
 export FPATH

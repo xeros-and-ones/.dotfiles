@@ -157,8 +157,8 @@
        ( lua +lsp +tree-sitter)         ; one-based indices? one-based indices
        (markdown +grip)                 ; writing docs for people to ignore
        ;;nim                            ; python + lisp at the speed of c
-       (nix +lsp +tree-sitter)                            ; I hereby declare "nix geht mehr!"
-       (ocaml +lsp +tree-sitter)                          ; an objective camel
+       (nix +lsp +tree-sitter)          ; I hereby declare "nix geht mehr!"
+       (ocaml +lsp +tree-sitter)        ; an objective camel
        (org                             ; organize your plain life in plain text
         ;; +pretty
         ;; +dragndrop                   ; drag & drop files/images into org buffers
@@ -169,11 +169,12 @@
        ;;purescript                     ; javascript, but functional
        (python
         ;; +pyenv
-        +conda
+        ;; +conda
         +poetry
         +pyright
         +lsp
-        +tree-sitter)                   ; beautiful is better than ugly
+        +tree-sitter
+        )                   ; beautiful is better than ugly
        ;;qt                             ; the 'cutest' gui framework ever
        ;;racket                         ; a DSL for DSLs
        ;;raku                           ; the artist formerly known as perl6
