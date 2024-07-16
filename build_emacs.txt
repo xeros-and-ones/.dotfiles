@@ -1,0 +1,12 @@
+git clone https://git.savannah.gnu.org/git/emacs.git master
+
+git worktree add ../my-custom-build (choose name you prefer)
+cd ../my-custom-build
+
+./autogen.sh
+
+./configure --with-cairo --with-x-toolkit=gtk3 --with-tree-sitter --without-compress-install --with-harfbuzz --with-json --without-gsettings --without-gconf--with-mailutils --with-native-compilation --with-imagemagick --program-transform-name='s/^ctags$/ctags.emacs/' --with-modules CFLAGS="-O3 -march=native -flto"
+
+make -jN (N = number of cores you have in your cpu)
+
+sudo make install
