@@ -94,23 +94,23 @@ config.font = wezterm.font("FiraCode Nerd Font", {
 	style = "Normal",
 	weight = "DemiBold",
 })
--- config.font_rules = {
--- 	{
--- 		italic = true,
--- 		intensity = "Bold",
--- 		font = wezterm.font("CaskaydiaCove Nerd Font", { weight = "Bold", style = "Italic" }),
--- 	},
--- 	{
--- 		italic = true,
--- 		intensity = "Half",
--- 		font = wezterm.font("CaskaydiaCove Nerd Font", { style = "Italic" }),
--- 	},
--- 	{
--- 		italic = true,
--- 		intensity = "Normal",
--- 		font = wezterm.font("CaskaydiaCove Nerd Font", { weight = "DemiBold", style = "Italic" }),
--- 	},
--- }
+config.font_rules = {
+	{
+		italic = true,
+		intensity = "Bold",
+		font = wezterm.font("CaskaydiaCove Nerd Font", { weight = "Bold", style = "Italic" }),
+	},
+	{
+		italic = true,
+		intensity = "Half",
+		font = wezterm.font("CaskaydiaCove Nerd Font", { style = "Italic" }),
+	},
+	{
+		italic = true,
+		intensity = "Normal",
+		font = wezterm.font("CaskaydiaCove Nerd Font", { weight = "DemiBold", style = "Italic" }),
+	},
+}
 
 -- KEY_BINDING
 config.swap_backspace_and_delete = false

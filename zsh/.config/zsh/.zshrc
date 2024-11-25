@@ -1,4 +1,4 @@
-export ZELLIJ_AUTO_ATTACH=false
+export ZELLIJ_AUTO_ATTACH=true
 export ZELLIJ_AUTO_EXIT=false
 # Auto Start zellij
 if [[ -z "$ZELLIJ" ]]; then
@@ -41,7 +41,6 @@ setopt INTERACTIVE_COMMENTS
 ####### exports ##########--------------------------------------------------------------
 # EDITOR=nvim
 # VISUAL=nvim
-# CODEEDITOR=nvim
 # SUDO_EDITOR=nvim
 EDITOR="emacsclient -t -a ''"
 VISUAL="emacsclient -c -a ''"
