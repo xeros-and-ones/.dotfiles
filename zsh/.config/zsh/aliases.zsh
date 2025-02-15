@@ -133,12 +133,12 @@ alias apps="cd /mnt/Data/Apps/"
 alias dotfiles="cd ~/.dotfiles/"
 
 ########## yt-dlp aliases ###########---------------
-alias ytv-mkv-720='yt-dlp -f "bestvideo\[height<=720]+bestaudio/best\[height<=720]" -o "//mnt//Data//Downloads//%(title)s.%(ext)s" --add-metadata --merge-output-format mkv'
-alias ytv-mkv-1080='yt-dlp -f "bestvideo\[height<=1080]+bestaudio/best\[height<=1080]" -o "//mnt//Data//Downloads//%(title)s.%(ext)s" --add-metadata --merge-output-format mkv'
-alias ytv-mp4='yt-dlp -f bestvideo\[height<=720]+bestaudio -o "//mnt//Data//Downloads//%(title)s.%(ext)s" --add-metadata --merge-output-format mp4'
-alias ytv-best='yt-dlp -f bestvideo+bestaudio -o "//mnt//Data//Downloads//%(title)s.%(ext)s" --add-metadata --merge-output-format mp4'
-alias yta-mp3='yt-dlp -f bestaudio --extract-audio --audio-format mp3 -o "//mnt//Data//Downloads//%(title)s.%(ext)s" --add-metadata'
-alias ytp-mkv-list-720="yt-dlp -f 'bv*[height=720]+ba' -o '//mnt//Data//Downloads//%(playlist_title)s//%(title)s.%(ext)s' --add-metadata --merge-output-format mkv"
-alias ytp-mkv-list-1080="yt-dlp -f 'bv*[height=1080]+ba' -o '//mnt//Data//Downloads//%(playlist_title)s//%(title)s.%(ext)s' --add-metadata --merge-output-format mkv"
-alias ytp-mp4-list-720="yt-dlp -f 'bv*[height=720]+ba' -o '//mnt//Data//Downloads//%(playlist_title)s//%(title)s.%(ext)s' --add-metadata --merge-output-format mp4"
-alias ytp-mp4-list-1080="yt-dlp -f 'bv*[height=1080]+ba' -o '//mnt//Data//Downloads//%(playlist_title)s//%(title)s.%(ext)s' --add-metadata --merge-output-format mp4"
+alias ytv-mkv-720='yt-dlp -f "bv*[height<=720]+ba/b[height<=720]" --merge-output-format mkv'
+alias ytv-mkv-1080='yt-dlp -f "bv*[height<=1080]+ba/b[height<=1080]" --merge-output-format mkv'
+alias ytv-mkv-720-sub='yt-dlp -f "bv*[height<=720]+ba/b[height<=720]" --merge-output-format mkv --sub-langs=eng --embed-subs'
+alias ytv-mkv-1080-sub='yt-dlp -f "bv*[height<=1080]+ba/b[height<=1080]" --merge-output-format mkv --sub-langs=eng --embed-subs'
+alias ytv-mp4='yt-dlp -f "bv*[height<=1080]+ba/b[height<=1080]" --merge-output-format mp4'
+alias ytp-mkv-list-720="yt-dlp -f 'bv*[height=720]+ba' --add-metadata --merge-output-format mkv"
+alias ytp-mkv-list-1080="yt-dlp -f 'bv*[height=1080]+ba' --add-metadata --merge-output-format mkv"
+alias ytp-mp4-list-720="yt-dlp -f 'bv*[height=720]+ba' --add-metadata --merge-output-format mp4"
+alias ytp-mp4-list-1080="yt-dlp -f 'bv*[height=1080]+ba' --add-metadata --merge-output-format mp4"
