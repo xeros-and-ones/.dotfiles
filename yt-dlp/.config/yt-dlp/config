@@ -1,4 +1,4 @@
--o "//mnt//Data//Downloads//%(title)s.%(ext)s"
+-o "//mnt//Data//Downloads//Youtube//%(title)s.%(ext)s"
 --add-metadata
 --embed-metadata
 --embed-chapters
