@@ -133,9 +133,9 @@ alias apps="cd /mnt/Data/Apps/"
 alias dotfiles="cd ~/.dotfiles/"
 
 ########## yt-dlp aliases ###########---------------
-alias ytv-720='noglob yt-dlp -f "bv*[height<=720]+ba/b[height<=720]" --merge-output-format mkv'
-alias ytv-1080='noglob yt-dlp -f "bv*[height<=1080]+ba/b[height<=1080]" --merge-output-format mkv'
-alias ytv-720-sub='noglob yt-dlp -f "bv*[height<=720]+ba/b[height<=720]" --merge-output-format mkv --sub-langs=eng --embed-subs'
-alias ytv-1080-sub='noglob yt-dlp -f "bv*[height<=1080]+ba/b[height<=1080]" --merge-output-format mkv --sub-langs=eng --embed-subs'
-alias ytp-720="noglob yt-dlp -f 'bv*[height=720]+ba/b[height<=720]' -o '//mnt//Data//Downloads//Youtube//%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' --merge-output-format mkv"
-alias ytp-1080="noglob yt-dlp -f 'bv*[height=1080]+ba/b[height<=1080]' -o '//mnt//Data//Downloads//Youtube//%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' --merge-output-format mkv"
+alias ytv-720='noglob yt-dlp -f "bv*[height<=720]+ba/b[height<=720]"'
+alias ytv-1080='noglob yt-dlp -f "bv*[height<=1080]+ba/b[height<=1080]"'
+alias ytv-720-sub='noglob yt-dlp -f "bv*[height<=720]+ba/b[height<=720]" --sub-langs=eng --embed-subs'
+alias ytv-1080-sub='noglob yt-dlp -f "bv*[height<=1080]+ba/b[height<=1080]" --sub-langs=eng --embed-subs'
+alias ytp-720="noglob yt-dlp -f 'bv*[height=720]+ba/b[height<=720]' -o '//mnt//Data//Downloads//Youtube//%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s'"
+alias ytp-1080="noglob yt-dlp -f 'bv*[height=1080]+ba/b[height<=1080]' -o '//mnt//Data//Downloads//Youtube//%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s'"

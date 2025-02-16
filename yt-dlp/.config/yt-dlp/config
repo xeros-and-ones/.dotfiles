@@ -2,3 +2,6 @@
 --add-metadata
 --embed-metadata
 --embed-chapters
+--merge-output-format mkv
+--sponsorblock-mark all
+--embed-info-json
