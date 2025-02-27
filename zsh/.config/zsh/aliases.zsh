@@ -138,6 +138,7 @@ alias ytv-1080='noglob yt-dlp -f "bv*[height<=1080]+ba/b[height<=1080]"'
 alias ytv-720-sub='noglob yt-dlp -f "bv*[height<=720]+ba/b[height<=720]" --sub-langs=eng --embed-subs'
 alias ytv-1080-sub='noglob yt-dlp -f "bv*[height<=1080]+ba/b[height<=1080]" --sub-langs=eng --embed-subs'
 alias ytp-720="noglob yt-dlp -f 'bv*[height=720]+ba/b[height<=720]' -o '//mnt//Data//Downloads//Youtube//%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s'"
+alias ytp-720-test="noglob yt-dlp -f 'bv*[height=720]+ba' -o '//mnt//Data//Downloads//Youtube//%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' --merge-outout-format mp4"
 alias ytp-1080="noglob yt-dlp -f 'bv*[height=1080]+ba/b[height<=1080]' -o '//mnt//Data//Downloads//Youtube//%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s'"
 alias ytp-720-sub="noglob yt-dlp -f 'bv*[height=720]+ba/b[height<=720]' -o '//mnt//Data//Downloads//Youtube//%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' --sub-langs=eng --embed-subs"
 alias ytp-1080-sub="noglob yt-dlp -f 'bv*[height=1080]+ba/b[height<=1080]' -o '//mnt//Data//Downloads//Youtube//%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' --sub-langs=eng --embed-subs"
