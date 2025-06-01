@@ -88,6 +88,7 @@ alias zshconf="$EDITOR $ZDOTDIR/.zshrc"
 alias matrix='neo-matrix -D -s -m" WE RULE THE WORLD! FROM THE SHADOWS "'
 alias printcolors='for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$"\n"};done'
 alias nvidia="sudo optirun -b none nvidia-settings -c :8"
+alias nv="envycontrol"
 alias smi="sudo nvidia-smi"
 alias lg="lazygit"
 alias tl="erd -fI.H --long -yinverted -Cauto --dir-order=first --sort=name --no-git"

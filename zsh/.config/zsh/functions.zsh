@@ -135,3 +135,35 @@ function git_repo_name() {
         echo ${repo_path:t}
     fi
 }
+
+
+#############################################################
+#####| JAVA FUNCTIONS | ###################
+function jrun() {
+    if [[ $# -ne 1 ]]; then
+        echo "Usage: jrun <file.java>"
+        return 1
+    fi
+
+    local java_file="$1"
+    local class_name="${java_file%.java}"
+
+    # Compile
+    javac "$java_file" || {
+        echo "❌ Compilation failed"
+        return 1
+    }
+
+    # Run (handles both regular and public class cases)
+    if grep -q "public class" "$java_file"; then
+        # For public classes, the filename must match the class name
+        java "$class_name"
+    else
+        # For non-public classes, use the class name found in the file
+        local actual_class=$(grep -m 1 -E 'class [A-Za-z0-9_]+' "$java_file" | awk '{print $2}')
+        java "$actual_class"
+    fi
+
+    # Clean up .class files
+    rm -f *.class
+}

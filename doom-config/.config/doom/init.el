@@ -119,12 +119,12 @@
        ;;common-lisp                    ; if you've seen one lisp, you've seen them all
        ;;coq                            ; proofs-as-programs
        ;;crystal                        ; ruby at the speed of c
-       (csharp
-        +dotnet
-        +lsp
-        +tree-sitter
-        +unity)                         ; unity, .NET, and mono shenanigans
-       data                             ; config/data formats
+       ;; (csharp
+       ;;  +dotnet
+       ;;  +lsp
+       ;;  +tree-sitter
+       ;;  +unity)                         ; unity, .NET, and mono shenanigans
+       ;; data                             ; config/data formats
        ;;(dart +flutter)                ; paint ui and not much else
        ;;dhall
        ;;elixir                         ; erlang done right
@@ -147,7 +147,7 @@
        (java +lsp +tree-sitter)         ; the poster child for carpal tunnel syndrome
        (javascript +lsp +tree-sitter)   ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia                          ; a better, faster MATLAB
-       ;; (kotlin +lsp +tree-sitter)    ; a better, slicker Java(Script)
+       (kotlin +lsp +tree-sitter)    ; a better, slicker Java(Script)
        ;;latex                          ; writing papers in Emacs has never been so fun
        ;;lean                           ; for folks with too much to prove
        ;;ledger                         ; be audit you can be

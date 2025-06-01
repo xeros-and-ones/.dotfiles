@@ -42,6 +42,7 @@ setopt INTERACTIVE_COMMENTS
 # EDITOR=nvim
 # VISUAL=nvim
 # SUDO_EDITOR=nvim
+JAVA_OPTS="-Xms512m -Xmx2G -XX:+UseG1GC"
 EDITOR="emacsclient -t -a ''"
 VISUAL="emacsclient -c -a ''"
 SUDO_EDITOR="emacsclient -t -a ''"
