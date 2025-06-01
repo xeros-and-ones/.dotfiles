@@ -139,31 +139,51 @@ function git_repo_name() {
 
 #############################################################
 #####| JAVA FUNCTIONS | ###################
-function jrun() {
-    if [[ $# -ne 1 ]]; then
-        echo "Usage: jrun <file.java>"
-        return 1
-    fi
+jrun() {
+  if [[ $# -ne 1 ]]; then
+    echo "Usage: jrun <JavaFile.java>"
+    return 1
+  fi
 
-    local java_file="$1"
-    local class_name="${java_file%.java}"
+  local java_file="$1"
+  if [[ ! -f "$java_file" ]]; then
+    echo "File not found: $java_file"
+    return 2
+  fi
 
-    # Compile
-    javac "$java_file" || {
-        echo "❌ Compilation failed"
-        return 1
-    }
+  # Extract directory and filename
+  local src_dir=$(dirname "$java_file")
+  local filename=$(basename "$java_file")
+  local classname="${filename%.java}"
 
-    # Run (handles both regular and public class cases)
-    if grep -q "public class" "$java_file"; then
-        # For public classes, the filename must match the class name
-        java "$class_name"
-    else
-        # For non-public classes, use the class name found in the file
-        local actual_class=$(grep -m 1 -E 'class [A-Za-z0-9_]+' "$java_file" | awk '{print $2}')
-        java "$actual_class"
-    fi
+  # Extract package name from the Java file (if any)
+  local package_name=$(grep -m1 '^package ' "$java_file" | sed -E 's/package[[:space:]]+([a-zA-Z0-9_.]+);/\1/')
 
-    # Clean up .class files
-    rm -f *.class
+  # Build the fully qualified class name
+  local fqcn="$classname"
+  if [[ -n "$package_name" ]]; then
+    fqcn="$package_name.$classname"
+  fi
+
+  # Define build output directory
+  local build_dir="./build"
+
+  # Create build directory
+  mkdir -p "$build_dir"
+
+  # Compile Java file to build directory
+  javac -d "$build_dir" "$java_file"
+  if [[ $? -ne 0 ]]; then
+    echo "Compilation failed."
+    return 3
+  fi
+
+  # Run the Java class with correct classpath and fully qualified name
+  java -cp "$build_dir" "$fqcn"
+  local run_status=$?
+
+  # Clean up .class files from build directory
+  rm -rf "$build_dir"
+
+  return $run_status
 }
