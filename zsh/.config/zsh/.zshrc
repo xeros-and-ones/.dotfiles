@@ -54,9 +54,13 @@ SAVEHIST=$(( 100 * 1000 ))      # Use multiplication for readability.
 # Max number of history entries to keep in memory.
 HISTSIZE=$(( 1.2 * SAVEHIST ))  # Zsh recommended value
 
+# Safely apply -march=native only if supported
+export CFLAGS="-O2 -flto=auto -pipe"
+case "$(gcc -march=native -Q --help=target | grep march)" in
+  *native*) CFLAGS+=" -march=native" ;;
+esac
 
 path=(
-    /usr/local/go/bin(N-/)
     $GOPATH/bin(N-/)
     $HOME/.rustup/toolchains/*/bin(N-/)
     $HOME/.config/emacs/bin(N-/)
