@@ -42,9 +42,10 @@ setopt INTERACTIVE_COMMENTS
 # EDITOR=nvim
 # VISUAL=nvim
 # SUDO_EDITOR=nvim
-EDITOR="emacsclient -t -a ''"
 VISUAL="emacsclient -c -a ''"
+EDITOR="emacsclient -t -a ''"
 SUDO_EDITOR="emacsclient -t -a ''"
+GIT_EDITOR='emacsclient -t -a '''
 # TERM=wezterm
 HISTFILE="$HOME/.zsh_history"    # History filepath
 # Max number of entries to keep in history file.

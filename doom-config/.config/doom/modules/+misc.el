@@ -5,7 +5,7 @@
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program
       (cond
-       ((executable-find "thorium") "thorium")
+       ((executable-find "thorium-browser") "thorium-browser")
        ((executable-find "floorp") "floorp")
        ((executable-find "google-chrome-stable") "google-chrome-stable")
        ((executable-find "google-chrome") "google-chrome")
@@ -16,7 +16,9 @@
 (setq evil-cross-lines t
       evil-split-window-below t
       evil-vsplit-window-right t
-      evil-ex-substitute-global t)
+      evil-ex-substitute-global t
+      evil-escape-key-sequence "jk"
+      evil-escape-delay 0.1)
 
 (after! evil
   (evil-define-text-object evil-inner-buffer (count &optional beg end type)

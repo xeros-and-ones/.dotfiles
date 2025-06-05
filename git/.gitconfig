@@ -4,7 +4,7 @@
 [credential]
 	helper = cache
 [core]
-    editor = emacsclient -t -a 'emacs'
+    editor = emacsclient -t -a ''
     pager = delta
 [interactive]
     diffFilter = delta --color-only

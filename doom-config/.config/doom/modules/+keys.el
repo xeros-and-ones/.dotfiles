@@ -1,5 +1,16 @@
 ;;; +keys.el -*- lexical-binding: t; -*-
 
+(defun my/ts-fold-close-all-then-open-first-level ()
+  (interactive)
+  (ts-fold-close-all)
+  (let ((root (treesit-buffer-root-node)))
+    (dolist (class-node (treesit-node-children root))
+      ;; Unfold the class declaration itself
+      (ts-fold-open class-node)
+      ;; Fold inner blocks (methods, fields, etc.)
+      (dolist (child (treesit-node-children class-node))
+        (ts-fold-close child)))))
+
 ;;; Terminal Key Fixes
 ;; Distinguish C-i from TAB (important for terminal users)
 (when (display-graphic-p)
@@ -162,6 +173,9 @@
 
 
 (map!
+ (:prefix "z"
+  :desc "Fold Toggle" :n "m" #'+fold/toggle
+  :desc "Fold Buffer except level 1" :n "M" #'my/ts-fold-close-all-then-open-first-level)
  (:prefix "C-x"
   :n "e"  #'pp-eval-last-sexp)
  (:prefix "C-c"
