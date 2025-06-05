@@ -1,5 +1,5 @@
 ;; -*- no-byte-compile: t; -*-
-;;; packages.el
+;;; $DOOMDIR/packages.el
 
 ;; disabled packages
 (disable-packages! solaire-mode
@@ -16,32 +16,8 @@
                    lsp-python-ms
                    pyimport)
 
-;; text
-(package! tldr)
-(package! edit-indirect)
-(package! link-hint)
-(package! symbol-overlay)
-(package! org-appear)
 
-;; misc
-(package! keycast)
-(package! evil-string-inflection)
-(package! all-the-icons-ibuffer)
-(package! dired-narrow)
-(package! git-link)
 (package! citre)
 (package! imenu-list)
-;; (package! tmux-pane)
-(package! go-translate)
-
-;; programming
-(package! bazel-mode :recipe (:host github :repo "bazelbuild/emacs-bazel-mode"))
-(package! graphql-mode)
-(package! protobuf-mode)
-(package! gn-mode)
-(when (modulep! :tools lsp +eglot)
-  (package! breadcrumb :recipe (:host github :repo "joaotavora/breadcrumb"))
-  (package! eglot-java)
-  )
-(when (not (modulep! :tools lsp +eglot))
-  (package! lsp-docker))
+(package! all-the-icons-ibuffer)
+(package! drag-stuff)
