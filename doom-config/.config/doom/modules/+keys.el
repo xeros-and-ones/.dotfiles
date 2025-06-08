@@ -1,13 +1,20 @@
 ;;; +keys.el -*- lexical-binding: t; -*-
 
-(defun my/fold-class-methods-and-return ()
+(defun my/fold-methods-except-current-and-return ()
   "Fold all class methods EXCEPT the current one."
   (interactive)
   (save-excursion
     (goto-char (point-min))
     (execute-kbd-macro (kbd "2 z m")))  ; Fold everything
-  (execute-kbd-macro (kbd "z o"))
+  (execute-kbd-macro (kbd "z a"))
   (execute-kbd-macro (kbd "z z")))      ; Unfold at current position
+
+(defun my/fold-all-methods-and-return ()
+  "Fold all class methods EXCEPT the current one."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (execute-kbd-macro (kbd "2 z m")))) ; Fold everything
 
 ;;; Terminal Key Fixes
 ;; Distinguish C-i from TAB (important for terminal users)
@@ -93,7 +100,8 @@
 ;;; Leader Keybindings
 (map! :leader
 
-      :desc "Fold Close 2" "z" #'my/fold-class-methods-and-return
+      :desc "Fold Methods EXCEPT POINT" "z" #'my/fold-methods-except-current-and-return
+      :desc "Fold All Methods" "Z" #'my/fold-all-methods-and-return
 
       ;; Code
       (:prefix "c"                      ; code

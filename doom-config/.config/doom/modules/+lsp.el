@@ -8,11 +8,9 @@
 (after! lsp-mode
   ;; General Settings
   (setq lsp-log-io nil
-        lsp-file-watch-threshold 4000
         +format-with-lsp nil
         +lsp-prompt-to-install-server 'quiet
         lsp-headerline-breadcrumb-enable t
-        lsp-inlay-hint-enable t
         lsp-headerline-breadcrumb-icons-enable t
         lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols)
         lsp-imenu-index-symbol-kinds '(File Module Namespace Package Class Method
@@ -68,6 +66,28 @@
 (use-package! nix-mode
   :custom (nix-nixfmt-bin "alejandra-the-quiet"))
 
+;; JAVA
+(after! lsp-java
+  (setq lsp-java-vmargs
+        `("-XX:+UseParallelGC"
+          "-XX:GCTimeRatio=4"
+          "-XX:AdaptiveSizePolicyWeight=90"
+          "-Dsun.zip.disableMemoryMapping=true"
+          "-Xmx4G")
+        lsp-java-completion-max-results 50
+        lsp-java-progress-reports :disabled
+        lsp-java-autobuild-enabled nil))
+
+(after! java-mode
+  (setq c-basic-offset 4
+        tab-width 4
+        indent-tabs-mode nil)
+
+  ;; Use eglot instead of lsp-mode if problems persist
+  (when (modulep! :tools lsp)
+    (after! lsp-java
+      (set-lsp-priority! 'jdtls 1))))  ; Higher priority than other servers
+
 ;; ====================
 ;; UI Configuration
 ;; ====================
@@ -80,3 +100,5 @@
         lsp-ui-sideline-enable t
         lsp-ui-sideline-show-code-actions t
         lsp-lens-enable t))
+
+(setq! +tree-sitter-hl-enabled-modes #'tree-sitter-hl-mode)

@@ -15,7 +15,7 @@
         drag-stuff-highlight t)
 
   ;; Safer keybindings (these work in both terminal and GUI)
-  (map! :n "M-<left>"  #'drag-stuff-left
-        :n "M-<right>" #'drag-stuff-right
-        :n "M-<down>"  #'drag-stuff-down
-        :n "M-<up>"    #'drag-stuff-up))
+  (map! :n "M-C-h"  #'drag-stuff-left
+        :n "M-C-l" #'drag-stuff-right
+        :n "M-C-j"  #'drag-stuff-down
+        :n "M-C-k"    #'drag-stuff-up))

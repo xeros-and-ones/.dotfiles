@@ -1,0 +1,169 @@
+set scrolloff=10
+set relativenumber
+set showmode
+set showcmd
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
+set clipboard+=unnamedplus
+set timeoutlen=300
+set visualbell
+set notimeout    " Prevent hiding on inactivity
+
+" Plugins
+set surround
+set highlightedyank
+set nerdtree
+set easymotion
+set fuzzier
+set which-key
+let g:WhichKey_FontSize = 16
+let g:WhichKey_CommandColor = "#458588"
+let g:WhichKey_PrefixColor = "#cc241d"
+let g:WhichKey_SortOrder = "by_key_prefix_first"
+
+let g:WhichKeyDesc_leader = "<leader> Leader key"
+
+let g:WhichKeyDesc_leader = "<leader>e File Explorer"
+
+let g:WhichKeyDesc_easymotion = "<leader>s Easymotion"
+let g:WhichKeyDesc_easymotion_prefix = "<leader><leader>"
+
+
+let g:WhichKeyDesc_window = "<leader>w Window"
+let g:WhichKeyDesc_window_split_vertically = "<leader>wv Split vertically"
+let g:WhichKeyDesc_window_split_horizontally = "<leader>wh Split horizontally"
+let g:WhichKeyDesc_window_split_unsplit = "<leader>wu Unsplit"
+let g:WhichKeyDesc_window_split_move_editor = "<leader>wm Move editor to opposite tab group"
+
+
+let g:WhichKeyDesc_display = "<leader>d Display options"
+let g:WhichKeyDesc_zen_mode = "<leader>dz Toggle Zen mode"
+let g:WhichKeyDesc_df_mode = "<leader>dd Toggle Distraction-Free mode"
+let g:WhichKeyDesc_fullscreen = "<leader>df Toggle full screen"
+
+let g:WhichKeyDesc_action= "<leader>a Actions"
+let g:WhichKeyDesc_action_context_menu = "<leader>am Open context menu"
+let g:WhichKeyDesc_action_search = "<leader>as Open command modal"
+
+let g:WhichKeyDesc_file_quickLook = "<leader><leader> Grep"
+
+let g:WhichKeyDesc_file_nav = "<leader>f File navigation"
+let g:WhichKeyDesc_file_nav_goto_file = "<leader>ff Go to file"
+let g:WhichKeyDesc_file_nav_goto_content = "<leader>fc Search for file content"
+let g:WhichKeyDesc_file_nav_show_recent_files = "<leader>fr Show recent files"
+let g:WhichKeyDesc_file_nav_show_recent_locations = "<leader>fl Show recent locations"
+
+let g:WhichKeyDesc_close_tab = "<leader>q Close active tab"
+
+let g:WhichKeyDesc_refactoring = "<leader>r Refactoring menu"
+let g:WhichKeyDesc_refactoring_rename = "<leader>rn Rename element"
+let g:WhichKeyDesc_refactoring_method = "<leader>rm Extract method"
+let g:WhichKeyDesc_refactoring_variable = "<leader>rv Introduce variable"
+let g:WhichKeyDesc_refactoring_field = "<leader>rf Introduce field"
+let g:WhichKeyDesc_refactoring_signature = "<leader>rs Change signature"
+let g:WhichKeyDesc_refactoring_all = "<leader>rr Open refactorings list"
+
+let g:WhichKeyDesc_goto = "<leader>c Code"
+let g:WhichKeyDesc_goto_declaration = "<leader>cd Go to Definition"
+let g:WhichKeyDesc_goto_type_declaration = "<leader>cy Go to Type Definition"
+let g:WhichKeyDesc_goto_implementation = "<leader>ci Go to Implementation"
+let g:WhichKeyDesc_goto_usages = "<leader>cu Go to Usages"
+let g:WhichKeyDesc_goto_test = "<leader>ct Go to Test"
+let g:WhichKeyDesc_goto_back = "<leader>cb Go Back"
+let g:WhichKeyDesc_goto_forward = "<leader>cf Go Forward"
+
+let g:WhichKeyDesc_git = "<leader>g Git operations"
+let g:WhichKeyDesc_git_commit = "<leader>gc Open Git commit dialog"
+let g:WhichKeyDesc_git_status = "<leader>gs Open Git status dialog"
+let g:WhichKeyDesc_git_branches = "<leader>gb Open Git branches list"
+
+let g:WhichKeyDesc_errors = "<leader>e File Explorer"
+let g:WhichKeyDesc_errors_next = "<leader>] Go to next error in solution"
+let g:WhichKeyDesc_errors_prev = "<leader>[ Go to previous error in solution"
+" (Optional) My own vim commands
+nnoremap Y y$
+let mapleader = " "
+nnoremap p :action EditorPaste<CR>
+vnoremap p :action EditorPaste<CR>
+nnoremap <ESC> :nohl<CR>
+
+" Git windows
+nnoremap <leader>gl    :action Vcs.Show.Log<CR>
+vnoremap <leader>gl    :action Vcs.Show.Log<CR>
+map <leader>gc <Action>(CheckinProject)
+map <leader>gs <Action>(ActivateVersionControlToolWindow)
+map <leader>gb <Action>(Git.Branches)
+
+" Pane navigation
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+nnoremap <C-k> <C-w>k
+nnoremap <C-j> <C-w>j
+
+" Tab navigation
+nnoremap <A-l> :tabnext<CR>
+nnoremap <A-h> :tabprev<CR>
+
+" Easy visual indentation
+vnoremap < <gv
+vnoremap > >gv
+
+" Popup navigation
+inoremap <C-j> <C-n>
+inoremap <C-k> <C-p>
+
+" Ctrl+hjkl for cursor movement in Insert mode
+inoremap <A-h> <Left>
+inoremap <A-j> <Down>
+inoremap <A-k> <Up>
+inoremap <A-l> <Right>
+
+" Folding
+nnoremap zm :action CollapseAllRegions<CR>
+nnoremap zo :action ExpandAllRegions<CR>
+
+" Leader mapping
+map <leader>e :NERDTreeToggle<CR>
+map <leader>s <Plug>(easymotion-s)
+"" Window splits
+map <leader>wv <Action>(SplitVertically)
+map <leader>ws <Action>(SplitHorizontally)
+map <leader>wu <Action>(Unsplit)
+map <leader>wm <Action>(MoveEditorToOppositeTabGroup)
+" Display options
+map <leader>dd <action>(ToggleDistractionFreeMode)
+map <leader>dz <action>(ToggleZenMode)
+map <leader>df <action>(ToggleFullScreen)
+" Actions
+map <leader>am <action>(ShowIntentionActions)
+map <leader>as <action>(SearchEverywhere)
+" File navigation
+map <leader>ff <action>(com.mituuz.fuzzier.Fuzzier)
+map <leader>fr <action>(RecentFiles)
+map <leader>fc <action>(FindInPath)
+map <leader><leader> <action>(com.mituuz.fuzzier.FuzzyGrepCaseInsensitive)
+map <leader>fg <action>(com.mituuz.fuzzier.FuzzyGrepCaseInsensitive)
+map <leader>fl <action>(RecentLocations)
+map <leader>fs <action>(NewScratchFile)
+" Close active tab
+map <leader>q <action>(CloseContent)
+" Refactoring
+map <leader>rn <Action>(RenameElement)
+map <leader>rm <Action>(ExtractMethod)
+map <leader>rv <Action>(IntroduceVariable)
+map <leader>rf <Action>(IntroduceField)
+map <leader>rs <Action>(ChangeSignature)
+map <leader>rr <Action>(Refactorings.QuickListPopupAction)
+" code
+nmap <leader>cd <Action>(GotoDeclaration)
+nmap <leader>cy <Action>(GotoTypeDeclaration)
+nmap <leader>ci <Action>(GotoImplementation)
+nmap <leader>cu <Action>(ShowUsages)
+nmap <leader>ct <Action>(GotoTest)
+nmap <leader>cf <Action>(Back)
+nmap <leader>cb <Action>(Forward)
+" Errors
+map <leader>] <Action>(ReSharperGotoNextErrorInSolution)
+map <leader>[ <Action>(ReSharperGotoPrevErrorInSolution)
