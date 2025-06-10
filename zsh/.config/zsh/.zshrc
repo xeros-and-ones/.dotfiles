@@ -60,6 +60,9 @@ case "$(gcc -march=native -Q --help=target | grep march)" in
   *native*) CFLAGS+=" -march=native" ;;
 esac
 
+# needed for emacs-lsp-booster
+export LSP_USE_PLISTS="true"
+
 path=(
     $GOPATH/bin(N-/)
     $HOME/.rustup/toolchains/*/bin(N-/)

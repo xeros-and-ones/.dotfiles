@@ -34,7 +34,7 @@ let g:WhichKeyDesc_easymotion_prefix = "<leader><leader>"
 let g:WhichKeyDesc_window = "<leader>w Window"
 let g:WhichKeyDesc_window_split_vertically = "<leader>wv Split vertically"
 let g:WhichKeyDesc_window_split_horizontally = "<leader>wh Split horizontally"
-let g:WhichKeyDesc_window_split_unsplit = "<leader>wu Unsplit"
+let g:WhichKeyDesc_window_split_unsplit = "<leader>wd Unsplit"
 let g:WhichKeyDesc_window_split_move_editor = "<leader>wm Move editor to opposite tab group"
 
 
@@ -79,7 +79,9 @@ let g:WhichKeyDesc_git_commit = "<leader>gc Open Git commit dialog"
 let g:WhichKeyDesc_git_status = "<leader>gs Open Git status dialog"
 let g:WhichKeyDesc_git_branches = "<leader>gb Open Git branches list"
 
-let g:WhichKeyDesc_errors = "<leader>e File Explorer"
+let g:WhichKeyDesc_error_list = "<leader>x Error List"
+
+let g:WhichKeyDesc_file_manager = "<leader>e File Explorer"
 let g:WhichKeyDesc_errors_next = "<leader>] Go to next error in solution"
 let g:WhichKeyDesc_errors_prev = "<leader>[ Go to previous error in solution"
 " (Optional) My own vim commands
@@ -88,13 +90,15 @@ let mapleader = " "
 nnoremap p :action EditorPaste<CR>
 vnoremap p :action EditorPaste<CR>
 nnoremap <ESC> :nohl<CR>
+" Normal mode mappings (like Vim)
+nnoremap <C-a> ^
+nnoremap <C-e> $
+nnoremap <C-x> <A-6>
 
-" Git windows
-nnoremap <leader>gl    :action Vcs.Show.Log<CR>
-vnoremap <leader>gl    :action Vcs.Show.Log<CR>
-map <leader>gc <Action>(CheckinProject)
-map <leader>gs <Action>(ActivateVersionControlToolWindow)
-map <leader>gb <Action>(Git.Branches)
+" Insert mode mappings (like Emacs)
+inoremap <C-a> <C-o>^
+inoremap <C-e> <C-o>$
+
 
 " Pane navigation
 nnoremap <C-h> <C-w>h
@@ -124,13 +128,20 @@ inoremap <A-l> <Right>
 nnoremap zm :action CollapseAllRegions<CR>
 nnoremap zo :action ExpandAllRegions<CR>
 
+" Git windows
+nnoremap <leader>gl    :action Vcs.Show.Log<CR>
+vnoremap <leader>gl    :action Vcs.Show.Log<CR>
+map <leader>gc <Action>(CheckinProject)
+map <leader>gs <Action>(ActivateVersionControlToolWindow)
+map <leader>gb <Action>(Git.Branches)
+
 " Leader mapping
 map <leader>e :NERDTreeToggle<CR>
 map <leader>s <Plug>(easymotion-s)
 "" Window splits
 map <leader>wv <Action>(SplitVertically)
 map <leader>ws <Action>(SplitHorizontally)
-map <leader>wu <Action>(Unsplit)
+map <leader>wd <Action>(Unsplit)
 map <leader>wm <Action>(MoveEditorToOppositeTabGroup)
 " Display options
 map <leader>dd <action>(ToggleDistractionFreeMode)
