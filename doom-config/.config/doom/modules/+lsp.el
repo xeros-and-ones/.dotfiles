@@ -74,6 +74,7 @@
           "-XX:AdaptiveSizePolicyWeight=90"
           "-Dsun.zip.disableMemoryMapping=true"
           "-Xmx4G")
+        lsp-enable-indentation nil
         lsp-java-completion-max-results 50
         lsp-java-progress-reports :disabled
         lsp-java-autobuild-enabled nil))
@@ -81,12 +82,7 @@
 (after! java-mode
   (setq c-basic-offset 4
         tab-width 4
-        indent-tabs-mode nil)
-
-  ;; Use eglot instead of lsp-mode if problems persist
-  (when (modulep! :tools lsp)
-    (after! lsp-java
-      (set-lsp-priority! 'jdtls 1))))  ; Higher priority than other servers
+        indent-tabs-mode nil))
 
 ;; ====================
 ;; UI Configuration
