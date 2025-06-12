@@ -1,11 +1,5 @@
 ;;; init.el -*- lexical-binding: t; -*-
 
-(setq custom-file (expand-file-name "custom.el" doom-local-dir))
-(load custom-file 'no-error 'no-message)
-
-(add-to-list 'default-frame-alist '(alpha-background . 85)) ; For all new frames henceforth
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
-(setq native-comp-jit-compilation t)
 
 (doom! :completion
        (corfu +orderless +icons +dabbrev)  ; Modern in-buffer completion
@@ -89,3 +83,12 @@
        :config
        (default +bindings +smartparens))
 
+
+(setq custom-file (expand-file-name "custom.el" doom-local-dir))
+(load custom-file 'no-error 'no-message)
+
+(add-to-list 'default-frame-alist '(alpha-background . 85)) ; For all new frames henceforth
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+(setq native-comp-jit-compilation t
+      corfu-preview-current nil
+      corfu-auto nil)

@@ -34,9 +34,6 @@
       orig-result)))
 (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command)
 
-
-(setq! corfu-preview-current nil)
-
 (after! lsp-mode
   ;; General Settings
   (setq lsp-log-io nil
@@ -112,7 +109,18 @@
         lsp-java-progress-reports nil
         lsp-java-autobuild-enabled nil
         lsp-java-jdt-download-url "https://www.eclipse.org/downloads/download.php?file=/jdtls/milestones/1.46.1/jdt-language-server-1.46.1-202504011455.tar.gz"))
+;; Define a function to set the compile command for Java files
+(defun my/set-java-compile-command ()
+  "Set compile command for Java files (supports java-mode and java-ts-mode)."
+  (when (or (derived-mode-p 'java-mode)
+            (derived-mode-p 'java-ts-mode))
+    (setq compile-command
+          (concat "javac " (file-name-nondirectory buffer-file-name)
+                  " && java " (file-name-sans-extension (file-name-nondirectory buffer-file-name))))))
 
+;; Hook the function to both java-mode and java-ts-mode
+(add-hook 'java-mode-hook #'my/set-java-compile-command)
+(add-hook 'java-ts-mode-hook #'my/set-java-compile-command)
 ;; ====================
 ;; UI Configuration
 ;; ====================
