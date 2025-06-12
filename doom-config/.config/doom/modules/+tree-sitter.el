@@ -1,0 +1,25 @@
+;;; +tree-sitter.el -*- lexical-binding: t; -*-
+
+(setq! treesit-font-lock-level 4)
+(after! treesit
+  (add-to-list 'treesit-language-source-alist
+               '((cpp        . ("https://github.com/tree-sitter/tree-sitter-cpp"))
+                 (go         . ("https://github.com/tree-sitter/tree-sitter-go"))
+                 (bash       . ("https://github.com/tree-sitter/tree-sitter-bash"))
+                 (c          . ("https://github.com/tree-sitter/tree-sitter-c"))
+                 (css        . ("https://github.com/tree-sitter/tree-sitter-css"))
+                 (gomod      . ("https://github.com/camdencheek/tree-sitter-go-mod"))
+                 (graphql    . ("https://github.com/bkegley/tree-sitter-graphql"))
+                 (html       . ("https://github.com/tree-sitter/tree-sitter-html"))
+                 (java       . ("https://github.com/tree-sitter/tree-sitter-java"))
+                 (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript"))
+                 (jsdoc      . ("https://github.com/tree-sitter/tree-sitter-jsdoc"))
+                 (json       . ("https://github.com/tree-sitter/tree-sitter-json"))
+                 (kotlin     . ("https://github.com/fwcd/tree-sitter-kotlin"))
+                 (python     . ("https://github.com/tree-sitter/tree-sitter-python"))
+                 (rust       . ("https://github.com/tree-sitter/tree-sitter-rust"))
+                 (scala      . ("https://github.com/tree-sitter/tree-sitter-scala"))
+                 (toml       . ("https://github.com/tree-sitter/tree-sitter-toml"))
+                 (tsx        . ("https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src"))
+                 (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src"))
+                 (yaml       . ("https://github.com/ikatyang/tree-sitter-yaml")))))

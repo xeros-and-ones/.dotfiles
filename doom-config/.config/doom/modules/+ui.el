@@ -68,6 +68,10 @@
 
   '(tide-hl-identifier-face :inherit 'lsp-face-highlight-read)
 
+  ;; Corfu Completion
+  `(corfu-current :background ,(doom-blend 'dark-blue 'bg 0.6) :foreground "ffffff" :weight bold)
+  `(corfu-border :background ,(doom-blend 'dark-blue 'bg 0.6))
+
   ;; Diagnostics
   `(flyspell-incorrect :underline ,(doom-color 'red))
   `(flyspell-duplicate :underline ,(doom-color 'orange))

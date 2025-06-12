@@ -15,6 +15,10 @@ cd ~/emacs-src
   --with-tree-sitter \
   --with-cairo \
   --with-harfbuzz \
+  --with-imagemagick \
+  --without-gsettings \
+  --with-gnutls \
+  --without-gconf \
   --without-compress-install \
   --with-modules \
   CFLAGS="-O2 -march=native -flto=auto -pipe" \

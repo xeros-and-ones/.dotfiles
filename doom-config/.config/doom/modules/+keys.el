@@ -41,8 +41,11 @@
       ;; Navigation
       "C-'"   #'toggle-input-method
       "C-S-n" #'dap-next
-      "<xterm-paste>" #'xterm-paste-with-delete-region)
+      "<xterm-paste>" #'xterm-paste-with-delete-region
 
+      )
+
+(evil-define-minor-mode-key 'insert 'corfu-mode (kbd "C-g") #'corfu-quit)
 
 ;;; Core Keybindings
 (map!
@@ -258,7 +261,7 @@
     :map vertico-map
     "C-j" #'vertico-next
     "C-k" #'vertico-previous
-    "C-M-RET" #'+vertico/embark-preview
+    "C-M-<return>" #'+vertico/embark-preview
     "C-n" #'vertico-next
     "C-M-j" #'+vertico/next-candidate-preview
     "C-S-n" #'vertico-next-group

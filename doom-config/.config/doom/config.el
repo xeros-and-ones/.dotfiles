@@ -9,11 +9,11 @@
 (load! "modules/+debugger.el")
 (load! "modules/+lsp.el")
 (load! "modules/+python.el")
+;; (load! "modules/+tree-sitter.el")
 
 ;; Basic identity and performance
 (setq user-full-name "Mohamed Tarek"
       user-mail-address "m96tarek@gmail.com"
-      native-comp-jit-compilation t
       doom-scratch-buffer-major-mode 'emacs-lisp-mode
       confirm-kill-emacs nil
       delete-trailing-lines t)
@@ -80,3 +80,5 @@
      nil 'alpha-background
      (if (eql active 100)
          85 100))))
+
+(setq! treesit-font-lock-level 4)

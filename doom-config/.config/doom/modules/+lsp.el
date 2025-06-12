@@ -1,14 +1,47 @@
 ;;; +lsp.el -*- lexical-binding: t; -*-
 
-;;; +lsp.el -*- lexical-binding: t; -*-
-
 ;; ====================
 ;; Core LSP Configuration
 ;; ====================
+(defun lsp-booster--advice-json-parse (old-fn &rest args)
+  "Try to parse bytecode instead of json."
+  (or
+   (when (equal (following-char) ?#)
+     (let ((bytecode (read (current-buffer))))
+       (when (byte-code-function-p bytecode)
+         (funcall bytecode))))
+   (apply old-fn args)))
+(advice-add (if (progn (require 'json)
+                       (fboundp 'json-parse-buffer))
+                'json-parse-buffer
+              'json-read)
+            :around
+            #'lsp-booster--advice-json-parse)
+
+(defun lsp-booster--advice-final-command (old-fn cmd &optional test?)
+  "Prepend emacs-lsp-booster command to lsp CMD."
+  (let ((orig-result (funcall old-fn cmd test?)))
+    (if (and (not test?)                             ;; for check lsp-server-present?
+             (not (file-remote-p default-directory)) ;; see lsp-resolve-final-command, it would add extra shell wrapper
+             lsp-use-plists
+             (not (functionp 'json-rpc-connection))  ;; native json-rpc
+             (executable-find "emacs-lsp-booster"))
+        (progn
+          (when-let ((command-from-exec-path (executable-find (car orig-result))))  ;; resolve command from exec-path (in case not found in $PATH)
+            (setcar orig-result command-from-exec-path))
+          (message "Using emacs-lsp-booster for %s!" orig-result)
+          (cons "emacs-lsp-booster" orig-result))
+      orig-result)))
+(advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command)
+
+
+(setq! corfu-preview-current nil)
+
 (after! lsp-mode
   ;; General Settings
   (setq lsp-log-io nil
         +format-with-lsp nil
+        lsp-lens-mode t
         +lsp-prompt-to-install-server 'quiet
         lsp-headerline-breadcrumb-enable t
         lsp-headerline-breadcrumb-icons-enable t
@@ -30,39 +63,7 @@
                  "[/\\\\]out\\'"
                  "[/\\\\]build\\'"
                  ))
-    (push dir lsp-file-watch-ignored-directories))
-
-
-  (defun lsp-booster--advice-json-parse (old-fn &rest args)
-    "Try to parse bytecode instead of json."
-    (or
-     (when (equal (following-char) ?#)
-       (let ((bytecode (read (current-buffer))))
-         (when (byte-code-function-p bytecode)
-           (funcall bytecode))))
-     (apply old-fn args)))
-  (advice-add (if (progn (require 'json)
-                         (fboundp 'json-parse-buffer))
-                  'json-parse-buffer
-                'json-read)
-              :around
-              #'lsp-booster--advice-json-parse)
-
-  (defun lsp-booster--advice-final-command (old-fn cmd &optional test?)
-    "Prepend emacs-lsp-booster command to lsp CMD."
-    (let ((orig-result (funcall old-fn cmd test?)))
-      (if (and (not test?)                             ;; for check lsp-server-present?
-               (not (file-remote-p default-directory)) ;; see lsp-resolve-final-command, it would add extra shell wrapper
-               lsp-use-plists
-               (not (functionp 'json-rpc-connection))  ;; native json-rpc
-               (executable-find "emacs-lsp-booster"))
-          (progn
-            (when-let ((command-from-exec-path (executable-find (car orig-result))))  ;; resolve command from exec-path (in case not found in $PATH)
-              (setcar orig-result command-from-exec-path))
-            (message "Using emacs-lsp-booster for %s!" orig-result)
-            (cons "emacs-lsp-booster" orig-result))
-        orig-result)))
-  (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command))
+    (push dir lsp-file-watch-ignored-directories)))
 
 ;; ====================
 ;; Language-Specific Configurations
@@ -105,16 +106,12 @@
           "-XX:GCTimeRatio=4"
           "-XX:AdaptiveSizePolicyWeight=90"
           "-Dsun.zip.disableMemoryMapping=true"
-          "-Xmx4G")
-        lsp-enable-indentation nil
+          "-Xmx2G"
+          "-Xms100m")
         lsp-java-completion-max-results 50
-        lsp-java-progress-reports :disabled
-        lsp-java-autobuild-enabled nil))
-
-(after! java-mode
-  (setq c-basic-offset 4
-        tab-width 4
-        indent-tabs-mode nil))
+        lsp-java-progress-reports nil
+        lsp-java-autobuild-enabled nil
+        lsp-java-jdt-download-url "https://www.eclipse.org/downloads/download.php?file=/jdtls/milestones/1.46.1/jdt-language-server-1.46.1-202504011455.tar.gz"))
 
 ;; ====================
 ;; UI Configuration
@@ -123,10 +120,9 @@
   (setq lsp-ui-doc-enable t
         lsp-ui-doc-show-with-mouse t
         lsp-ui-doc-include-signature t
+        lsp-modeline-workspace-status-enable nil
         lsp-ui-doc-max-height 15
         lsp-ui-doc-max-width 100
-        lsp-ui-sideline-enable t
-        lsp-ui-sideline-show-code-actions t
-        lsp-lens-enable t))
+        lsp-ui-sideline-enable nil
+        lsp-ui-sideline-show-code-actions nil))
 
-(setq! +tree-sitter-hl-enabled-modes #'tree-sitter-hl-mode)

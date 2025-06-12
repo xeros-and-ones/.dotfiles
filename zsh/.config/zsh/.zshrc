@@ -61,7 +61,7 @@ case "$(gcc -march=native -Q --help=target | grep march)" in
 esac
 
 # needed for emacs-lsp-booster
-export LSP_USE_PLISTS="true"
+export LSP_USE_PLISTS=true
 
 path=(
     $GOPATH/bin(N-/)
