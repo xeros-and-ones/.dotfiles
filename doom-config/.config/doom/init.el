@@ -62,6 +62,7 @@
 
        :lang
        (cc +lsp +tree-sitter)
+       (csharp +dotnet +lsp +tree-sitter)
        data
        emacs-lisp
        (go +lsp +tree-sitter)
