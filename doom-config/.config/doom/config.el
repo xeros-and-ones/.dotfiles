@@ -9,7 +9,8 @@
 (load! "modules/+debugger.el")
 (load! "modules/+lsp.el")
 (load! "modules/+python.el")
-;; (load! "modules/+tree-sitter.el")
+(load! "modules/+tree-sitter.el")
+(load! "modules/+compilation-mode.el")
 
 ;; Basic identity and performance
 (setq user-full-name "Mohamed Tarek"
@@ -81,4 +82,3 @@
      (if (eql active 100)
          85 100))))
 
-(setq! treesit-font-lock-level 4)

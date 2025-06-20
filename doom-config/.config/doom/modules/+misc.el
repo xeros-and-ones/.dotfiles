@@ -34,13 +34,6 @@
   (dolist (func '(+default/search-project))
     (advice-add func :around #'doom-set-jump-a)))
 
-;;; File Management
-(after! dired
-  (when-let (eza (executable-find "eza"))
-    (setq insert-directory-program eza
-          dired-listing-switches "-ahl --group-directories-first")))
-
-
 ;;; Project Management
 (after! projectile
   (setq compilation-read-command nil)

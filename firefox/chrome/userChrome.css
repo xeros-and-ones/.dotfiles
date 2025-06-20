@@ -1,206 +1,289 @@
-/*************************************** tabbar Transparency ******************************************/
+/*************************************************************************************************************************************************************************************************************************************************************
 
-@media (-moz-bool-pref: "userChrome.Linux.Transparency.Low.Enabled") or (-moz-bool-pref: "userChrome.Linux.Transparency.Medium.Enabled") or (-moz-bool-pref: "userChrome.Linux.Transparency.High.Enabled") or (-moz-bool-pref: "userChrome.Linux.Transparency.VeryHigh.Enabled") {
-    :root {
-        --toolbox-background-color: ActiveCaption;
+"userChrome.css" is a custom CSS file that can be used to specify CSS style rules for Floorp's interface (NOT internal site) using "chrome" privileges.
+For instance, if you want to hide the tab bar, you can use the following CSS rule:
 
-        &:-moz-window-inactive {
-            --toolbox-background-color: InActiveCaption;
-        }
+**************************************
+#TabsToolbar {                       *
+    display: none !important;        *
+}                                    *
+**************************************
 
-        @media (-moz-bool-pref: "userChrome.Linux.Transparency.Low.Enabled") {
-            --toolbox-transparency: 25%;
-        }
+NOTE: You can use the userChrome.css file without change preferences (about:config)
 
-        @media (-moz-bool-pref: "userChrome.Linux.Transparency.Medium.Enabled") {
-            --toolbox-transparency: 50%;
-        }
+Quote: https://userChrome.org | https://github.com/topics/userchrome 
 
-        @media (-moz-bool-pref: "userChrome.Linux.Transparency.High.Enabled") {
-            --toolbox-transparency: 75%;
-        }
+************************************************************************************************************************************************************************************************************************************************************/
 
-        @media (-moz-bool-pref: "userChrome.Linux.Transparency.VeryHigh.Enabled") {
-            --toolbox-transparency: 100%;
-        }
-
-        &:not([lwtheme]) #navigator-toolbox {
-            background-color: color-mix(
-                in srgb,
-                var(--toolbox-background-color),
-                transparent var(--toolbox-transparency)
-            ) !important;
-        }
-    }
-}
-
-/***************************************** Toolbar Transparency *******************************************/
-
-@media (-moz-bool-pref: "userChrome.Toolbar.Transparency.Low.Enabled") or (-moz-bool-pref: "userChrome.Toolbar.Transparency.Medium.Enabled") or (-moz-bool-pref: "userChrome.Toolbar.Transparency.High.Enabled") {
-    :root:not([lwtheme]) {
-        --toolbarbutton-hover-background: color-mix(
-            in srgb,
-            currentColor 17%,
-            transparent
-        ) !important;
-        --toolbarbutton-active-background: color-mix(
-            in srgb,
-            currentColor 30%,
-            transparent
-        ) !important;
-        --urlbar-box-hover-bgcolor: color-mix(
-            in srgb,
-            currentColor 17%,
-            transparent
-        ) !important;
-        --urlbar-box-active-bgcolor: color-mix(
-            in srgb,
-            currentColor 30%,
-            transparent
-        ) !important;
-
-        @media (-moz-bool-pref: "userChrome.Toolbar.Transparency.Low.Enabled") {
-            --toolbar-transparency-level: 25%;
-        }
-
-        @media (-moz-bool-pref: "userChrome.Toolbar.Transparency.Medium.Enabled") {
-            --toolbar-transparency-level: 50%;
-        }
-
-        @media (-moz-bool-pref: "userChrome.Toolbar.Transparency.High.Enabled") {
-            --toolbar-transparency-level: 75%;
-        }
-
-        .tabbrowser-tab[visuallyselected] .tab-background,
-        #nav-bar,
-        #PersonalToolbar {
-            background-color: color-mix(
-                in srgb,
-                var(--toolbar-bgcolor),
-                transparent var(--toolbar-transparency-level)
-            ) !important;
-        }
-
-        #urlbar:not([focused], [open]) > #urlbar-background,
-        #searchbar:not(:focus-within) {
-            background-color: color-mix(
-                in srgb,
-                var(--toolbar-field-background-color),
-                transparent var(--toolbar-transparency-level)
-            ) !important;
-        }
-    }
-}
-
-/********************** remove space pre tabs ********************************/
-#TabsToolbar *[type="pre-tabs"] {
-    display: none !important;
-}
-
-/********************* hide "open all in tabs" *******************************/
-.bookmark-item[type="menu"][container="true"]
-    menuitem[label="Open All in Tabs"],
-.bookmark-item[type="menu"][container="true"] .bookmarks-actions-menuseparator {
-    display: none !important;
-}
-
-/**************** hide icons for bookmark folders ****************************/
-#personal-bookmarks .bookmark-item[container="true"] .toolbarbutton-icon {
-    display: none !important;
-}
-
-/******************** Show Tab Close buttons only when hovered ******************/
-.tabbrowser-tab:not([pinned]) .tab-close-button {
-    display: none !important; /* Hide close button by default */
-}
-.tabbrowser-tab:not([pinned]):hover .tab-close-button {
-    display: block !important; /* Show close button on hover */
-}
-
-/******************************* tab margins **************************************/
-#tabbrowser-tabs {
-    --uc-tabs-scrollbutton-border: 0px;
-    --proton-tab-block-margin: 0px;
-    --tab-block-margin: 2px;
-}
-.tabbrowser-tab {
-    padding-inline: 0px !important;
-    /* By default, proton tabs have 2px + 2px = 4px space between them */
-}
-#TabsToolbar {
-    --toolbarbutton-inner-padding: 6px !important;
-}
-#scrollbutton-up,
-#scrollbutton-down {
-    border-block-width: var(--uc-tabs-scrollbutton-border, 0px) !important;
-    border-top-width: 1px !important;
-    border-bottom-width: 0 !important;
-}
-/* [Connected Tabs] Set a max height based on min-height plus margin-block: 1px 0 */
-#TabsToolbar,
-#TabsToolbar > hbox,
-#TabsToolbar-customization-target,
-#tabbrowser-arrowscrollbox {
-    max-height: calc(var(--tab-min-height) + 4px) !important;
-}
-
-/* [Connected Tabs] Adjust padding around icons on buttons to avoid crushed images */
-#TabsToolbar-customization-target toolbarbutton > .toolbarbutton-icon,
-#TabsToolbar-customization-target .toolbarbutton-text,
-#TabsToolbar-customization-target .toolbarbutton-badge-stack,
-#scrollbutton-up,
-#scrollbutton-down {
-    padding-top: 5px !important;
-    padding-bottom: 4px !important;
-}
-
-/**************************************** LIBRARY ****************************/
-@-moz-document url("chrome://browser/content/places/places.xhtml")
+@charset "UTF-8";
+@-moz-document url(chrome://browser/content/browser.xhtml)
 {
+    /* Please write your custom CSS under this line*/
+
+    /*************************************** tabbar Transparency ******************************************/
+
+    @media (-moz-bool-pref: "userChrome.Linux.Transparency.Low.Enabled") or (-moz-bool-pref: "userChrome.Linux.Transparency.Medium.Enabled") or (-moz-bool-pref: "userChrome.Linux.Transparency.High.Enabled") or (-moz-bool-pref: "userChrome.Linux.Transparency.VeryHigh.Enabled") {
+        :root {
+            --toolbox-background-color: ActiveCaption;
+
+            &:-moz-window-inactive {
+                --toolbox-background-color: InActiveCaption;
+            }
+
+            @media (-moz-bool-pref: "userChrome.Linux.Transparency.Low.Enabled") {
+                --toolbox-transparency: 25%;
+            }
+
+            @media (-moz-bool-pref: "userChrome.Linux.Transparency.Medium.Enabled") {
+                --toolbox-transparency: 50%;
+            }
+
+            @media (-moz-bool-pref: "userChrome.Linux.Transparency.High.Enabled") {
+                --toolbox-transparency: 75%;
+            }
+
+            @media (-moz-bool-pref: "userChrome.Linux.Transparency.VeryHigh.Enabled") {
+                --toolbox-transparency: 100%;
+            }
+
+            &:not([lwtheme]) #navigator-toolbox {
+                background-color: color-mix(
+                    in srgb,
+                    var(--toolbox-background-color),
+                    transparent var(--toolbox-transparency)
+                ) !important;
+            }
+        }
+    }
+
+    /***************************************** Toolbar Transparency *******************************************/
+
+    @media (-moz-bool-pref: "userChrome.Toolbar.Transparency.Low.Enabled") or (-moz-bool-pref: "userChrome.Toolbar.Transparency.Medium.Enabled") or (-moz-bool-pref: "userChrome.Toolbar.Transparency.High.Enabled") {
+        :root:not([lwtheme]) {
+            --toolbarbutton-hover-background: color-mix(
+                in srgb,
+                currentColor 17%,
+                transparent
+            ) !important;
+            --toolbarbutton-active-background: color-mix(
+                in srgb,
+                currentColor 30%,
+                transparent
+            ) !important;
+            --urlbar-box-hover-bgcolor: color-mix(
+                in srgb,
+                currentColor 17%,
+                transparent
+            ) !important;
+            --urlbar-box-active-bgcolor: color-mix(
+                in srgb,
+                currentColor 30%,
+                transparent
+            ) !important;
+
+            @media (-moz-bool-pref: "userChrome.Toolbar.Transparency.Low.Enabled") {
+                --toolbar-transparency-level: 25%;
+            }
+
+            @media (-moz-bool-pref: "userChrome.Toolbar.Transparency.Medium.Enabled") {
+                --toolbar-transparency-level: 50%;
+            }
+
+            @media (-moz-bool-pref: "userChrome.Toolbar.Transparency.High.Enabled") {
+                --toolbar-transparency-level: 75%;
+            }
+
+            .tabbrowser-tab[visuallyselected] .tab-background,
+            #nav-bar,
+            #PersonalToolbar {
+                background-color: color-mix(
+                    in srgb,
+                    var(--toolbar-bgcolor),
+                    transparent var(--toolbar-transparency-level)
+                ) !important;
+            }
+
+            #urlbar:not([focused], [open]) > #urlbar-background,
+            #searchbar:not(:focus-within) {
+                background-color: color-mix(
+                    in srgb,
+                    var(--toolbar-field-background-color),
+                    transparent var(--toolbar-transparency-level)
+                ) !important;
+            }
+        }
+    }
+
+    /********************** remove space pre tabs ********************************/
+    #TabsToolbar *[type="pre-tabs"] {
+        display: none !important;
+    }
+
+    /********************* hide "open all in tabs" *******************************/
+    .bookmark-item[type="menu"][container="true"]
+        menuitem[label="Open All in Tabs"],
+    .bookmark-item[type="menu"][container="true"]
+        .bookmarks-actions-menuseparator {
+        display: none !important;
+    }
+
+    /**************** hide icons for bookmark folders ****************************/
+    #personal-bookmarks .bookmark-item[container="true"] .toolbarbutton-icon {
+        display: none !important;
+    }
+
+    /******************** Show Tab Close buttons only when hovered ******************/
+    .tabbrowser-tab:not([pinned]) .tab-close-button {
+        display: none !important; /* Hide close button by default */
+    }
+    .tabbrowser-tab:not([pinned]):hover .tab-close-button {
+        display: block !important; /* Show close button on hover */
+    }
+
+    /******************************* tab margins **************************************/
+    #tabbrowser-tabs {
+        --uc-tabs-scrollbutton-border: 0px;
+        --proton-tab-block-margin: 0px;
+        --tab-block-margin: 2px;
+    }
+    .tabbrowser-tab {
+        padding-inline: 0px !important;
+        /* By default, proton tabs have 2px + 2px = 4px space between them */
+    }
+    #TabsToolbar {
+        --toolbarbutton-inner-padding: 6px !important;
+    }
+    #scrollbutton-up,
+    #scrollbutton-down {
+        border-block-width: var(--uc-tabs-scrollbutton-border, 0px) !important;
+        border-top-width: 1px !important;
+        border-bottom-width: 0 !important;
+    }
+    /* [Connected Tabs] Set a max height based on min-height plus margin-block: 1px 0 */
+    #TabsToolbar,
+    #TabsToolbar > hbox,
+    #TabsToolbar-customization-target,
+    #tabbrowser-arrowscrollbox {
+        max-height: var(--tab-min-height) !important;
+    }
+
+    /* [Connected Tabs] Adjust padding around icons on buttons to avoid crushed images */
+    #TabsToolbar-customization-target toolbarbutton > .toolbarbutton-icon,
+    #TabsToolbar-customization-target .toolbarbutton-text,
+    #TabsToolbar-customization-target .toolbarbutton-badge-stack,
+    #scrollbutton-up,
+    #scrollbutton-down {
+        padding-top: 5px !important;
+        padding-bottom: 4px !important;
+    }
+
+    /**************************************** LIBRARY ****************************/
+    @-moz-document url("chrome://browser/content/places/places.xhtml")
+    {
+        :root {
+            --organizer-border-color: none !important;
+        }
+
+        treechildren::-moz-tree-row(selected, current) {
+            border-color: none !important;
+        }
+
+        treechildren::-moz-tree-row(selected, current, focus) {
+            border-color: none !important;
+        }
+    }
+
+    /******************* audio icon as a separate icon in compact mode *****************/
+    /* .tab-icon-stack:is([muted], [soundplaying], [activemedia-blocked]) { */
+    /*     grid-template-areas: "a s"; */
+    /* } */
+    /* .tab-icon-overlay:is([muted], [soundplaying], [activemedia-blocked]) { */
+    /*     grid-area: s; */
+    /* } */
+    /* .tab-icon-overlay, */
+    /* .tab-icon-image { */
+    /*     opacity: 1 !important; */
+    /* } */
+    /* .tab-icon-overlay { */
+    /*     padding: 0 !important; */
+    /* } */
+    /* .tab-icon-overlay:hover { */
+    /*     background: none !important; */
+    /* } */
+
+    /************************** drop-down/context/popup menu spacing **********************************/
+    menupopup:not(.in-menulist) > menuitem,
+    menupopup:not(.in-menulist) > menu {
+        padding-block: 2px !important;
+        /* reduce to 3px, 2px, 1px or 0px as needed */
+        min-height: unset !important;
+        /* v92.0 - for padding below 4px */
+    }
+
     :root {
-        --organizer-border-color: none !important;
+        --arrowpanel-padding: 1.3em !important;
+        --arrowpanel-menuitem-margin: 0 0px !important;
+    }
+    /************************** Reduced UI Density ***************************/
+    :root {
+        /* Reduce toolbar button padding */
+        --toolbarbutton-inner-padding: 3px !important;
+
+        /* Reduce URL bar and tab bar height */
+        --urlbar-min-height: 24px !important;
+        --tab-min-height: 24px !important;
+
+        /* Reduce menu item padding */
+        --arrowpanel-menuitem-padding: 1px 4px !important;
+        --panel-subview-body-padding: 1px 0 !important;
     }
 
-    treechildren::-moz-tree-row(selected, current) {
-        border-color: none !important;
+    /* Reduce navigation toolbar padding */
+    #nav-bar {
+        padding-block: 2px !important;
     }
 
-    treechildren::-moz-tree-row(selected, current, focus) {
-        border-color: none !important;
+    /* Reduce tab bar height */
+    #TabsToolbar {
+        min-height: var(--tab-min-height) !important;
     }
-}
 
-/******************* audio icon as a separate icon in compact mode *****************/
-.tab-icon-stack:is([muted], [soundplaying], [activemedia-blocked]) {
-    grid-template-areas: "a s";
-}
-.tab-icon-overlay:is([muted], [soundplaying], [activemedia-blocked]) {
-    grid-area: s;
-}
-.tab-icon-overlay,
-.tab-icon-image {
-    opacity: 1 !important;
-}
-.tab-icon-overlay {
-    padding: 0 !important;
-}
-.tab-icon-overlay:hover {
-    background: none !important;
-}
+    /* Reduce bookmark toolbar height */
+    #PersonalToolbar {
+        min-height: 20px !important;
+        max-height: 20px !important;
+    }
 
-/************************** drop-down/context/popup menu spacing **********************************/
-menupopup:not(.in-menulist) > menuitem,
-menupopup:not(.in-menulist) > menu {
-    padding-block: 2px !important;
-    /* reduce to 3px, 2px, 1px or 0px as needed */
-    min-height: unset !important;
-    /* v92.0 - for padding below 4px */
-}
+    /* Compact URL bar */
+    #urlbar-container {
+        --urlbar-container-height: var(--urlbar-min-height) !important;
+    }
 
-:root {
-    --arrowpanel-menuitem-padding: 1px 5px !important;
-    /*--arrowpanel-border-radius: 0px !important; */
-    --panel-subview-body-padding: 2px 0px !important;
-    --arrowpanel-padding: 1.3em !important;
-    --arrowpanel-menuitem-margin: 0 0px !important;
+    /* Reduce spacing between toolbar items */
+    toolbar .toolbarbutton-1 {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Compact menu items */
+    menupopup > menuitem,
+    menupopup > menu {
+        padding-block: 1px !important;
+        min-height: unset !important;
+    }
+
+    /* Reduce spacing in context menus */
+    menupopup {
+        --panel-padding: 4px !important;
+    }
+
+    /* Compact tab styling */
+    .tabbrowser-tab {
+        min-height: var(--tab-min-height) !important;
+    }
+
+    /* Reduce spacing around tab close buttons */
+    .tab-close-button {
+        margin-inline-end: 0 !important;
+    }
 }

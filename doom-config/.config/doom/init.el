@@ -30,7 +30,7 @@
        snippets
 
        :emacs
-       (dired +icons)
+       (dired +icons +dirvish)
        electric
        undo
        vc
@@ -43,6 +43,7 @@
        (syntax +everywhere +childframe)
 
        :tools
+       direnv
        (debugger +lsp)
        (docker +lsp)
        editorconfig

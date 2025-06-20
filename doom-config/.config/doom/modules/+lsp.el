@@ -3,37 +3,6 @@
 ;; ====================
 ;; Core LSP Configuration
 ;; ====================
-(defun lsp-booster--advice-json-parse (old-fn &rest args)
-  "Try to parse bytecode instead of json."
-  (or
-   (when (equal (following-char) ?#)
-     (let ((bytecode (read (current-buffer))))
-       (when (byte-code-function-p bytecode)
-         (funcall bytecode))))
-   (apply old-fn args)))
-(advice-add (if (progn (require 'json)
-                       (fboundp 'json-parse-buffer))
-                'json-parse-buffer
-              'json-read)
-            :around
-            #'lsp-booster--advice-json-parse)
-
-(defun lsp-booster--advice-final-command (old-fn cmd &optional test?)
-  "Prepend emacs-lsp-booster command to lsp CMD."
-  (let ((orig-result (funcall old-fn cmd test?)))
-    (if (and (not test?)                             ;; for check lsp-server-present?
-             (not (file-remote-p default-directory)) ;; see lsp-resolve-final-command, it would add extra shell wrapper
-             lsp-use-plists
-             (not (functionp 'json-rpc-connection))  ;; native json-rpc
-             (executable-find "emacs-lsp-booster"))
-        (progn
-          (when-let ((command-from-exec-path (executable-find (car orig-result))))  ;; resolve command from exec-path (in case not found in $PATH)
-            (setcar orig-result command-from-exec-path))
-          (message "Using emacs-lsp-booster for %s!" orig-result)
-          (cons "emacs-lsp-booster" orig-result))
-      orig-result)))
-(advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command)
-
 (after! lsp-mode
   ;; General Settings
   (setq lsp-log-io nil
@@ -99,28 +68,28 @@
 ;; JAVA
 (after! lsp-java
   (setq lsp-java-vmargs
-        `("-XX:+UseParallelGC"
-          "-XX:GCTimeRatio=4"
-          "-XX:AdaptiveSizePolicyWeight=90"
+        `("-XX:GCTimeRatio=9"
+          ;; G1GC
+          "-XX:+UseG1GC"
+          "-XX:MaxGCPauseMillis=200"
+          ;; ZGC
+          ;; "-XX:+UseZGC"
+          ;; "-XX:ZAllocationSpikeTolerance=5.0"
+          ;; Shenandoah
+          ;; "-XX:+UseShenandoahGC"
+          ;; "-XX:ShenandoahGCMode=iu"
+          ;;
+          "-XX:+HeapDumpOnOutOfMemoryError"
+          "-XX:SoftRefLRUPolicyMSPerMB=50"
           "-Dsun.zip.disableMemoryMapping=true"
-          "-Xmx2G"
-          "-Xms100m")
+          "-Djava.awt.headless=true"
+          "-Xms1G"
+          "-Xmx4G")
         lsp-java-completion-max-results 50
         lsp-java-progress-reports nil
         lsp-java-autobuild-enabled nil
         lsp-java-jdt-download-url "https://www.eclipse.org/downloads/download.php?file=/jdtls/milestones/1.46.1/jdt-language-server-1.46.1-202504011455.tar.gz"))
-;; Define a function to set the compile command for Java files
-(defun my/set-java-compile-command ()
-  "Set compile command for Java files (supports java-mode and java-ts-mode)."
-  (when (or (derived-mode-p 'java-mode)
-            (derived-mode-p 'java-ts-mode))
-    (setq compile-command
-          (concat "javac " (file-name-nondirectory buffer-file-name)
-                  " && java " (file-name-sans-extension (file-name-nondirectory buffer-file-name))))))
 
-;; Hook the function to both java-mode and java-ts-mode
-(add-hook 'java-mode-hook #'my/set-java-compile-command)
-(add-hook 'java-ts-mode-hook #'my/set-java-compile-command)
 ;; ====================
 ;; UI Configuration
 ;; ====================

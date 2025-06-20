@@ -50,6 +50,7 @@
 
 (after! lsp-pyright
   (setq lsp-pyright-auto-import-completions t
+        lsp-pyright-langserver-command "basedpyright"
         lsp-pyright-diagnostic-mode "workspace"
         lsp-pyright-python-executable-cmd "python3"
         lsp-pyright-typechecking-mode "basic"
