@@ -6,11 +6,11 @@
       browse-url-generic-program
       (cond
        ((executable-find "thorium-browser") "thorium-browser")
+       ((executable-find "firefox") "firefox")
        ((executable-find "floorp") "floorp")
        ((executable-find "google-chrome-stable") "google-chrome-stable")
        ((executable-find "google-chrome") "google-chrome")
-       ((executable-find "/usr/bin/google-chrome-stable") "/usr/bin/google-chrome-stable")
-       ((executable-find "firefox") "firefox")))
+       ((executable-find "/usr/bin/google-chrome-stable") "/usr/bin/google-chrome-stable")))
 
 ;;; Navigation & Editing
 (setq evil-cross-lines t

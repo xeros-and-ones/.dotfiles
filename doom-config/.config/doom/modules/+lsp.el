@@ -115,12 +115,12 @@
           "-XX:SoftRefLRUPolicyMSPerMB=50"
           "-Dsun.zip.disableMemoryMapping=true"
           "-Djava.awt.headless=true"
-          "-Xms1G"
+          "-Xms2G"
           "-Xmx4G")
         lsp-java-completion-max-results 50
         lsp-java-progress-reports nil
         lsp-java-autobuild-enabled nil
-        lsp-java-jdt-download-url "https://www.eclipse.org/downloads/download.php?file=/jdtls/milestones/1.46.1/jdt-language-server-1.46.1-202504011455.tar.gz"))
+        lsp-java-jdt-download-url "https://www.eclipse.org/downloads/download.php?file=/jdtls/milestones/1.47.0/jdt-language-server-1.47.0-202505151856.tar.gz"))
 
 ;; ====================
 ;; UI Configuration
@@ -132,6 +132,6 @@
         lsp-modeline-workspace-status-enable nil
         lsp-ui-doc-max-height 15
         lsp-ui-doc-max-width 100
-        lsp-ui-sideline-enable nil
+        lsp-ui-sideline-enable t
         lsp-ui-sideline-show-code-actions nil))
 
