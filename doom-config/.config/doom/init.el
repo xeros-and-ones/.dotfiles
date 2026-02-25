@@ -53,7 +53,7 @@
        magit
        make
        pdf
-       (terraform +lsp)
+       ;;(terraform +lsp)
        tree-sitter
 
        :os

@@ -11,8 +11,7 @@
             'magit-process-git-credential-manager-core)
 
 
-  (magit-wip-after-apply-mode t)
-  (magit-wip-before-change-mode t))
+  (magit-wip-mode t))
 
 
 

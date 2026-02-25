@@ -9,7 +9,6 @@
 (load! "modules/+debugger.el")
 (load! "modules/+lsp.el")
 (load! "modules/+python.el")
-(load! "modules/+tree-sitter.el")
 
 ;; Basic identity and performance
 (setq user-full-name "Mohamed Tarek"
