@@ -1,20 +1,20 @@
-export ZELLIJ_AUTO_ATTACH=false
+export ZELLIJ_AUTO_ATTACH=true
 export ZELLIJ_AUTO_EXIT=false
 # Auto Start zellij
 if [[ -z "$ZELLIJ" ]]; then
-    if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
-        zellij attach default -c
-    fi
+	if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
+		zellij attach default -c
+	fi
 
-    if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then
-        exit
-    fi
+	if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then
+		exit
+	fi
 fi
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+	source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 #
 #
@@ -47,38 +47,38 @@ EDITOR="emacsclient -t -a ''"
 SUDO_EDITOR="emacsclient -t -a ''"
 GIT_EDITOR='emacsclient -t -a '''
 # TERM=wezterm
-HISTFILE="$HOME/.zsh_history"    # History filepath
+HISTFILE="$HOME/.zsh_history" # History filepath
 # Max number of entries to keep in history file.
-SAVEHIST=$(( 100 * 1000 ))      # Use multiplication for readability.
+SAVEHIST=$((100 * 1000)) # Use multiplication for readability.
 
 # Max number of history entries to keep in memory.
-HISTSIZE=$(( 1.2 * SAVEHIST ))  # Zsh recommended value
+HISTSIZE=$((1.2 * SAVEHIST)) # Zsh recommended value
 
 # Safely apply -march=native only if supported
 export CFLAGS="-O2 -flto=auto -pipe"
 case "$(gcc -march=native -Q --help=target | grep march)" in
-  *native*) CFLAGS+=" -march=native" ;;
+*native*) CFLAGS+=" -march=native" ;;
 esac
 
 # needed for emacs-lsp-booster
 export LSP_USE_PLISTS=true
 
 path=(
-    $GOPATH/bin(N-/)
-    $HOME/.rustup/toolchains/*/bin(N-/)
-    $HOME/.config/emacs/bin(N-/)
-    $HOME/.detaspace/bin(N-/)
-    $HOME/.cargo/bin/(N-/)
-    $HOME/.local/bin(N-/)
-    $HOME/.config/zsh/shell-colorscripts/bin(N-/)
-    $HOME/.dotnet/tools(N-/)
-    $path
+	$GOPATH/bin(N-/)
+	$HOME/.rustup/toolchains/*/bin(N-/)
+	$HOME/.config/emacs/bin(N-/)
+	$HOME/.detaspace/bin(N-/)
+	$HOME/.cargo/bin/(N-/)
+	$HOME/.local/bin(N-/)
+	$HOME/.config/zsh/shell-colorscripts/bin(N-/)
+	$HOME/.dotnet/tools(N-/)
+	$path
 )
 export PATH
 
 fpath=(
-    $ZDOTDIR/zfunc(N-/)
-    $fpath
+	$ZDOTDIR/zfunc(N-/)
+	$fpath
 )
 export FPATH
 #

@@ -11,8 +11,10 @@ gui:
       - green
       - bold
 git:
-  pagers:
+  diffRenderers:
     - colorArg: always
       # pager: delta --dark --paging=never
+
+      type: rawGit
 os:
   editPreset: "emacs"
