@@ -1,0 +1,428 @@
+accounts-qml-module
+accountsservice
+akm
+alsa-firmware
+alsa-plugins
+alsa-utils
+android-tools
+appmenu-gtk-module
+ark
+asciidoc
+aspell
+aspnet-runtime
+aspnet-targeting-pack
+autoconf-archive
+b43-fwcutter
+base-devel
+basedpyright
+bash-completion
+bash-language-server
+bat
+bind
+bleachbit
+bluedevil
+bluez
+bluez-utils
+breeze-gtk
+btrfs-progs
+cantarell-fonts
+checkmake
+citron-bin
+clang
+clang20
+clang21
+cloc
+cmake-language-server
+cpupower
+dbeaver
+dialog
+diffutils
+direnv
+dmidecode
+dmraid
+dnsmasq
+docker
+dolphin
+dolphin-emu
+dolphin-plugins
+dosfstools
+dotnet-host
+dotnet-runtime
+dotnet-sdk
+dotnet-targeting-pack
+downgrade
+dracut
+droidcam
+duf
+dwarfs-bin
+efibootmgr
+efitools
+emacs
+emacs-lsp-booster
+emote
+emulationstation-de
+endeavouros-branding
+endeavouros-keyring
+endeavouros-konsole-colors
+endeavouros-mirrorlist
+envycontrol
+eos-apps-info
+eos-breeze-sddm
+eos-dracut
+eos-hooks
+eos-log-tool
+eos-packagelist
+eos-quickstart
+eos-rankmirrors
+eos-reboot-recommended
+eos-settings-plasma
+erdtree
+ethtool
+exfatprogs
+extra-cmake-modules
+ex-vi-compat
+eza
+f2fs-tools
+ffmpegthumbnailer
+ffmpegthumbs
+filelight
+firefox
+firewalld
+flashrom
+floorp-bin
+fuse-overlayfs
+fwupd
+gdb
+gi-docgen
+gimp
+gimp-plugin-gmic
+git
+github-cli
+glances
+go
+gobject-introspection
+godot
+google-java-format
+gotests
+go-tools
+gparted
+gradle
+gradle-doc
+gradle-src
+grub
+gst-libav
+gst-plugin-pipewire
+gst-plugins-bad
+gst-plugins-ugly
+gtksourceview3
+gwenview
+haruna
+haveged
+hdparm
+hwdetect
+hwinfo
+inetutils
+intel-gpu-tools
+intel-hybrid-codec-driver-git
+intellij-idea-oss
+intel-ucode
+inxi
+iptables
+itstool
+iwd
+jackett-bin
+jdk17-temurin
+jdk21-temurin
+jdk-temurin
+jfsutils
+jq
+kate
+kcalc
+kde-cli-tools
+kdeconnect
+kdegraphics-thumbnailers
+kde-gtk-config
+kdenetwork-filesharing
+kdeplasma-addons
+kgamma
+kimageformats
+kinfocenter
+kio-admin
+kio-extras
+kio-fuse
+kitty
+konsole
+kotlin
+krename
+kscreen
+ktlint
+kvantum
+kwallet-pam
+kwayland-integration
+kwin-effects-better-blur-dx
+kwin-x11
+lazygit
+less
+lib32-nvidia-390xx-utils
+lib32-opencl-nvidia-390xx
+lib32-vulkan-icd-loader
+lib32-vulkan-intel
+libappindicator
+libdvdcss
+libgccjit
+libgsf
+libopenraw
+libotf
+libretro-core-info
+libretro-shaders-slang
+libva-intel-driver-hybrid
+libva-utils
+libwnck3
+linux-lts
+linux-lts-headers
+lldb
+logrotate
+lsb-release
+lsscsi
+lua-language-server
+lvm2
+m17n-lib
+maliit-keyboard
+mame-tools
+man-db
+man-pages
+maven
+mdadm
+mediainfo
+meld
+mesa-utils
+meson
+modemmanager
+mtools
+nano
+nano-syntax-highlighting
+neovim
+netctl
+networkmanager
+networkmanager-openconnect
+networkmanager-openvpn
+nfs-utils
+nilfs-utils
+noto-fonts
+noto-fonts-cjk
+noto-fonts-emoji
+noto-fonts-extra
+npm
+nss-mdns
+ntfs-3g
+ntp
+nvidia-390xx-dkms
+nvidia-390xx-settings
+nvidia-390xx-utils
+nvidia-prime
+okular
+omnisharp-roslyn
+opencl-nvidia-390xx
+openssh
+os-prober
+pacman-contrib
+pamac-all
+partitionmanager
+pavucontrol
+perl
+perl-image-exiftool
+picard
+pipewire-alsa
+pipewire-jack
+pipewire-pulse
+pkgfile
+plasma5-integration
+plasma-browser-integration
+plasma-desktop
+plasma-disks
+plasma-firewall
+plasma-keyboard
+plasma-login-manager
+plasma-nm
+plasma-pa
+plasma-systemmonitor
+plasma-workspace
+plocate
+pollymc-qt5-bin
+poppler-glib
+postgresql
+powerdevil
+power-profiles-daemon
+ppsspp
+prettier
+print-manager
+pv
+python
+python-black-macchiato
+python-build
+python-capng
+python-defusedxml
+python-installer
+python-nose
+python-packaging
+python-pip
+python-pipenv
+python-pipx
+python-pyqt5
+python-pytest
+qbittorrent
+rebuild-detector
+reflector
+reflector-simple
+reiserfsprogs
+retroarch
+retroarch-assets-glui
+retroarch-assets-ozone
+retroarch-assets-xmb
+rsync
+rtkit
+rustup
+scrcpy
+sddm-kcm
+sg3_utils
+shellcheck-bin
+shfmt
+smartmontools
+s-nail
+sof-firmware
+spectacle
+stow
+stylua
+subtitleedit
+sudo
+sysfsutils
+taplo-cli
+texinfo
+thorium-browser-bin
+tk
+tldr
+tmux
+tochd
+tree
+tree-sitter
+tree-sitter-cli
+tree-sitter-java
+ttf-bitstream-vera
+ttf-cascadia-code-nerd
+ttf-dejavu
+ttf-firacode-nerd
+ttf-liberation
+ttf-nerd-fonts-symbols-mono
+ttf-opensans
+ttf-rubik-vf
+typescript
+typescript-language-server
+unrar
+unzip
+upower
+usb_modeswitch
+usbutils
+vala
+vdpauinfo
+ventoy-bin
+visual-studio-code-bin
+visualvm
+vulkan-intel
+vulkan-mesa-layers
+welcome
+wget
+which
+whois
+windscribe-v2-bin
+wireless-regdb
+wireplumber
+wl-clipboard
+wpa_supplicant
+xdg-desktop-portal-kde
+xdg-user-dirs
+xdg-utils
+xf86-input-libinput
+xfsprogs
+xl2tpd
+xorg-server
+xorg-xdpyinfo
+xorg-xinit
+xorg-xinput
+xorg-xkill
+xorg-xrandr
+xsel
+xsettingsd
+xterm
+xwaylandvideobridge
+yaml-language-server
+yay
+yt-dlp
+ytdlp-gui
+zellij
+zig
+zip
+zls
+zsh
+
+------------ AUR --------------
+accounts-qml-module 0.7-8
+basedpyright 1.40.2-1
+checkmake 0.3.2-1
+citron-bin 0.6.1-1
+cmake-format 0.6.13-3
+cmake-language-server 0.1.11-3
+droidcam 1:2.1.7-1
+dwarfs-bin 0.15.8-1
+emacs-lsp-booster 0.2.1-1
+emote 4.1.0-10
+emulationstation-de 3.3.0-1
+envycontrol 3.5.2-2
+floorp-bin 12.21.0-1
+freeimage 3.18.0-25
+google-java-format 2.0.0-1
+gotests 1.6.0-2
+gtk2 2.24.33-5
+intel-hybrid-codec-driver-git 2.0.0.r6.gb0c7970d-1
+jackett-bin 0.24.2994-1
+jdk-temurin 27.0.1.0.2.u1-1
+jdk17-temurin 17.0.21.u9-1
+jdk21-temurin 21.0.13.u9-1
+kgamma 6.7.5-1
+kwin-effects-better-blur-dx 2.6.0-2
+kwin-x11 6.7.5-1
+lib32-nvidia-390xx-utils 390.157-2
+lib32-opencl-nvidia-390xx 390.157-2
+libcmrt 1.0.6-3
+libpamac-full 1:11.7.4.3.gc7efe92-1
+libva-intel-driver-hybrid 2.4.5-1
+libxnvctrl-390xx 390.157-1
+litehtml0.9 0.9-4
+maliit-framework 2.3.0-3
+maliit-keyboard 2.3.1-3
+mbedtls2 2.28.10-1
+nvidia-390xx-dkms 390.157-24
+nvidia-390xx-settings 390.157-1
+nvidia-390xx-utils 390.157-24
+omnisharp-roslyn 2.0.0-1
+opencl-nvidia-390xx 390.157-24
+pamac-all 11.7.5-1
+pamac-cli 11.7.4-1
+pollymc-qt5-bin 8.0-2
+presage 0.9.1-3
+python-black-macchiato 1.3.0-5
+python-pkg_resources 81.0.0-1
+qt5-feedback 0.0.0.20150918-6
+reiserfsprogs 3.6.27-8
+shellcheck-bin 0.11.0-1
+snapd 2.78-1
+snapd-glib 1.72-1
+subtitleedit 5.3.0-1
+thorium-browser-bin 138.0.7204.303-2
+tochd 0.13-1
+tree-sitter-java 0.23.5-3
+ttf-rubik-vf 2.3.0-3
+ventoy-bin 1.1.18-1
+visual-studio-code-bin 1.144.0-1
+windscribe-v2-bin 2.24.13-2
+xwaylandvideobridge 0.5.3-1
+ytdlp-gui 3.5.1-1
