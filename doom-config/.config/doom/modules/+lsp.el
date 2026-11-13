@@ -92,10 +92,11 @@
 
 ;; Nix
 (set-formatter! 'alejandra '("alejandra" "--quiet") :modes '(nix-mode))
-(use-package! lsp-nix
-  :custom (lsp-nix-nil-formatter ["alejandra" "--quiet"]))
-(use-package! nix-mode
-  :custom (nix-nixfmt-bin "alejandra-the-quiet"))
+(after! lsp-nix
+  (setq lsp-nix-nixd-server-path "nixd"
+        lsp-nix-nixd-formatting-command [ "alejandra --quiet" ]
+        lsp-nix-nixd-nixos-options-expr "(builtins.getFlake \"/home/xero/XeroNixOS\").nixosConfigurations.XeroNixOS.options"
+        lsp-nix-nixd-home-manager-options-expr "(builtins.getFlake \"/home/xero/XeroNixOS\").homeConfigurations.\"xero\".options"))
 
 ;; JAVA
 (after! lsp-java

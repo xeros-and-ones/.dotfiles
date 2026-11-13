@@ -1,8 +1,10 @@
 [ActivityManager][Global Shortcuts]
 switch-to-activity-3322ee59-422b-4250-844a-bc84615c6d31=
 switch-to-activity-4a2259ec-d549-4a69-81a4-86c8ff954a66=
+switch-to-activity-bfb71346-e632-4e54-a2f6-451aec7edaf9=
 
 [KDE Keyboard Layout Switcher][Global Shortcuts]
+Switch keyboard layout to Arabic=
 Switch keyboard layout to Arabic (Egypt)=
 Switch keyboard layout to English (US)=
 Switch to Last-Used Keyboard Layout=Meta+Alt+L
@@ -15,7 +17,7 @@ Activate Next Tab=Ctrl+PgDown; Ctrl+]
 Activate Previous Tab=Ctrl+[; Ctrl+PgUp
 ActualSize=Ctrl+0
 AddBookmark=Ctrl+B
-Back=Back; Alt+Left
+Back=Alt+Left; Back
 BackwardWord=Ctrl+Left
 Begin=Ctrl+Home
 BeginningOfLine=Home
@@ -25,7 +27,7 @@ ConfigureNotifications=
 ConfigureToolbars=
 Copy=Ctrl+C; Ctrl+Ins
 CreateFolder=F10; Ctrl+Shift+N
-Cut=Ctrl+X; Shift+Del
+Cut=Shift+Del; Ctrl+X
 DeleteFile=Shift+Del
 DeleteWordBack=Ctrl+Backspace
 DeleteWordForward=Ctrl+Del
@@ -79,7 +81,7 @@ RotateUp=Up
 Save=Ctrl+S
 SaveAs=Ctrl+Shift+S
 SelectAll=Ctrl+A
-ShowHideHiddenFiles=Alt+.; Ctrl+H
+ShowHideHiddenFiles=Ctrl+H; Alt+.
 ShowMenubar=Ctrl+M
 ShowStatusbar=
 ShowToolbar=
@@ -91,7 +93,7 @@ Undo=Ctrl+Z
 Up=Alt+Up
 WhatsThis=Shift+F1
 Zoom=
-ZoomIn=Ctrl+=; Ctrl++
+ZoomIn=Ctrl++; Ctrl+=
 ZoomOut=Ctrl+-
 
 [code.desktop][Global Shortcuts]
@@ -99,7 +101,7 @@ _launch=Meta+V
 new-empty-window=
 
 [emacs.desktop][Global Shortcuts]
-_launch=Meta+Shift+E
+_launch=Meta+Ctrl+E
 
 [emacsclient.desktop][Global Shortcuts]
 _launch=Meta+E
@@ -133,10 +135,11 @@ decrease_microphone_volume=Microphone Volume Down
 decrease_volume=Volume Down; Meta+F11
 decrease_volume_small=Shift+Volume Down
 increase_microphone_volume=Microphone Volume Up
-increase_volume=Volume Up; Meta+F12
+increase_volume=Meta+F12; Volume Up
 increase_volume_small=Shift+Volume Up
-mic_mute=Microphone Mute; Meta+Volume Mute
-mute=Volume Mute; Meta+F10
+mic_mute=Meta+Volume Mute; Microphone Mute
+mute=Meta+F10; Volume Mute
+push_to_talk=
 
 [ksmserver][Global Shortcuts]
 Halt Without Confirmation=
@@ -155,7 +158,7 @@ Cycle Overview Opposite=
 Decrease Opacity=
 Edit Tiles=Meta+Tab
 Expose=Ctrl+F9
-ExposeAll=Launch (C); Ctrl+F10
+ExposeAll=Ctrl+F10; Launch (C)
 ExposeClass=Ctrl+F7
 ExposeClassCurrentDesktop=
 Grid View=Meta+G
@@ -181,7 +184,7 @@ Switch Window Down=Meta+Alt+Down
 Switch Window Left=Meta+Alt+Left
 Switch Window Right=Meta+Alt+Right
 Switch Window Up=Meta+Alt+Up
-Switch to Desktop 1=Ctrl+F1
+Switch to Desktop 1=Ctrl+F1; Meta+1
 Switch to Desktop 10=
 Switch to Desktop 11=
 Switch to Desktop 12=
@@ -192,10 +195,15 @@ Switch to Desktop 16=
 Switch to Desktop 17=
 Switch to Desktop 18=
 Switch to Desktop 19=
-Switch to Desktop 2=Ctrl+F2
+Switch to Desktop 2=Meta+2; Ctrl+F2
 Switch to Desktop 20=
-Switch to Desktop 3=Ctrl+F3
-Switch to Desktop 4=Ctrl+F4
+Switch to Desktop 21=
+Switch to Desktop 22=
+Switch to Desktop 23=
+Switch to Desktop 24=
+Switch to Desktop 25=
+Switch to Desktop 3=Meta+3; Ctrl+F3
+Switch to Desktop 4=Ctrl+F4; Meta+4
 Switch to Desktop 5=
 Switch to Desktop 6=
 Switch to Desktop 7=
@@ -272,7 +280,7 @@ Window Resize=
 Window Shade=Meta+Ctrl+Alt
 Window Shrink Horizontal=
 Window Shrink Vertical=
-Window to Desktop 1=
+Window to Desktop 1=Meta+Ctrl+1
 Window to Desktop 10=
 Window to Desktop 11=
 Window to Desktop 12=
@@ -283,10 +291,15 @@ Window to Desktop 16=
 Window to Desktop 17=
 Window to Desktop 18=
 Window to Desktop 19=
-Window to Desktop 2=
+Window to Desktop 2=Meta+Ctrl+2
 Window to Desktop 20=
-Window to Desktop 3=
-Window to Desktop 4=
+Window to Desktop 21=
+Window to Desktop 22=
+Window to Desktop 23=
+Window to Desktop 24=
+Window to Desktop 25=
+Window to Desktop 3=Meta+Ctrl+3
+Window to Desktop 4=Meta+Ctrl+4
 Window to Desktop 5=
 Window to Desktop 6=
 Window to Desktop 7=
@@ -316,6 +329,10 @@ pausemedia=Media Pause
 playmedia=
 playpausemedia=Media Play
 previousmedia=Media Previous
+seekbackwardmedia=Media Rewind
+seekbackwardmedialong=
+seekforwardmedia=Media Fast Forward
+seekforwardmedialong=
 stopmedia=Media Stop
 
 [org.kde.dolphin.desktop][Global Shortcuts]
@@ -334,10 +351,14 @@ RunClipboard=Alt+Shift+F2
 _launch=Alt+F2; Search; Alt+Space
 
 [org.kde.kscreen.desktop][Global Shortcuts]
-ShowOSD=Display; Meta+P
+ShowOSD=Meta+P; Display
 
 [org.kde.plasma-systemmonitor.desktop][Global Shortcuts]
 _launch=Meta+Esc
+applications=
+history=
+overview=
+processes=
 
 [org.kde.plasma.emojier.desktop][Global Shortcuts]
 _launch=
@@ -353,6 +374,11 @@ RecordWindow=Meta+Ctrl+R
 RectangularRegionScreenShot=Ctrl+Print
 WindowUnderCursorScreenShot=Meta+Ctrl+Print
 _launch=
+
+[org.kde.touchpadshortcuts.desktop][Global Shortcuts]
+DisableTouchpad=Touchpad Off
+EnableTouchpad=Touchpad On
+ToggleTouchpad=Meta+Ctrl+Zenkaku Hankaku; Touchpad Toggle; Meta+Ctrl+Touchpad Toggle
 
 [org.qbittorrent.qBittorrent.desktop][Global Shortcuts]
 _launch=Meta+Q
@@ -373,26 +399,29 @@ Turn Off Screen=
 powerProfile=Battery
 
 [plasmashell][Global Shortcuts]
-activate application launcher=Meta; Alt+F1
-activate task manager entry 1=Meta+1
+Slideshow Wallpaper Next Image=
+activate application launcher=Alt+F1; Meta
+activate task manager entry 1=
 activate task manager entry 10=
-activate task manager entry 2=Meta+2
-activate task manager entry 3=Meta+3
-activate task manager entry 4=Meta+4
-activate task manager entry 5=Meta+5
-activate task manager entry 6=Meta+6
-activate task manager entry 7=Meta+7
-activate task manager entry 8=Meta+8
-activate task manager entry 9=Meta+9
+activate task manager entry 2=
+activate task manager entry 3=
+activate task manager entry 4=
+activate task manager entry 5=
+activate task manager entry 6=
+activate task manager entry 7=
+activate task manager entry 8=
+activate task manager entry 9=
 activate widget 4=
+clear history=
 clear-history=
 clipboard_action=Meta+Ctrl+X
 cycle-panels=Meta+Alt+P
 cycleNextAction=
 cyclePrevAction=
+edit_clipboard=
 manage activities=
-next activity=Meta+A
-previous activity=Meta+Shift+A
+next activity=
+previous activity=
 repeat_action=
 show dashboard=Ctrl+F12
 show-barcode=

@@ -1,4 +1,4 @@
-export ZELLIJ_AUTO_ATTACH=true
+export ZELLIJ_AUTO_ATTACH=false
 export ZELLIJ_AUTO_EXIT=false
 # Auto Start zellij
 if [[ -z "$ZELLIJ" ]]; then
