@@ -1,29 +1,50 @@
 ######## Functions ##########-----------------------------------------------------------
 DISABLE_AUTO_TITLE="true"
-function xtitle () {
-    echo -en "\e]0;$@\a"
+function xtitle() {
+	echo -en "\e]0;$@\a"
 }
 autoload -Uz add-zsh-hook
 # updates the window title whenever a command is run
-precmd_update_title () {
-    xtitle "$(print -P $USER @ %3~)"
+precmd_update_title() {
+	xtitle "$(print -P $USER @ %3~)"
 }
 add-zsh-hook precmd precmd_update_title
-#########################################################
-# Get the value of an alias.
-#
-# Arguments:
-#    1. alias - The alias to get its value from
-# STDOUT:
-#    The value of alias $1 (if it has one).
-# Return value:
-#    0 if the alias was found,
-#    1 if it does not exist
-#
-function alias_value() {
-    (( $+aliases[$1] )) && echo $aliases[$1]
+######### venv utilities #########-----------------
+# Activate the python virtual environment specified.
+# If none specified, use 'venv'.
+function vr() {
+	local name="${1:-.venv}"
+	local venvpath="${name:P}"
+
+	# Check if 'venv' or '.venv' exists
+	if [[ ! -d "${venvpath}" && ! -d "${venvpath}/.venv" ]]; then
+		echo >&2 "Error: no such venv in current directory: ${name}"
+		return 1
+	fi
+
+	# Set venvpath to the existing directory
+	if [[ -d "${venvpath}/.venv" ]]; then
+		venvpath="${venvpath}/.venv"
+	fi
+
+	if [[ ! -f "${venvpath}/bin/activate" ]]; then
+		echo >&2 "Error: '${name}' is not a proper virtual environment"
+		return 1
+	fi
+
+	. "${venvpath}/bin/activate" || return $?
+	echo "Activated virtual environment ${name}"
 }
 
+# Create a new virtual environment, with default name 'venv'.
+function mkvenv() {
+	local name="${1:-.venv}"
+	local venvpath="${name:P}"
+
+	python3 -m venv "${name}" || return
+	echo >&2 "Created venv in '${venvpath}'"
+	vr "${name}"
+}
 ##########################################################
 # Handle $0 according to the standard:
 # https://zdharma-continuum.github.io/Zsh-100-Commits-Club/Zsh-Plugin-Standard.html
@@ -39,151 +60,68 @@ eval '
     alias | python3 "'"${0:h}"'/cheatsheet.py" "$@"
   }
 '
-
-##########################################################
-# Try to get the value of an alias,
-# otherwise return the input.
-#
-# Arguments:
-#    1. alias - The alias to get its value from
-# STDOUT:
-#    The value of alias $1, or $1 if there is no alias $1.
-# Return value:
-#    Always 0
-#
-function try_alias_value() {
-    alias_value "$1" || echo "$1"
-}
-
-#
-#
 #############################################################
 #
 # mkcd is equivalent to takedir
 function mkcd takedir() {
-    mkdir -p $@ && cd ${@:$#}
+	mkdir -p $@ && cd ${@:$#}
 }
-#
-#
-#
 #############################################################
-function d () {
-    if [[ -n $1 ]]; then
-        dirs "$@"
-    else
-        dirs -v | head -n 10
-    fi
+function d() {
+	if [[ -n $1 ]]; then
+		dirs "$@"
+	else
+		dirs -v | head -n 10
+	fi
 }
 compdef _dirs d
-#
-#
-#
-#
-#
-#############################################################
-#####| GIT FUNCTIONS | ###################
-# Gets the difference between the local and remote branches
-function git_remote_status() {
-    local remote ahead behind git_remote_status git_remote_status_detailed
-    remote=${$(__git_prompt_git rev-parse --verify ${hook_com[branch]}@{upstream} --symbolic-full-name 2>/dev/null)/refs\/remotes\/}
-    if [[ -n ${remote} ]]; then
-        ahead=$(__git_prompt_git rev-list ${hook_com[branch]}@{upstream}..HEAD 2>/dev/null | wc -l)
-        behind=$(__git_prompt_git rev-list HEAD..${hook_com[branch]}@{upstream} 2>/dev/null | wc -l)
-
-        if [[ $ahead -eq 0 ]] && [[ $behind -eq 0 ]]; then
-            git_remote_status="$ZSH_THEME_GIT_PROMPT_EQUAL_REMOTE"
-        elif [[ $ahead -gt 0 ]] && [[ $behind -eq 0 ]]; then
-            git_remote_status="$ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE"
-            git_remote_status_detailed="$ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE_COLOR$ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE$((ahead))%{$reset_color%}"
-        elif [[ $behind -gt 0 ]] && [[ $ahead -eq 0 ]]; then
-            git_remote_status="$ZSH_THEME_GIT_PROMPT_BEHIND_REMOTE"
-            git_remote_status_detailed="$ZSH_THEME_GIT_PROMPT_BEHIND_REMOTE_COLOR$ZSH_THEME_GIT_PROMPT_BEHIND_REMOTE$((behind))%{$reset_color%}"
-        elif [[ $ahead -gt 0 ]] && [[ $behind -gt 0 ]]; then
-            git_remote_status="$ZSH_THEME_GIT_PROMPT_DIVERGED_REMOTE"
-            git_remote_status_detailed="$ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE_COLOR$ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE$((ahead))%{$reset_color%}$ZSH_THEME_GIT_PROMPT_BEHIND_REMOTE_COLOR$ZSH_THEME_GIT_PROMPT_BEHIND_REMOTE$((behind))%{$reset_color%}"
-        fi
-
-        if [[ -n $ZSH_THEME_GIT_PROMPT_REMOTE_STATUS_DETAILED ]]; then
-            git_remote_status="$ZSH_THEME_GIT_PROMPT_REMOTE_STATUS_PREFIX${remote:gs/%/%%}$git_remote_status_detailed$ZSH_THEME_GIT_PROMPT_REMOTE_STATUS_SUFFIX"
-        fi
-
-        echo $git_remote_status
-    fi
-}
-
-# Outputs the name of the current branch
-# Usage example: git pull origin $(git_current_branch)
-# Using '--quiet' with 'symbolic-ref' will not cause a fatal error (128) if
-# it's not a symbolic ref, but in a Git repo.
-function git_current_branch() {
-    local ref
-    ref=$(__git_prompt_git symbolic-ref --quiet HEAD 2> /dev/null)
-    local ret=$?
-    if [[ $ret != 0 ]]; then
-        [[ $ret == 128 ]] && return  # no git repo.
-        ref=$(__git_prompt_git rev-parse --short HEAD 2> /dev/null) || return
-    fi
-    echo ${ref#refs/heads/}
-}
-#
-#
-# Output the name of the root directory of the git repository
-# Usage example: $(git_repo_name)
-function git_repo_name() {
-    local repo_path
-    if repo_path="$(__git_prompt_git rev-parse --show-toplevel 2>/dev/null)" && [[ -n "$repo_path" ]]; then
-        echo ${repo_path:t}
-    fi
-}
-
-
 #############################################################
 #####| JAVA FUNCTIONS | ###################
 jrun() {
-  if [[ $# -ne 1 ]]; then
-    echo "Usage: jrun <JavaFile.java>"
-    return 1
-  fi
+	if [[ $# -ne 1 ]]; then
+		echo "Usage: jrun <JavaFile.java>"
+		return 1
+	fi
 
-  local java_file="$1"
-  if [[ ! -f "$java_file" ]]; then
-    echo "File not found: $java_file"
-    return 2
-  fi
+	local java_file="$1"
+	if [[ ! -f "$java_file" ]]; then
+		echo "File not found: $java_file"
+		return 2
+	fi
 
-  # Extract directory and filename
-  local src_dir=$(dirname "$java_file")
-  local filename=$(basename "$java_file")
-  local classname="${filename%.java}"
+	# Extract directory and filename
+	local src_dir=$(dirname "$java_file")
+	local filename=$(basename "$java_file")
+	local classname="${filename%.java}"
 
-  # Extract package name from the Java file (if any)
-  local package_name=$(grep -m1 '^package ' "$java_file" | sed -E 's/package[[:space:]]+([a-zA-Z0-9_.]+);/\1/')
+	# Extract package name from the Java file (if any)
+	local package_name=$(grep -m1 '^package ' "$java_file" | sed -E 's/package[[:space:]]+([a-zA-Z0-9_.]+);/\1/')
 
-  # Build the fully qualified class name
-  local fqcn="$classname"
-  if [[ -n "$package_name" ]]; then
-    fqcn="$package_name.$classname"
-  fi
+	# Build the fully qualified class name
+	local fqcn="$classname"
+	if [[ -n "$package_name" ]]; then
+		fqcn="$package_name.$classname"
+	fi
 
-  # Define build output directory
-  local build_dir="./build"
+	# Define build output directory
+	local build_dir="./build"
 
-  # Create build directory
-  mkdir -p "$build_dir"
+	# Create build directory
+	mkdir -p "$build_dir"
 
-  # Compile Java file to build directory
-  javac -d "$build_dir" "$java_file"
-  if [[ $? -ne 0 ]]; then
-    echo "Compilation failed."
-    return 3
-  fi
+	# Compile Java file to build directory
+	javac -d "$build_dir" "$java_file"
+	if [[ $? -ne 0 ]]; then
+		echo "Compilation failed."
+		return 3
+	fi
 
-  # Run the Java class with correct classpath and fully qualified name
-  java -cp "$build_dir" "$fqcn"
-  local run_status=$?
+	# Run the Java class with correct classpath and fully qualified name
+	java -cp "$build_dir" "$fqcn"
+	local run_status=$?
 
-  # Clean up .class files from build directory
-  rm -rf "$build_dir"
+	# Clean up .class files from build directory
+	rm -rf "$build_dir"
 
-  return $run_status
+	return $run_status
 }
