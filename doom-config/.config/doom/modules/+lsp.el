@@ -91,13 +91,13 @@
         lsp-lua-workspace-preload-file-size 1000))
 
 ;; Nix
-(after! nix-mode
-  (set-formatter! 'alejandra '("alejandra" "--quiet") :modes '(nix-mode))
-  (setq-hook! 'nix-mode-hook +format-with-lsp nil))
 (after! lsp-mode
-  (setq lsp-disabled-clients '((nix-mode . nix-nil)))
+  (setq lsp-disabled-clients
+        '((nix-mode . nix-nil)
+          (nix-ts-mode . nix-nil)))
+
   (setopt lsp-nix-nixd-server-path "nixd"
-          lsp-nix-nixd-formatting-command [ "alejandra" "--quiet" ]
+          lsp-nix-nixd-formatting-command ["alejandra" "--quiet"]
           lsp-nix-nixd-nixos-options-expr "(builtins.getFlake \"/home/xero/XeroNixOS\").nixosConfigurations.XeroNixOS.options"
           lsp-nix-nixd-home-manager-options-expr "(builtins.getFlake \"/home/xero/XeroNixOS\").homeConfigurations.\"xero\".options"
           lsp-nix-nixd-nixpkgs-expr "import <nixpkgs> { }"))

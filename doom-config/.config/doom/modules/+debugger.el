@@ -18,7 +18,7 @@
 
     ;; use M-u to exit dap-hydra
     (after! dap-hydra
-      (defhydra+ dap-hydra () ("M-u" nil)))
+      (eval '(defhydra+ dap-hydra () ("M-u" nil))))
 
     ;; Toggle dap-hydra whenever breakpoint is triggered
     ;; (add-hook 'dap-stopped-hook

@@ -76,7 +76,7 @@
        (kotlin +lsp)
        (lua +lsp +tree-sitter)
        (markdown +grip)
-       (nix +tree-sitter)
+       (nix +lsp +tree-sitter)
        (org +pretty)
        (python +lsp +tree-sitter +pyright)
        (rust +lsp +tree-sitter)
