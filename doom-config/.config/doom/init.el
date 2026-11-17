@@ -25,14 +25,17 @@
        (evil +everywhere)
        file-templates
        fold
+       multiple-cursors
        (format +onsave)
        rotate-text
+       (whitespace +guess +trim)
        snippets
 
        :emacs
        (dired +icons +dirvish)
+       (ibuffer +icons)
        electric
-       undo
+       (undo +tree)
        vc
 
        :term
@@ -44,7 +47,7 @@
 
        :tools
        direnv
-       (debugger +lsp)
+       debugger
        (docker +lsp)
        editorconfig
        (eval +overlay)
