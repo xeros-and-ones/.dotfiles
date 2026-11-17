@@ -91,6 +91,14 @@
         lsp-lua-workspace-preload-file-size 1000))
 
 ;; Nix
+(after! nix-mode
+  (set-formatter! 'alejandra
+    '("alejandra" "--quiet")
+    :modes '(nix-mode)))
+(after! nix-ts-mode
+  (set-formatter! 'alejandra
+    '("alejandra" "--quiet")
+    :modes '(nix-ts-mode)))
 (after! lsp-mode
   (setq lsp-disabled-clients
         '((nix-mode . nix-nil)
