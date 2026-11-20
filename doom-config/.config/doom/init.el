@@ -69,13 +69,13 @@
        data
        emacs-lisp
        (go +lsp +tree-sitter)
-       (graphql +lsp)
+       (graphql +lsp +tree-sitter)
        (json +lsp +tree-sitter)
        (java +lsp +tree-sitter)
        (javascript +lsp +tree-sitter)
-       (kotlin +lsp)
+       (kotlin +lsp +tree-sitter)
        (lua +lsp +tree-sitter)
-       (markdown +grip)
+       (markdown +grip +lsp +tree-sitter)
        (nix +lsp +tree-sitter)
        (org +pretty)
        (python +lsp +tree-sitter +pyright)
@@ -84,6 +84,7 @@
        (sh +lsp +tree-sitter)
        (web +lsp +tree-sitter)
        (yaml +lsp +tree-sitter)
+       (zig +lsp +tree-sitter)
 
        :config
        (default +bindings +smartparens))

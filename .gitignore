@@ -2,3 +2,5 @@
 state.yml
 github_cli/.config/gh/hosts.yml
 zsh/.config/zsh/__pycache__/termcolor.cpython-311.pyc
+/zsh/.config/zsh/.zcompdump
+/zsh/.config/zsh/.zsh_history

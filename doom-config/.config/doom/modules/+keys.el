@@ -52,6 +52,7 @@
  ;; Basic Navigation
  :i "C-j" #'next-line
  :i "C-k" #'previous-line
+ :gnvi "C-S-v" #'yank
  :gi "C-h" #'backward-char
  :gi "C-l" #'forward-char
  :gnmvi "C-e" #'doom/forward-to-last-non-comment-or-eol

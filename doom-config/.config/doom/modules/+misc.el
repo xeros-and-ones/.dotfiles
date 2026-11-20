@@ -5,12 +5,9 @@
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program
       (cond
-       ((executable-find "thorium-browser") "thorium-browser")
-       ((executable-find "firefox") "firefox")
-       ((executable-find "floorp") "floorp")
-       ((executable-find "google-chrome-stable") "google-chrome-stable")
-       ((executable-find "google-chrome") "google-chrome")
-       ((executable-find "/usr/bin/google-chrome-stable") "/usr/bin/google-chrome-stable")))
+       ((executable-find "thorium") "thorium")
+       ((executable-find "fireox") "firefox")
+       ((executable-find "floorp") "floorp")))
 
 ;;; Navigation & Editing
 (setq evil-cross-lines t
