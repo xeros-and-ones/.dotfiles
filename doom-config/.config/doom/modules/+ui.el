@@ -134,3 +134,20 @@
     ("^\\*edit-indirect" :size 0.6)
     ("^\\*grep\\*$" :size 0.35)
     ("\\*.*server log\\*$" :side top :size 0.20 :select nil)))
+
+
+;; Render \uXXXX and \UXXXXXXXX escape sequences as their actual glyphs
+(defun +unicode-preview-escapes ()
+  (font-lock-add-keywords
+   nil
+   '(("\\\\u\\([0-9a-fA-F]\\{4\\}\\)"
+      (0 (prog1 nil
+           (compose-region (match-beginning 0) (match-end 0)
+                           (string-to-number (match-string 1) 16)))))
+     ("\\\\U00\\([0-9a-fA-F]\\{6\\}\\)"
+      (0 (prog1 nil
+           (compose-region (match-beginning 0) (match-end 0)
+                           (string-to-number (match-string 1) 16))))))))
+
+;; Enable automatically in programming modes (or toggle manually with M-x +unicode-preview-escapes)
+(add-hook 'prog-mode-hook #'+unicode-preview-escapes)

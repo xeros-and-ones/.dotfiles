@@ -44,5 +44,4 @@
          "q" #'dap-disconnect
          "s" #'dap-ui-sessions
          "k" #'dap-delete-session
-         "K" #'dap-delete-all-sessions
-         "S" #'realgud-short-key-mode)))
+         "K" #'dap-delete-all-sessions)))

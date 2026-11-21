@@ -21,3 +21,5 @@
 (package! imenu-list)
 (package! all-the-icons-ibuffer)
 (package! drag-stuff)
+(package! vim-file-locals
+  :recipe (:host github :repo "abougouffa/emacs-vim-file-locals"))

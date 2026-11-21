@@ -101,6 +101,9 @@
   (remove-hook 'citre-after-jump-hook #'citre-recenter-and-blink)
   (add-hook 'citre-after-jump-hook #'+nav-flash-blink-cursor-maybe-h))
 
+(use-package! vim-file-locals
+  :hook (after-init . vim-file-locals-mode))
+
 
 ;;; Hooks
 (add-hook! 'better-jumper-post-jump-hook #'recenter)
