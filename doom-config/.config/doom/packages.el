@@ -2,13 +2,11 @@
 ;;; $DOOMDIR/packages.el
 
 ;; disabled packages
-(disable-packages! solaire-mode
-                   osx-trash
+(disable-packages! osx-trash
                    realgud
                    realgud-trepan-ni
                    ccls
                    tide
-                   swiper
                    ;; forge
                    code-review
                    anaconda-mode

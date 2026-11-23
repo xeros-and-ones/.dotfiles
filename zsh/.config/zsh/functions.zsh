@@ -71,7 +71,7 @@ function d() {
 	if [[ -n $1 ]]; then
 		dirs "$@"
 	else
-		dirs -v | head -n 10
+		dirs -v | head -n 15
 	fi
 }
 compdef _dirs d

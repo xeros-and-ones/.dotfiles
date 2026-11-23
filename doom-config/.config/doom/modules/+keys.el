@@ -195,11 +195,6 @@
  ;; MAJOR MODE BINDINGS
  ;; ====================
 
- ;; Programming Modes
- (:map prog-mode-map
-  :i "TAB" #'doom/dumb-indent
-  :i "<backtab>" #'doom/dumb-dedent)
-
  ;; Outline Mode
  (:after outline
   :map outline-mode-map

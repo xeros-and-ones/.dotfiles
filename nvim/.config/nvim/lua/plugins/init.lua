@@ -1,23 +1,28 @@
-local editor = require("plugins.editor")
-local themes = require("plugins.themes")
-local tools = require("plugins.tools")
-local ui = require("plugins.ui")
+return {
+  {
+    "stevearc/conform.nvim",
+    -- event = 'BufWritePre', -- uncomment for format on save
+    opts = require "configs.conform",
+  },
 
-local plugins = { themes, ui, tools, editor }
+  -- These are some examples, uncomment them if you want to see them work!
+  {
+    "neovim/nvim-lspconfig",
+    config = function()
+      require "configs.lspconfig"
+    end,
+  },
 
-local colorschemes = {
-  "monokai-pro-default",
-  "catppuccin-frappe",
-  "duskfox",
-  "onedark",
-  "vscode",
-  "tokyonight-storm",
-  "tokyonight-moon",
-  "github_dark",
+  -- test new blink
+  -- { import = "nvchad.blink.lazyspec" },
+
+  -- {
+  -- 	"nvim-treesitter/nvim-treesitter",
+  -- 	opts = {
+  -- 		ensure_installed = {
+  -- 			"vim", "lua", "vimdoc",
+  --      "html", "css"
+  -- 		},
+  -- 	},
+  -- },
 }
-math.randomseed(os.time())
-COLORSCHEME = colorschemes[math.random(#colorschemes)]
-
-require("lazy").setup(plugins)
-
-vim.cmd.colorscheme(COLORSCHEME)
