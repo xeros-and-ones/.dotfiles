@@ -14,6 +14,7 @@
       evil-split-window-below t
       evil-vsplit-window-right t
       evil-ex-substitute-global t
+      evil-kill-on-visual-paste nil
       evil-escape-key-sequence "jk"
       evil-escape-delay 0.1)
 

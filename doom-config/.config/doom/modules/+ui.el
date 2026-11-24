@@ -1,15 +1,13 @@
 ;;; +ui.el -*- lexical-binding: t; -*-
 
-;;; +ui.el -*- lexical-binding: t; -*-
-
 ;; Theme and Font Configuration
 (setq doom-theme 'doom-gruvbox
       doom-themes-enable-bold t
       doom-themes-enable-italic t
-      doom-font (font-spec :family "CaskaydiaCove Nerd Font" :size 16 :weight 'semi-bold)
-      doom-variable-pitch-font (font-spec :family "CaskaydiaCove Nerd Font")
-      doom-symbol-font (font-spec :family "CaskaydiaCove Nerd Font" :size 16 :weight 'bold)
-      doom-big-font (font-spec :family "CaskaydiaCove Nerd Font" :size 19)
+      doom-font (font-spec :family "Google Sans Code NF" :size 16 :weight 'semi-bold)
+      doom-variable-pitch-font (font-spec :family "Rubik")
+      doom-symbol-font (font-spec :family "Google Sans Code NF" :size 16 :weight 'bold)
+      doom-big-font (font-spec :family "Google Sans Code NF" :size 19 :weight 'extra-bold)
       display-line-numbers-type 'relative
       +workspaces-on-switch-project-behavior t)
 
