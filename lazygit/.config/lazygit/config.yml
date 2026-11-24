@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://json.schemastore.org/lazygit.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/jesseduffield/lazygit/master/schema/config.json
 gui:
   expandFocusedSidePanel: true
   nerdFontsVersion: "3"
@@ -12,9 +12,6 @@ gui:
       - bold
 git:
   diffRenderers:
-    - colorArg: always
-      # pager: delta --dark --paging=never
-
-      type: rawGit
+    - command: delta --dark --paging=never
 os:
   editPreset: "emacs"
