@@ -216,3 +216,4 @@ on_force_close "detach"
 session_serialization true
 serialization_interval 1
 show_startup_tips false
+on_quit "detach"

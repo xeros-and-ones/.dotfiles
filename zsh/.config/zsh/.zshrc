@@ -39,15 +39,14 @@ GIT_EDITOR='emacsclient -t -a '''
 HISTFILE="$HOME/.zsh_history" # History filepath
 SAVEHIST=$((100 * 1000))      # Use multiplication for readability.
 HISTSIZE=$((1.2 * SAVEHIST))  # Zsh recommended value
+# needed for emacs-lsp-booster
+LSP_USE_PLISTS=true
 
 # Safely apply -march=native only if supported
-export CFLAGS="-O2 -flto=auto -pipe"
-case "$(gcc -march=native -Q --help=target | grep march)" in
-*native*) CFLAGS+=" -march=native" ;;
-esac
-
-# needed for emacs-lsp-booster
-export LSP_USE_PLISTS=true
+# export CFLAGS="-O2 -flto=auto -pipe"
+# case "$(gcc -march=native -Q --help=target | grep march)" in
+# *native*) CFLAGS+=" -march=native" ;;
+# esac
 
 path=(
 	$GOPATH/bin(N-/)
@@ -66,10 +65,6 @@ fpath=(
 	$fpath
 )
 export FPATH
-#
-#
-### RANDOM COLOR SCRIPT ###
-# colorscript random
 #
 ######## PLUGINS & THEMES #############--------------------------------------------------
 source $ZDOTDIR/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
