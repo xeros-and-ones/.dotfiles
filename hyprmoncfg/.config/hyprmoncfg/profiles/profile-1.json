@@ -1,0 +1,135 @@
+{
+  "name": "profile 1",
+  "created_at": "2026-11-27T16:51:32.884258494Z",
+  "updated_at": "2026-11-27T17:18:06.458494962Z",
+  "outputs": [
+    {
+      "key": "bnq|benq gw2780|r4n0461001q",
+      "match_key": "bnq|benq gw2780|r4n0461001q",
+      "name": "HDMI-A-1",
+      "description": "BNQ BenQ GW2780 R4N0461001Q",
+      "make": "BNQ",
+      "model": "BenQ GW2780",
+      "serial": "R4N0461001Q",
+      "enabled": true,
+      "mode": "1920x1080@60.00Hz",
+      "width": 1920,
+      "height": 1080,
+      "refresh": 60,
+      "x": 0,
+      "y": 0,
+      "scale": 1,
+      "transform": 0,
+      "bitdepth": 8,
+      "cm": "srgb",
+      "sdr_brightness": 1,
+      "sdr_saturation": 1,
+      "sdr_min_luminance": 0.2,
+      "sdr_max_luminance": 80,
+      "min_luminance": 0
+    },
+    {
+      "key": "au optronics|0x48ec",
+      "match_key": "au optronics|0x48ec",
+      "name": "eDP-1",
+      "description": "AU Optronics 0x48EC",
+      "make": "AU Optronics",
+      "model": "0x48EC",
+      "enabled": false,
+      "mode": "1366x768@60.06Hz",
+      "width": 1366,
+      "height": 768,
+      "refresh": 60.06,
+      "x": 1920,
+      "y": 312,
+      "scale": 1,
+      "transform": 0,
+      "bitdepth": 8,
+      "cm": "srgb",
+      "sdr_brightness": 1,
+      "sdr_saturation": 1,
+      "sdr_min_luminance": 0.2,
+      "sdr_max_luminance": 80,
+      "min_luminance": 0
+    }
+  ],
+  "workspaces": {
+    "enabled": true,
+    "strategy": "manual",
+    "max_workspaces": 10,
+    "group_size": 3,
+    "monitor_order": [
+      "bnq|benq gw2780|r4n0461001q",
+      "au optronics|0x48ec"
+    ],
+    "rules": [
+      {
+        "workspace": "1",
+        "output_key": "bnq|benq gw2780|r4n0461001q",
+        "output_name": "HDMI-A-1",
+        "default": true,
+        "persistent": true
+      },
+      {
+        "workspace": "2",
+        "output_key": "bnq|benq gw2780|r4n0461001q",
+        "output_name": "HDMI-A-1",
+        "persistent": true
+      },
+      {
+        "workspace": "3",
+        "output_key": "bnq|benq gw2780|r4n0461001q",
+        "output_name": "HDMI-A-1",
+        "persistent": true
+      },
+      {
+        "workspace": "4",
+        "output_key": "bnq|benq gw2780|r4n0461001q",
+        "output_name": "HDMI-A-1",
+        "persistent": true
+      },
+      {
+        "workspace": "5",
+        "output_key": "bnq|benq gw2780|r4n0461001q",
+        "output_name": "HDMI-A-1",
+        "persistent": true
+      },
+      {
+        "workspace": "6",
+        "output_key": "bnq|benq gw2780|r4n0461001q",
+        "output_name": "HDMI-A-1",
+        "persistent": true
+      },
+      {
+        "workspace": "7",
+        "output_key": "bnq|benq gw2780|r4n0461001q",
+        "output_name": "HDMI-A-1"
+      },
+      {
+        "workspace": "8",
+        "output_key": "bnq|benq gw2780|r4n0461001q",
+        "output_name": "HDMI-A-1"
+      },
+      {
+        "workspace": "9",
+        "output_key": "bnq|benq gw2780|r4n0461001q",
+        "output_name": "HDMI-A-1"
+      },
+      {
+        "workspace": "10",
+        "output_key": "bnq|benq gw2780|r4n0461001q",
+        "output_name": "HDMI-A-1",
+        "persistent": true
+      },
+      {
+        "workspace": "f[1]",
+        "output_key": ""
+      },
+      {
+        "workspace": "w[tv1]",
+        "output_key": ""
+      }
+    ]
+  },
+  "exec": ""
+}

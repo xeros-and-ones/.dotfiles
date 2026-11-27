@@ -1,0 +1,185 @@
+[bar.default]
+background_opacity = 0.69999998435378075
+center = [ "weather", "clock" ]
+compositor_blur = false
+start = [ "launcher", "wallpaper", "workspaces", "spacer_2", "active_window" ]
+thickness = 25
+
+[desktop_widgets]
+schema_version = 2
+widget_order = []
+
+    [desktop_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [desktop_widgets.widget]
+
+[dock]
+compositor_blur = false
+
+[idle]
+behavior_order = [ "lock", "screen-off", "lock-and-suspend" ]
+
+    [idle.behavior.lock]
+    action = "lock"
+    enabled = true
+    timeout = 300.0
+
+    [idle.behavior.lock-and-suspend]
+    action = "lock_and_suspend"
+    enabled = false
+    timeout = 900.0
+
+    [idle.behavior.screen-off]
+    action = "screen_off"
+    enabled = true
+    timeout = 360.0
+
+[location]
+address = "cairo, egypt"
+
+[lockscreen]
+transition = [ "disc" ]
+
+[lockscreen_widgets]
+enabled = true
+schema_version = 2
+widget_order = [ "lockscreen-login-box@HDMI-A-1", "lockscreen-login-box@eDP-1", "lockscreen-widget-0000000000000001" ]
+
+    [lockscreen_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-1"]
+    box_height = 70.0
+    box_width = 400.0
+    cx = 960.0
+    cy = 585.0
+    output = "HDMI-A-1"
+    placement_height = 1080.0
+    placement_width = 1920.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-1".settings]
+        background_color = "surface_container"
+        background_opacity = 0.70000000000000007
+        background_radius = 32.0
+        center_password_text = true
+        input_opacity = 0.80000000000000004
+        input_radius = 20.0
+        layout = "compact"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = false
+        show_media_controls = true
+        show_password_reveal = false
+        show_session_buttons = false
+        show_unlock_hint = false
+        show_weather = false
+
+    [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
+    box_height = 196.0
+    box_width = 810.0
+    cx = 683.0
+    cy = 586.0
+    output = "eDP-1"
+    placement_height = 768.0
+    placement_width = 1366.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@eDP-1".settings]
+        background_color = "surface_container"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_media_controls = true
+        show_password_reveal = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
+    [lockscreen_widgets.widget.lockscreen-widget-0000000000000001]
+    box_height = 128.0
+    box_width = 400.0
+    cx = 960.0
+    cy = 444.0
+    output = "HDMI-A-1"
+    placement_height = 1080.0
+    placement_width = 1920.0
+    rotation = 0.0
+    type = "clock"
+
+        [lockscreen_widgets.widget.lockscreen-widget-0000000000000001.settings]
+        background = false
+        background_opacity = 0.0
+        circle = true
+        clock_style = "digital"
+        font_family = ""
+        format = "{:%-I:%M %p}"
+        shadow = true
+
+[shell]
+clipboard_auto_paste = "off"
+clipboard_history_max_entries = 200
+font_family = "Rubik SemiBold"
+polkit_agent = true
+settings_window_translucent = true
+
+    [shell.greeter_sync]
+    auto_sync = true
+
+    [shell.keyboard_layout.custom_labels]
+    Arabic = "AR"
+    "English (US)" = "EN"
+
+    [shell.launcher]
+    auto_paste = "off"
+
+    [shell.window_switcher]
+    style = "grid"
+
+[theme]
+builtin = "Gruvbox"
+community_palette = "Oxocarbon"
+mode = "dark"
+shell_mode = "dark"
+source = "builtin"
+wallpaper_scheme = "faithful"
+
+    [theme.templates]
+    builtin_ids = [ "gtk3", "gtk4", "hyprland", "kitty", "luciole", "qt" ]
+    community_ids = [ "tauon", "bat", "lazygit", "zellij" ]
+
+[wallpaper]
+directory = "/home/xero/Pictures/wallpapers"
+
+    [wallpaper.default]
+    path = "/home/xero/Pictures/wallpapers/PcIDKd5.jpg"
+
+    [wallpaper.last]
+    path = "/home/xero/Pictures/wallpapers/PcIDKd5.jpg"
+
+    [wallpaper.monitors.HDMI-A-1]
+    path = "/home/xero/Pictures/wallpapers/PcIDKd5.jpg"
+
+[widget.active_window]
+max_length = 500
+
+[widget.clock]
+anchor = true
+
+[widget.spacer_2]
+type = "spacer"

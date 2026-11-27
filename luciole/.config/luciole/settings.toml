@@ -1,0 +1,17 @@
+schema_version = 1
+
+[browser]
+always_show_status_bar = true
+always_show_tab_bar = false
+background_opacity = 0.7
+chooser_show_hidden = true
+chooser_show_preview = true
+grid_icon_size = 80
+miller_column_width = 196
+preview_width = 268
+remember_folder_views = true
+show_hidden = true
+show_modified_caption = true
+show_size_caption = true
+typing_mode = "typeahead"
+view_mode = "list"
