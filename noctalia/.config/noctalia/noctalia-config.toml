@@ -1,9 +1,10 @@
 [bar.default]
 background_opacity = 0.69999998435378075
-center = [ "weather", "clock" ]
+center = [ "workspaces" ]
 compositor_blur = false
-start = [ "launcher", "wallpaper", "workspaces", "spacer_2", "active_window" ]
+start = [ "launcher", "wallpaper", "clock", "active_window" ]
 thickness = 25
+widget_spacing = 9
 
 [desktop_widgets]
 schema_version = 2
@@ -153,16 +154,16 @@ time_format = "{:%-I:%M %p}"
     style = "grid"
 
 [theme]
-builtin = "Gruvbox"
-community_palette = "Horizon"
+builtin = "Kanagawa"
+community_palette = "Kemuri Koke"
 mode = "dark"
 shell_mode = "dark"
-source = "community"
+source = "builtin"
 wallpaper_scheme = "faithful"
 
     [theme.templates]
     builtin_ids = [ "gtk3", "gtk4", "hyprland", "kitty", "luciole", "qt" ]
-    community_ids = [ "tauon", "bat", "lazygit", "zellij" ]
+    community_ids = [ "tauon", "hyprtoolkit", "bat", "lazygit", "zellij" ]
 
 [wallpaper]
 directory = "/home/xero/Pictures/wallpapers"
@@ -181,8 +182,16 @@ max_length = 400
 title_scroll = "on_hover"
 
 [widget.clock]
-anchor = true
+anchor = false
 format = "{:%-I:%M %p}"
+
+[widget.media]
+art_size = 33
+max_length = 170
+title_scroll = "on_hover"
 
 [widget.spacer_2]
 type = "spacer"
+
+[widget.workspaces]
+anchor = true

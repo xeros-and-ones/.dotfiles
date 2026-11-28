@@ -1,0 +1,9 @@
+{
+  "au optronics 0x48ec": {
+    "step": 0,
+    "reason": "",
+    "saved": "",
+    "since": "2026-11-28T13:58:52.422253576+02:00",
+    "gentle_wake": true
+  }
+}

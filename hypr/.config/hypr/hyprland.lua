@@ -2,13 +2,13 @@
 ---- AUTOSTART ----
 -------------------
 hl.on("hyprland.start", function()
-	hl.exec_cmd("noctalia")
-end)
-
-hl.on("hyprland.start", function()
 	hl.exec_cmd("/run/current-system/sw/libexec/pam_kwallet_init")
 end)
-
+hl.on("hyprland.start", function()
+	if #hl.get_monitors() > 1 then
+		hl.monitor({ output = "eDP-1", disabled = true })
+	end
+end)
 -------------------------------
 ---- ENVIRONMENT VARIABLES ----
 -------------------------------
@@ -333,7 +333,6 @@ hl.window_rule({
 hl.window_rule({
 	match = { class = "dev.noctalia.Noctalia" },
 	float = true,
-	pin = true,
 	size = "monitor_w*0.5625 monitor_h*0.85",
 })
 
@@ -361,6 +360,8 @@ hl.window_rule({
 	},
 	float = true,
 	center = true,
+	dim_around = true,
+	focus_on_activate = true,
 })
 
 -- "Smart gaps" / "No gaps when only"
@@ -371,18 +372,31 @@ hl.window_rule({ match = { float = false, workspace = "w[tv1]" }, rounding = 0 }
 hl.window_rule({ match = { float = false, workspace = "f[1]" }, border_size = 0 })
 hl.window_rule({ match = { float = false, workspace = "f[1]" }, rounding = 0 })
 
-do
-	local path = (os.getenv("XDG_CONFIG_HOME") or os.getenv("HOME") .. "/.config") .. "/hypr/hyprmoncfg-monitors.lua"
-	local file = io.open(path, "r")
-	if file then
-		file:close()
-		dofile(path)
-	end
-end
+hl.monitor({
+	output = "desc:BNQ BenQ GW2780 R4N0461001Q",
+	mode = "1920x1080@60.00",
+	position = "0x0",
+	scale = 1,
+	vrr = 0,
+	sdr_min_luminance = 0.2,
+	sdr_max_luminance = 80,
+})
+
+hl.monitor({
+	output = "desc:AU Optronics 0x48EC",
+	disabled = true,
+})
+
+hl.workspace_rule({ workspace = "1", monitor = "desc:BNQ BenQ GW2780 R4N0461001Q", default = true, persistent = true })
+hl.workspace_rule({ workspace = "2", monitor = "desc:BNQ BenQ GW2780 R4N0461001Q", persistent = true })
+hl.workspace_rule({ workspace = "3", monitor = "desc:BNQ BenQ GW2780 R4N0461001Q", persistent = true })
+hl.workspace_rule({ workspace = "4", monitor = "desc:BNQ BenQ GW2780 R4N0461001Q", persistent = true })
+hl.workspace_rule({ workspace = "5", monitor = "desc:BNQ BenQ GW2780 R4N0461001Q", persistent = true })
+hl.workspace_rule({ workspace = "6", monitor = "desc:BNQ BenQ GW2780 R4N0461001Q" })
+hl.workspace_rule({ workspace = "7", monitor = "desc:BNQ BenQ GW2780 R4N0461001Q" })
+hl.workspace_rule({ workspace = "8", monitor = "desc:BNQ BenQ GW2780 R4N0461001Q" })
+hl.workspace_rule({ workspace = "9", monitor = "desc:BNQ BenQ GW2780 R4N0461001Q" })
+hl.workspace_rule({ workspace = "10", monitor = "desc:BNQ BenQ GW2780 R4N0461001Q" })
 
 -- For Noctalia Color templates
 require("noctalia").apply_theme()
-
--- Added by hyprmoncfg: its generated monitor rules load last, so nothing before this can override the applied layout.
--- stylua: ignore
-do local path = (os.getenv("XDG_CONFIG_HOME") or os.getenv("HOME") .. "/.config") .. "/hypr/hyprmoncfg-monitors.lua"; local file = io.open(path, "r"); if file then file:close(); dofile(path) end end
