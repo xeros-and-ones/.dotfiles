@@ -17,7 +17,7 @@ end)
 
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
-
+hl.env("GTK_USE_PORTAL", "1")
 -----------------------
 ---- LOOK AND FEEL ----
 -----------------------
@@ -143,6 +143,7 @@ hl.config({
 		kb_model = "",
 		kb_options = "grp:alt_space_toggle",
 		kb_rules = "",
+		numlock_by_default = true,
 
 		follow_mouse = 1,
 
@@ -342,6 +343,26 @@ hl.window_rule({
 	size = "monitor_w*0.5625 monitor_h*0.85",
 })
 
+hl.window_rule({
+	name = "qbittorrent-popups",
+	match = {
+		initial_class = "^(org\\.qbittorrent\\.qBittorrent)$",
+	},
+	float = true,
+	center = true,
+	size = "1372 919",
+})
+
+-- Optional: Force modal dialogs across all apps (including qBittorrent "Are you sure?" popups) to float
+hl.window_rule({
+	name = "float-modals",
+	match = {
+		modal = true,
+	},
+	float = true,
+	center = true,
+})
+
 -- "Smart gaps" / "No gaps when only"
 hl.workspace_rule({ workspace = "w[tv1]", gaps_out = 0, gaps_in = 0 })
 hl.workspace_rule({ workspace = "f[1]", gaps_out = 0, gaps_in = 0 })
@@ -349,7 +370,6 @@ hl.window_rule({ match = { float = false, workspace = "w[tv1]" }, border_size = 
 hl.window_rule({ match = { float = false, workspace = "w[tv1]" }, rounding = 0 })
 hl.window_rule({ match = { float = false, workspace = "f[1]" }, border_size = 0 })
 hl.window_rule({ match = { float = false, workspace = "f[1]" }, rounding = 0 })
-
 
 do
 	local path = (os.getenv("XDG_CONFIG_HOME") or os.getenv("HOME") .. "/.config") .. "/hypr/hyprmoncfg-monitors.lua"
@@ -360,8 +380,9 @@ do
 	end
 end
 
--- Added by hyprmoncfg: its generated monitor rules load last, so nothing before this can override the applied layout.
-do local path = (os.getenv("XDG_CONFIG_HOME") or os.getenv("HOME") .. "/.config") .. "/hypr/hyprmoncfg-monitors.lua"; local file = io.open(path, "r"); if file then file:close(); dofile(path) end end
-
 -- For Noctalia Color templates
 require("noctalia").apply_theme()
+
+-- Added by hyprmoncfg: its generated monitor rules load last, so nothing before this can override the applied layout.
+-- stylua: ignore
+do local path = (os.getenv("XDG_CONFIG_HOME") or os.getenv("HOME") .. "/.config") .. "/hypr/hyprmoncfg-monitors.lua"; local file = io.open(path, "r"); if file then file:close(); dofile(path) end end

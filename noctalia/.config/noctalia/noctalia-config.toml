@@ -137,9 +137,10 @@ clipboard_history_max_entries = 200
 font_family = "Rubik SemiBold"
 polkit_agent = true
 settings_window_translucent = true
+time_format = "{:%-I:%M %p}"
 
     [shell.greeter_sync]
-    auto_sync = true
+    auto_sync = false
 
     [shell.keyboard_layout.custom_labels]
     Arabic = "AR"
@@ -153,10 +154,10 @@ settings_window_translucent = true
 
 [theme]
 builtin = "Gruvbox"
-community_palette = "Oxocarbon"
+community_palette = "Horizon"
 mode = "dark"
 shell_mode = "dark"
-source = "builtin"
+source = "community"
 wallpaper_scheme = "faithful"
 
     [theme.templates]
@@ -167,19 +168,21 @@ wallpaper_scheme = "faithful"
 directory = "/home/xero/Pictures/wallpapers"
 
     [wallpaper.default]
-    path = "/home/xero/Pictures/wallpapers/PcIDKd5.jpg"
+    path = "/home/xero/Pictures/wallpapers/wallhaven-xe8ggz.jpg"
 
     [wallpaper.last]
-    path = "/home/xero/Pictures/wallpapers/PcIDKd5.jpg"
+    path = "/home/xero/Pictures/wallpapers/wallhaven-xe8ggz.jpg"
 
     [wallpaper.monitors.HDMI-A-1]
-    path = "/home/xero/Pictures/wallpapers/PcIDKd5.jpg"
+    path = "/home/xero/Pictures/wallpapers/wallhaven-xe8ggz.jpg"
 
 [widget.active_window]
-max_length = 500
+max_length = 400
+title_scroll = "on_hover"
 
 [widget.clock]
 anchor = true
+format = "{:%-I:%M %p}"
 
 [widget.spacer_2]
 type = "spacer"

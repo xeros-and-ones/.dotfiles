@@ -1,17 +1,30 @@
 schema_version = 1
 
 [browser]
+accessed_column_width = 156
 always_show_status_bar = true
 always_show_tab_bar = false
 background_opacity = 0.7
 chooser_show_hidden = true
 chooser_show_preview = true
+created_column_width = 156
 grid_icon_size = 80
+group_column_width = 128
+list_icon_size = 24
+location_column_width = 260
 miller_column_width = 196
+modified_column_width = 123
+name_column_width = 389
+owner_column_width = 128
+permissions_column_width = 112
 preview_width = 268
 remember_folder_views = true
 show_hidden = true
 show_modified_caption = true
+show_preview = false
 show_size_caption = true
+sidebar_width = 160
+size_column_width = 87
+type_column_width = 127
 typing_mode = "typeahead"
 view_mode = "list"

@@ -7,3 +7,5 @@ zsh/.config/zsh/__pycache__/termcolor.cpython-311.pyc
 /bat/.config/bat/themes/
 /zellij/.config/zellij/config.kdl.bak
 /zellij/.config/zellij/themes
+/hypr/.config/hypr/noctalia.lua
+/luciole/.config/luciole/colors.toml
